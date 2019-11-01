@@ -1,11 +1,11 @@
 {
-  "name": "angular-electron",
-  "version": "6.0.1",
-  "description": "Angular 8 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "Vitomu",
+  "version": "2.0.0-beta1",
+  "description": "Video to audio converter",
+  "homepage": "https://github.com/digimezzo/vitomu-electron",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Digimezzo",
+    "email": "info@digimezzo.com"
   },
   "keywords": [
     "angular",
@@ -82,5 +82,14 @@
   },
   "engines": {
     "node": ">=10.9.0"
+  },
+  "dependencies": {
+    "@angular/animations": "^8.2.1",
+    "@angular/cdk": "^8.1.2",
+    "@angular/material": "^8.1.2",
+    "electron-log": "^3.0.6",
+    "electron-store": "^4.0.0",
+    "electron-window-state": "^5.0.3",
+    "fs-extra": "^8.1.0"
   }
 }
