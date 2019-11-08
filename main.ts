@@ -1,6 +1,12 @@
 import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import * as windowStateKeeper from 'electron-window-state';
+
+// Logging needs to be imported in main.ts also. Otherwise it just doesn't work anywhere else.
+// See post by megahertz: https://github.com/megahertz/electron-log/issues/60
+// "You need to import electron-log in the main process. Without it, electron-log doesn't works in a renderer process."
+import log from 'electron-log';
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -11,16 +17,27 @@ function createWindow() {
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
+  // Load the previous state with fallback to defaults
+  let windowState = windowStateKeeper({
+    defaultWidth: 850,
+    defaultHeight: 600
+  });
+
   // Create the browser window.
   win = new BrowserWindow({
-    x: 0,
-    y: 0,
-    width: size.width,
-    height: size.height,
+    x: windowState.x,
+    y: windowState.y,
+    width: windowState.width,
+    height: windowState.height,
+    backgroundColor: '#fff',
+    frame: false,
+    icon: path.join(__dirname, 'build/icon/icon.png'),
     webPreferences: {
       nodeIntegration: true,
     },
   });
+
+  windowState.manage(win);
 
   if (serve) {
     require('electron-reload')(__dirname, {
@@ -36,7 +53,7 @@ function createWindow() {
   }
 
   if (serve) {
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
   }
 
   // Emitted when the window is closed.
@@ -47,9 +64,28 @@ function createWindow() {
     win = null;
   });
 
+  // 'ready-to-show' doesn't fire on Windows in dev mode. In prod it seems to work. 
+  // See: https://github.com/electron/electron/issues/7779
+  win.on('ready-to-show', function () {
+    win.show();
+    win.focus();
+  });
+
+  // Makes links open in external browser
+  var handleRedirect = (e, url) => {
+    // Check that the requested url is not the current page
+    if (url != win.webContents.getURL()) {
+      e.preventDefault()
+      require('electron').shell.openExternal(url)
+    }
+  }
+
+  win.webContents.on('will-navigate', handleRedirect)
+  win.webContents.on('new-window', handleRedirect)
 }
 
 try {
+  log.info("[Main] [] +++ Starting +++");
 
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
@@ -58,6 +94,7 @@ try {
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
+    log.info("[App] [window-all-closed] +++ Stopping +++");
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
