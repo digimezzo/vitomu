@@ -44,7 +44,7 @@ export class Settings {
         }
 
         if (!this.settings.has('colorTheme')) {
-            this.settings.set('colorTheme', "default-blue-theme");
+            this.settings.set('colorTheme', "default-pink-theme");
         } else {
             let settingsColorThemeName: string = this.settings.get('colorTheme');
 
@@ -52,20 +52,8 @@ export class Settings {
             // in the app (The color themes might change between releases).
             // If not, reset the color theme setting to the default color theme.
             if (!Constants.colorThemes.map(x => x.name).includes(settingsColorThemeName)) {
-                this.settings.set('colorTheme', "default-blue-theme");
+                this.settings.set('colorTheme', "default-pink-theme");
             }
-        }
-
-        if (!this.settings.has('closeNotesWithEscape')) {
-            this.settings.set('closeNotesWithEscape', true);
-        }
-
-        if (!this.settings.has('fontSizeInNotes')) {
-            this.settings.set('fontSizeInNotes', 14);
-        }
-
-        if (!this.settings.has('showExactDatesInTheNotesList')) {
-            this.settings.set('showExactDatesInTheNotesList', false);
         }
     }
 }

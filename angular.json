@@ -27,6 +27,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/css"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -97,6 +102,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/css"
+              ]
+            },
             "assets": [
               "src/assets",
               "src/favicon.ico",

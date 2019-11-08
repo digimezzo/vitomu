@@ -1,0 +1,55 @@
+@import "variables";
+@import "font-faces";
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  outline: none; // Removes yellow outline on elements
+}
+
+* :not(.custom-font) {
+  font-family: opensans !important;
+  font-size: $fontsize-normal;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow-y: hidden;
+}
+
+h1 {
+  @extend .color-primary;
+  font-weight: lighter !important;
+  font-size: $fontsize-largest !important;
+}
+
+h4 {
+  font-weight: lighter !important;
+  font-size: $fontsize-larger !important;
+}
+
+a {
+  @extend .color-primary;
+  outline: none; // Removes yellow outline on links
+}
+
+hr {
+  border-bottom: 1px solid #dedede;
+}

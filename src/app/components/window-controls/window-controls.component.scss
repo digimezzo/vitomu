@@ -1,0 +1,12 @@
+@import 'theming';
+
+.window-controls {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.window-controls .close-button:hover {
+    @extend .background-color-primary;
+    color: #FFF;
+}

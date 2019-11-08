@@ -1,0 +1,43 @@
+// Created with: http://mcg.mbitson.com/
+$default-pink-palette: (
+    50 : #fde4ed,
+    100 : #f9bad1,
+    200 : #f68db2,
+    300 : #f25f93,
+    400 : #ef3c7c,
+    500 : #ec1a65,
+    600 : #ea175d,
+    700 : #e71353,
+    800 : #e40f49,
+    900 : #df0837,
+    A100 : #ffffff,
+    A200 : #ffd4dc,
+    A400 : #ffa1b2,
+    A700 : #ff889d,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+  )
+);
+
+$default-pink-theme-primary: mat-palette($default-pink-palette);
+$default-pink-theme-accent: mat-palette($default-pink-palette);
+$default-pink-theme-warn: mat-palette($default-pink-palette);
+
+$default-pink-theme: mat-dark-theme(
+  $default-pink-theme-primary,
+  $default-pink-theme-accent,
+  $default-pink-theme-warn
+);

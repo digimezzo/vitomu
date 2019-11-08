@@ -1,0 +1,47 @@
+@import "~@angular/material/theming";
+@include mat-core();
+
+@import "color-themes/default-pink-theme.scss";
+@import "color-themes/default-green-theme.scss";
+
+@mixin set-colors($theme) {
+  $primary: map-get($theme, primary);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  .color-primary {
+    color: mat-color($primary) !important;
+  }
+
+  .background-color-primary {
+    background-color: mat-color($primary) !important;
+  }
+
+  .background-color-primary-0-6 {
+    background-color: mat-color($primary, 0.6) !important;
+  }
+
+  .color-base{
+    color: mat-color($foreground, base);
+  }
+
+  .background-color-hover{
+    background-color: mat-color($background, hover) !important;
+  }
+}
+
+// Default
+@include angular-material-theme($default-pink-theme);
+@include set-colors($default-pink-theme);
+
+// Default pink
+.default-pink-theme {
+  @include angular-material-theme($default-pink-theme);
+  @include set-colors($default-pink-theme);
+}
+
+// Default green
+.default-green-theme {
+    @include angular-material-theme($default-green-theme);
+    @include set-colors($default-green-theme);
+  }

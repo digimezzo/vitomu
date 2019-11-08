@@ -1,0 +1,19 @@
+.window-button {
+    @extend .color-base;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 46px;
+    height: 100%;
+    user-select: none;
+    cursor: default;
+    opacity: 0.8;
+    font-family: segoe !important;
+    font-size: 10px;
+    -webkit-app-region: no-drag;
+}
+
+.window-button:hover {
+    @extend .background-color-hover;
+    opacity: 1;
+}

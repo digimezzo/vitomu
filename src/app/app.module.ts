@@ -20,6 +20,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { Logger } from './core/logger';
 import { Settings } from './core/settings';
+import { WindowControlsComponent } from './components/window-controls/window-controls.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -30,6 +31,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeComponent,
+    WindowControlsComponent,
     WebviewDirective
   ],
   imports: [
