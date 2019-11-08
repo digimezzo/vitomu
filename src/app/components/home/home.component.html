@@ -7,13 +7,22 @@
   </div>
   <div class="window-frame-content">
     <mat-tab-group>
-      <mat-tab label="{{ 'Tabs.Convert' | translate }}">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <h2>{{ 'Tabs.Convert' | translate }}</h2>
+        </ng-template>
         One
       </mat-tab>
-      <mat-tab label="{{ 'Tabs.Settings' | translate }}">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <h2>{{ 'Tabs.Settings' | translate }}</h2>
+        </ng-template>
         Two
       </mat-tab>
-      <mat-tab label="{{ 'Tabs.About' | translate }}">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <h2>{{ 'Tabs.About' | translate }}</h2>
+        </ng-template>
         Three
       </mat-tab>
     </mat-tab-group>
