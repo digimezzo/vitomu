@@ -1,0 +1,5 @@
+{
+    "ErrorTexts": {
+        "GlobalError": "Er is een fout opgetreden waardoor de toepassing wordt gesloten. Controleer het log bestand als u meer informatie nodig hebt."
+    }
+  }

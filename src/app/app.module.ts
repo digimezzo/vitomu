@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -22,6 +22,9 @@ import { Logger } from './core/logger';
 import { Settings } from './core/settings';
 import { WindowControlsComponent } from './components/window-controls/window-controls.component';
 
+import { MatTooltipModule, MatDialogModule } from '@angular/material';
+import { GlobalErrorHandler } from './GlobalErrorHandler';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -35,6 +38,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebviewDirective
   ],
   imports: [
+    MatTooltipModule,
+    MatDialogModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
@@ -47,7 +52,15 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ElectronService, Logger, Settings], 
+  providers: [
+    ElectronService, 
+    Logger, 
+    Settings,
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    }
+  ], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
