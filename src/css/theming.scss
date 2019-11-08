@@ -4,6 +4,10 @@
 @import "color-themes/default-pink-theme.scss";
 @import "color-themes/default-green-theme.scss";
 
+// Custom colors
+$background-color-main: #202020;
+
+// Theme-based colors
 @mixin set-colors($theme) {
   $primary: map-get($theme, primary);
   $foreground: map-get($theme, foreground);
@@ -23,6 +27,10 @@
 
   .color-base{
     color: mat-color($foreground, base);
+  }
+
+  .color-secondary-text{
+    color: mat-color($foreground, secondary-text);
   }
 
   .background-color-hover{

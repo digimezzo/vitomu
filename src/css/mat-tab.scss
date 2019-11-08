@@ -1,0 +1,17 @@
+mat-tab-group {
+    height: 100%;
+}
+
+.mat-tab-body-wrapper {
+    @extend .color-secondary-text;
+    background-color: $background-color-main !important;
+    height: 100%;
+}
+
+.mat-tab-label {
+    user-select: none; // Prevents accidental selection of the header text
+}
+
+.mat-tab-header {
+    border-bottom-style: none !important;
+}

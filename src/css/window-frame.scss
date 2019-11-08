@@ -17,12 +17,12 @@
   }
   
   .window-frame-titlebar-dragarea {
+    @extend .color-secondary-text;
     width: 100%;
     height: $titlebar-height;
     line-height: $titlebar-height;
     flex: 1;
     -webkit-app-region: drag;
-    color: white;
   }
   
   .window-frame-overlay{

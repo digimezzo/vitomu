@@ -1,5 +1,10 @@
 {
     "ErrorTexts": {
         "GlobalError": "Une erreur s'est produite qui entraînera la fermeture de l'application. Veuillez vérifier le log si vous avez besoin de plus d'informations."
-    }
+    },
+    "Tabs": {
+        "Convert": "Convert",
+        "Settings": "Settings",
+        "About": "About"
+      }
   }

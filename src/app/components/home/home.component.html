@@ -1,10 +1,21 @@
 <div class="window-frame">
   <div class="window-frame-titlebar">
     <div class="window-frame-titlebar-dragarea pl-1">
-        {{ applicationName }}
+      {{ applicationName }}
     </div>
     <window-controls></window-controls>
   </div>
   <div class="window-frame-content">
+    <mat-tab-group>
+      <mat-tab label="{{ 'Tabs.Convert' | translate }}">
+        One
+      </mat-tab>
+      <mat-tab label="{{ 'Tabs.Settings' | translate }}">
+        Two
+      </mat-tab>
+      <mat-tab label="{{ 'Tabs.About' | translate }}">
+        Three
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>

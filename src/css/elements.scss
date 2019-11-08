@@ -40,16 +40,7 @@ h1 {
   font-size: $fontsize-largest !important;
 }
 
-h4 {
-  font-weight: lighter !important;
-  font-size: $fontsize-larger !important;
-}
-
 a {
   @extend .color-primary;
   outline: none; // Removes yellow outline on links
-}
-
-hr {
-  border-bottom: 1px solid #dedede;
 }

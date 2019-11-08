@@ -22,7 +22,8 @@ import { Logger } from './core/logger';
 import { Settings } from './core/settings';
 import { WindowControlsComponent } from './components/window-controls/window-controls.component';
 
-import { MatTooltipModule, MatDialogModule } from '@angular/material';
+import { MatTooltipModule, MatDialogModule, MatTabsModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalErrorHandler } from './GlobalErrorHandler';
 
 // AoT requires an exported function for factories
@@ -40,6 +41,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     MatTooltipModule,
     MatDialogModule,
+    MatTabsModule,
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
