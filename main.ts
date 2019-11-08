@@ -19,8 +19,8 @@ function createWindow() {
 
   // Load the previous state with fallback to defaults
   let windowState = windowStateKeeper({
-    defaultWidth: 850,
-    defaultHeight: 600
+    defaultWidth: 500,
+    defaultHeight: 500
   });
 
   // Create the browser window.
