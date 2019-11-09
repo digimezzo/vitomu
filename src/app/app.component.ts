@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { ElectronService } from './providers/electron.service';
-import { TranslateService } from '@ngx-translate/core';
-import { AppConfig } from '../environments/environment';
+import { TranslatorService } from './services/translator/translator.service';
+import { AppearanceService } from './services/appearance/appearance.service';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +8,9 @@ import { AppConfig } from '../environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(public electronService: ElectronService, private translate: TranslateService) {
+  constructor(private translator: TranslatorService, private appearance: AppearanceService) {
 
-    translate.setDefaultLang('en');
-    console.log('AppConfig', AppConfig);
-
-    if (electronService.isElectron()) {
-      console.log('Mode electron');
-      console.log('Electron ipcRenderer', electronService.ipcRenderer);
-      console.log('NodeJS childProcess', electronService.childProcess);
-    } else {
-      console.log('Mode web');
-    }
+    this.appearance.applyTheme();
+    this.translator.applyLanguage();
   }
 }
