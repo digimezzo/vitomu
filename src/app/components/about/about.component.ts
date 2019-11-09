@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Constants } from '../../core/constants';
 
 @Component({
   selector: 'app-about',
@@ -9,6 +10,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 export class AboutComponent implements OnInit {
 
   constructor() { }
+
+  public applicationName: string = Constants.applicationName;
 
   ngOnInit() {
   }
