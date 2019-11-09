@@ -11,6 +11,9 @@
         "Language": "Taal",
         "Color": "Kleur"
     },
+    "AboutTab": {
+        "About": "Over"
+      },
     "DialogTitles": {
         "Error": "Fout"
       }

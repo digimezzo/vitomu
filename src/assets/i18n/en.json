@@ -11,6 +11,9 @@
     "Language": "Language",
     "Color": "Color"
   },
+  "AboutTab": {
+    "About": "About"
+  },
   "DialogTitles": {
     "Error": "Error"
   }

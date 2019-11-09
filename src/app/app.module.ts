@@ -33,6 +33,7 @@ import { LanguageSwitcherComponent } from './components/language-switcher/langua
 import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
 import { TranslatorService } from './services/translator/translator.service';
 import { AppearanceService } from './services/appearance/appearance.service';
+import { LogoFullComponent } from './components/logo-full/logo-full.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -50,6 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ColorThemeSwitcherComponent,
     LanguageSwitcherComponent,
     ErrorDialogComponent,
+    LogoFullComponent,
     WebviewDirective
   ],
   imports: [
