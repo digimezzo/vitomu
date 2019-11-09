@@ -32,26 +32,35 @@ export class AppearanceService {
         let themeName: string = this.settings.colorTheme;
 
         // Apply theme to components in the overlay container: https://gist.github.com/tomastrajan/ee29cd8e180b14ce9bc120e2f7435db7
-        let overlayContainerClasses: DOMTokenList = this.overlayContainer.getContainerElement().classList;
-        let overlayContainerClassesToRemove: string[] = Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'));
-
-        if (overlayContainerClassesToRemove.length) {
-            overlayContainerClasses.remove(...overlayContainerClassesToRemove);
+        try {
+            this.updateClasses(this.overlayContainer.getContainerElement().classList, themeName);
+        } catch (error) {
+            this.logger.error(`Could not update overlay container classes: Error: ${error}`, "AppearanceService", "applyTheme");
         }
-
-        overlayContainerClasses.add(themeName);
 
         // Apply theme to body
-        let bodyClasses: DOMTokenList = document.body.classList;
-        let bodyClassesToRemove: string[] = Array.from(bodyClasses).filter((item: string) => item.includes('-theme-'));
+        try {
+            this.updateClasses(document.body.classList, themeName);
+        } catch (error) {
+            this.logger.error(`Could not update body classes: Error: ${error}`, "AppearanceService", "applyTheme");
+        }
+        
+        this.logger.info(`Applied theme '${themeName}'`, "AppearanceService", "applyTheme");
+    }
 
-        if (bodyClassesToRemove.length) {
-            bodyClasses.remove(...bodyClassesToRemove);
+    private updateClasses(tokenList: DOMTokenList, newThemeName: string) {
+        if (tokenList === null) {
+            this.logger.error(`${tokenList} is null`, "AppearanceService", "getClassesToRemove");
+            return;
         }
 
-        document.body.classList.add(themeName);
+        let classesToRemove: string[] = Array.from(tokenList).filter((item: string) => item.includes('-theme'));
 
-        this.logger.info(`Applied theme '${themeName}'`, "AppearanceService", "applyTheme");
+        if (classesToRemove.length) {
+            tokenList.remove(...classesToRemove);
+        }
+
+        tokenList.add(newThemeName);
     }
 
     private initialize(): void {
