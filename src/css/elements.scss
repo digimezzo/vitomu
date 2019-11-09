@@ -49,3 +49,7 @@ a {
   @extend .color-primary;
   outline: none; // Removes yellow outline on links
 }
+
+hr {
+  border-bottom: 1px solid $border-color-main;
+}
