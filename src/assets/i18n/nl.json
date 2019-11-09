@@ -3,8 +3,15 @@
         "GlobalError": "Er is een fout opgetreden waardoor de toepassing wordt gesloten. Controleer het log bestand als u meer informatie nodig hebt."
     },
     "Tabs": {
-        "Convert": "Convert",
-        "Settings": "Settings",
-        "About": "About"
+        "Convert": "Converteren",
+        "Settings": "Instellingen",
+        "About": "Over"
+    },
+    "SettingsTab": {
+        "Language": "Taal",
+        "Color": "Kleur"
+    },
+    "DialogTitles": {
+        "Error": "Fout"
       }
-  }
+}

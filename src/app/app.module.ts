@@ -22,12 +22,17 @@ import { Logger } from './core/logger';
 import { Settings } from './core/settings';
 import { WindowControlsComponent } from './components/window-controls/window-controls.component';
 
-import { MatTooltipModule, MatDialogModule, MatTabsModule } from '@angular/material';
+import { MatTooltipModule, MatDialogModule, MatTabsModule, MatSelectModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalErrorHandler } from './GlobalErrorHandler';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AboutComponent } from './components/about/about.component';
 import { ConvertComponent } from './components/convert/convert.component';
+import { ColorThemeSwitcherComponent } from './components/color-theme-switcher/color-theme-switcher.component';
+import { LanguageSwitcherComponent } from './components/language-switcher/language-switcher.component';
+import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
+import { TranslatorService } from './services/translator/translator.service';
+import { AppearanceService } from './services/appearance/appearance.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -42,12 +47,17 @@ export function HttpLoaderFactory(http: HttpClient) {
     SettingsComponent,
     AboutComponent,
     WindowControlsComponent,
+    ColorThemeSwitcherComponent,
+    LanguageSwitcherComponent,
+    ErrorDialogComponent,
     WebviewDirective
   ],
   imports: [
+    MatButtonModule,
     MatTooltipModule,
     MatDialogModule,
     MatTabsModule,
+    MatSelectModule,
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
@@ -63,6 +73,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     ElectronService, 
+    TranslatorService,
+    AppearanceService,
     Logger, 
     Settings,
     {
@@ -70,6 +82,9 @@ export function HttpLoaderFactory(http: HttpClient) {
       useClass: GlobalErrorHandler
     }
   ], 
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ErrorDialogComponent
+  ],
 })
 export class AppModule { }

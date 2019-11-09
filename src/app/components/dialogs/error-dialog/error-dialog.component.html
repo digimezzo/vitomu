@@ -1,6 +1,4 @@
-<h1>
-    <mat-dialog-title>{{ 'DialogTitles.Error' | translate }}</mat-dialog-title>
-</h1>
+<h1 mat-dialog-title>{{ 'DialogTitles.Error' | translate }}</h1>
 <mat-dialog-content>
     <p *ngIf="!data.isGlobalError">{{ data.errorText }}</p>
     <p *ngIf="data.isGlobalError">{{ 'ErrorTexts.GlobalError' | translate }}</p>

@@ -6,5 +6,12 @@
     "Convert": "Convert",
     "Settings": "Settings",
     "About": "About"
+  },
+  "SettingsTab": {
+    "Language": "Language",
+    "Color": "Color"
+  },
+  "DialogTitles": {
+    "Error": "Error"
   }
 }
