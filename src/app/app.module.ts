@@ -25,6 +25,9 @@ import { WindowControlsComponent } from './components/window-controls/window-con
 import { MatTooltipModule, MatDialogModule, MatTabsModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalErrorHandler } from './GlobalErrorHandler';
+import { SettingsComponent } from './components/settings/settings.component';
+import { AboutComponent } from './components/about/about.component';
+import { ConvertComponent } from './components/convert/convert.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -35,6 +38,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeComponent,
+    ConvertComponent,
+    SettingsComponent,
+    AboutComponent,
     WindowControlsComponent,
     WebviewDirective
   ],
