@@ -8,19 +8,6 @@ import { Language } from '../../app/core/language';
 
 describe('TranslatorService', () => {
     describe('constructor', () => {
-        it('Should apply the default language', () => {
-            // Arrange
-            var translateServiceMock = TypeMoq.Mock.ofType<TranslateService>();
-            var settingsMock = TypeMoq.Mock.ofType<Settings>();
-            settingsMock.setup(x => x.defaultLanguage).returns(() => "en");
-
-            // Act
-            let translator: TranslatorService = new TranslatorService(translateServiceMock.object, settingsMock.object);
-
-            // Assert
-            translateServiceMock.verify(x => x.setDefaultLang("en"), Times.atLeastOnce());
-        });
-
         it('Should provide a list of languages', () => {
             // Arrange
             var translateServiceMock = TypeMoq.Mock.ofType<TranslateService>();
@@ -32,6 +19,19 @@ describe('TranslatorService', () => {
             // Assert
             assert.ok(translator.languages.length > 0);
         });
+
+        it('Should apply the default language', () => {
+            // Arrange
+            var translateServiceMock = TypeMoq.Mock.ofType<TranslateService>();
+            var settingsMock = TypeMoq.Mock.ofType<Settings>();
+            settingsMock.setup(x => x.defaultLanguage).returns(() => "en");
+
+            // Act
+            let translator: TranslatorService = new TranslatorService(translateServiceMock.object, settingsMock.object);
+
+            // Assert
+            translateServiceMock.verify(x => x.setDefaultLang("en"), Times.atLeastOnce());
+        });  
     });
 
     describe('applyLanguage', () => {
