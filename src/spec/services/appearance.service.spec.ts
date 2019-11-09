@@ -21,5 +21,20 @@ describe('AppearanceService', () => {
             // Assert
             assert.ok(appearance.colorThemes.length > 0);
         });
+
+        it('Should set the selected colorTheme', () => {
+            // Arrange
+            var settingsMock = TypeMoq.Mock.ofType<Settings>();
+            var loggerMock = TypeMoq.Mock.ofType<Logger>();
+            var overlayContainerMock = TypeMoq.Mock.ofType<OverlayContainer>();
+            overlayContainerMock.setup(x => x.getContainerElement()).returns(() => null);
+            settingsMock.setup(x => x.colorTheme).returns(() => "default-pink-theme");
+
+            // Act
+            let appearance: AppearanceService = new AppearanceService(settingsMock.object, loggerMock.object, overlayContainerMock.object);
+
+            // Assert
+            assert.notEqual(appearance.selectedColorTheme, null);
+        });
     });
 });

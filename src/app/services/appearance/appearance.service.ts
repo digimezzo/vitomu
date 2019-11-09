@@ -12,7 +12,7 @@ export class AppearanceService {
     private _selectedColorTheme: ColorTheme;
 
     constructor(private settings: Settings, private logger: Logger, private overlayContainer: OverlayContainer) {
-        this.initialize();
+        this._selectedColorTheme = this.colorThemes.find(x => x.name === this.settings.colorTheme);
     }
 
     public colorThemes: ColorTheme[] = Constants.colorThemes;
@@ -44,7 +44,7 @@ export class AppearanceService {
         } catch (error) {
             this.logger.error(`Could not update body classes: Error: ${error}`, "AppearanceService", "applyTheme");
         }
-        
+
         this.logger.info(`Applied theme '${themeName}'`, "AppearanceService", "applyTheme");
     }
 
@@ -61,10 +61,5 @@ export class AppearanceService {
         }
 
         tokenList.add(newThemeName);
-    }
-
-    private initialize(): void {
-        this._selectedColorTheme = this.colorThemes.find(x => x.name === this.settings.colorTheme);
-        this.applyTheme();
     }
 }
