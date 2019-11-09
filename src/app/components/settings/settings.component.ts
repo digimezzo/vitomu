@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { TranslatorService } from '../../services/translator/translator.service';
 
 @Component({
   selector: 'app-settings',
@@ -9,7 +8,7 @@ import { TranslatorService } from '../../services/translator/translator.service'
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(public translator: TranslatorService) { }
+  constructor() { }
 
   ngOnInit() {
   }
