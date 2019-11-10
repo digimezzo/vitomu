@@ -28,6 +28,39 @@ describe('AboutComponent', () => {
             // Assert
             assert.equal(aboutComponent.applicationCopyright, Constants.applicationCopyright);
         });
+
+        it('Should provide website url', () => {
+            // Arrange
+            var matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+
+            // Act
+            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
+
+            // Assert
+            assert.equal(aboutComponent.websiteUrl, Constants.websiteUrl);
+        });
+
+        it('Should provide github url', () => {
+            // Arrange
+            var matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+
+            // Act
+            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
+
+            // Assert
+            assert.equal(aboutComponent.githubUrl, Constants.githubUrl);
+        });
+
+        it('Should provide twitter url', () => {
+            // Arrange
+            var matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+
+            // Act
+            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
+
+            // Assert
+            assert.equal(aboutComponent.twitterUrl, Constants.twitterUrl);
+        });
     });
 
     describe('openLicenseDialog', () => {

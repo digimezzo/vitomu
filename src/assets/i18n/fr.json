@@ -13,12 +13,17 @@
   },
   "AboutTab": {
     "About": "À propos",
-    "Version": "Version"
+    "Version": "Version",
+    "Donate": "Donate",
+    "IsAppUseful": "Vitomu est utile? Prière d'envisager de faire un don. Merci!",
+    "GetInTouch": "Entrer en contact",
+    "Website": "Site web"
   },
   "Buttons": {
     "Ok": "OK",
     "ViewLog": "VÉRIFIER LOG",
-    "License": "LICENCE"
+    "License": "LICENCE",
+    "Donate": "FAIRE UN DON"
   },
   "DialogTitles": {
     "Error": "Erreur"

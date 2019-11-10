@@ -15,6 +15,9 @@ export class AboutComponent implements OnInit {
 
   public applicationVersion: string = Constants.applicationVersion;
   public applicationCopyright: string = Constants.applicationCopyright;
+  public websiteUrl: string = Constants.websiteUrl;
+  public twitterUrl: string = Constants.twitterUrl;
+  public githubUrl: string = Constants.githubUrl;
 
   ngOnInit() {
   }
@@ -23,5 +26,9 @@ export class AboutComponent implements OnInit {
     let dialogRef: MatDialogRef<LicenseDialogComponent> = this.dialog.open(LicenseDialogComponent, {
       width: '450px'
     });
+  }
+
+  public openDonateLink(): void {
+    require('electron').shell.openExternal(Constants.donateUrl);
   }
 }
