@@ -1,20 +1,29 @@
 {
-    "ErrorTexts": {
-        "GlobalError": "Une erreur s'est produite qui entraînera la fermeture de l'application. Veuillez vérifier le log si vous avez besoin de plus d'informations."
-    },
-    "Tabs": {
-        "Convert": "Convertir",
-        "Settings": "Paramètres",
-        "About": "À propos"
-      },
-      "SettingsTab": {
-        "Language": "Langue",
-        "Color": "Couleur"
-      },
-      "AboutTab": {
-        "About": "À propos"
-      },
-      "DialogTitles": {
-        "Error": "Erreur"
-      }
+  "ErrorTexts": {
+    "GlobalError": "Une erreur s'est produite qui entraînera la fermeture de l'application. Veuillez vérifier le log si vous avez besoin de plus d'informations."
+  },
+  "Tabs": {
+    "Convert": "Convertir",
+    "Settings": "Paramètres",
+    "About": "À propos"
+  },
+  "SettingsTab": {
+    "Language": "Langue",
+    "Color": "Couleur"
+  },
+  "AboutTab": {
+    "About": "À propos",
+    "Version": "Version"
+  },
+  "Buttons": {
+    "Ok": "OK",
+    "ViewLog": "VÉRIFIER LOG",
+    "License": "LICENCE"
+  },
+  "DialogTitles": {
+    "Error": "Erreur"
+  },
+  "LicenseDialog": {
+    "License": "Licence"
   }
+}

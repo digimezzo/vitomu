@@ -1,4 +1,13 @@
 <div class="m-3">
     <h1>{{ 'AboutTab.About' | translate }}</h1>
     <app-logo-full class="mt-3"></app-logo-full>
+    <div class="mt-3">
+        {{ 'AboutTab.Version' | translate }}:
+        <strong> {{applicationVersion}}</strong>
+        <br />{{applicationCopyright}}
+    </div>
+    <button class="mt-2" mat-raised-button color="primary" (click)="openLicenseDialog()">
+        {{ 'Buttons.License' | translate }}
+    </button>
 </div>
+<hr>

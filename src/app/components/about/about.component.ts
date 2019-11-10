@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Constants } from '../../core/constants';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { LicenseDialogComponent } from '../dialogs/license-dialog/license-dialog.component';
 
 @Component({
   selector: 'app-about',
@@ -9,11 +11,17 @@ import { Constants } from '../../core/constants';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
-  public applicationName: string = Constants.applicationName;
+  public applicationVersion: string = Constants.applicationVersion;
+  public applicationCopyright: string = Constants.applicationCopyright;
 
   ngOnInit() {
   }
 
+  public openLicenseDialog(): void {
+    let dialogRef: MatDialogRef<LicenseDialogComponent> = this.dialog.open(LicenseDialogComponent, {
+      width: '450px'
+    });
+  }
 }

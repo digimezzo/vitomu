@@ -53,3 +53,7 @@ a {
 hr {
   border-bottom: 1px solid $border-color-main;
 }
+
+::selection {
+  @extend .background-color-primary;
+}

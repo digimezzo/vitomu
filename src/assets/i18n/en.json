@@ -12,9 +12,18 @@
     "Color": "Color"
   },
   "AboutTab": {
-    "About": "About"
+    "About": "About",
+    "Version": "Version"
+  },
+  "Buttons": {
+    "Ok": "OK",
+    "ViewLog": "VIEW LOG",
+    "License": "LICENSE"
   },
   "DialogTitles": {
     "Error": "Error"
+  },
+  "LicenseDialog": {
+    "License": "License"
   }
 }

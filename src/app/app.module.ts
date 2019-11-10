@@ -34,6 +34,7 @@ import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-di
 import { TranslatorService } from './services/translator/translator.service';
 import { AppearanceService } from './services/appearance/appearance.service';
 import { LogoFullComponent } from './components/logo-full/logo-full.component';
+import { LicenseDialogComponent } from './components/dialogs/license-dialog/license-dialog.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -51,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ColorThemeSwitcherComponent,
     LanguageSwitcherComponent,
     ErrorDialogComponent,
+    LicenseDialogComponent,
     LogoFullComponent,
     WebviewDirective
   ],
@@ -86,7 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ], 
   bootstrap: [AppComponent],
   entryComponents: [
-    ErrorDialogComponent
+    LicenseDialogComponent, ErrorDialogComponent
   ],
 })
 export class AppModule { }

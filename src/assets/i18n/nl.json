@@ -12,9 +12,18 @@
         "Color": "Kleur"
     },
     "AboutTab": {
-        "About": "Over"
-      },
+        "About": "Over",
+        "Version": "Versie"
+    },
+    "Buttons": {
+        "Ok": "OK",
+        "ViewLog": "BEKIJK LOG",
+        "License": "LICENTIE"
+    },
     "DialogTitles": {
         "Error": "Fout"
-      }
+    },
+    "LicenseDialog": {
+        "License": "Licentie"
+    }
 }
