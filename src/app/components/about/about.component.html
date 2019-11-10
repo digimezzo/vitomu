@@ -35,3 +35,15 @@
         <a href="{{ githubUrl }}" matTooltip="{{ githubUrl }}">GitHub</a>
     </div>
 </div>
+<hr>
+<div class="m-3">
+    <h1>{{ 'AboutTab.Components' | translate }}</h1>
+    <div class="mt-2" *ngFor="let externalComponent of externalComponents">
+        <strong>{{externalComponent.name}}</strong><br />
+        {{externalComponent.description}}<br />
+        <a href="{{externalComponent.url}}">{{ 'AboutTab.Website' | translate }}</a>
+        <a class="ml-1"
+            href="{{externalComponent.licenseUrl}}">{{ 'AboutTab.License' | translate }}</a>
+    </div>
+
+</div>

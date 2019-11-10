@@ -17,7 +17,9 @@
         "Donate": "Donate",
         "IsAppUseful": "Is Vitomu nuttig? Overweeg alstublieft om te doneren. Bedankt!",
         "GetInTouch": "Neem contact op",
-        "Website": "Website"
+        "Website": "Website",
+        "License": "Licentie",
+        "Components": "Componenten"
     },
     "Buttons": {
         "Ok": "OK",

@@ -18,6 +18,7 @@ export class AboutComponent implements OnInit {
   public websiteUrl: string = Constants.websiteUrl;
   public twitterUrl: string = Constants.twitterUrl;
   public githubUrl: string = Constants.githubUrl;
+  public externalComponents: any[] = Constants.externalComponents;
 
   ngOnInit() {
   }
