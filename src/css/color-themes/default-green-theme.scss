@@ -1,3 +1,5 @@
+@import "../custom-mat-themes.scss";
+
 // Created with: http://mcg.mbitson.com/
 $default-green-palette: (
     50 : #e0f6ec,
@@ -36,7 +38,7 @@ $default-green-theme-primary: mat-palette($default-green-palette);
 $default-green-theme-accent: mat-palette($default-green-palette);
 $default-green-theme-warn: mat-palette($default-green-palette);
 
-$default-green-theme: mat-dark-theme(
+$default-green-theme: custom-mat-dark-theme(
   $default-green-theme-primary,
   $default-green-theme-accent,
   $default-green-theme-warn
