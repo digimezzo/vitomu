@@ -19,7 +19,7 @@ function createWindow() {
         defaultWidth: 500,
         defaultHeight: 500
     });
-    // Create the browser window.
+    // Create the window using the state information
     win = new electron_1.BrowserWindow({
         x: windowState.x,
         y: windowState.y,
@@ -31,6 +31,7 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true,
         },
+        show: false
     });
     windowState.manage(win);
     if (serve) {

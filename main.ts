@@ -23,7 +23,7 @@ function createWindow() {
     defaultHeight: 500
   });
 
-  // Create the browser window.
+   // Create the window using the state information
   win = new BrowserWindow({
     x: windowState.x,
     y: windowState.y,
@@ -35,6 +35,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
+    show: false
   });
 
   windowState.manage(win);
