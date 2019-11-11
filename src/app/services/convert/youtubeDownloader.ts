@@ -6,6 +6,7 @@ import { Readable } from 'stream';
 import * as progress from 'progress-stream';
 import * as path from 'path';
 import * as sanitize from 'sanitize-filename';
+import * as fs from 'fs-extra';
 
 export class YoutubeDownloader {
     private youtubeBaseUrl: string = "http://www.youtube.com/watch?v=";
@@ -15,7 +16,6 @@ export class YoutubeDownloader {
     private outputPath = "/home/raphael/Downloads/Vitomu";
 
     constructor(private logger: Logger) {
-
     }
 
     public async downloadAsync(ffmpegPath: string, videoId: string): Promise<void> {
@@ -28,6 +28,9 @@ export class YoutubeDownloader {
             let fileName: string = path.join(this.outputPath, sanitize(videoDetails.videoTitle) + ".mp3");
 
             this.logger.info(`File name: ${fileName}`, "YoutubeDownloader", "downloadAsync");
+
+            // Make sure outputPath exists
+            await fs.ensureDir(this.outputPath);
 
             // Download
             let videoStream: Readable = ytdl.downloadFromInfo(videoInfo, { quality: this.youtubeVideoQuality, requestOptions: this.requestOptions });
