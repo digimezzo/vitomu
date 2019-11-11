@@ -95,7 +95,7 @@
     "electron-store": "^4.0.0",
     "electron-window-state": "^5.0.3",
     "ffbinaries": "^1.1.4",
-    "fluent-ffmpeg": "^2.1.2",
+    "fluent-ffmpeg-corrected": "^1.0.0",
     "fs-extra": "^8.1.0",
     "progress-stream": "^2.0.0",
     "sanitize-filename": "1.6.1",

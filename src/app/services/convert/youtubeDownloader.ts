@@ -1,5 +1,5 @@
 import * as ytdl from 'ytdl-core';
-import * as ffmpeg from 'fluent-ffmpeg';
+import * as ffmpeg from 'fluent-ffmpeg-corrected';
 import { Logger } from '../../core/logger';
 import { VideoDetails } from './videoDetails';
 import { Readable } from 'stream';
