@@ -7,14 +7,15 @@ import { YoutubeDownloader } from './youtubeDownloader';
     providedIn: 'root',
 })
 export class ConvertService {
-    constructor(private logger: Logger) {
+    constructor(private logger: Logger, private ffmpegInstaller: FFmpegInstaller, private youtubeDownloader: YoutubeDownloader) {
 
     }
 
-    public initialize(): void {
-        let ffmpegInstaller = new FFmpegInstaller(this.logger);
-        ffmpegInstaller.downloadFFmpegIfneeded();
-        let downloader: YoutubeDownloader = new YoutubeDownloader(this.logger);
-        downloader.downloadAsync(ffmpegInstaller.ffmpegPath, "3BE0D9geu2o");
+    public async initializeAsync(): Promise<void> {
+        await this.ffmpegInstaller.downloadFFmpegIfneededAsync();
+    }
+
+    public async convertAsync(videoId: string): Promise<void>{
+        await this.youtubeDownloader.downloadAsync(this.ffmpegInstaller.ffmpegPath, videoId);
     }
 }

@@ -4,7 +4,7 @@ import { Times } from "typemoq";
 import { AppearanceService } from '../../app/services/appearance/appearance.service';
 import { TranslatorService } from '../../app/services/translator/translator.service';
 import { AppComponent } from '../../app/app.component';
-import { ElectronService } from '../../app/services/electron.service';
+import { ConvertService } from '../../app/services/convert/convert.service';
 
 describe('AppComponent', () => {
     describe('constructor', () => {
@@ -12,9 +12,10 @@ describe('AppComponent', () => {
             // Arrange
             var appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
             var translatorServiceMock = TypeMoq.Mock.ofType<TranslatorService>();
-         
+            var convertServiceMock = TypeMoq.Mock.ofType<ConvertService>();
+
             // Act
-            let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object);
+            let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object, convertServiceMock.object);
 
             // Assert
             translatorServiceMock.verify(x => x.applyLanguage(), Times.atLeastOnce());
@@ -24,12 +25,26 @@ describe('AppComponent', () => {
             // Arrange
             var appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
             var translatorServiceMock = TypeMoq.Mock.ofType<TranslatorService>();
-            
+            var convertServiceMock = TypeMoq.Mock.ofType<ConvertService>();
+
             // Act
-            let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object);
+            let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object, convertServiceMock.object);
 
             // Assert
             appearanceServiceMock.verify(x => x.applyTheme(), Times.atLeastOnce());
+        });
+
+        it('Should initialize convert service', () => {
+            // Arrange
+            var appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
+            var translatorServiceMock = TypeMoq.Mock.ofType<TranslatorService>();
+            var convertServiceMock = TypeMoq.Mock.ofType<ConvertService>();
+
+            // Act
+            let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object, convertServiceMock.object);
+
+            // Assert
+            convertServiceMock.verify(x => x.initializeAsync(), Times.atLeastOnce());
         });
     });
 });

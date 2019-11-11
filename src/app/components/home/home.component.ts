@@ -15,6 +15,5 @@ export class HomeComponent implements OnInit {
   public applicationName: string = Constants.applicationName;
   
   ngOnInit() {
-    this.convert.initialize();
   }
 }

@@ -3,7 +3,11 @@ import * as path from 'path';
 import { Paths } from '../../core/paths';
 import * as fs from 'fs-extra';
 import * as ffbinaries from 'ffbinaries';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+    providedIn: 'root',
+})
 export class FFmpegInstaller {
     private ffmpegFolder: string = path.join(Paths.applicatioData(), "FFmpeg");
     private _ffmpegPath : string;
@@ -17,27 +21,24 @@ export class FFmpegInstaller {
         return this._ffmpegPath;
     }
 
-    public async downloadFFmpegIfneeded(): Promise<void> {
+    public async downloadFFmpegIfneededAsync(): Promise<void> {
         if (this.isFFmpegInstalled()) {
-            this.logger.info("FFmpeg is already installed. No need to download.", "FFmpegInstaller", "downloadFFmpegIfneeded");
+            this.logger.info("FFmpeg is already installed. No need to download.", "FFmpegInstaller", "downloadFFmpegIfneededAsync");
 
             return;
         }
 
-        this.logger.info("Start downloading FFmpeg.", "FFmpegInstaller", "downloadFFmpegIfneeded");
+        this.logger.info("Start downloading FFmpeg.", "FFmpegInstaller", "downloadFFmpegIfneededAsync");
         await ffbinaries.downloadBinaries(['ffmpeg'], { destination: this.ffmpegFolder });
-        //await ffbinaries.downloadBinaries(['ffmpeg', 'ffprobe'], { destination: this.ffmpegPath });
-        this.logger.info("Finished downloading FFmpeg.", "FFmpegInstaller", "downloadFFmpegIfneeded");
+        this.logger.info("Finished downloading FFmpeg.", "FFmpegInstaller", "downloadFFmpegIfneededAsync");
     }
 
     public isFFmpegInstalled(): boolean {
         try {
             if (fs.existsSync(this.ffmpegFolder)) {
                 this._ffmpegPath = fs.readdirSync(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
-                //let ffprobeFile: any = fs.readdirSync(this.ffmpegPath).find(file => file.includes('ffprobe'));
 
                 if (this._ffmpegPath) {
-                //if (ffmpegFile && ffprobeFile) {
                     this.logger.info(`FFmpeg was found in at ${this._ffmpegPath}`, "FFmpegInstaller", "isFFmpegInstalled");
 
                     return true;

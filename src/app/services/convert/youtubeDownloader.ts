@@ -7,7 +7,11 @@ import * as progress from 'progress-stream';
 import * as path from 'path';
 import * as sanitize from 'sanitize-filename';
 import * as fs from 'fs-extra';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+    providedIn: 'root',
+})
 export class YoutubeDownloader {
     private youtubeBaseUrl: string = "http://www.youtube.com/watch?v=";
     private youtubeVideoQuality: string = "highest";
