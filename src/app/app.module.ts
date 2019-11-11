@@ -33,6 +33,7 @@ import { LanguageSwitcherComponent } from './components/language-switcher/langua
 import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
 import { TranslatorService } from './services/translator/translator.service';
 import { AppearanceService } from './services/appearance/appearance.service';
+import { ConvertService } from './services/convert/convert.service';
 import { LogoFullComponent } from './components/logo-full/logo-full.component';
 import { LicenseDialogComponent } from './components/dialogs/license-dialog/license-dialog.component';
 
@@ -79,6 +80,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ElectronService, 
     TranslatorService,
     AppearanceService,
+    ConvertService,
     Logger, 
     Settings,
     {

@@ -59,6 +59,18 @@ export class Constants {
             licenseUrl: "https://github.com/mawie81/electron-window-state/blob/master/license"
         },
         {
+            name: "ffbinaries downloader",
+            description: "Downloads precompiled ffmpeg, ffprobe, ffplay and ffserver binaries from ffbinaries.com.",
+            url: "https://github.com/vot/ffbinaries-node",
+            licenseUrl: "https://github.com/vot/ffbinaries-node"
+        },
+        {
+            name: "Fluent ffmpeg-API for node.js",
+            description: "This library abstracts the complex command-line usage of ffmpeg into a fluent, easy to use node.js module.",
+            url: "https://github.com/fluent-ffmpeg/node-fluent-ffmpeg",
+            licenseUrl: "https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/blob/master/LICENSE"
+        },
+        {
             name: "Font Awesome Free",
             description: "The iconic SVG, font, and CSS toolkit.",
             url: "https://github.com/FortAwesome/Font-Awesome",
@@ -75,6 +87,24 @@ export class Constants {
             description: "Material Design icons by Google.",
             url: "https://github.com/google/material-design-icons",
             licenseUrl: "https://github.com/google/material-design-icons/blob/master/LICENSE"
+        },
+        {
+            name: "node-ytdl-core",
+            description: "Yet another youtube downloading module. Written with only Javascript and a node-friendly streaming interface.",
+            url: "https://github.com/fent/node-ytdl-core",
+            licenseUrl: "https://github.com/fent/node-ytdl-core/blob/master/LICENSE"
+        },
+        {
+            name: "progress-stream",
+            description: "Read the progress of a stream. Supports speed and eta.",
+            url: "https://github.com/freeall/progress-stream",
+            licenseUrl: "https://github.com/freeall/progress-stream/blob/master/LICENSE"
+        },
+        {
+            name: "sanitize-filename",
+            description: "Sanitize a string to be safe for use as a filename by removing directory paths and invalid characters.",
+            url: "https://github.com/parshap/node-sanitize-filename",
+            licenseUrl: "https://github.com/parshap/node-sanitize-filename/blob/master/LICENSE.md"
         }
     ];
 }
