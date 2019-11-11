@@ -9,6 +9,7 @@ import * as sanitize from 'sanitize-filename';
 import * as fs from 'fs-extra';
 import { Injectable } from '@angular/core';
 import { FFmpegInstaller } from './ffmpegInstaller';
+import { Paths } from '../../core/paths';
 
 @Injectable({
     providedIn: 'root',
@@ -18,7 +19,7 @@ export class ConvertService {
     private youtubeVideoQuality: string = "highest";
     private requestOptions: any = { maxRedirects: 5 }; // TODO: shouldn't this be typed?
     private progressTimeoutMilliseconds: number = 100;
-    private outputPath = "/home/raphael/Downloads/Vitomu";
+    private outputPath = path.join(Paths.musicFolder(), "Vitomu");
 
     constructor(private logger: Logger, private ffmpegInstaller: FFmpegInstaller) {
     }
@@ -28,6 +29,12 @@ export class ConvertService {
             await this.ffmpegInstaller.ensureFFmpegIsAvailableAsync();
         } catch (error) {
             this.logger.error(`Could not ensure that FFmpeg is available. Error: ${error}`, "ConvertService", "downloadAsync");
+            // TODO: make sure the user sees when this fails.
+            return;
+        }
+
+        if(!this.ffmpegInstaller.ffmpegPath){
+            this.logger.error("FFmpeg is not available.", "ConvertService", "downloadAsync");
             // TODO: make sure the user sees when this fails.
             return;
         }
