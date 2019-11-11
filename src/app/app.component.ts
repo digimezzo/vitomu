@@ -13,6 +13,5 @@ export class AppComponent {
 
     this.appearance.applyTheme();
     this.translator.applyLanguage();
-    this.convert.initializeAsync();
   }
 }

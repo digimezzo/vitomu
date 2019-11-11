@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Constants } from '../../core/constants';
-import { ConvertService } from '../../services/convert/convert.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +9,7 @@ import { ConvertService } from '../../services/convert/convert.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private convert: ConvertService) { }
+  constructor() { }
 
   public applicationName: string = Constants.applicationName;
   

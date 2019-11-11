@@ -10,18 +10,18 @@ import { Injectable } from '@angular/core';
 })
 export class FFmpegInstaller {
     private ffmpegFolder: string = path.join(Paths.applicatioData(), "FFmpeg");
-    private _ffmpegPath : string;
+    private _ffmpegPath: string;
 
     constructor(private logger: Logger) {
         // Make sure _ffmpegPath is set
         this.isFFmpegInstalled();
     }
 
-    public get ffmpegPath() : string {
+    public get ffmpegPath(): string {
         return this._ffmpegPath;
     }
 
-    public async downloadFFmpegIfneededAsync(): Promise<void> {
+    public async ensureFFmpegIsAvailableAsync(): Promise<void> {
         if (this.isFFmpegInstalled()) {
             this.logger.info("FFmpeg is already installed. No need to download.", "FFmpegInstaller", "downloadFFmpegIfneededAsync");
 
@@ -33,19 +33,15 @@ export class FFmpegInstaller {
         this.logger.info("Finished downloading FFmpeg.", "FFmpegInstaller", "downloadFFmpegIfneededAsync");
     }
 
-    public isFFmpegInstalled(): boolean {
-        try {
-            if (fs.existsSync(this.ffmpegFolder)) {
-                this._ffmpegPath = fs.readdirSync(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
+    private isFFmpegInstalled(): boolean {
+        if (fs.existsSync(this.ffmpegFolder)) {
+            this._ffmpegPath = fs.readdirSync(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
 
-                if (this._ffmpegPath) {
-                    this.logger.info(`FFmpeg was found in at ${this._ffmpegPath}`, "FFmpegInstaller", "isFFmpegInstalled");
+            if (this._ffmpegPath) {
+                this.logger.info(`FFmpeg was found in at ${this._ffmpegPath}`, "FFmpegInstaller", "isFFmpegInstalled");
 
-                    return true;
-                }
+                return true;
             }
-        } catch (error) {
-            this.logger.error(`Could not check if FFmpeg is installed. Error: ${error}`, "FFmpegInstaller", "isFFmpegInstalled");
         }
 
         this.logger.info(`FFmpeg was not found in folder ${this.ffmpegFolder}`, "FFmpegInstaller", "isFFmpegInstalled");

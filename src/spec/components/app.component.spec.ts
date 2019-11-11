@@ -33,18 +33,5 @@ describe('AppComponent', () => {
             // Assert
             appearanceServiceMock.verify(x => x.applyTheme(), Times.atLeastOnce());
         });
-
-        it('Should initialize convert service', () => {
-            // Arrange
-            var appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
-            var translatorServiceMock = TypeMoq.Mock.ofType<TranslatorService>();
-            var convertServiceMock = TypeMoq.Mock.ofType<ConvertService>();
-
-            // Act
-            let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object, convertServiceMock.object);
-
-            // Assert
-            convertServiceMock.verify(x => x.initializeAsync(), Times.atLeastOnce());
-        });
     });
 });

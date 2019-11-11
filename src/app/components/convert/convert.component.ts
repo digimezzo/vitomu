@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ConvertService } from '../../services/convert/convert.service';
 
 @Component({
   selector: 'app-convert',
@@ -8,7 +9,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class ConvertComponent implements OnInit {
 
-  constructor() { }
+  constructor(private convert: ConvertService) { }
 
   ngOnInit() {
   }
