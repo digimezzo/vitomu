@@ -50,7 +50,7 @@ describe('FFmpegInstaller', () => {
             ffmpegDownloaderMock.verify(x => x.downloadAsync(ffmpegFolder), Times.exactly(1));
         });
 
-        it('Should download FFmpeg if FFmpeg folder exists and the folder contains a file that is not ffmpeg', () => {
+        it('Should download FFmpeg if FFmpeg folder exists and the folder contains a file that does not contain "ffmpeg"', () => {
             // Arrange
             var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
             var loggerMock = TypeMoq.Mock.ofType<Logger>();
@@ -60,7 +60,7 @@ describe('FFmpegInstaller', () => {
 
             let ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataFolder(), "FFmpeg");
             fileSystemMock.setup(x => x.existsSync(ffmpegFolder)).returns(() => true);
-            fileSystemMock.setup(x => x.readdirSync(ffmpegFolder)).returns(() => ["/home/user/.config/Vitomu/FFmpeg/notFFmpeg"]);
+            fileSystemMock.setup(x => x.readdirSync(ffmpegFolder)).returns(() => ["wrongfile"]);
 
             let ffmpegInstaller: FFmpegInstaller = new FFmpegInstaller(loggerMock.object, ffmpegDownloaderMock.object, fileSystemMock.object);
 
@@ -69,6 +69,48 @@ describe('FFmpegInstaller', () => {
 
             // Assert
             ffmpegDownloaderMock.verify(x => x.downloadAsync(ffmpegFolder), Times.exactly(1));
+        });
+
+        it('Should not download FFmpeg if FFmpeg folder exists and the folder contains a file that is "ffmpeg"', () => {
+            // Arrange
+            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            var loggerMock = TypeMoq.Mock.ofType<Logger>();
+            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+
+            fileSystemMock.setup(x => x.applicatioDataFolder()).returns(() => "/home/user/.config/Vitomu");
+
+            let ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataFolder(), "FFmpeg");
+            fileSystemMock.setup(x => x.existsSync(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup(x => x.readdirSync(ffmpegFolder)).returns(() => ["ffmpeg"]);
+
+            let ffmpegInstaller: FFmpegInstaller = new FFmpegInstaller(loggerMock.object, ffmpegDownloaderMock.object, fileSystemMock.object);
+
+            // Act
+            ffmpegInstaller.ensureFFmpegIsAvailableAsync();
+
+            // Assert
+            ffmpegDownloaderMock.verify(x => x.downloadAsync(ffmpegFolder), Times.never());
+        });
+
+        it('Should not download FFmpeg if FFmpeg folder exists and the folder contains a file that contains "ffmpeg"', () => {
+            // Arrange
+            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            var loggerMock = TypeMoq.Mock.ofType<Logger>();
+            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+
+            fileSystemMock.setup(x => x.applicatioDataFolder()).returns(() => "/home/user/.config/Vitomu");
+
+            let ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataFolder(), "FFmpeg");
+            fileSystemMock.setup(x => x.existsSync(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup(x => x.readdirSync(ffmpegFolder)).returns(() => ["ffmpeg.exe"]);
+
+            let ffmpegInstaller: FFmpegInstaller = new FFmpegInstaller(loggerMock.object, ffmpegDownloaderMock.object, fileSystemMock.object);
+
+            // Act
+            ffmpegInstaller.ensureFFmpegIsAvailableAsync();
+
+            // Assert
+            ffmpegDownloaderMock.verify(x => x.downloadAsync(ffmpegFolder), Times.never());
         });
     });
 });
