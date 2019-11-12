@@ -24,7 +24,7 @@ export class ConvertService {
     constructor(private logger: Logger, private ffmpegInstaller: FFmpegInstaller, private fileSystem: FileSystem) {
     }
 
-    public async downloadAsync(videoId: string): Promise<void> {
+    public async convertAsync(videoId: string): Promise<void> {
         try {
             await this.ffmpegInstaller.ensureFFmpegIsAvailableAsync();
         } catch (error) {
