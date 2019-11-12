@@ -31,10 +31,11 @@ export class FFmpegInstaller {
 
     private getFFmpegPath(): string {
         if (this.fileSystem.existsSync(this.ffmpegFolder)) {
-            let ffmpegPath: string = this.fileSystem.readdirSync(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
-
-            if (ffmpegPath) {
-                this.logger.info(`FFmpeg was found in at ${ffmpegPath}`, "FFmpegInstaller", "isFFmpegInstalled");
+            let ffmpegFile: string = this.fileSystem.readdirSync(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
+            
+            if (ffmpegFile) {
+                let ffmpegPath: string = path.join(this.ffmpegFolder, ffmpegFile);
+                this.logger.info(`FFmpeg was found in at '${ffmpegPath}'`, "FFmpegInstaller", "isFFmpegInstalled");
 
                 return ffmpegPath;
             }

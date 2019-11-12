@@ -32,7 +32,7 @@ export class ConvertService {
             return;
         }
 
-        if(!this.ffmpegInstaller.ffmpegPath){
+        if (!this.ffmpegInstaller.ffmpegPath) {
             this.logger.error("FFmpeg is not available.", "ConvertService", "downloadAsync");
             // TODO: make sure the user sees when this fails.
             return;
@@ -72,9 +72,11 @@ export class ConvertService {
                     "-metadata", "artist=" + videoDetails.artist
                 ];
 
+                ffmpeg.setFfmpegPath(this.ffmpegInstaller.ffmpegPath);
+             
                 // Start encoding
                 let proc: any = new ffmpeg({
-                    source: videoStream.pipe(str), ffmpegPath: this.ffmpegInstaller.ffmpegPath
+                    source: videoStream.pipe(str)
                 })
                     .audioBitrate(videoInfo.formats[0].audioBitrate)
                     .withAudioCodec("libmp3lame")
