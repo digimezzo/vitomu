@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Settings } from '../../core/settings';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Logger } from '../../core/logger';
-import { ColorTheme } from '../../core/colorTheme';
+import { ColorTheme } from '../../core/color-theme';
 import { Constants } from '../../core/constants';
 
 @Injectable({

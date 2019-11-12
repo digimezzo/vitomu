@@ -24,7 +24,7 @@ import { WindowControlsComponent } from './components/window-controls/window-con
 
 import { MatTooltipModule, MatDialogModule, MatTabsModule, MatSelectModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { GlobalErrorHandler } from './GlobalErrorHandler';
+import { GlobalErrorHandler } from './global-error-handler';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AboutComponent } from './components/about/about.component';
 import { ConvertComponent } from './components/convert/convert.component';
@@ -36,6 +36,9 @@ import { AppearanceService } from './services/appearance/appearance.service';
 import { ConvertService } from './services/convert/convert.service';
 import { LogoFullComponent } from './components/logo-full/logo-full.component';
 import { LicenseDialogComponent } from './components/dialogs/license-dialog/license-dialog.component';
+import { FFmpegInstaller } from './services/convert/ffmpeg-installer';
+import { FileSystem } from './core/file-system';
+import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -83,6 +86,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConvertService,
     Logger, 
     Settings,
+    FileSystem,
+    FFmpegDownloader,
+    FFmpegInstaller,
     {
       provide: ErrorHandler,
       useClass: GlobalErrorHandler

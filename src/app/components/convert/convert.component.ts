@@ -12,7 +12,7 @@ export class ConvertComponent implements OnInit {
   constructor(private convert: ConvertService) { }
 
   ngOnInit() {
-    //this.convert.downloadAsync("UznHTBZIa8E");
+    this.convert.downloadAsync("UznHTBZIa8E");
   }
 
 }

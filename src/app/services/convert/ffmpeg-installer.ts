@@ -1,18 +1,16 @@
 import { Logger } from '../../core/logger';
 import * as path from 'path';
 import { Paths } from '../../core/paths';
-import * as fs from 'fs-extra';
-import * as ffbinaries from 'ffbinaries';
 import { Injectable } from '@angular/core';
+import { FileSystem } from '../../core/file-system';
+import { FFmpegDownloader } from './ffmpeg-downloader';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class FFmpegInstaller {
     private ffmpegFolder: string = path.join(Paths.applicatioDataFolder(), "FFmpeg");
     private _ffmpegPath: string;
 
-    constructor(private logger: Logger) {
+    constructor(private logger: Logger, private ffmpegDownloader: FFmpegDownloader, private fileSystem: FileSystem) {
     }
 
     public get ffmpegPath(): string {
@@ -24,7 +22,7 @@ export class FFmpegInstaller {
 
         if (!ffmpegPath) {
             this.logger.info("Start downloading FFmpeg.", "FFmpegInstaller", "downloadFFmpegIfneededAsync");
-            await this.downloadFFmpegAsync();
+            await this.ffmpegDownloader.downloadAsync(this.ffmpegFolder);
             this.logger.info("Finished downloading FFmpeg.", "FFmpegInstaller", "downloadFFmpegIfneededAsync");
             ffmpegPath = this.getFFmpegPath();
         }
@@ -32,21 +30,9 @@ export class FFmpegInstaller {
         this._ffmpegPath = ffmpegPath;
     }
 
-    private async downloadFFmpegAsync(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            ffbinaries.downloadBinaries(['ffmpeg'], { destination: this.ffmpegFolder }, (error: string) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            });
-        });
-    }
-
     private getFFmpegPath(): string {
-        if (fs.existsSync(this.ffmpegFolder)) {
-            let ffmpegPath: string = fs.readdirSync(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
+        if (this.fileSystem.existsSync(this.ffmpegFolder)) {
+            let ffmpegPath: string = this.fileSystem.readdirSync(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
 
             if (ffmpegPath) {
                 this.logger.info(`FFmpeg was found in at ${ffmpegPath}`, "FFmpegInstaller", "isFFmpegInstalled");

@@ -1,15 +1,15 @@
 import * as ytdl from 'ytdl-core';
 import * as ffmpeg from 'fluent-ffmpeg-corrected';
 import { Logger } from '../../core/logger';
-import { VideoDetails } from './videoDetails';
+import { VideoDetails } from './video-details';
 import { Readable } from 'stream';
 import * as progress from 'progress-stream';
 import * as path from 'path';
 import * as sanitize from 'sanitize-filename';
-import * as fs from 'fs-extra';
 import { Injectable } from '@angular/core';
-import { FFmpegInstaller } from './ffmpegInstaller';
+import { FFmpegInstaller } from './ffmpeg-installer';
 import { Paths } from '../../core/paths';
+import { FileSystem } from '../../core/file-system';
 
 @Injectable({
     providedIn: 'root',
@@ -21,7 +21,7 @@ export class ConvertService {
     private progressTimeoutMilliseconds: number = 100;
     private outputPath = path.join(Paths.musicFolder(), "Vitomu");
 
-    constructor(private logger: Logger, private ffmpegInstaller: FFmpegInstaller) {
+    constructor(private logger: Logger, private ffmpegInstaller: FFmpegInstaller, private fileSystem: FileSystem) {
     }
 
     public async downloadAsync(videoId: string): Promise<void> {
@@ -49,7 +49,7 @@ export class ConvertService {
             this.logger.info(`File name: ${fileName}`, "ConvertService", "downloadAsync");
 
             // Make sure outputPath exists
-            await fs.ensureDir(this.outputPath);
+            await this.fileSystem.ensureDir(this.outputPath);
 
             // Download
             let videoStream: Readable = ytdl.downloadFromInfo(videoInfo, { quality: this.youtubeVideoQuality, requestOptions: this.requestOptions });

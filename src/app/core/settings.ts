@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import * as Store from 'electron-store';
 import { Constants } from './constants';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class Settings {
     private settings: Store<any> = new Store();
 
