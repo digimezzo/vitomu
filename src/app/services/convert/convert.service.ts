@@ -8,7 +8,6 @@ import * as path from 'path';
 import * as sanitize from 'sanitize-filename';
 import { Injectable } from '@angular/core';
 import { FFmpegInstaller } from './ffmpeg-installer';
-import { Paths } from '../../core/paths';
 import { FileSystem } from '../../core/file-system';
 
 @Injectable({
@@ -19,7 +18,7 @@ export class ConvertService {
     private youtubeVideoQuality: string = "highest";
     private requestOptions: any = { maxRedirects: 5 }; // TODO: shouldn't this be typed?
     private progressTimeoutMilliseconds: number = 100;
-    private outputPath = path.join(Paths.musicFolder(), "Vitomu");
+    private outputPath = path.join(this.fileSystem.musicFolder(), "Vitomu");
 
     constructor(private logger: Logger, private ffmpegInstaller: FFmpegInstaller, private fileSystem: FileSystem) {
     }

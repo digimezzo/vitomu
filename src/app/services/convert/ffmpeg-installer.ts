@@ -1,13 +1,12 @@
 import { Logger } from '../../core/logger';
 import * as path from 'path';
-import { Paths } from '../../core/paths';
 import { Injectable } from '@angular/core';
 import { FileSystem } from '../../core/file-system';
 import { FFmpegDownloader } from './ffmpeg-downloader';
 
 @Injectable()
 export class FFmpegInstaller {
-    private ffmpegFolder: string = path.join(Paths.applicatioDataFolder(), "FFmpeg");
+    private ffmpegFolder: string = path.join(this.fileSystem.applicatioDataFolder(), "FFmpeg");
     private _ffmpegPath: string;
 
     constructor(private logger: Logger, private ffmpegDownloader: FFmpegDownloader, private fileSystem: FileSystem) {
