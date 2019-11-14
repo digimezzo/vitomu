@@ -7,7 +7,7 @@ import * as progress from 'progress-stream';
 import * as path from 'path';
 import * as sanitize from 'sanitize-filename';
 import { Injectable } from '@angular/core';
-import { FFmpegInstaller } from './ffmpeg-installer';
+import { FFmpegChecker } from './ffmpeg-checker';
 import { FileSystem } from '../../core/file-system';
 
 @Injectable({
@@ -18,21 +18,21 @@ export class ConvertService {
     private youtubeVideoQuality: string = "highest";
     private requestOptions: any = { maxRedirects: 5 }; // TODO: shouldn't this be typed?
     private progressTimeoutMilliseconds: number = 100;
-    private outputPath = path.join(this.fileSystem.musicFolder(), "Vitomu");
+    private outputPath = path.join(this.fileSystem.musicDirectory(), "Vitomu");
 
-    constructor(private logger: Logger, private ffmpegInstaller: FFmpegInstaller, private fileSystem: FileSystem) {
+    constructor(private logger: Logger, private ffmpegChecker: FFmpegChecker, private fileSystem: FileSystem) {
     }
 
     public async convertAsync(videoId: string): Promise<void> {
         try {
-            await this.ffmpegInstaller.ensureFFmpegIsAvailableAsync();
+            await this.ffmpegChecker.ensureFFmpegIsAvailableAsync();
         } catch (error) {
             this.logger.error(`Could not ensure that FFmpeg is available. Error: ${error}`, "ConvertService", "downloadAsync");
             // TODO: make sure the user sees when this fails.
             return;
         }
 
-        if (!this.ffmpegInstaller.ffmpegPath) {
+        if (!this.ffmpegChecker.isFfmpegInPath && !this.ffmpegChecker.ffmpegPath) {
             this.logger.error("FFmpeg is not available.", "ConvertService", "downloadAsync");
             // TODO: make sure the user sees when this fails.
             return;
@@ -48,7 +48,7 @@ export class ConvertService {
             this.logger.info(`File name: ${fileName}`, "ConvertService", "downloadAsync");
 
             // Make sure outputPath exists
-            await this.fileSystem.ensureDir(this.outputPath);
+            await this.fileSystem.ensureDirectoryAsync(this.outputPath);
 
             // Download
             let videoStream: Readable = ytdl.downloadFromInfo(videoInfo, { quality: this.youtubeVideoQuality, requestOptions: this.requestOptions });
@@ -72,8 +72,10 @@ export class ConvertService {
                     "-metadata", "artist=" + videoDetails.artist
                 ];
 
-                ffmpeg.setFfmpegPath(this.ffmpegInstaller.ffmpegPath);
-             
+                if (!this.ffmpegChecker.isFfmpegInPath) {
+                    ffmpeg.setFfmpegPath(this.ffmpegChecker.ffmpegPath);
+                }
+
                 // Start encoding
                 let proc: any = new ffmpeg({
                     source: videoStream.pipe(str)

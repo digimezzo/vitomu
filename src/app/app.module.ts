@@ -36,7 +36,7 @@ import { AppearanceService } from './services/appearance/appearance.service';
 import { ConvertService } from './services/convert/convert.service';
 import { LogoFullComponent } from './components/logo-full/logo-full.component';
 import { LicenseDialogComponent } from './components/dialogs/license-dialog/license-dialog.component';
-import { FFmpegInstaller } from './services/convert/ffmpeg-installer';
+import { FFmpegChecker } from './services/convert/ffmpeg-checker';
 import { FileSystem } from './core/file-system';
 import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
 
@@ -88,7 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Settings,
     FileSystem,
     FFmpegDownloader,
-    FFmpegInstaller,
+    FFmpegChecker,
     {
       provide: ErrorHandler,
       useClass: GlobalErrorHandler

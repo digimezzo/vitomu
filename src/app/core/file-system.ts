@@ -1,29 +1,34 @@
 import * as fs from 'fs-extra';
 import { Injectable } from '@angular/core';
 import { remote } from 'electron';
+import * as commandExists from 'command-exists-promise';
 
 @Injectable()
-export class FileSystem{
+export class FileSystem {
     constructor() {
     }
 
-    public applicatioDataFolder(): string {
+    public applicatioDataDirectory(): string {
         return remote.app.getPath("userData");
     }
 
-    public musicFolder(): string {
+    public musicDirectory(): string {
         return remote.app.getPath("music");
     }
 
-    public async ensureDir(directory: string): Promise<void>{
+    public async ensureDirectoryAsync(directory: string): Promise<void> {
         await fs.ensureDir(directory);
     }
 
-    public existsSync(path: string): boolean{
+    public pathExists(path: string): boolean {
         return fs.existsSync(path);
     }
 
-    public readdirSync(directory: string): any[]{
+    public readDirectory(directory: string): any[] {
         return fs.readdirSync(directory);
+    }
+
+    public async commanExistsAsync(command: string): Promise<boolean> {
+        return await commandExists(command)
     }
 }
