@@ -39,6 +39,7 @@ import { LicenseDialogComponent } from './components/dialogs/license-dialog/lice
 import { FFmpegChecker } from './services/convert/ffmpeg-checker';
 import { FileSystem } from './core/file-system';
 import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
+import { Desktop } from './core/desktop';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -87,6 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Logger, 
     Settings,
     FileSystem,
+    Desktop,
     FFmpegDownloader,
     FFmpegChecker,
     {

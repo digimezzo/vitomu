@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Constants } from '../../core/constants';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { LicenseDialogComponent } from '../dialogs/license-dialog/license-dialog.component';
+import { Desktop } from '../../core/desktop';
 
 @Component({
   selector: 'app-about',
@@ -11,7 +12,7 @@ import { LicenseDialogComponent } from '../dialogs/license-dialog/license-dialog
 })
 export class AboutComponent implements OnInit {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private desktop: Desktop) { }
 
   public applicationVersion: string = Constants.applicationVersion;
   public applicationCopyright: string = Constants.applicationCopyright;
@@ -30,6 +31,6 @@ export class AboutComponent implements OnInit {
   }
 
   public openDonateLink(): void {
-    require('electron').shell.openExternal(Constants.donateUrl);
+    this.desktop.openExternal(Constants.donateUrl);
   }
 }
