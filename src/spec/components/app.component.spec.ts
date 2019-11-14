@@ -10,9 +10,9 @@ describe('AppComponent', () => {
     describe('constructor', () => {
         it('Should apply language', () => {
             // Arrange
-            var appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
-            var translatorServiceMock = TypeMoq.Mock.ofType<TranslatorService>();
-            var convertServiceMock = TypeMoq.Mock.ofType<ConvertService>();
+            let appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
+            let translatorServiceMock = TypeMoq.Mock.ofType<TranslatorService>();
+            let convertServiceMock = TypeMoq.Mock.ofType<ConvertService>();
 
             // Act
             let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object, convertServiceMock.object);
@@ -23,9 +23,9 @@ describe('AppComponent', () => {
 
         it('Should apply theme', () => {
             // Arrange
-            var appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
-            var translatorServiceMock = TypeMoq.Mock.ofType<TranslatorService>();
-            var convertServiceMock = TypeMoq.Mock.ofType<ConvertService>();
+            let appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
+            let translatorServiceMock = TypeMoq.Mock.ofType<TranslatorService>();
+            let convertServiceMock = TypeMoq.Mock.ofType<ConvertService>();
 
             // Act
             let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object, convertServiceMock.object);

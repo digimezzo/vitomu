@@ -9,7 +9,7 @@ describe('AboutComponent', () => {
     describe('constructor', () => {
         it('Should provide application version', () => {
             // Arrange
-            var matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+            let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
         
             // Act
             let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
@@ -20,7 +20,7 @@ describe('AboutComponent', () => {
 
         it('Should provide application copyright', () => {
             // Arrange
-            var matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+            let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
 
             // Act
             let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
@@ -31,7 +31,7 @@ describe('AboutComponent', () => {
 
         it('Should provide website url', () => {
             // Arrange
-            var matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+            let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
 
             // Act
             let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
@@ -42,7 +42,7 @@ describe('AboutComponent', () => {
 
         it('Should provide github url', () => {
             // Arrange
-            var matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+            let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
 
             // Act
             let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
@@ -53,7 +53,7 @@ describe('AboutComponent', () => {
 
         it('Should provide twitter url', () => {
             // Arrange
-            var matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+            let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
 
             // Act
             let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
@@ -66,7 +66,7 @@ describe('AboutComponent', () => {
     describe('openLicenseDialog', () => {
         it('Should open the license dialog', () => {
             // Arrange
-            var matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+            let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
             let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
 
             // Act

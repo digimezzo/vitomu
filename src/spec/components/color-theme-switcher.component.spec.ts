@@ -9,7 +9,7 @@ describe('ColorThemeSwitcherComponent', () => {
     describe('setColorTheme', () => {
         it('Should change the selected color theme', () => {
             // Arrange
-            var appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
+            let appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
             let colorThemeSwitcher: ColorThemeSwitcherComponent = new ColorThemeSwitcherComponent(appearanceServiceMock.object);
 
             // Act

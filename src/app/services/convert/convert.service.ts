@@ -66,7 +66,7 @@ export class ConvertService {
                     // TODO
                 });
 
-                var outputOptions = [
+                let outputOptions = [
                     "-id3v2_version", "4",
                     "-metadata", "title=" + videoDetails.title,
                     "-metadata", "artist=" + videoDetails.artist

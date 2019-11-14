@@ -10,9 +10,9 @@ describe('AppearanceService', () => {
     describe('constructor', () => {
         it('Should provide a list of themes', () => {
             // Arrange
-            var settingsMock = TypeMoq.Mock.ofType<Settings>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var overlayContainerMock = TypeMoq.Mock.ofType<OverlayContainer>();
+            let settingsMock = TypeMoq.Mock.ofType<Settings>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let overlayContainerMock = TypeMoq.Mock.ofType<OverlayContainer>();
             overlayContainerMock.setup(x => x.getContainerElement()).returns(() => null);
 
             // Act
@@ -24,9 +24,9 @@ describe('AppearanceService', () => {
 
         it('Should set the selected colorTheme', () => {
             // Arrange
-            var settingsMock = TypeMoq.Mock.ofType<Settings>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var overlayContainerMock = TypeMoq.Mock.ofType<OverlayContainer>();
+            let settingsMock = TypeMoq.Mock.ofType<Settings>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let overlayContainerMock = TypeMoq.Mock.ofType<OverlayContainer>();
             overlayContainerMock.setup(x => x.getContainerElement()).returns(() => null);
             settingsMock.setup(x => x.colorTheme).returns(() => "default-pink-theme");
 

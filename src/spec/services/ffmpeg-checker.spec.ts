@@ -11,9 +11,9 @@ describe('FFmpegInstaller', () => {
     describe('ensureFFmpegIsAvailableAsync', () => {
         it('Should not download FFmpeg if FFmpeg is in path', async () => {
             // Arrange
-            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+            let fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
 
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => "/home/user/.config/Vitomu");
             fileSystemMock.setup(x => x.commanExistsAsync("ffmpeg")).returns(async() => true);
@@ -29,9 +29,9 @@ describe('FFmpegInstaller', () => {
         
         it('Should download FFmpeg if FFmpeg is not in path and FFmpeg folder does not exist', async () => {
             // Arrange
-            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+            let fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
 
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => "/home/user/.config/Vitomu");
             fileSystemMock.setup(x => x.commanExistsAsync("ffmpeg")).returns(async() => false);
@@ -51,9 +51,9 @@ describe('FFmpegInstaller', () => {
 
         it('Should download FFmpeg if FFmpeg is not in path and FFmpeg folder exists but it is empty', async () => {
             // Arrange
-            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+            let fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
 
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => "/home/user/.config/Vitomu");
             fileSystemMock.setup(x => x.commanExistsAsync("ffmpeg")).returns(async() => false);
@@ -74,9 +74,9 @@ describe('FFmpegInstaller', () => {
 
         it('Should download FFmpeg if FFmpeg is not in path and FFmpeg folder exists but bas a file that does not contain "ffmpeg"', async () => {
             // Arrange
-            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+            let fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
 
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => "/home/user/.config/Vitomu");
             fileSystemMock.setup(x => x.commanExistsAsync("ffmpeg")).returns(async() => false);
@@ -97,9 +97,9 @@ describe('FFmpegInstaller', () => {
 
         it('Should not download FFmpeg if FFmpeg is not in path and FFmpeg folder exists and has a file that is equal to "ffmpeg"', async () => {
             // Arrange
-            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+            let fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
 
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => "/home/user/.config/Vitomu");
             fileSystemMock.setup(x => x.commanExistsAsync("ffmpeg")).returns(async() => false);
@@ -120,9 +120,9 @@ describe('FFmpegInstaller', () => {
 
         it('Should not download FFmpeg if FFmpeg is not in path and FFmpeg folder exists and has a file that contains "ffmpeg"', async () => {
             // Arrange
-            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+            let fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
 
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => "/home/user/.config/Vitomu");
             fileSystemMock.setup(x => x.commanExistsAsync("ffmpeg")).returns(async() => false);
@@ -143,9 +143,9 @@ describe('FFmpegInstaller', () => {
 
         it('Should indicate if FFmpeg was found in the path', async () => {
             // Arrange
-            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+            let fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
 
             fileSystemMock.setup(x => x.commanExistsAsync("ffmpeg")).returns(async() => true);
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => "/home/user/.config/Vitomu");
@@ -161,9 +161,9 @@ describe('FFmpegInstaller', () => {
 
         it('Should indicate if FFmpeg was not found in the path', async () => {
             // Arrange
-            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+            let fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
 
             fileSystemMock.setup(x => x.commanExistsAsync("ffmpeg")).returns(async() => false);
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => "/home/user/.config/Vitomu");
@@ -179,9 +179,9 @@ describe('FFmpegInstaller', () => {
 
         it('Should set empty ffmpegPath if FFmpeg is found in the path', async () => {
             // Arrange
-            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+            let fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
 
             fileSystemMock.setup(x => x.commanExistsAsync("ffmpeg")).returns(async() => true);
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => "/home/user/.config/Vitomu");
@@ -197,9 +197,9 @@ describe('FFmpegInstaller', () => {
 
         it('Should set empty ffmpegPath if FFmpeg is not found in path and also not found locally', async () => {
             // Arrange
-            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+            let fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
 
             fileSystemMock.setup(x => x.commanExistsAsync("ffmpeg")).returns(async() => false);
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => "/home/user/.config/Vitomu");
@@ -220,9 +220,9 @@ describe('FFmpegInstaller', () => {
 
         it('Should set non-empty ffmpegPath if FFmpeg is not found in path but is found locally', async () => {
             // Arrange
-            var fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
-            var loggerMock = TypeMoq.Mock.ofType<Logger>();
-            var ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
+            let fileSystemMock = TypeMoq.Mock.ofType<FileSystem>();
+            let loggerMock = TypeMoq.Mock.ofType<Logger>();
+            let ffmpegDownloaderMock = TypeMoq.Mock.ofType<FFmpegDownloader>();
 
             fileSystemMock.setup(x => x.commanExistsAsync("ffmpeg")).returns(async() => false);
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => "/home/user/.config/Vitomu");
