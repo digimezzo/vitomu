@@ -1,6 +1,5 @@
 import * as assert from 'assert';
-import * as TypeMoq from "typemoq";
-import { Times } from "typemoq";
+import { Mock, It, Times } from "typemoq";
 import { ColorThemeSwitcherComponent } from '../../app/components/color-theme-switcher/color-theme-switcher.component';
 import { AppearanceService } from '../../app/services/appearance/appearance.service';
 import { ColorTheme } from '../../app/core/color-theme';
@@ -9,7 +8,7 @@ describe('ColorThemeSwitcherComponent', () => {
     describe('setColorTheme', () => {
         it('Should change the selected color theme', () => {
             // Arrange
-            let appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
+            let appearanceServiceMock = Mock.ofType<AppearanceService>();
             let colorThemeSwitcher: ColorThemeSwitcherComponent = new ColorThemeSwitcherComponent(appearanceServiceMock.object);
 
             // Act

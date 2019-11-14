@@ -1,17 +1,16 @@
 import * as assert from 'assert';
-import * as TypeMoq from "typemoq";
+import { Mock, It, Times } from "typemoq";
 import { TranslatorService } from '../../app/services/translator/translator.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Settings } from '../../app/core/settings';
-import { Times } from 'typemoq';
 import { Language } from '../../app/core/language';
 
 describe('TranslatorService', () => {
     describe('constructor', () => {
         it('Should provide a list of languages', () => {
             // Arrange
-            let translateServiceMock = TypeMoq.Mock.ofType<TranslateService>();
-            let settingsMock = TypeMoq.Mock.ofType<Settings>();
+            let translateServiceMock = Mock.ofType<TranslateService>();
+            let settingsMock = Mock.ofType<Settings>();
 
             // Act
             let translator: TranslatorService = new TranslatorService(translateServiceMock.object, settingsMock.object);
@@ -22,8 +21,8 @@ describe('TranslatorService', () => {
 
         it('Should apply the default language', () => {
             // Arrange
-            let translateServiceMock = TypeMoq.Mock.ofType<TranslateService>();
-            let settingsMock = TypeMoq.Mock.ofType<Settings>();
+            let translateServiceMock = Mock.ofType<TranslateService>();
+            let settingsMock = Mock.ofType<Settings>();
             settingsMock.setup(x => x.defaultLanguage).returns(() => "en");
 
             // Act
@@ -37,8 +36,8 @@ describe('TranslatorService', () => {
     describe('applyLanguage', () => {
         it('Should apply the language from the settings', () => {
             // Arrange
-            let translateServiceMock = TypeMoq.Mock.ofType<TranslateService>();
-            let settingsMock = TypeMoq.Mock.ofType<Settings>();
+            let translateServiceMock = Mock.ofType<TranslateService>();
+            let settingsMock = Mock.ofType<Settings>();
 
             settingsMock.setup(x => x.language).returns(() => "en");
 
@@ -56,8 +55,8 @@ describe('TranslatorService', () => {
     describe('selectedLanguage', () => {
         it('Should save the selected language in the settings', () => {
             // Arrange
-            let translateServiceMock = TypeMoq.Mock.ofType<TranslateService>();
-            let settingsMock = TypeMoq.Mock.ofType<Settings>();
+            let translateServiceMock = Mock.ofType<TranslateService>();
+            let settingsMock = Mock.ofType<Settings>();
 
             let translator: TranslatorService = new TranslatorService(translateServiceMock.object, settingsMock.object);
 
@@ -72,8 +71,8 @@ describe('TranslatorService', () => {
 
         it('Should apply the selected language', () => {
             // Arrange
-            let translateServiceMock = TypeMoq.Mock.ofType<TranslateService>();
-            let settingsMock = TypeMoq.Mock.ofType<Settings>();
+            let translateServiceMock = Mock.ofType<TranslateService>();
+            let settingsMock = Mock.ofType<Settings>();
 
             let translator: TranslatorService = new TranslatorService(translateServiceMock.object, settingsMock.object);
 
@@ -88,8 +87,8 @@ describe('TranslatorService', () => {
 
         it('Should get the selected language', () => {
             // Arrange
-            let translateServiceMock = TypeMoq.Mock.ofType<TranslateService>();
-            let settingsMock = TypeMoq.Mock.ofType<Settings>();
+            let translateServiceMock = Mock.ofType<TranslateService>();
+            let settingsMock = Mock.ofType<Settings>();
 
             settingsMock.setup(x => x.language).returns(() => "de");
             

@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import * as TypeMoq from "typemoq";
+import { Mock, It, Times } from "typemoq";
 import { LogoFullComponent } from '../../app/components/logo-full/logo-full.component';
 
 describe('LogoFullComponent', () => {

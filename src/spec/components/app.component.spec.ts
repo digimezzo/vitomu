@@ -1,6 +1,5 @@
 import * as assert from 'assert';
-import * as TypeMoq from "typemoq";
-import { Times } from "typemoq";
+import { Mock, It, Times } from "typemoq";
 import { AppearanceService } from '../../app/services/appearance/appearance.service';
 import { TranslatorService } from '../../app/services/translator/translator.service';
 import { AppComponent } from '../../app/app.component';
@@ -10,9 +9,9 @@ describe('AppComponent', () => {
     describe('constructor', () => {
         it('Should apply language', () => {
             // Arrange
-            let appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
-            let translatorServiceMock = TypeMoq.Mock.ofType<TranslatorService>();
-            let convertServiceMock = TypeMoq.Mock.ofType<ConvertService>();
+            let appearanceServiceMock = Mock.ofType<AppearanceService>();
+            let translatorServiceMock = Mock.ofType<TranslatorService>();
+            let convertServiceMock = Mock.ofType<ConvertService>();
 
             // Act
             let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object, convertServiceMock.object);
@@ -23,9 +22,9 @@ describe('AppComponent', () => {
 
         it('Should apply theme', () => {
             // Arrange
-            let appearanceServiceMock = TypeMoq.Mock.ofType<AppearanceService>();
-            let translatorServiceMock = TypeMoq.Mock.ofType<TranslatorService>();
-            let convertServiceMock = TypeMoq.Mock.ofType<ConvertService>();
+            let appearanceServiceMock = Mock.ofType<AppearanceService>();
+            let translatorServiceMock = Mock.ofType<TranslatorService>();
+            let convertServiceMock = Mock.ofType<ConvertService>();
 
             // Act
             let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object, convertServiceMock.object);
