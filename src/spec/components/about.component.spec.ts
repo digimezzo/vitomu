@@ -4,15 +4,17 @@ import { AboutComponent } from '../../app/components/about/about.component';
 import { Constants } from '../../app/core/constants';
 import { MatDialog } from '@angular/material';
 import { Times } from "typemoq";
+import { Desktop } from '../../app/core/desktop';
 
 describe('AboutComponent', () => {
     describe('constructor', () => {
         it('Should provide application version', () => {
             // Arrange
             let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
-        
+            let desktopMock = TypeMoq.Mock.ofType<Desktop>();
+
             // Act
-            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
+            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
 
             // Assert
             assert.equal(aboutComponent.applicationVersion, Constants.applicationVersion);
@@ -21,9 +23,10 @@ describe('AboutComponent', () => {
         it('Should provide application copyright', () => {
             // Arrange
             let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+            let desktopMock = TypeMoq.Mock.ofType<Desktop>();
 
             // Act
-            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
+            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object,  desktopMock.object);
 
             // Assert
             assert.equal(aboutComponent.applicationCopyright, Constants.applicationCopyright);
@@ -32,9 +35,10 @@ describe('AboutComponent', () => {
         it('Should provide website url', () => {
             // Arrange
             let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+            let desktopMock = TypeMoq.Mock.ofType<Desktop>();
 
             // Act
-            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
+            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
 
             // Assert
             assert.equal(aboutComponent.websiteUrl, Constants.websiteUrl);
@@ -43,9 +47,10 @@ describe('AboutComponent', () => {
         it('Should provide github url', () => {
             // Arrange
             let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+            let desktopMock = TypeMoq.Mock.ofType<Desktop>();
 
             // Act
-            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
+            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
 
             // Assert
             assert.equal(aboutComponent.githubUrl, Constants.githubUrl);
@@ -54,9 +59,10 @@ describe('AboutComponent', () => {
         it('Should provide twitter url', () => {
             // Arrange
             let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+            let desktopMock = TypeMoq.Mock.ofType<Desktop>();
 
             // Act
-            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
+            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
 
             // Assert
             assert.equal(aboutComponent.twitterUrl, Constants.twitterUrl);
@@ -67,13 +73,31 @@ describe('AboutComponent', () => {
         it('Should open the license dialog', () => {
             // Arrange
             let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
-            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object);
+            let desktopMock = TypeMoq.Mock.ofType<Desktop>();
+
+            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
 
             // Act
             aboutComponent.openLicenseDialog();
 
             // Assert
             matDialogMock.verify(x => x.open(TypeMoq.It.isAny(), TypeMoq.It.isAny()), Times.atLeastOnce());
+        });
+    });
+
+    describe('openDonateLink', () => {
+        it('Should open the the donate link', () => {
+            // Arrange
+            let matDialogMock = TypeMoq.Mock.ofType<MatDialog>();
+            let desktopMock = TypeMoq.Mock.ofType<Desktop>();
+
+            let aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
+
+            // Act
+            aboutComponent.openDonateLink();
+
+            // Assert
+            desktopMock.verify(x => x.openExternal(Constants.donateUrl), Times.atLeastOnce());
         });
     });
 });
