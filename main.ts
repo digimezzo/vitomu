@@ -7,6 +7,8 @@ import * as windowStateKeeper from 'electron-window-state';
 // See post by megahertz: https://github.com/megahertz/electron-log/issues/60
 // "You need to import electron-log in the main process. Without it, electron-log doesn't works in a renderer process."
 import log from 'electron-log';
+import { Constants } from './src/app/core/constants';
+import { Events } from './src/app/core/events';
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -23,7 +25,7 @@ function createWindow() {
     defaultHeight: 500
   });
 
-   // Create the window using the state information
+  // Create the window using the state information
   win = new BrowserWindow({
     x: windowState.x,
     y: windowState.y,
@@ -70,6 +72,10 @@ function createWindow() {
   win.on('ready-to-show', function () {
     win.show();
     win.focus();
+  });
+
+  win.on('focus', function () {
+    win.webContents.send(Events.windowFocusChangedEvent);
   });
 
   // Makes links open in external browser

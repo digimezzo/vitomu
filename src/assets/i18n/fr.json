@@ -7,6 +7,9 @@
     "Settings": "Paramètres",
     "About": "À propos"
   },
+  "ConvertTab": {
+    "DropText": "Copiez un url dans le presse-papier"
+  },
   "SettingsTab": {
     "Language": "Langue",
     "Color": "Couleur"

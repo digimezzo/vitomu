@@ -37,6 +37,10 @@ $border-color-main: #333;
   .background-color-hover{
     background-color: mat-color($background, hover) !important;
   }
+
+  .background-color-background{
+    background-color: mat-color($background, background) !important;
+  }
 }
 
 // Default

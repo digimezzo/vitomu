@@ -14,7 +14,7 @@ import { FileSystem } from '../../core/file-system';
     providedIn: 'root',
 })
 export class ConvertService {
-    private youtubeBaseUrl: string = "http://www.youtube.com/watch?v=";
+    private youtubeBaseUrl: string = "https://www.youtube.com/watch?v=";
     private youtubeVideoQuality: string = "highest";
     private requestOptions: any = { maxRedirects: 5 }; // TODO: shouldn't this be typed?
     private progressTimeoutMilliseconds: number = 100;

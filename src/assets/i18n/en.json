@@ -7,6 +7,9 @@
     "Settings": "Settings",
     "About": "About"
   },
+  "ConvertTab": {
+    "DropText": "Copy a url to the clipboard"
+  },
   "SettingsTab": {
     "Language": "Language",
     "Color": "Color"

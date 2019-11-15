@@ -8,6 +8,7 @@ var windowStateKeeper = require("electron-window-state");
 // See post by megahertz: https://github.com/megahertz/electron-log/issues/60
 // "You need to import electron-log in the main process. Without it, electron-log doesn't works in a renderer process."
 var electron_log_1 = require("electron-log");
+var events_1 = require("./src/app/core/events");
 var win, serve;
 var args = process.argv.slice(1);
 serve = args.some(function (val) { return val === '--serve'; });
@@ -62,6 +63,9 @@ function createWindow() {
     win.on('ready-to-show', function () {
         win.show();
         win.focus();
+    });
+    win.on('focus', function () {
+        win.webContents.send(events_1.Events.windowFocusChangedEvent);
     });
     // Makes links open in external browser
     var handleRedirect = function (e, url) {

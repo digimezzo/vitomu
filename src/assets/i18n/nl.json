@@ -7,6 +7,9 @@
         "Settings": "Instellingen",
         "About": "Over"
     },
+    "ConvertTab": {
+        "DropText": "Kopieer een url naar het klembord"
+      },
     "SettingsTab": {
         "Language": "Taal",
         "Color": "Kleur"
