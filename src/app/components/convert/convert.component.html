@@ -4,8 +4,14 @@
             <div *ngIf="!canConvert" class="drop-zone-container-plus-icon custom-font">
                 &#59152;
             </div>
-            <div *ngIf="canConvert" class="drop-zone-container-plus-icon custom-font clickable" (click)="performConvert()">
-                &#xE896;
+            <div *ngIf="canConvert" 
+                (click)="performConvert()">
+                <div *ngIf="!convert.isConverting" class="drop-zone-container-plus-icon custom-font clickable">
+                    &#xE896;
+                </div>
+                <div *ngIf="convert.isConverting" class="drop-zone-container-progress-text">
+                   {{ convert.convertPercent }}%
+                </div>
             </div>
         </div>
         <div class="drop-zone-container-text mt-3">

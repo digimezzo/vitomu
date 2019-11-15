@@ -13,6 +13,7 @@ import { Logger } from '../../core/logger';
 export class ConvertComponent implements OnInit {
 
   private _canConvert: boolean;
+  //private _converting: boolean;
   private _downloadUrl: string;
 
   constructor(private convert: ConvertService, private logger: Logger, private zone: NgZone) { }
@@ -24,6 +25,14 @@ export class ConvertComponent implements OnInit {
   public set canConvert(v: boolean) {
     this._canConvert = v;
   }
+
+  // public get converting(): boolean {
+  //   return this._converting;
+  // }
+
+  // public set converting(v: boolean) {
+  //   this._converting = v;
+  // }
 
   public get downloadUrl(): string {
     return this._downloadUrl;

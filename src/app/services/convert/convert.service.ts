@@ -6,7 +6,7 @@ import { Readable } from 'stream';
 import * as progress from 'progress-stream';
 import * as path from 'path';
 import * as sanitize from 'sanitize-filename';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { FFmpegChecker } from './ffmpeg-checker';
 import { FileSystem } from '../../core/file-system';
 
@@ -14,14 +14,33 @@ import { FileSystem } from '../../core/file-system';
     providedIn: 'root',
 })
 export class ConvertService {
+    private _isConverting : boolean;
+    private _convertPercent : string;
+
     private youtubeBaseUrl: string = "https://www.youtube.com/watch?v=";
     private youtubeVideoQuality: string = "highest";
     private requestOptions: any = { maxRedirects: 5 }; // TODO: shouldn't this be typed?
     private progressTimeoutMilliseconds: number = 100;
     private outputPath = path.join(this.fileSystem.musicDirectory(), "Vitomu");
 
-    constructor(private logger: Logger, private ffmpegChecker: FFmpegChecker, private fileSystem: FileSystem) {
+    constructor(private logger: Logger, private ffmpegChecker: FFmpegChecker, private fileSystem: FileSystem, private zone: NgZone) {
     }
+
+    public get isConverting() : boolean {
+        return this._isConverting;
+    }
+    public set isConverting(v : boolean) {
+        this._isConverting = v;
+    }
+
+    public get convertPercent() : string {
+        return this._convertPercent;
+    }
+    public set convertPercent(v : string) {
+        this._convertPercent = v;
+    }
+    
+    
 
     public async convertAsync(videoId: string): Promise<void> {
         try {
@@ -37,6 +56,9 @@ export class ConvertService {
             // TODO: make sure the user sees when this fails.
             return;
         }
+
+        this.convertPercent = "0";
+        this.isConverting = true;
 
         try {
             // Get info
@@ -62,8 +84,8 @@ export class ConvertService {
 
                 // Add progress event listener
                 str.on("progress", (progress) => {
-                    this.logger.info(`Progress: ${progress.percentage.toString()}`, "ConvertService", "downloadAsync");
-                    // TODO
+                    //this.logger.info(`Progress: ${progress.percentage.toString()}`, "ConvertService", "downloadAsync");
+                    this.zone.run(() => this.convertPercent = parseInt(progress.percentage, 10).toString());
                 });
 
                 let outputOptions = [
@@ -85,15 +107,16 @@ export class ConvertService {
                     .toFormat("mp3")
                     .outputOptions(outputOptions)
                     .on("error", (error) => {
-                        // TODO
+                        this.isConverting = false;
                         this.logger.info(`An error occurred while encoding. Error: ${error}`, "ConvertService", "downloadAsync");
                     })
                     .on("end", () => {
-                        // TODO
+                        this.isConverting = false;
                     })
                     .saveToFile(fileName);
             });
         } catch (error) {
+            this.isConverting = false;
             this.logger.error(`Could not download video. Error: ${error}`, "ConvertService", "downloadAsync");
         }
     }
