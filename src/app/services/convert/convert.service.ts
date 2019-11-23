@@ -107,11 +107,11 @@ export class ConvertService {
                     .toFormat("mp3")
                     .outputOptions(outputOptions)
                     .on("error", (error) => {
-                        this.isConverting = false;
+                        this.zone.run(() => this.isConverting = false);
                         this.logger.info(`An error occurred while encoding. Error: ${error}`, "ConvertService", "downloadAsync");
                     })
                     .on("end", () => {
-                        this.isConverting = false;
+                        this.zone.run(() => this.isConverting = false);
                     })
                     .saveToFile(fileName);
             });
