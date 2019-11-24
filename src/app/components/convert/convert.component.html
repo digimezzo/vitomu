@@ -1,16 +1,15 @@
 <div class="container p-2">
-    <div class="drop-zone-container">
+    <div class="drop-zone-container no-select">
         <div class="drop-zone-container-background">
             <div *ngIf="!canConvert" class="drop-zone-container-plus-icon custom-font">
                 &#59152;
             </div>
-            <div *ngIf="canConvert" 
-                (click)="performConvert()">
-                <div *ngIf="!convert.isConverting" class="drop-zone-container-plus-icon custom-font clickable">
+            <div *ngIf="canConvert" (click)="performConvert()">
+                <div *ngIf="!isConverting" class="drop-zone-container-plus-icon custom-font clickable">
                     &#xE896;
                 </div>
-                <div *ngIf="convert.isConverting" class="drop-zone-container-progress-text">
-                   {{ convert.convertPercent }}%
+                <div *ngIf="isConverting" class="drop-zone-container-progress-text">
+                    {{ progressPercent }}%
                 </div>
             </div>
         </div>
