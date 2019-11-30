@@ -20,6 +20,8 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   constructor(private convert: ConvertService, private logger: Logger, private zone: NgZone, private clipboardWatcher: ClipboardWatcher) { }
 
+  public mode = 'determinate';
+
   public get canConvert(): boolean {
     return this._canConvert;
   }

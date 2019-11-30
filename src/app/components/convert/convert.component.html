@@ -1,15 +1,19 @@
 <div class="container p-2">
     <div class="drop-zone-container no-select">
-        <div class="drop-zone-container-background">
-            <div *ngIf="!canConvert" class="drop-zone-container-plus-icon custom-font">
-                &#59152;
-            </div>
-            <div *ngIf="canConvert" (click)="performConvert()">
-                <div *ngIf="!isConverting" class="drop-zone-container-plus-icon custom-font clickable">
-                    &#xE896;
+        <div class="drop-zone-container-circle">
+            <mat-progress-spinner class="drop-zone-container-circle-spinner" diameter="268" strokeWidth="4" color="primary" [mode]="mode" [value]="progressPercent">
+            </mat-progress-spinner>
+            <div class="drop-zone-container-circle-background">
+                <div *ngIf="!canConvert" class="drop-zone-container-plus-icon custom-font">
+                    &#59152;
                 </div>
-                <div *ngIf="isConverting" class="drop-zone-container-progress-text">
-                    {{ progressPercent }}%
+                <div *ngIf="canConvert" (click)="performConvert()">
+                    <div *ngIf="!isConverting" class="drop-zone-container-plus-icon custom-font clickable">
+                        &#xE896;
+                    </div>
+                    <div *ngIf="isConverting" class="drop-zone-container-progress-text">
+                        {{ progressPercent }}%
+                    </div>
                 </div>
             </div>
         </div>

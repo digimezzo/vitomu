@@ -22,7 +22,7 @@ import { Logger } from './core/logger';
 import { Settings } from './core/settings';
 import { WindowControlsComponent } from './components/window-controls/window-controls.component';
 
-import { MatTooltipModule, MatDialogModule, MatTabsModule, MatSelectModule, MatButtonModule } from '@angular/material';
+import { MatTooltipModule, MatDialogModule, MatTabsModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalErrorHandler } from './global-error-handler';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -68,6 +68,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDialogModule,
     MatTabsModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
