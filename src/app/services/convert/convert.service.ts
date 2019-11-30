@@ -6,7 +6,7 @@ import { Readable } from 'stream';
 import * as progress from 'progress-stream';
 import * as path from 'path';
 import * as sanitize from 'sanitize-filename';
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FFmpegChecker } from './ffmpeg-checker';
 import { FileSystem } from '../../core/file-system';
 import { Subject, Observable } from 'rxjs';
@@ -17,7 +17,7 @@ import { Subject, Observable } from 'rxjs';
 export class ConvertService {
     private youtubeBaseUrl: string = "https://www.youtube.com/watch?v=";
     private youtubeVideoQuality: string = "highest";
-    private requestOptions: any = { maxRedirects: 5 }; // TODO: shouldn't this be typed?
+    private requestOptions: any = { maxRedirects: 5 };
     private progressTimeoutMilliseconds: number = 100;
     private outputPath = path.join(this.fileSystem.musicDirectory(), "Vitomu");
 
@@ -27,9 +27,17 @@ export class ConvertService {
     private convertProgressChanged = new Subject<number>();
     public convertProgressChanged$: Observable<number> = this.convertProgressChanged.asObservable();
 
-    // this.subscription = this.collection.collectionsChanged$.subscribe(() => this.router.navigate(['/loading']));
-
     constructor(private logger: Logger, private ffmpegChecker: FFmpegChecker, private fileSystem: FileSystem) {
+    }
+
+    public isVideoUrlConvertible(videoUrl: string): boolean {
+        if (videoUrl && videoUrl.includes('www.youtube.com/watch?v=')) {
+            this.logger.info(`Video '${videoUrl}' is convertible`, "ConvertService", "isVideoUrlConvertible");
+            return true;
+        }
+
+        this.logger.warn(`Video '${videoUrl}' is not convertible`, "ConvertService", "isVideoUrlConvertible");
+        return false;
     }
 
     public async convertAsync(videoId: string): Promise<void> {

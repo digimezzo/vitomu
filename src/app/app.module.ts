@@ -40,6 +40,7 @@ import { FFmpegChecker } from './services/convert/ffmpeg-checker';
 import { FileSystem } from './core/file-system';
 import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
 import { Desktop } from './core/desktop';
+import { ClipboardWatcher } from './core/clipboard-watcher';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -89,6 +90,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Settings,
     FileSystem,
     Desktop,
+    ClipboardWatcher,
     FFmpegDownloader,
     FFmpegChecker,
     {

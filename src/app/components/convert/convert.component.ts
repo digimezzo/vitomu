@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, NgZone, OnDestroy } from '@angular/core';
 import { ConvertService } from '../../services/convert/convert.service';
-import { ipcRenderer, clipboard } from 'electron';
-import { Events } from '../../core/events';
 import { Logger } from '../../core/logger';
 import { Subscription } from 'rxjs';
+import { ClipboardWatcher } from '../../core/clipboard-watcher';
 
 @Component({
   selector: 'app-convert',
@@ -15,11 +14,11 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
   private _canConvert: boolean;
-   private _isConverting: boolean;
-  private _progressPercent : number;
+  private _isConverting: boolean;
+  private _progressPercent: number;
   private _downloadUrl: string;
-  
-  constructor(private convert: ConvertService, private logger: Logger, private zone: NgZone) { }
+
+  constructor(private convert: ConvertService, private logger: Logger, private zone: NgZone, private clipboardWatcher: ClipboardWatcher) { }
 
   public get canConvert(): boolean {
     return this._canConvert;
@@ -29,13 +28,13 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this._canConvert = v;
   }
 
-  public get progressPercent() : number {
+  public get progressPercent(): number {
     return this._progressPercent;
   }
-  public set progressPercent(v : number) {
+  public set progressPercent(v: number) {
     this._progressPercent = v;
   }
-  
+
 
   public get isConverting(): boolean {
     return this._isConverting;
@@ -54,30 +53,27 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    ipcRenderer.on(Events.windowFocusChangedEvent, () => {
-      let clipBoardText: string = clipboard.readText();
-
-      this.zone.run(() => {
-        if (clipBoardText && clipBoardText.includes('https://www.youtube.com/watch?v=')) {
-          this.canConvert = true;
-          this.downloadUrl = clipBoardText;
-        } else {
-          this.canConvert = false;
-        }
-      });
-    });
-
     this.subscription = this.convert.convertStatusChanged$.subscribe((isConverting) => this.zone.run(() => this.isConverting = isConverting));
     this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => this.zone.run(() => this.progressPercent = progressPercent)));
+
+    this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipBoardText) => {
+      this.zone.run(() => {
+        this.canConvert = this.convert.isVideoUrlConvertible(clipBoardText);
+
+        if (this.canConvert) {
+          this.downloadUrl = clipBoardText;
+        }
+      });
+    }));
   }
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  public performConvert(){
+  public performConvert() {
     let pieces: string[] = this.downloadUrl.split("&");
-    let videoId: string = pieces[0].replace("https://www.youtube.com/watch?v=","");
+    let videoId: string = pieces[0].replace("https://www.youtube.com/watch?v=", "");
     this.convert.convertAsync(videoId);
   }
 }
