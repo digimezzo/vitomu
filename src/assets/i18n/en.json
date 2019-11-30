@@ -35,5 +35,8 @@
   },
   "LicenseDialog": {
     "License": "License"
+  },
+  "Tooltips": {
+    "ClickToDownload": "Click to download"
   }
 }

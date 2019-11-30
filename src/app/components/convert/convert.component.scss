@@ -48,10 +48,12 @@
   font-size: $fontsize-larger;
 }
 
-.drop-zone-container-plus-icon {
+.drop-zone-container-drop-icon {
   @extend .color-secondary-text;
   font-family: segoe;
-  font-size: 80px;
+  font-size: 60px;
+  -webkit-animation: pulse 3s infinite ease-in-out;
+  animation: pulse 3s infinite ease-in-out;
 }
 
 .clickable {
@@ -60,4 +62,16 @@
 
 .drop-zone-container-progress-text {
   font-size: 50px;
+}
+
+@-webkit-keyframes pulse {
+  0% { -webkit-transform: scale(0.9); opacity: 0.7; }
+  50% { -webkit-transform: scale(1); opacity: 1; }
+  100% { -webkit-transform: scale(0.9); opacity: 0.7; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
 }
