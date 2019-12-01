@@ -9,7 +9,8 @@
   },
   "ConvertTab": {
     "DropText": "Copiez un url dans le presse-papier",
-    "ConversionSuccessful": "Conversion réussie!"
+    "ConversionSuccessful": "Conversion réussie!",
+    "FoundOnClipboard": "Trouvé dans le presse-papiers"
   },
   "SettingsTab": {
     "Language": "Langue",

@@ -9,7 +9,8 @@
   },
   "ConvertTab": {
     "DropText": "Copy a url to the clipboard",
-    "ConversionSuccessful": "Conversion successful!"
+    "ConversionSuccessful": "Conversion successful!",
+    "FoundOnClipboard": "Found on clipboard"
   },
   "SettingsTab": {
     "Language": "Language",

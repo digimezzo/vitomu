@@ -1,8 +1,9 @@
 <div class="container p-2">
-    <div class="drop-zone-container no-select">
-        <div class="drop-zone-container-circle">
-            <mat-progress-spinner *ngIf="isConverting" class="drop-zone-container-circle-spinner" diameter="266"
-                strokeWidth="4" color="primary" [mode]="mode" [value]="progressPercent">
+    <div class="drop-zone-container my-4 no-select">
+        <div class="drop-zone-container-circle mb-4">
+            <mat-progress-spinner *ngIf="isConverting || isConvertionSuccessful"
+                class="drop-zone-container-circle-spinner" diameter="266" strokeWidth="4" color="primary" [mode]="mode"
+                [value]="progressPercent">
             </mat-progress-spinner>
             <div class="drop-zone-container-circle-background">
                 <div *ngIf="!canConvert" class="drop-zone-container-drop-icon">
@@ -24,18 +25,19 @@
                 </div>
             </div>
         </div>
-        <div class="drop-zone-container-text mt-3">
-            <div *ngIf="!canConvert">
-                <div *ngIf="!isConvertionSuccessful">
-                    {{ 'ConvertTab.DropText' | translate }}
-                </div>
-                <div *ngIf="isConvertionSuccessful">
-                        {{ 'ConvertTab.ConversionSuccessful' | translate }}
-                </div>
+        <div *ngIf="!canConvert">
+            <div *ngIf="!isConvertionSuccessful">
+                {{ 'ConvertTab.DropText' | translate }}
             </div>
-            <div *ngIf="canConvert">
-                {{downloadUrl}}
+            <div *ngIf="isConvertionSuccessful">
+                {{ 'ConvertTab.ConversionSuccessful' | translate }}
             </div>
+        </div>
+        <div *ngIf="canConvert">
+                {{ 'ConvertTab.FoundOnClipboard' | translate }}
+        </div>
+        <div class="clipboard-content m-1 p-1" *ngIf="canConvert">
+            {{downloadUrl}}
         </div>
     </div>
 </div>
