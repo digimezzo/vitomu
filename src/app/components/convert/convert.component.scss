@@ -48,10 +48,26 @@
   font-size: $fontsize-larger;
 }
 
-.drop-zone-container-drop-icon {
+.drop-zone-container-drop-icon-base {
   @extend .color-secondary-text;
   font-family: segoe;
   font-size: 60px;
+}
+
+.drop-zone-container-drop-icon-copy{
+  @extend .drop-zone-container-drop-icon-base;
+  -webkit-animation: pulse 3s infinite ease-in-out;
+  animation: pulse 3s infinite ease-in-out;
+}
+
+.drop-zone-container-drop-icon-success{
+  @extend .drop-zone-container-drop-icon-base;
+  font-family: segoe;
+  font-size: 60px;
+}
+
+.drop-zone-container-drop-icon-download{
+  @extend .drop-zone-container-drop-icon-base;
   -webkit-animation: pulse 3s infinite ease-in-out;
   animation: pulse 3s infinite ease-in-out;
 }
@@ -65,13 +81,13 @@
 }
 
 @-webkit-keyframes pulse {
-  0% { -webkit-transform: scale(0.9); opacity: 0.7; }
+  0% { -webkit-transform: scale(0.8); opacity: 0.7; }
   50% { -webkit-transform: scale(1); opacity: 1; }
-  100% { -webkit-transform: scale(0.9); opacity: 0.7; }
+  100% { -webkit-transform: scale(0.8); opacity: 0.7; }
 }
 
 @keyframes pulse {
-  0% { transform: scale(0.9); opacity: 0.7; }
+  0% { transform: scale(0.8); opacity: 0.7; }
   50% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(0.8); opacity: 0.7; }
 }

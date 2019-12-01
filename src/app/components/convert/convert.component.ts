@@ -15,8 +15,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   private _canConvert: boolean;
   private _isConverting: boolean;
+  private _isConvertionSuccessful: boolean;
   private _progressPercent: number;
   private _downloadUrl: string;
+  private _lastConvertedFileName: string;
 
   constructor(private convert: ConvertService, private logger: Logger, private zone: NgZone, private clipboardWatcher: ClipboardWatcher) { }
 
@@ -46,6 +48,14 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this._isConverting = v;
   }
 
+  public get isConvertionSuccessful(): boolean {
+    return this._isConvertionSuccessful;
+  }
+
+  public set isConvertionSuccessful(v: boolean) {
+    this._isConvertionSuccessful = v;
+  }
+
   public get downloadUrl(): string {
     return this._downloadUrl;
   }
@@ -54,9 +64,18 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this._downloadUrl = v;
   }
 
+  public get lastConvertedFileName(): string {
+    return this._lastConvertedFileName;
+  }
+
+  public set lastConvertedFileName(v: string) {
+    this._downloadUrl = v;
+  }
+
   ngOnInit() {
     this.subscription = this.convert.convertStatusChanged$.subscribe((isConverting) => this.zone.run(() => this.isConverting = isConverting));
     this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => this.zone.run(() => this.progressPercent = progressPercent)));
+    this.subscription.add(this.convert.convertionSuccessful$.subscribe((fileName) => this.zone.run(() => this.handleConvertionSuccessful(fileName))));
 
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipBoardText) => {
       this.zone.run(() => {
@@ -74,8 +93,13 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   public performConvert() {
-    let pieces: string[] = this.downloadUrl.split("&");
-    let videoId: string = pieces[0].replace("https://www.youtube.com/watch?v=", "");
-    this.convert.convertAsync(videoId);
+    this.convert.convertAsync(this.downloadUrl);
+  }
+
+  public async handleConvertionSuccessful(fileName: string): Promise<void> {
+    this.canConvert = false;
+    this.isConvertionSuccessful = true;
+    this.lastConvertedFileName = fileName;
+    setTimeout(() => this.isConvertionSuccessful = false, 3000);
   }
 }

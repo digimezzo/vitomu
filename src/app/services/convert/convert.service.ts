@@ -15,7 +15,6 @@ import { Subject, Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class ConvertService {
-    private youtubeBaseUrl: string = "https://www.youtube.com/watch?v=";
     private youtubeVideoQuality: string = "highest";
     private requestOptions: any = { maxRedirects: 5 };
     private progressTimeoutMilliseconds: number = 100;
@@ -26,6 +25,9 @@ export class ConvertService {
 
     private convertProgressChanged = new Subject<number>();
     public convertProgressChanged$: Observable<number> = this.convertProgressChanged.asObservable();
+
+    private convertionSuccessful = new Subject<string>();
+    public convertionSuccessful$: Observable<string> = this.convertionSuccessful.asObservable();
 
     constructor(private logger: Logger, private ffmpegChecker: FFmpegChecker, private fileSystem: FileSystem) {
     }
@@ -40,17 +42,17 @@ export class ConvertService {
         return false;
     }
 
-    public async convertAsync(videoId: string): Promise<void> {
+    public async convertAsync(videoUrl: string): Promise<void> {
         try {
             await this.ffmpegChecker.ensureFFmpegIsAvailableAsync();
         } catch (error) {
-            this.logger.error(`Could not ensure that FFmpeg is available. Error: ${error}`, "ConvertService", "downloadAsync");
+            this.logger.error(`Could not ensure that FFmpeg is available. Error: ${error}`, "ConvertService", "convertAsync");
             // TODO: make sure the user sees when this fails.
             return;
         }
 
         if (!this.ffmpegChecker.isFfmpegInPath && !this.ffmpegChecker.ffmpegPath) {
-            this.logger.error("FFmpeg is not available.", "ConvertService", "downloadAsync");
+            this.logger.error("FFmpeg is not available.", "ConvertService", "convertAsync");
             // TODO: make sure the user sees when this fails.
             return;
         }
@@ -60,12 +62,11 @@ export class ConvertService {
 
         try {
             // Get info
-            let videoUrl: string = this.youtubeBaseUrl + videoId;
             let videoInfo: ytdl.videoInfo = await ytdl.getInfo(videoUrl);
             let videoDetails: VideoDetails = new VideoDetails(videoInfo);
             let fileName: string = path.join(this.outputPath, sanitize(videoDetails.videoTitle) + ".mp3");
 
-            this.logger.info(`File name: ${fileName}`, "ConvertService", "downloadAsync");
+            this.logger.info(`File name: ${fileName}`, "ConvertService", "convertAsync");
 
             // Make sure outputPath exists
             await this.fileSystem.ensureDirectoryAsync(this.outputPath);
@@ -105,16 +106,19 @@ export class ConvertService {
                     .outputOptions(outputOptions)
                     .on("error", (error) => {
                         this.convertStatusChanged.next(false);
-                        this.logger.info(`An error occurred while encoding. Error: ${error}`, "ConvertService", "downloadAsync");
+                        this.logger.error(`An error occurred while encoding. Error: ${error}`, "ConvertService", "convertAsync");
                     })
                     .on("end", () => {
                         this.convertStatusChanged.next(false);
+                        this.convertionSuccessful.next(fileName);
+                        this.logger.info(`Convertion of video '${videoUrl}' to file '${fileName}' was succesful`, "ConvertService", "convertAsync");
+                       
                     })
                     .saveToFile(fileName);
             });
         } catch (error) {
             this.convertStatusChanged.next(false);
-            this.logger.error(`Could not download video. Error: ${error}`, "ConvertService", "downloadAsync");
+            this.logger.error(`Could not download video. Error: ${error}`, "ConvertService", "convertAsync");
         }
     }
 }
