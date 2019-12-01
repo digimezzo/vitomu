@@ -8,9 +8,9 @@
         "About": "Over"
     },
     "ConvertTab": {
-        "DropText": "Kopieer een url naar het klembord",
+        "DropText": "Kopieer een URL naar het klembord",
         "ConversionSuccessful": "Conversie succesvol!",
-        "FoundOnClipboard": "Gevonden op klembord"
+        "FoundOnClipboard": "URL gevonden op klembord"
       },
     "SettingsTab": {
         "Language": "Taal",

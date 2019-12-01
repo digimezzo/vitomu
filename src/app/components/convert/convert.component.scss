@@ -78,7 +78,8 @@
 
 .clipboard-content{
   @extend .background-color-background;
-  border-radius: 8px;
+  font-size: $fontsize-smaller;
+  border-radius: 6px;
 }
 
 @-webkit-keyframes pulse {

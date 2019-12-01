@@ -8,9 +8,9 @@
     "About": "About"
   },
   "ConvertTab": {
-    "DropText": "Copy a url to the clipboard",
+    "DropText": "Copy a URL to the clipboard",
     "ConversionSuccessful": "Conversion successful!",
-    "FoundOnClipboard": "Found on clipboard"
+    "FoundOnClipboard": "Found URL on clipboard"
   },
   "SettingsTab": {
     "Language": "Language",

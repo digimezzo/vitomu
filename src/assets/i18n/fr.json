@@ -8,9 +8,9 @@
     "About": "À propos"
   },
   "ConvertTab": {
-    "DropText": "Copiez un url dans le presse-papier",
+    "DropText": "Copiez un URL dans le presse-papier",
     "ConversionSuccessful": "Conversion réussie!",
-    "FoundOnClipboard": "Trouvé dans le presse-papiers"
+    "FoundOnClipboard": "URL trouvé dans le presse-papiers"
   },
   "SettingsTab": {
     "Language": "Langue",
