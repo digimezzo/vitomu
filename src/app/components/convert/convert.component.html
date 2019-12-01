@@ -14,9 +14,9 @@
                         &#xE8FB;
                     </div>
                 </div>
-                <div *ngIf="canConvert" (click)="performConvert()">
+                <div *ngIf="canConvert">
                     <div *ngIf="!isConverting" class="drop-zone-container-drop-icon-download custom-font clickable"
-                        matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}">
+                        matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}" (click)="performConvert()">
                         &#xE896;
                     </div>
                     <div *ngIf="isConverting" class="drop-zone-container-progress-text">
