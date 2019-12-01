@@ -8,7 +8,8 @@
     "About": "À propos"
   },
   "ConvertTab": {
-    "DropText": "Copiez un url dans le presse-papier"
+    "DropText": "Copiez un url dans le presse-papier",
+    "ConversionSuccessful": "Conversion réussie!"
   },
   "SettingsTab": {
     "Language": "Langue",
@@ -37,6 +38,6 @@
     "License": "Licence"
   },
   "Tooltips": {
-    "ClickToDownload": "Cliquer pour télécharger"
+    "ClickToConvert": "Cliquer pour convertir"
   }
 }

@@ -1,7 +1,7 @@
 <div class="container p-2">
     <div class="drop-zone-container no-select">
         <div class="drop-zone-container-circle">
-            <mat-progress-spinner *ngIf="isConverting" class="drop-zone-container-circle-spinner" diameter="268"
+            <mat-progress-spinner *ngIf="isConverting" class="drop-zone-container-circle-spinner" diameter="266"
                 strokeWidth="4" color="primary" [mode]="mode" [value]="progressPercent">
             </mat-progress-spinner>
             <div class="drop-zone-container-circle-background">
@@ -15,7 +15,7 @@
                 </div>
                 <div *ngIf="canConvert" (click)="performConvert()">
                     <div *ngIf="!isConverting" class="drop-zone-container-drop-icon-download custom-font clickable"
-                        matTooltip="{{ 'Tooltips.ClickToDownload' | translate }}">
+                        matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}">
                         &#xE896;
                     </div>
                     <div *ngIf="isConverting" class="drop-zone-container-progress-text">
@@ -26,10 +26,15 @@
         </div>
         <div class="drop-zone-container-text mt-3">
             <div *ngIf="!canConvert">
-                {{ 'ConvertTab.DropText' | translate }}
+                <div *ngIf="!isConvertionSuccessful">
+                    {{ 'ConvertTab.DropText' | translate }}
+                </div>
+                <div *ngIf="isConvertionSuccessful">
+                        {{ 'ConvertTab.ConversionSuccessful' | translate }}
+                </div>
             </div>
             <div *ngIf="canConvert">
-                Download {{downloadUrl}}
+                {{downloadUrl}}
             </div>
         </div>
     </div>

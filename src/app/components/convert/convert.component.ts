@@ -100,6 +100,6 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.canConvert = false;
     this.isConvertionSuccessful = true;
     this.lastConvertedFileName = fileName;
-    setTimeout(() => this.isConvertionSuccessful = false, 3000);
+    setTimeout(() => this.isConvertionSuccessful = false, 5000);
   }
 }

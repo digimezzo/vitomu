@@ -8,7 +8,8 @@
     "About": "About"
   },
   "ConvertTab": {
-    "DropText": "Copy a url to the clipboard"
+    "DropText": "Copy a url to the clipboard",
+    "ConversionSuccessful": "Conversion successful!"
   },
   "SettingsTab": {
     "Language": "Language",
@@ -37,6 +38,6 @@
     "License": "License"
   },
   "Tooltips": {
-    "ClickToDownload": "Click to download"
+    "ClickToConvert": "Click to convert"
   }
 }

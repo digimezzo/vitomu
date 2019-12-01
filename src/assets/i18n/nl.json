@@ -8,7 +8,8 @@
         "About": "Over"
     },
     "ConvertTab": {
-        "DropText": "Kopieer een url naar het klembord"
+        "DropText": "Kopieer een url naar het klembord",
+        "ConversionSuccessful": "Conversie succesvol!"
       },
     "SettingsTab": {
         "Language": "Taal",
@@ -37,6 +38,6 @@
         "License": "Licentie"
     },
     "Tooltips": {
-        "ClickToDownload": "Klik om te downloaden"
+        "ClickToConvert": "Klik om te converteren"
       }
 }
