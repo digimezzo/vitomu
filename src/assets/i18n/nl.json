@@ -10,7 +10,7 @@
     "ConvertTab": {
         "DropText": "Kopieer een URL naar het klembord",
         "ConversionSuccessful": "Conversie succesvol!",
-        "FoundOnClipboard": "URL gevonden op klembord"
+        "FoundOnClipboard": "URL gevonden op klembord!"
       },
     "SettingsTab": {
         "Language": "Taal",

@@ -10,7 +10,7 @@
   "ConvertTab": {
     "DropText": "Copy a URL to the clipboard",
     "ConversionSuccessful": "Conversion successful!",
-    "FoundOnClipboard": "Found URL on clipboard"
+    "FoundOnClipboard": "Found URL on clipboard!"
   },
   "SettingsTab": {
     "Language": "Language",

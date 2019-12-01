@@ -10,7 +10,7 @@
   "ConvertTab": {
     "DropText": "Copiez un URL dans le presse-papier",
     "ConversionSuccessful": "Conversion réussie!",
-    "FoundOnClipboard": "URL trouvé dans le presse-papiers"
+    "FoundOnClipboard": "URL trouvé dans le presse-papiers!"
   },
   "SettingsTab": {
     "Language": "Langue",
