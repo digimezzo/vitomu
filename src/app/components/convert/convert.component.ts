@@ -82,6 +82,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
         this.canConvert = this.convert.isVideoUrlConvertible(clipBoardText);
 
         if (this.canConvert) {
+          this.isConvertionSuccessful = false;
           this.downloadUrl = clipBoardText;
         }
       });

@@ -41,6 +41,10 @@ $border-color-main: #333;
   .background-color-background{
     background-color: mat-color($background, background) !important;
   }
+
+  .box-shadow-inset-0-0-10px-10px-primary{
+    box-shadow: inset 0 0 10px 10px mat-color($primary);
+  }
 }
 
 // Default

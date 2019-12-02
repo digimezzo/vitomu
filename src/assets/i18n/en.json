@@ -8,9 +8,9 @@
     "About": "About"
   },
   "ConvertTab": {
-    "DropText": "Copy a URL to the clipboard",
+    "DropText": "Copy a video link to the clipboard",
     "ConversionSuccessful": "Conversion successful!",
-    "FoundOnClipboard": "Found URL on clipboard!"
+    "FoundOnClipboard": "Found video link on clipboard!"
   },
   "SettingsTab": {
     "Language": "Language",

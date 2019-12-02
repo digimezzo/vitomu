@@ -1,26 +1,14 @@
-/* width */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 12px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 3px;
+  box-shadow: inset 0 0 10px 10px transparent;
+  border: solid 3px transparent;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
-  @extend .background-color-primary-0-6;
-  border-radius: 3px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  @extend .background-color-primary;
-}
-
-::-webkit-scrollbar-corner {
-  background-color: transparent;
+  @extend .box-shadow-inset-0-0-10px-10px-primary;
+  border: solid 3px transparent;
+  border-radius: 12px;
 }
