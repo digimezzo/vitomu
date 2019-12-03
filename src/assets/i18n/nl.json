@@ -39,6 +39,7 @@
         "License": "Licentie"
     },
     "Tooltips": {
-        "ClickToConvert": "Klik om te converteren"
+        "ClickToConvert": "Klik om te converteren",
+        "ShowVideoLink": "Toon videolink"
       }
 }

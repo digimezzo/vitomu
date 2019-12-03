@@ -22,7 +22,7 @@ import { Logger } from './core/logger';
 import { Settings } from './core/settings';
 import { WindowControlsComponent } from './components/window-controls/window-controls.component';
 
-import { MatTooltipModule, MatDialogModule, MatTabsModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatTooltipModule, MatDialogModule, MatTabsModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatSnackBarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalErrorHandler } from './global-error-handler';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -41,6 +41,7 @@ import { FileSystem } from './core/file-system';
 import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
 import { Desktop } from './core/desktop';
 import { ClipboardWatcher } from './core/clipboard-watcher';
+import { SnackBarService } from './services/snack-bar/snack-bar.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -69,6 +70,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatTabsModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
@@ -87,6 +89,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslatorService,
     AppearanceService,
     ConvertService,
+    SnackBarService,
     Logger, 
     Settings,
     FileSystem,

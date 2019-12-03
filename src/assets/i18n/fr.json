@@ -39,6 +39,7 @@
     "License": "Licence"
   },
   "Tooltips": {
-    "ClickToConvert": "Cliquer pour convertir"
+    "ClickToConvert": "Cliquer pour convertir",
+    "ShowVideoLink": "Afficher le lien vidéo"
   }
 }

@@ -34,11 +34,9 @@ export class ConvertService {
 
     public isVideoUrlConvertible(videoUrl: string): boolean {
         if (videoUrl && videoUrl.includes('www.youtube.com/watch?v=')) {
-            this.logger.info(`Video '${videoUrl}' is convertible`, "ConvertService", "isVideoUrlConvertible");
             return true;
         }
 
-        this.logger.warn(`Video '${videoUrl}' is not convertible`, "ConvertService", "isVideoUrlConvertible");
         return false;
     }
 

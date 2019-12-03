@@ -1,0 +1,11 @@
+.mat-simple-snackbar {
+  @extend .color-secondary-text;
+}
+
+.mat-simple-snackbar-action {
+  @extend .color-primary;
+}
+
+.dark-snackbar {
+  @extend .background-color-background;
+}

@@ -33,11 +33,14 @@
                 {{ 'ConvertTab.ConversionSuccessful' | translate }}
             </div>
         </div>
-        <div *ngIf="canConvert">
+        <div class="video-link-info" *ngIf="canConvert">
+            <div>
                 {{ 'ConvertTab.FoundOnClipboard' | translate }}
-        </div>
-        <div class="clipboard-content m-2 p-1" *ngIf="canConvert">
-            {{downloadUrl}}
+            </div>
+            <div class="view-link-button custom-font ml-2" (click)="showVideoLink()"
+                matTooltip="{{ 'Tooltips.ShowVideoLink' | translate }}">
+                &#xE890;
+            </div>
         </div>
     </div>
 </div>

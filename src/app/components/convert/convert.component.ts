@@ -3,6 +3,8 @@ import { ConvertService } from '../../services/convert/convert.service';
 import { Logger } from '../../core/logger';
 import { Subscription } from 'rxjs';
 import { ClipboardWatcher } from '../../core/clipboard-watcher';
+import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
+import { TranslatorService } from '../../services/translator/translator.service';
 
 @Component({
   selector: 'app-convert',
@@ -20,7 +22,8 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private _downloadUrl: string;
   private _lastConvertedFileName: string;
 
-  constructor(private convert: ConvertService, private logger: Logger, private zone: NgZone, private clipboardWatcher: ClipboardWatcher) { }
+  constructor(private convert: ConvertService, private logger: Logger, private zone: NgZone, private clipboardWatcher: ClipboardWatcher,
+    private snackBar: SnackBarService, private translator: TranslatorService) { }
 
   public mode = 'determinate';
 
@@ -38,7 +41,6 @@ export class ConvertComponent implements OnInit, OnDestroy {
   public set progressPercent(v: number) {
     this._progressPercent = v;
   }
-
 
   public get isConverting(): boolean {
     return this._isConverting;
@@ -102,5 +104,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.isConvertionSuccessful = true;
     this.lastConvertedFileName = fileName;
     setTimeout(() => this.isConvertionSuccessful = false, 5000);
+  }
+
+  public async showVideoLink(): Promise<void> {
+    let action: string = await this.translator.getAsync('Buttons.Ok');
+    this.snackBar.showActionSnackBar(this.downloadUrl, action);
   }
 }
