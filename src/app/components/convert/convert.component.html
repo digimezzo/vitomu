@@ -1,28 +1,28 @@
 <div class="container p-2">
     <div class="drop-zone-container my-4 no-select">
         <div class="drop-zone-container-circle mb-4">
+            <div *ngIf="canConvert && !isConverting" class="drop-zone-container-circle-pulsating-circle">
+            </div>
             <mat-progress-spinner *ngIf="isConverting || isConvertionSuccessful"
                 class="drop-zone-container-circle-spinner" diameter="266" strokeWidth="4" color="primary" [mode]="mode"
                 [value]="progressPercent">
             </mat-progress-spinner>
             <div class="drop-zone-container-circle-background">
-                <div *ngIf="!canConvert" class="drop-zone-container-drop-icon">
-                    <div class="drop-zone-container-drop-icon-copy custom-font" *ngIf="!isConvertionSuccessful">
-                        &#xE77F;
-                    </div>
-                    <div class="drop-zone-container-drop-icon-success custom-font" *ngIf="isConvertionSuccessful">
-                        &#xE8FB;
-                    </div>
+            </div>
+            <div *ngIf="!canConvert" class="drop-zone-container-circle-drop-icon">
+                <div class="drop-zone-container-drop-icon-copy custom-font" *ngIf="!isConvertionSuccessful">
+                    &#xE77F;
                 </div>
-                <div *ngIf="canConvert">
-                    <div *ngIf="!isConverting" class="drop-zone-container-drop-icon-download custom-font clickable"
-                        matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}" (click)="performConvert()">
-                        &#xE896;
-                    </div>
-                    <div *ngIf="isConverting" class="drop-zone-container-progress-text">
-                        {{ progressPercent }}%
-                    </div>
+                <div class="drop-zone-container-drop-icon-success custom-font" *ngIf="isConvertionSuccessful">
+                    &#xE8FB;
                 </div>
+            </div>
+            <div *ngIf="canConvert && !isConverting" class="drop-zone-container-circle-download-icon custom-font clickable"
+                matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}" (click)="performConvert()">
+                &#xE896;
+            </div>
+            <div *ngIf="canConvert &&isConverting" class="drop-zone-container-progress-text">
+                {{ progressPercent }}%
             </div>
         </div>
         <div *ngIf="!canConvert">
