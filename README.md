@@ -9,7 +9,7 @@ Vitomu stands for **VI**deo **TO** **MU**sic converter. It allows easy conversio
 
 ## Screenshot
 
-![Knowte2screenshot](Knowte.showcase.png)
+![Vitomu2screenshot](Vitomu.showcase.png)
 
 ## Important ##
 
