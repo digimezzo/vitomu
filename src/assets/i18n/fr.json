@@ -10,7 +10,8 @@
   "ConvertTab": {
     "DropText": "Copiez un lien vidéo dans le presse-papier",
     "ConversionSuccessful": "Conversion réussie!",
-    "FoundOnClipboard": "Lien vidéo trouvé dans le presse-papiers!"
+    "FoundOnClipboard": "Lien vidéo trouvé dans le presse-papiers!",
+    "ConversionInProgress": "Conversion en cours..."
   },
   "SettingsTab": {
     "Language": "Langue",

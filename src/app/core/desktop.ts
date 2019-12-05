@@ -9,4 +9,8 @@ export class Desktop {
     public openExternal(url: string): void {
         shell.openExternal(url);
     }
+
+    public showItemInFolder(fileName: string) : void{
+        shell.showItemInFolder(fileName);
+    }
 }

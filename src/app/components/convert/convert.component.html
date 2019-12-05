@@ -17,11 +17,12 @@
                     &#xE8FB;
                 </div>
             </div>
-            <div *ngIf="canConvert && !isConverting" class="drop-zone-container-circle-download-icon custom-font clickable"
+            <div *ngIf="canConvert && !isConverting"
+                class="drop-zone-container-circle-download-icon custom-font clickable"
                 matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}" (click)="performConvert()">
                 &#xE896;
             </div>
-            <div *ngIf="canConvert &&isConverting" class="drop-zone-container-progress-text">
+            <div *ngIf="canConvert && isConverting" class="drop-zone-container-progress-text">
                 {{ progressPercent }}%
             </div>
         </div>
@@ -33,7 +34,7 @@
                 {{ 'ConvertTab.ConversionSuccessful' | translate }}
             </div>
         </div>
-        <div class="video-link-info" *ngIf="canConvert">
+        <div class="video-link-info" *ngIf="canConvert && !isConverting">
             <div>
                 {{ 'ConvertTab.FoundOnClipboard' | translate }}
             </div>
@@ -42,5 +43,15 @@
                 &#xE890;
             </div>
         </div>
+        <div *ngIf="canConvert && isConverting">
+            {{ 'ConvertTab.ConversionInProgress' | translate }}
+        </div>
+    </div>
+    <div *ngIf="lastConvertedFileName" class="last-converted-container p-1">
+        <div class="last-converted-container-text">
+            {{ lastConvertedFileName }} yo
+        </div>
+        <button mat-mini-fab (click)="viewInFolder()"><span class="last-converted-container-button custom-font">&#xE838;</span></button>
+        <button class="ml-1" mat-mini-fab (click)="play()"><span class="last-converted-container-button custom-font">&#xE768;</span></button>
     </div>
 </div>

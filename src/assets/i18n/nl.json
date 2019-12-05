@@ -10,7 +10,8 @@
     "ConvertTab": {
         "DropText": "Kopieer een video link naar het klembord",
         "ConversionSuccessful": "Conversie succesvol!",
-        "FoundOnClipboard": "Video link gevonden op klembord!"
+        "FoundOnClipboard": "Video link gevonden op klembord!",
+        "ConversionInProgress": "Conversie wordt uitgevoerd..."
       },
     "SettingsTab": {
         "Language": "Taal",

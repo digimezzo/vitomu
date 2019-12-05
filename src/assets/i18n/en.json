@@ -10,7 +10,8 @@
   "ConvertTab": {
     "DropText": "Copy a video link to the clipboard",
     "ConversionSuccessful": "Conversion successful!",
-    "FoundOnClipboard": "Found video link on clipboard!"
+    "FoundOnClipboard": "Found video link on clipboard!",
+    "ConversionInProgress": "Conversion in progress..."
   },
   "SettingsTab": {
     "Language": "Language",

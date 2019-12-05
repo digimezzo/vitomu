@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ClipboardWatcher } from '../../core/clipboard-watcher';
 import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../services/translator/translator.service';
+import { Desktop } from '../../core/desktop';
 
 @Component({
   selector: 'app-convert',
@@ -23,7 +24,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private _lastConvertedFileName: string;
 
   constructor(private convert: ConvertService, private logger: Logger, private zone: NgZone, private clipboardWatcher: ClipboardWatcher,
-    private snackBar: SnackBarService, private translator: TranslatorService) { }
+    private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop) { }
 
   public mode = 'determinate';
 
@@ -71,7 +72,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   public set lastConvertedFileName(v: string) {
-    this._downloadUrl = v;
+    this._lastConvertedFileName = v;
   }
 
   ngOnInit() {
@@ -109,5 +110,13 @@ export class ConvertComponent implements OnInit, OnDestroy {
   public async showVideoLink(): Promise<void> {
     let action: string = await this.translator.getAsync('Buttons.Ok');
     this.snackBar.showActionSnackBar(this.downloadUrl, action);
+  }
+
+  public viewInFolder(): void{
+    this.desktop.showItemInFolder(this.lastConvertedFileName);
+  }
+
+  public play(): void{
+
   }
 }
