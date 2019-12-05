@@ -7,6 +7,21 @@ Vitomu stands for **VI**deo **TO** **MU**sic converter. It allows easy conversio
 [![Issues](https://img.shields.io/github/issues/digimezzo/Vitomu-electron.svg?style=flat-square)](https://github.com/digimezzo/vitomu-electron/issues)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MQALEWTEZ7HX8)
 
+## Screenshot
+
+![Knowte2screenshot](Knowte.showcase.png)
+
 ## Important ##
 
 This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href="https://github.com/digimezzo/Vitomu">here</a>
+
+## Build instructions
+
+```bash
+$ git clone https://github.com/digimezzo/vitomu-electron.git
+$ cd vitomu-electron
+$ npm install            # Download dependencies
+$ npm start              # Start Knowte
+$ npm run electron:windows   # Build for Windows
+$ npm run electron:linux     # Build for Linux
+$ npm run electron:mac       # Build for Mac
