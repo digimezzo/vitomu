@@ -115,7 +115,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.isConvertionSuccessful = true;
     this.lastConvertedFilePath = filePath;
     this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
-    setTimeout(() => this.isConvertionSuccessful = false, 5000);
+    setTimeout(() => this.isConvertionSuccessful = false, 3000);
   }
 
   public async showVideoLink(): Promise<void> {
