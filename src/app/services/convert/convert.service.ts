@@ -84,12 +84,6 @@ export class ConvertService {
                     this.convertProgressChanged.next(parseInt(progress.percentage, 10));
                 });
 
-                let outputOptions = [
-                    "-id3v2_version", "4",
-                    "-metadata", "title=" + videoDetails.title,
-                    "-metadata", "artist=" + videoDetails.artist
-                ];
-
                 if (!this.ffmpegChecker.isFfmpegInPath) {
                     ffmpeg.setFfmpegPath(this.ffmpegChecker.ffmpegPath);
                 }
@@ -101,7 +95,9 @@ export class ConvertService {
                     .audioBitrate(videoInfo.formats[0].audioBitrate)
                     .withAudioCodec("libmp3lame")
                     .toFormat("mp3")
-                    .outputOptions(outputOptions)
+                    .addOutputOption('-id3v2_version', '4')
+                    .addOutputOption('-metadata', `title=${videoDetails.title}`)
+                    .addOutputOption('-metadata', `artist=${videoDetails.artist}`)
                     .on("error", (error) => {
                         this.convertStatusChanged.next(false);
                         this.logger.error(`An error occurred while encoding. Error: ${error}`, "ConvertService", "convertAsync");

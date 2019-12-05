@@ -111,6 +111,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   public async handleConvertionSuccessful(filePath: string): Promise<void> {
+    this.canConvert = false;
     this.isConvertionSuccessful = true;
     this.lastConvertedFilePath = filePath;
     this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
