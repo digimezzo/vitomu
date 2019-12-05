@@ -41,6 +41,8 @@
     },
     "Tooltips": {
         "ClickToConvert": "Klik om te converteren",
-        "ShowVideoLink": "Toon videolink"
+        "ShowVideoLink": "Toon videolink",
+        "ViewInFolder": "Bekijk in map",
+        "Play": "Afspelen"
       }
 }

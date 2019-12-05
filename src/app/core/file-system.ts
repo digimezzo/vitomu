@@ -2,6 +2,7 @@ import * as fs from 'fs-extra';
 import { Injectable } from '@angular/core';
 import { remote } from 'electron';
 import * as commandExists from 'command-exists-promise';
+import * as path from 'path';
 
 @Injectable()
 export class FileSystem {
@@ -30,5 +31,9 @@ export class FileSystem {
 
     public async commanExistsAsync(command: string): Promise<boolean> {
         return await commandExists(command)
+    }
+
+    public getFileName(filePath: string): string {
+        return path.basename(filePath);
     }
 }

@@ -96,7 +96,7 @@ describe('AboutComponent', () => {
             aboutComponent.openDonateLink();
 
             // Assert
-            desktopMock.verify(x => x.openExternal(Constants.donateUrl), Times.atLeastOnce());
+            desktopMock.verify(x => x.openLink(Constants.donateUrl), Times.atLeastOnce());
         });
     });
 });

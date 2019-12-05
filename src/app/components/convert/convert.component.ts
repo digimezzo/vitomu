@@ -6,6 +6,7 @@ import { ClipboardWatcher } from '../../core/clipboard-watcher';
 import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../services/translator/translator.service';
 import { Desktop } from '../../core/desktop';
+import { FileSystem } from '../../core/file-system';
 
 @Component({
   selector: 'app-convert',
@@ -21,10 +22,11 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private _isConvertionSuccessful: boolean;
   private _progressPercent: number;
   private _downloadUrl: string;
+  private _lastConvertedFilePath: string;
   private _lastConvertedFileName: string;
 
   constructor(private convert: ConvertService, private logger: Logger, private zone: NgZone, private clipboardWatcher: ClipboardWatcher,
-    private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop) { }
+    private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop, private fileSystem: FileSystem) { }
 
   public mode = 'determinate';
 
@@ -67,6 +69,14 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this._downloadUrl = v;
   }
 
+  public get lastConvertedFilePath(): string {
+    return this._lastConvertedFilePath;
+  }
+
+  public set lastConvertedFilePath(v: string) {
+    this._lastConvertedFilePath = v;
+  }
+
   public get lastConvertedFileName(): string {
     return this._lastConvertedFileName;
   }
@@ -78,7 +88,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.convert.convertStatusChanged$.subscribe((isConverting) => this.zone.run(() => this.isConverting = isConverting));
     this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => this.zone.run(() => this.progressPercent = progressPercent)));
-    this.subscription.add(this.convert.convertionSuccessful$.subscribe((fileName) => this.zone.run(() => this.handleConvertionSuccessful(fileName))));
+    this.subscription.add(this.convert.convertionSuccessful$.subscribe((filePath) => this.zone.run(() => this.handleConvertionSuccessful(filePath))));
 
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipBoardText) => {
       this.zone.run(() => {
@@ -100,10 +110,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.convert.convertAsync(this.downloadUrl);
   }
 
-  public async handleConvertionSuccessful(fileName: string): Promise<void> {
-    this.canConvert = false;
+  public async handleConvertionSuccessful(filePath: string): Promise<void> {
     this.isConvertionSuccessful = true;
-    this.lastConvertedFileName = fileName;
+    this.lastConvertedFilePath = filePath;
+    this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
     setTimeout(() => this.isConvertionSuccessful = false, 5000);
   }
 
@@ -113,10 +123,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   public viewInFolder(): void{
-    this.desktop.showItemInFolder(this.lastConvertedFileName);
+    this.desktop.showInFolder(this.lastConvertedFilePath);
   }
 
   public play(): void{
-
+    this.desktop.openInDefaultApplication(this.lastConvertedFilePath);
   }
 }

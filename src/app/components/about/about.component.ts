@@ -31,6 +31,6 @@ export class AboutComponent implements OnInit {
   }
 
   public openDonateLink(): void {
-    this.desktop.openExternal(Constants.donateUrl);
+    this.desktop.openLink(Constants.donateUrl);
   }
 }

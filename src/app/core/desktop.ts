@@ -6,11 +6,15 @@ export class Desktop {
     constructor() {
     }
 
-    public openExternal(url: string): void {
+    public openLink(url: string): void {
         shell.openExternal(url);
     }
 
-    public showItemInFolder(fileName: string) : void{
+    public showInFolder(fileName: string): void {
         shell.showItemInFolder(fileName);
+    }
+
+    public openInDefaultApplication(fileName: string): void {
+        shell.openItem(fileName);
     }
 }

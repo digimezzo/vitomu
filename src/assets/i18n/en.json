@@ -41,6 +41,8 @@
   },
   "Tooltips": {
     "ClickToConvert": "Click to convert",
-    "ShowVideoLink": "Show video link"
+    "ShowVideoLink": "Show video link",
+    "ViewInFolder": "View in folder",
+    "Play": "Play"
   }
 }
