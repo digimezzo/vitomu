@@ -25,10 +25,10 @@ describe('ConvertComponent', () => {
             let convertComponent: ConvertComponent = new ConvertComponent(
                 convertMock.object,
                 zoneMock.object,
-                clipboardWatcherMock.object, 
+                clipboardWatcherMock.object,
                 snackBarMock.object,
-                translatorMock.object, 
-                desktopMock.object, 
+                translatorMock.object,
+                desktopMock.object,
                 fileSystemMock.object);
 
             // Assert
@@ -49,10 +49,10 @@ describe('ConvertComponent', () => {
             let convertComponent: ConvertComponent = new ConvertComponent(
                 convertMock.object,
                 zoneMock.object,
-                clipboardWatcherMock.object, 
+                clipboardWatcherMock.object,
                 snackBarMock.object,
-                translatorMock.object, 
-                desktopMock.object, 
+                translatorMock.object,
+                desktopMock.object,
                 fileSystemMock.object);
 
             // Assert
@@ -73,10 +73,10 @@ describe('ConvertComponent', () => {
             let convertComponent: ConvertComponent = new ConvertComponent(
                 convertMock.object,
                 zoneMock.object,
-                clipboardWatcherMock.object, 
+                clipboardWatcherMock.object,
                 snackBarMock.object,
-                translatorMock.object, 
-                desktopMock.object, 
+                translatorMock.object,
+                desktopMock.object,
                 fileSystemMock.object);
 
             // Assert
@@ -97,10 +97,10 @@ describe('ConvertComponent', () => {
             let convertComponent: ConvertComponent = new ConvertComponent(
                 convertMock.object,
                 zoneMock.object,
-                clipboardWatcherMock.object, 
+                clipboardWatcherMock.object,
                 snackBarMock.object,
-                translatorMock.object, 
-                desktopMock.object, 
+                translatorMock.object,
+                desktopMock.object,
                 fileSystemMock.object);
 
             // Assert
@@ -121,10 +121,10 @@ describe('ConvertComponent', () => {
             let convertComponent: ConvertComponent = new ConvertComponent(
                 convertMock.object,
                 zoneMock.object,
-                clipboardWatcherMock.object, 
+                clipboardWatcherMock.object,
                 snackBarMock.object,
-                translatorMock.object, 
-                desktopMock.object, 
+                translatorMock.object,
+                desktopMock.object,
                 fileSystemMock.object);
 
             // Assert
@@ -145,14 +145,14 @@ describe('ConvertComponent', () => {
             let convertComponent: ConvertComponent = new ConvertComponent(
                 convertMock.object,
                 zoneMock.object,
-                clipboardWatcherMock.object, 
+                clipboardWatcherMock.object,
                 snackBarMock.object,
-                translatorMock.object, 
-                desktopMock.object, 
+                translatorMock.object,
+                desktopMock.object,
                 fileSystemMock.object);
 
             // Assert
-            assert.equal(convertComponent.downloadUrl, "");
+            assert.equal(convertComponent.downloadUrl, '');
         });
 
         it('Should not start with a last converted file path', () => {
@@ -169,14 +169,14 @@ describe('ConvertComponent', () => {
             let convertComponent: ConvertComponent = new ConvertComponent(
                 convertMock.object,
                 zoneMock.object,
-                clipboardWatcherMock.object, 
+                clipboardWatcherMock.object,
                 snackBarMock.object,
-                translatorMock.object, 
-                desktopMock.object, 
+                translatorMock.object,
+                desktopMock.object,
                 fileSystemMock.object);
 
             // Assert
-            assert.equal(convertComponent.lastConvertedFilePath, "");
+            assert.equal(convertComponent.lastConvertedFilePath, '');
         });
 
         it('Should not start with a last converted file name', () => {
@@ -193,14 +193,74 @@ describe('ConvertComponent', () => {
             let convertComponent: ConvertComponent = new ConvertComponent(
                 convertMock.object,
                 zoneMock.object,
-                clipboardWatcherMock.object, 
+                clipboardWatcherMock.object,
                 snackBarMock.object,
-                translatorMock.object, 
-                desktopMock.object, 
+                translatorMock.object,
+                desktopMock.object,
                 fileSystemMock.object);
 
             // Assert
             assert.equal(convertComponent.lastConvertedFileName, "");
+        });
+    });
+
+    describe('performConvert', () => {
+        it('Should perform a conversion for the given download url', () => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            // Act
+            convertComponent.downloadUrl = 'https://my.url.is.glorious';
+            convertComponent.performConvert();
+
+            // Assert
+            convertMock.verify(x => x.convertAsync('https://my.url.is.glorious'), Times.exactly(1));
+        });
+    });
+
+    describe('showVideoLink', () => {
+        it('Should show a snack bar containing the current video URL and a OK button', async() => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            translatorMock.setup(x => x.getAsync('Buttons.Ok')).returns(() => Promise.resolve('OK'));
+
+            // Act
+            convertComponent.downloadUrl = 'https://my.url.is.glorious';
+            await convertComponent.showVideoLinkAsync();
+
+            // Assert
+            snackBarMock.verify(x => x.showActionSnackBar('https://my.url.is.glorious', 'OK'), Times.atLeastOnce());
         });
     });
 });

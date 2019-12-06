@@ -110,15 +110,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.convert.convertAsync(this.downloadUrl);
   }
 
-  public async handleConvertionSuccessful(filePath: string): Promise<void> {
-    this.canConvert = false;
-    this.isConvertionSuccessful = true;
-    this.lastConvertedFilePath = filePath;
-    this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
-    setTimeout(() => this.isConvertionSuccessful = false, 3000);
-  }
-
-  public async showVideoLink(): Promise<void> {
+  public async showVideoLinkAsync(): Promise<void> {
     let action: string = await this.translator.getAsync('Buttons.Ok');
     this.snackBar.showActionSnackBar(this.downloadUrl, action);
   }
@@ -129,5 +121,13 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   public play(): void{
     this.desktop.openInDefaultApplication(this.lastConvertedFilePath);
+  }
+
+  public async handleConvertionSuccessful(filePath: string): Promise<void> {
+    this.canConvert = false;
+    this.isConvertionSuccessful = true;
+    this.lastConvertedFilePath = filePath;
+    this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
+    setTimeout(() => this.isConvertionSuccessful = false, 3000);
   }
 }
