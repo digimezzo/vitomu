@@ -17,13 +17,13 @@ import { FileSystem } from '../../core/file-system';
 export class ConvertComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
-  private _canConvert: boolean;
-  private _isConverting: boolean;
-  private _isConvertionSuccessful: boolean;
-  private _progressPercent: number;
-  private _downloadUrl: string;
-  private _lastConvertedFilePath: string;
-  private _lastConvertedFileName: string;
+  private _canConvert: boolean = false;
+  private _isConverting: boolean = false;
+  private _isConvertionSuccessful: boolean = false;
+  private _progressPercent: number = 0;
+  private _downloadUrl: string = "";
+  private _lastConvertedFilePath: string = "";
+  private _lastConvertedFileName: string = "";
 
   constructor(private convert: ConvertService, private zone: NgZone, private clipboardWatcher: ClipboardWatcher,
     private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop, private fileSystem: FileSystem) { }

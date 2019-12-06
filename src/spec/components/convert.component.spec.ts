@@ -34,5 +34,173 @@ describe('ConvertComponent', () => {
             // Assert
             assert.equal(convertComponent.progressMode, 'determinate');
         });
+
+        it('Should not start with ability to convert', () => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            // Act
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object, 
+                snackBarMock.object,
+                translatorMock.object, 
+                desktopMock.object, 
+                fileSystemMock.object);
+
+            // Assert
+            assert.equal(convertComponent.canConvert, false);
+        });
+
+        it('Should not start converting', () => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            // Act
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object, 
+                snackBarMock.object,
+                translatorMock.object, 
+                desktopMock.object, 
+                fileSystemMock.object);
+
+            // Assert
+            assert.equal(convertComponent.isConverting, false);
+        });
+
+        it('Should start with no progress', () => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            // Act
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object, 
+                snackBarMock.object,
+                translatorMock.object, 
+                desktopMock.object, 
+                fileSystemMock.object);
+
+            // Assert
+            assert.equal(convertComponent.progressPercent, 0);
+        });
+
+        it('Should not start with a successful conversion', () => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            // Act
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object, 
+                snackBarMock.object,
+                translatorMock.object, 
+                desktopMock.object, 
+                fileSystemMock.object);
+
+            // Assert
+            assert.equal(convertComponent.isConvertionSuccessful, false);
+        });
+
+        it('Should not start with a download url', () => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            // Act
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object, 
+                snackBarMock.object,
+                translatorMock.object, 
+                desktopMock.object, 
+                fileSystemMock.object);
+
+            // Assert
+            assert.equal(convertComponent.downloadUrl, "");
+        });
+
+        it('Should not start with a last converted file path', () => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            // Act
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object, 
+                snackBarMock.object,
+                translatorMock.object, 
+                desktopMock.object, 
+                fileSystemMock.object);
+
+            // Assert
+            assert.equal(convertComponent.lastConvertedFilePath, "");
+        });
+
+        it('Should not start with a last converted file name', () => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            // Act
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object, 
+                snackBarMock.object,
+                translatorMock.object, 
+                desktopMock.object, 
+                fileSystemMock.object);
+
+            // Assert
+            assert.equal(convertComponent.lastConvertedFileName, "");
+        });
     });
 });
