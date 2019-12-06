@@ -4,7 +4,7 @@
             <div *ngIf="canConvert && !isConverting" class="drop-zone-container-circle-pulsating-circle">
             </div>
             <mat-progress-spinner *ngIf="isConverting || isConvertionSuccessful"
-                class="drop-zone-container-circle-spinner" diameter="266" strokeWidth="4" color="primary" [mode]="mode"
+                class="drop-zone-container-circle-spinner" diameter="266" strokeWidth="4" color="primary" [mode]="progressMode"
                 [value]="progressPercent">
             </mat-progress-spinner>
             <div class="drop-zone-container-circle-background">

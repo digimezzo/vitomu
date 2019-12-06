@@ -25,10 +25,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private _lastConvertedFilePath: string;
   private _lastConvertedFileName: string;
 
-  constructor(private convert: ConvertService, private logger: Logger, private zone: NgZone, private clipboardWatcher: ClipboardWatcher,
+  constructor(private convert: ConvertService, private zone: NgZone, private clipboardWatcher: ClipboardWatcher,
     private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop, private fileSystem: FileSystem) { }
 
-  public mode = 'determinate';
+  public progressMode = 'determinate';
 
   public get canConvert(): boolean {
     return this._canConvert;
