@@ -233,7 +233,7 @@ describe('ConvertComponent', () => {
         });
     });
 
-    describe('showVideoLink', () => {
+    describe('showVideoLinkAsync', () => {
         it('Should show a snack bar containing the current video URL and a OK button', async() => {
             // Arrange
             let convertMock = Mock.ofType<ConvertService>();
@@ -260,7 +260,65 @@ describe('ConvertComponent', () => {
             await convertComponent.showVideoLinkAsync();
 
             // Assert
-            snackBarMock.verify(x => x.showActionSnackBar('https://my.url.is.glorious', 'OK'), Times.atLeastOnce());
+            snackBarMock.verify(x => x.showActionSnackBar('https://my.url.is.glorious', 'OK'), Times.exactly(1));
+        });
+    });
+
+    describe('viewInFolder', () => {
+        it('Should show the converted file in its containing folder', async() => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            // Act
+            convertComponent.lastConvertedFilePath = '/home/user/Music/Vitomu/Converted file.mp3';
+            convertComponent.viewInFolder();
+
+            // Assert
+            desktopMock.verify(x => x.showInFolder('/home/user/Music/Vitomu/Converted file.mp3'), Times.exactly(1));
+        });
+    });
+
+    describe('play', () => {
+        it('Should play the converted file in the default application', async() => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            // Act
+            convertComponent.lastConvertedFilePath = '/home/user/Music/Vitomu/Converted file.mp3';
+            convertComponent.play();
+
+            // Assert
+            desktopMock.verify(x => x.openInDefaultApplication('/home/user/Music/Vitomu/Converted file.mp3'), Times.exactly(1));
         });
     });
 });
