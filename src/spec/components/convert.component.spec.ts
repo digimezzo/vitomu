@@ -15,21 +15,21 @@ describe('ConvertComponent', () => {
             // Arrange
             let convertMock = Mock.ofType<ConvertService>();
             let zoneMock = Mock.ofType<NgZone>();
-            let clipboardWatcher = Mock.ofType<ClipboardWatcher>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
-            let translator = Mock.ofType<TranslatorService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
             let desktopMock = Mock.ofType<Desktop>();
-            let fileSystem = Mock.ofType<FileSystem>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
                 convertMock.object,
                 zoneMock.object,
-                clipboardWatcher.object, 
+                clipboardWatcherMock.object, 
                 snackBarMock.object,
-                translator.object, 
+                translatorMock.object, 
                 desktopMock.object, 
-                fileSystem.object);
+                fileSystemMock.object);
 
             // Assert
             assert.equal(convertComponent.progressMode, 'determinate');
