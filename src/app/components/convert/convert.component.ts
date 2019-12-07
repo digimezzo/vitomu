@@ -86,9 +86,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription = this.convert.convertStatusChanged$.subscribe((isConverting) => this.zone.run(() => this.isConverting = isConverting));
+    this.subscription = new Subscription();
+    this.subscription.add(this.convert.convertStatusChanged$.subscribe((isConverting) => this.zone.run(() => this.isConverting = isConverting)));
     this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => this.zone.run(() => this.progressPercent = progressPercent)));
-    this.subscription.add(this.convert.convertionSuccessful$.subscribe((filePath) => this.zone.run(() => this.handleConvertionSuccessful(filePath))));
+    this.subscription.add(this.convert.conversionSuccessful$.subscribe((filePath) => this.zone.run(() => this.handleConvertionSuccessful(filePath))));
 
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipBoardText) => {
       this.zone.run(() => {

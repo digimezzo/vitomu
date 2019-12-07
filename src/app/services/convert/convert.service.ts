@@ -26,10 +26,22 @@ export class ConvertService {
     private convertProgressChanged = new Subject<number>();
     public convertProgressChanged$: Observable<number> = this.convertProgressChanged.asObservable();
 
-    private convertionSuccessful = new Subject<string>();
-    public convertionSuccessful$: Observable<string> = this.convertionSuccessful.asObservable();
+    private conversionSuccessful = new Subject<string>();
+    public conversionSuccessful$: Observable<string> = this.conversionSuccessful.asObservable();
 
     constructor(private logger: Logger, private ffmpegChecker: FFmpegChecker, private fileSystem: FileSystem) {
+    }
+
+    public onConvertStatusChanged(isConverting: boolean): void{
+        this.convertStatusChanged.next(isConverting);
+    }
+
+    public onConvertProgressChanged(progressPercent: number): void{
+        this.convertProgressChanged.next(progressPercent);
+    }
+
+    public onConvertionSuccessful(fileName: string): void{
+        this.conversionSuccessful.next(fileName);
     }
 
     public isVideoUrlConvertible(videoUrl: string): boolean {
@@ -55,8 +67,8 @@ export class ConvertService {
             return;
         }
 
-        this.convertProgressChanged.next(0);
-        this.convertStatusChanged.next(true);
+        this.onConvertProgressChanged(0);
+        this.onConvertStatusChanged(true);
 
         try {
             // Get info
@@ -81,7 +93,7 @@ export class ConvertService {
 
                 // Add progress event listener
                 str.on("progress", (progress) => {
-                    this.convertProgressChanged.next(parseInt(progress.percentage, 10));
+                    this.onConvertProgressChanged(parseInt(progress.percentage, 10));
                 });
 
                 if (!this.ffmpegChecker.isFfmpegInPath) {
@@ -99,19 +111,19 @@ export class ConvertService {
                     .addOutputOption('-metadata', `title=${videoDetails.title}`)
                     .addOutputOption('-metadata', `artist=${videoDetails.artist}`)
                     .on("error", (error) => {
-                        this.convertStatusChanged.next(false);
+                        this.onConvertStatusChanged(false);
                         this.logger.error(`An error occurred while encoding. Error: ${error}`, "ConvertService", "convertAsync");
                     })
                     .on("end", () => {
-                        this.convertStatusChanged.next(false);
-                        this.convertionSuccessful.next(fileName);
+                        this.onConvertStatusChanged(false);
+                        this.onConvertionSuccessful(fileName);
                         this.logger.info(`Convertion of video '${videoUrl}' to file '${fileName}' was succesful`, "ConvertService", "convertAsync");
                        
                     })
                     .saveToFile(fileName);
             });
         } catch (error) {
-            this.convertStatusChanged.next(false);
+            this.onConvertStatusChanged(false);
             this.logger.error(`Could not download video. Error: ${error}`, "ConvertService", "convertAsync");
         }
     }

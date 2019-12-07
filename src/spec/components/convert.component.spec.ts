@@ -8,6 +8,7 @@ import { SnackBarService } from '../../app/services/snack-bar/snack-bar.service'
 import { TranslatorService } from '../../app/services/translator/translator.service';
 import { FileSystem } from '../../app/core/file-system';
 import { ConvertComponent } from '../../app/components/convert/convert.component';
+import { Observable } from 'rxjs';
 
 describe('ConvertComponent', () => {
     describe('constructor', () => {
@@ -319,6 +320,42 @@ describe('ConvertComponent', () => {
 
             // Assert
             desktopMock.verify(x => x.openInDefaultApplication('/home/user/Music/Vitomu/Converted file.mp3'), Times.exactly(1));
+        });
+    });
+
+    describe('ngOnInit', () => {
+        it('Should detect when the conversion status is changed', (done) => {
+            // Arrange
+            let convertMock = Mock.ofType<ConvertService>();
+            let zoneMock = Mock.ofType<NgZone>();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            convertMock.setup(x => x.convertStatusChanged$).returns(() => new Observable<boolean>());
+            convertMock.setup(x => x.convertProgressChanged$).returns(() => new Observable<number>());
+            convertMock.setup(x => x.conversionSuccessful$).returns(() => new Observable<string>());
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                convertMock.object,
+                zoneMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            // Act
+            convertComponent.ngOnInit();
+            convertMock.object.onConvertStatusChanged(true);
+            convertComponent.ngOnDestroy();
+            done();
+
+            // Assert
+            assert.equal(convertComponent.isConverting, true);
         });
     });
 });
