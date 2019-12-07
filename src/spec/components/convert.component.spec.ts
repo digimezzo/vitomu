@@ -347,22 +347,25 @@ describe('ConvertComponent', () => {
             }
         }
 
+        class ClipboardWatcherMock{
+            private clipboardContentChanged = new Subject<string>();
+            public clipboardContentChanged$: Observable<string> = this.clipboardContentChanged.asObservable();
+        }
+
         it('Should detect when the conversion starts', async () => {
             // Arrange
             let refMock = Mock.ofType<ChangeDetectorRef>();
             let convertMock = new ConvertServiceMock();
-            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let clipboardWatcherMock = new ClipboardWatcherMock();
             let snackBarMock = Mock.ofType<SnackBarService>();
             let translatorMock = Mock.ofType<TranslatorService>();
             let desktopMock = Mock.ofType<Desktop>();
             let fileSystemMock = Mock.ofType<FileSystem>();
 
-            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
-
             let convertComponent: ConvertComponent = new ConvertComponent(
                 refMock.object,
                 convertMock as any,
-                clipboardWatcherMock.object,
+                clipboardWatcherMock as any,
                 snackBarMock.object,
                 translatorMock.object,
                 desktopMock.object,
@@ -382,18 +385,16 @@ describe('ConvertComponent', () => {
             // Arrange
             let refMock = Mock.ofType<ChangeDetectorRef>();
             let convertMock = new ConvertServiceMock();
-            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let clipboardWatcherMock = new ClipboardWatcherMock();
             let snackBarMock = Mock.ofType<SnackBarService>();
             let translatorMock = Mock.ofType<TranslatorService>();
             let desktopMock = Mock.ofType<Desktop>();
             let fileSystemMock = Mock.ofType<FileSystem>();
 
-            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
-
             let convertComponent: ConvertComponent = new ConvertComponent(
                 refMock.object,
                 convertMock as any,
-                clipboardWatcherMock.object,
+                clipboardWatcherMock as any,
                 snackBarMock.object,
                 translatorMock.object,
                 desktopMock.object,
@@ -407,6 +408,35 @@ describe('ConvertComponent', () => {
 
             // Assert
             assert.equal(convertComponent.isConverting, false);
+        });
+
+        it('Should detect conversion progress changes', async () => {
+            // Arrange
+            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let convertMock = new ConvertServiceMock();
+            let clipboardWatcherMock = new ClipboardWatcherMock();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                refMock.object,
+                convertMock as any,
+                clipboardWatcherMock as any,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            // Act
+            convertComponent.progressPercent = 0;
+            convertComponent.ngOnInit();
+            convertMock.onConvertProgressChanged(40);
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.progressPercent, 40);
         });
     });
 });
