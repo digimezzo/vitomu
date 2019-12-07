@@ -7,6 +7,7 @@ import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../services/translator/translator.service';
 import { Desktop } from '../../core/desktop';
 import { FileSystem } from '../../core/file-system';
+import { Utils } from '../../core/utils';
 
 @Component({
   selector: 'app-convert',
@@ -86,9 +87,9 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription.add(this.convert.convertStatusChanged$.subscribe((isConverting) => this.isConverting = isConverting));
-    this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => this.progressPercent = progressPercent));
-    this.subscription.add(this.convert.conversionSuccessful$.subscribe((filePath) => this.handleConvertionSuccessful(filePath)));
+    this.subscription.add(this.convert.convertStatusChanged$.subscribe((isConverting) => this.handleConvertStatusChanged(isConverting)));
+    this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => this.handleConvertProgressChanged(progressPercent)));
+    this.subscription.add(this.convert.conversionSuccessful$.subscribe(async (filePath) => await this.handleConvertionSuccessfulAsync(filePath)));
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipboardText) => this.handleClipboardContentChanged(clipboardText)));
   }
 
@@ -113,12 +114,31 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.desktop.openInDefaultApplication(this.lastConvertedFilePath);
   }
 
-  private async handleConvertionSuccessful(filePath: string): Promise<void> {
+  private handleConvertStatusChanged(isConverting: boolean): void {
+    this.isConverting = isConverting;
+    this.ref.detectChanges();
+  }
+
+  private handleConvertProgressChanged(progressPercent: number): void {
+    this.progressPercent = progressPercent;
+    this.ref.detectChanges();
+  }
+
+  private async handleConvertionSuccessfulAsync(filePath: string): Promise<void> {
     this.canConvert = false;
     this.isConvertionSuccessful = true;
     this.lastConvertedFilePath = filePath;
     this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
-    setTimeout(() => this.isConvertionSuccessful = false, 3000);
+    this.ref.detectChanges();
+
+    setTimeout(() => {
+      this.isConvertionSuccessful = false;
+      this.ref.detectChanges();
+    }, 3000);
+
+    // await Utils.sleep(3000);
+    // this.isConvertionSuccessful = false;
+    // this.ref.detectChanges();
   }
 
   private handleClipboardContentChanged(clipboardText: string): void {

@@ -9,6 +9,7 @@ import { TranslatorService } from '../../app/services/translator/translator.serv
 import { FileSystem } from '../../app/core/file-system';
 import { ConvertComponent } from '../../app/components/convert/convert.component';
 import { Observable, of, Subject } from 'rxjs';
+import { Utils } from '../../app/core/utils';
 
 describe('ConvertComponent', () => {
     describe('constructor', () => {
@@ -484,6 +485,44 @@ describe('ConvertComponent', () => {
             assert.equal(convertComponent.canConvert, true);
             assert.equal(convertComponent.isConvertionSuccessful, false);
             assert.equal(convertComponent.downloadUrl, videoUrl);
+        });
+
+        it('Should handle a successful conversion correctly', () => {
+            // Arrange
+            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let convertMock = new ConvertServiceMock();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+
+            let filePath: string = "/home/user/Music/Vitomu/My converted file.mp3";
+            let fileName: string = "My converted file.mp3";
+
+            fileSystemMock.setup(x => x.getFileName(filePath)).returns(() => fileName);
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                refMock.object,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            // Act
+            convertComponent.ngOnInit();
+            convertMock.onConvertionSuccessful(filePath);
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.isConvertionSuccessful, true);
+            assert.equal(convertComponent.lastConvertedFilePath, filePath);
+            assert.equal(convertComponent.lastConvertedFileName, fileName);
         });
     });
 });
