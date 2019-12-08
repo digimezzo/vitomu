@@ -2,20 +2,21 @@ import * as assert from 'assert';
 import { Mock, It, Times } from "typemoq";
 import { Desktop } from '../../app/core/desktop';
 import { ConvertService } from '../../app/services/convert/convert.service';
-import { ChangeDetectorRef } from '@angular/core';
 import { ClipboardWatcher } from '../../app/core/clipboard-watcher';
 import { SnackBarService } from '../../app/services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../app/services/translator/translator.service';
 import { FileSystem } from '../../app/core/file-system';
 import { ConvertComponent } from '../../app/components/convert/convert.component';
-import { Observable, of, Subject } from 'rxjs';
-import { Utils } from '../../app/core/utils';
+import { Observable, Subject } from 'rxjs';
+import { NgZoneMock } from '../mocks/ng-zone.mock';
+import { ConvertServiceMock } from '../mocks/convert.service.mock';
+import { ClipboardWatcherMock } from '../mocks/clipboard-watcher.mock';
 
 describe('ConvertComponent', () => {
     describe('constructor', () => {
         it('Should start with progress mode determinate', () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -25,7 +26,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -39,7 +40,7 @@ describe('ConvertComponent', () => {
 
         it('Should not start with ability to convert', () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -49,7 +50,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -63,7 +64,7 @@ describe('ConvertComponent', () => {
 
         it('Should not start converting', () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -73,7 +74,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -87,7 +88,7 @@ describe('ConvertComponent', () => {
 
         it('Should start with no progress', () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -97,7 +98,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -111,7 +112,7 @@ describe('ConvertComponent', () => {
 
         it('Should not start with a successful conversion', () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -121,7 +122,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -135,7 +136,7 @@ describe('ConvertComponent', () => {
 
         it('Should not start with a download url', () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -145,7 +146,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -159,7 +160,7 @@ describe('ConvertComponent', () => {
 
         it('Should not start with a last converted file path', () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -169,7 +170,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -183,7 +184,7 @@ describe('ConvertComponent', () => {
 
         it('Should not start with a last converted file name', () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -193,7 +194,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -209,7 +210,7 @@ describe('ConvertComponent', () => {
     describe('performConvert', () => {
         it('Should perform a conversion for the given download url', () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -218,7 +219,7 @@ describe('ConvertComponent', () => {
             let fileSystemMock = Mock.ofType<FileSystem>();
 
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -238,7 +239,7 @@ describe('ConvertComponent', () => {
     describe('showVideoLinkAsync', () => {
         it('Should show a snack bar containing the current video URL and a OK button', async () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -247,7 +248,7 @@ describe('ConvertComponent', () => {
             let fileSystemMock = Mock.ofType<FileSystem>();
 
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -269,7 +270,7 @@ describe('ConvertComponent', () => {
     describe('viewInFolder', () => {
         it('Should show the converted file in its containing folder', async () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -278,7 +279,7 @@ describe('ConvertComponent', () => {
             let fileSystemMock = Mock.ofType<FileSystem>();
 
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -298,7 +299,7 @@ describe('ConvertComponent', () => {
     describe('play', () => {
         it('Should play the converted file in the default application', async () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -307,7 +308,7 @@ describe('ConvertComponent', () => {
             let fileSystemMock = Mock.ofType<FileSystem>();
 
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -325,41 +326,9 @@ describe('ConvertComponent', () => {
     });
 
     describe('ngOnInit', () => {
-        class ConvertServiceMock {
-            private convertStatusChanged = new Subject<boolean>();
-            public convertStatusChanged$: Observable<boolean> = this.convertStatusChanged.asObservable();
-
-            private convertProgressChanged = new Subject<number>();
-            public convertProgressChanged$: Observable<number> = this.convertProgressChanged.asObservable();
-        
-            private conversionSuccessful = new Subject<string>();
-            public conversionSuccessful$: Observable<string> = this.conversionSuccessful.asObservable();
-
-            onConvertStatusChanged(isConverting: boolean) {
-                this.convertStatusChanged.next(isConverting);
-            }
-
-            public onConvertProgressChanged(progressPercent: number): void{
-                this.convertProgressChanged.next(progressPercent);
-            }
-        
-            public onConvertionSuccessful(fileName: string): void{
-                this.conversionSuccessful.next(fileName);
-            }
-        }
-
-        class ClipboardWatcherMock{
-            private clipboardContentChanged = new Subject<string>();
-            public clipboardContentChanged$: Observable<string> = this.clipboardContentChanged.asObservable();
-
-            public onClipboardContentChanged(clipBoardText: string): void{
-                this.clipboardContentChanged.next(clipBoardText);
-            }
-        }
-
         it('Should detect when the conversion starts', async () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = new ConvertServiceMock();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -370,7 +339,7 @@ describe('ConvertComponent', () => {
             clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock as any,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -390,7 +359,7 @@ describe('ConvertComponent', () => {
 
         it('Should detect when the conversion stops', async () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = new ConvertServiceMock();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -401,7 +370,7 @@ describe('ConvertComponent', () => {
             clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock as any,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -421,7 +390,7 @@ describe('ConvertComponent', () => {
 
         it('Should detect conversion progress changes', async () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = new ConvertServiceMock();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -432,7 +401,7 @@ describe('ConvertComponent', () => {
             clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock as any,
                 clipboardWatcherMock.object,
                 snackBarMock.object,
@@ -452,7 +421,7 @@ describe('ConvertComponent', () => {
 
         it('Should detect clipboard content changes', async () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = new ClipboardWatcherMock();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -468,7 +437,7 @@ describe('ConvertComponent', () => {
             convertMock.setup(x => x.isVideoUrlConvertible(videoUrl)).returns(() => true);
 
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock as any,
                 snackBarMock.object,
@@ -489,7 +458,7 @@ describe('ConvertComponent', () => {
 
         it('Should handle a successful conversion correctly', () => {
             // Arrange
-            let refMock = Mock.ofType<ChangeDetectorRef>();
+            let ngZoneMock = new NgZoneMock();
             let convertMock = new ConvertServiceMock();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
             let snackBarMock = Mock.ofType<SnackBarService>();
@@ -505,7 +474,7 @@ describe('ConvertComponent', () => {
             fileSystemMock.setup(x => x.getFileName(filePath)).returns(() => fileName);
 
             let convertComponent: ConvertComponent = new ConvertComponent(
-                refMock.object,
+                ngZoneMock as any,
                 convertMock as any,
                 clipboardWatcherMock.object,
                 snackBarMock.object,

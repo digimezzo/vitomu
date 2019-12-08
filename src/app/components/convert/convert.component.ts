@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewEncapsulation, NgZone, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, NgZone, OnDestroy } from '@angular/core';
 import { ConvertService } from '../../services/convert/convert.service';
-import { Logger } from '../../core/logger';
 import { Subscription } from 'rxjs';
 import { ClipboardWatcher } from '../../core/clipboard-watcher';
 import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../services/translator/translator.service';
 import { Desktop } from '../../core/desktop';
 import { FileSystem } from '../../core/file-system';
-import { Utils } from '../../core/utils';
 
 @Component({
   selector: 'app-convert',
@@ -26,7 +24,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private _lastConvertedFilePath: string = "";
   private _lastConvertedFileName: string = "";
 
-  constructor(private ref: ChangeDetectorRef, private convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
+  constructor(private zone: NgZone, private convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
     private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop, private fileSystem: FileSystem) { }
 
   public progressMode = 'determinate';
@@ -89,7 +87,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription.add(this.convert.convertStatusChanged$.subscribe((isConverting) => this.handleConvertStatusChanged(isConverting)));
     this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => this.handleConvertProgressChanged(progressPercent)));
-    this.subscription.add(this.convert.conversionSuccessful$.subscribe(async (filePath) => await this.handleConvertionSuccessfulAsync(filePath)));
+    this.subscription.add(this.convert.conversionSuccessful$.subscribe(async (filePath) => await this.handleConversionSuccessfulAsync(filePath)));
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipboardText) => this.handleClipboardContentChanged(clipboardText)));
   }
 
@@ -115,40 +113,34 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   private handleConvertStatusChanged(isConverting: boolean): void {
-    this.isConverting = isConverting;
-    this.ref.detectChanges();
+    this.zone.run(() => this.isConverting = isConverting);
   }
 
   private handleConvertProgressChanged(progressPercent: number): void {
-    this.progressPercent = progressPercent;
-    this.ref.detectChanges();
+    this.zone.run(() => this.progressPercent = progressPercent);
   }
 
-  private async handleConvertionSuccessfulAsync(filePath: string): Promise<void> {
-    this.canConvert = false;
-    this.isConvertionSuccessful = true;
-    this.lastConvertedFilePath = filePath;
-    this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
-    this.ref.detectChanges();
+  private async handleConversionSuccessfulAsync(filePath: string): Promise<void> {
+    this.zone.run(() => {
+      this.canConvert = false;
+      this.isConvertionSuccessful = true;
+      this.lastConvertedFilePath = filePath;
+      this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
 
-    setTimeout(() => {
-      this.isConvertionSuccessful = false;
-      this.ref.detectChanges();
-    }, 3000);
-
-    // await Utils.sleep(3000);
-    // this.isConvertionSuccessful = false;
-    // this.ref.detectChanges();
+      setTimeout(() => {
+        this.isConvertionSuccessful = false;
+      }, 3000);
+    });
   }
 
   private handleClipboardContentChanged(clipboardText: string): void {
-    this.canConvert = this.convert.isVideoUrlConvertible(clipboardText);
+    this.zone.run(() => {
+      this.canConvert = this.convert.isVideoUrlConvertible(clipboardText);
 
-    if (this.canConvert) {
-      this.isConvertionSuccessful = false;
-      this.downloadUrl = clipboardText;
-    }
-
-    this.ref.detectChanges();
+      if (this.canConvert) {
+        this.isConvertionSuccessful = false;
+        this.downloadUrl = clipboardText;
+      }
+    });
   }
 }

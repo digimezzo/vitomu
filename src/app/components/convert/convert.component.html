@@ -48,7 +48,7 @@
         </div>
     </div>
     <div *ngIf="lastConvertedFileName" class="last-converted-container p-1">
-        <div class="last-converted-container-text">
+        <div class="last-converted-container-text mr-1">
             {{ lastConvertedFileName }}
         </div>
         <button class="grey-button" mat-mini-fab (click)="viewInFolder()" matTooltip="{{ 'Tooltips.ViewInFolder' | translate }}"><span class="last-converted-container-button custom-font">&#xE838;</span></button>
