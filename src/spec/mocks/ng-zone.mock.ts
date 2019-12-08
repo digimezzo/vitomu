@@ -1,4 +1,4 @@
 export class NgZoneMock {
 
-    run(fn: Function): any { return fn(); }
+    run(fn: Function): Promise<void> { return Promise.resolve(fn()); }
 }

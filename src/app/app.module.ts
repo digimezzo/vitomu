@@ -42,6 +42,7 @@ import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
 import { Desktop } from './core/desktop';
 import { ClipboardWatcher } from './core/clipboard-watcher';
 import { SnackBarService } from './services/snack-bar/snack-bar.service';
+import { Delayer } from './core/delayer';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -94,6 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Settings,
     FileSystem,
     Desktop,
+    Delayer,
     ClipboardWatcher,
     FFmpegDownloader,
     FFmpegChecker,

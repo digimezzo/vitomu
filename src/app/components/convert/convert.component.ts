@@ -6,6 +6,7 @@ import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../services/translator/translator.service';
 import { Desktop } from '../../core/desktop';
 import { FileSystem } from '../../core/file-system';
+import { Delayer } from '../../core/delayer';
 
 @Component({
   selector: 'app-convert',
@@ -24,7 +25,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private _lastConvertedFilePath: string = "";
   private _lastConvertedFileName: string = "";
 
-  constructor(private zone: NgZone, private convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
+  constructor(private delayer: Delayer, private zone: NgZone, private convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
     private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop, private fileSystem: FileSystem) { }
 
   public progressMode = 'determinate';
@@ -87,7 +88,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription.add(this.convert.convertStatusChanged$.subscribe((isConverting) => this.handleConvertStatusChanged(isConverting)));
     this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => this.handleConvertProgressChanged(progressPercent)));
-    this.subscription.add(this.convert.conversionSuccessful$.subscribe(async (filePath) => await this.handleConversionSuccessfulAsync(filePath)));
+    this.subscription.add(this.convert.conversionSuccessful$.subscribe((filePath) => this.handleConversionSuccessfulAsync(filePath)));
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipboardText) => this.handleClipboardContentChanged(clipboardText)));
   }
 
@@ -121,15 +122,13 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   private async handleConversionSuccessfulAsync(filePath: string): Promise<void> {
-    this.zone.run(() => {
+    this.zone.run(async () => {
       this.canConvert = false;
       this.isConvertionSuccessful = true;
       this.lastConvertedFilePath = filePath;
       this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
 
-      setTimeout(() => {
-        this.isConvertionSuccessful = false;
-      }, 3000);
+      this.delayer.execute(() => this.isConvertionSuccessful = false, 3000);
     });
   }
 

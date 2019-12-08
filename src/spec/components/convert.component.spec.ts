@@ -11,11 +11,14 @@ import { Observable, Subject } from 'rxjs';
 import { NgZoneMock } from '../mocks/ng-zone.mock';
 import { ConvertServiceMock } from '../mocks/convert.service.mock';
 import { ClipboardWatcherMock } from '../mocks/clipboard-watcher.mock';
+import { Delayer } from '../../app/core/delayer';
 
 describe('ConvertComponent', () => {
     describe('constructor', () => {
         it('Should start with progress mode determinate', () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -26,6 +29,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -40,6 +44,8 @@ describe('ConvertComponent', () => {
 
         it('Should not start with ability to convert', () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -50,6 +56,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -64,6 +71,8 @@ describe('ConvertComponent', () => {
 
         it('Should not start converting', () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -74,6 +83,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -88,6 +98,8 @@ describe('ConvertComponent', () => {
 
         it('Should start with no progress', () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -98,6 +110,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -112,6 +125,8 @@ describe('ConvertComponent', () => {
 
         it('Should not start with a successful conversion', () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -122,6 +137,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -136,6 +152,8 @@ describe('ConvertComponent', () => {
 
         it('Should not start with a download url', () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -146,6 +164,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -160,6 +179,8 @@ describe('ConvertComponent', () => {
 
         it('Should not start with a last converted file path', () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -170,6 +191,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -184,6 +206,8 @@ describe('ConvertComponent', () => {
 
         it('Should not start with a last converted file name', () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -194,6 +218,7 @@ describe('ConvertComponent', () => {
 
             // Act
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -210,6 +235,8 @@ describe('ConvertComponent', () => {
     describe('performConvert', () => {
         it('Should perform a conversion for the given download url', () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -219,6 +246,7 @@ describe('ConvertComponent', () => {
             let fileSystemMock = Mock.ofType<FileSystem>();
 
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -239,6 +267,8 @@ describe('ConvertComponent', () => {
     describe('showVideoLinkAsync', () => {
         it('Should show a snack bar containing the current video URL and a OK button', async () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -248,6 +278,7 @@ describe('ConvertComponent', () => {
             let fileSystemMock = Mock.ofType<FileSystem>();
 
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -270,6 +301,8 @@ describe('ConvertComponent', () => {
     describe('viewInFolder', () => {
         it('Should show the converted file in its containing folder', async () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -279,6 +312,7 @@ describe('ConvertComponent', () => {
             let fileSystemMock = Mock.ofType<FileSystem>();
 
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -299,6 +333,8 @@ describe('ConvertComponent', () => {
     describe('play', () => {
         it('Should play the converted file in the default application', async () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -308,6 +344,7 @@ describe('ConvertComponent', () => {
             let fileSystemMock = Mock.ofType<FileSystem>();
 
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock.object,
@@ -328,6 +365,8 @@ describe('ConvertComponent', () => {
     describe('ngOnInit', () => {
         it('Should detect when the conversion starts', async () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = new ConvertServiceMock();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -339,6 +378,7 @@ describe('ConvertComponent', () => {
             clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock as any,
                 clipboardWatcherMock.object,
@@ -359,6 +399,8 @@ describe('ConvertComponent', () => {
 
         it('Should detect when the conversion stops', async () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = new ConvertServiceMock();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -370,6 +412,7 @@ describe('ConvertComponent', () => {
             clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock as any,
                 clipboardWatcherMock.object,
@@ -390,6 +433,8 @@ describe('ConvertComponent', () => {
 
         it('Should detect conversion progress changes', async () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = new ConvertServiceMock();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -401,6 +446,7 @@ describe('ConvertComponent', () => {
             clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock as any,
                 clipboardWatcherMock.object,
@@ -421,6 +467,8 @@ describe('ConvertComponent', () => {
 
         it('Should detect clipboard content changes', async () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = Mock.ofType<ConvertService>();
             let clipboardWatcherMock = new ClipboardWatcherMock();
@@ -437,6 +485,7 @@ describe('ConvertComponent', () => {
             convertMock.setup(x => x.isVideoUrlConvertible(videoUrl)).returns(() => true);
 
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock.object,
                 clipboardWatcherMock as any,
@@ -458,6 +507,8 @@ describe('ConvertComponent', () => {
 
         it('Should handle a successful conversion correctly', () => {
             // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
             let ngZoneMock = new NgZoneMock();
             let convertMock = new ConvertServiceMock();
             let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
@@ -474,6 +525,7 @@ describe('ConvertComponent', () => {
             fileSystemMock.setup(x => x.getFileName(filePath)).returns(() => fileName);
 
             let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
                 ngZoneMock as any,
                 convertMock as any,
                 clipboardWatcherMock.object,
@@ -489,7 +541,7 @@ describe('ConvertComponent', () => {
 
             // Assert
             assert.equal(convertComponent.canConvert, false);
-            assert.equal(convertComponent.isConvertionSuccessful, true);
+            assert.equal(convertComponent.isConvertionSuccessful, false);
             assert.equal(convertComponent.lastConvertedFilePath, filePath);
             assert.equal(convertComponent.lastConvertedFileName, fileName);
         });
