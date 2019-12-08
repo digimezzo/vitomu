@@ -29,7 +29,7 @@ export class ConvertService {
     private convertProgressChanged = new Subject<number>();
     public convertProgressChanged$: Observable<number> = this.convertProgressChanged.asObservable();
 
-    private conversionSuccessful = new Subject<string>(); 
+    private conversionSuccessful = new Subject<string>();
     public conversionSuccessful$: Observable<string> = this.conversionSuccessful.asObservable();
 
     private _selectedAudioFormat: AudioFormat;
@@ -81,15 +81,7 @@ export class ConvertService {
         return false;
     }
 
-    public async convertAsync(videoUrl: string, audioFormatId: string): Promise<void> {
-        let selectedAudioFormat: AudioFormat = this.audioFormats.find(x => x.id === audioFormatId);
-
-        if(!selectedAudioFormat){
-            this.logger.error(`The audio format with id=${audioFormatId} is invalid.`, "ConvertService", "convertAsync");
-             // TODO: make sure the user sees when this fails.
-             return;
-        }
-
+    public async convertAsync(videoUrl: string): Promise<void> {
         try {
             await this.ffmpegChecker.ensureFFmpegIsAvailableAsync();
         } catch (error) {
@@ -111,7 +103,7 @@ export class ConvertService {
             // Get info
             let videoInfo: ytdl.videoInfo = await ytdl.getInfo(videoUrl);
             let videoDetails: VideoDetails = new VideoDetails(videoInfo);
-            let fileName: string = path.join(this.outputPath, sanitize(videoDetails.videoTitle) + selectedAudioFormat.extension);
+            let fileName: string = path.join(this.outputPath, sanitize(videoDetails.videoTitle) + this.selectedAudioFormat.extension);
 
             this.logger.info(`File name: ${fileName}`, "ConvertService", "convertAsync");
 
@@ -137,14 +129,14 @@ export class ConvertService {
                     ffmpeg.setFfmpegPath(this.ffmpegChecker.ffmpegPath);
                 }
 
-
-
                 // Start encoding
+                   //.audioBitrate(videoInfo.formats[0].audioBitrate)
+                   // Non-working link: https://www.youtube.com/watch?v=A_hbnW0Axvk&list=RDA_hbnW0Axvk&start_radio=1
                 let proc: any = new ffmpeg({
                     source: videoStream.pipe(str)
                 })
-                    .audioBitrate(videoInfo.formats[0].audioBitrate)
-                    .toFormat(selectedAudioFormat.ffmpegFormat)
+                    .audioBitrate(this.selectedAudioBitrate)
+                    .toFormat(this.selectedAudioFormat.ffmpegFormat)
                     .on("error", (error) => {
                         this.onConvertStatusChanged(false);
                         this.logger.error(`An error occurred while encoding. Error: ${error}`, "ConvertService", "convertAsync");

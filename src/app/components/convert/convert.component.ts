@@ -97,7 +97,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   public performConvert() {
-    this.convert.convertAsync(this.downloadUrl, "mp3");
+    this.convert.convertAsync(this.downloadUrl);
   }
 
   public async showVideoLinkAsync(): Promise<void> {
