@@ -15,7 +15,10 @@
   },
   "SettingsTab": {
     "Language": "Language",
-    "Color": "Color"
+    "Color": "Color",
+    "Conversion": "Conversion",
+    "AudioFormat": "Audio format",
+    "AudioBitrate": "Audio bitrate"
   },
   "AboutTab": {
     "About": "About",

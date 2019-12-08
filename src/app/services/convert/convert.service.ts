@@ -10,6 +10,9 @@ import { Injectable } from '@angular/core';
 import { FFmpegChecker } from './ffmpeg-checker';
 import { FileSystem } from '../../core/file-system';
 import { Subject, Observable } from 'rxjs';
+import { AudioFormat } from '../../core/audio-format';
+import { Constants } from '../../core/constants';
+import { Settings } from '../../core/settings';
 
 @Injectable({
     providedIn: 'root',
@@ -26,21 +29,47 @@ export class ConvertService {
     private convertProgressChanged = new Subject<number>();
     public convertProgressChanged$: Observable<number> = this.convertProgressChanged.asObservable();
 
-    private conversionSuccessful = new Subject<string>();
+    private conversionSuccessful = new Subject<string>(); 
     public conversionSuccessful$: Observable<string> = this.conversionSuccessful.asObservable();
 
-    constructor(private logger: Logger, private ffmpegChecker: FFmpegChecker, private fileSystem: FileSystem) {
+    private _selectedAudioFormat: AudioFormat;
+    private _selectedAudioBitrate: number;
+
+    constructor(private logger: Logger, private ffmpegChecker: FFmpegChecker, private fileSystem: FileSystem, private settings: Settings) {
+        this._selectedAudioBitrate = this.audioBitrates.find(x => x === this.settings.audioBitrate);
+        this._selectedAudioFormat = this.audioFormats.find(x => x.id === this.settings.audioFormat);
     }
 
-    public onConvertStatusChanged(isConverting: boolean): void{
+    public audioFormats: AudioFormat[] = Constants.audioFormats;
+    public audioBitrates: number[] = Constants.audioBitrates;
+
+    public get selectedAudioFormat(): AudioFormat {
+        return this._selectedAudioFormat;
+    }
+
+    public set selectedColorTheme(v: AudioFormat) {
+        this._selectedAudioFormat = v;
+        this.settings.audioFormat = v.id;
+    }
+
+    public get selectedAudioBitrate(): number {
+        return this._selectedAudioBitrate;
+    }
+
+    public set selectedAudioBitrate(v: number) {
+        this._selectedAudioBitrate = v;
+        this.settings.audioBitrate = v;
+    }
+
+    public onConvertStatusChanged(isConverting: boolean): void {
         this.convertStatusChanged.next(isConverting);
     }
 
-    public onConvertProgressChanged(progressPercent: number): void{
+    public onConvertProgressChanged(progressPercent: number): void {
         this.convertProgressChanged.next(progressPercent);
     }
 
-    public onConvertionSuccessful(fileName: string): void{
+    public onConvertionSuccessful(fileName: string): void {
         this.conversionSuccessful.next(fileName);
     }
 
@@ -52,7 +81,15 @@ export class ConvertService {
         return false;
     }
 
-    public async convertAsync(videoUrl: string): Promise<void> {
+    public async convertAsync(videoUrl: string, audioFormatId: string): Promise<void> {
+        let selectedAudioFormat: AudioFormat = this.audioFormats.find(x => x.id === audioFormatId);
+
+        if(!selectedAudioFormat){
+            this.logger.error(`The audio format with id=${audioFormatId} is invalid.`, "ConvertService", "convertAsync");
+             // TODO: make sure the user sees when this fails.
+             return;
+        }
+
         try {
             await this.ffmpegChecker.ensureFFmpegIsAvailableAsync();
         } catch (error) {
@@ -74,7 +111,7 @@ export class ConvertService {
             // Get info
             let videoInfo: ytdl.videoInfo = await ytdl.getInfo(videoUrl);
             let videoDetails: VideoDetails = new VideoDetails(videoInfo);
-            let fileName: string = path.join(this.outputPath, sanitize(videoDetails.videoTitle) + ".mp3");
+            let fileName: string = path.join(this.outputPath, sanitize(videoDetails.videoTitle) + selectedAudioFormat.extension);
 
             this.logger.info(`File name: ${fileName}`, "ConvertService", "convertAsync");
 
@@ -100,16 +137,14 @@ export class ConvertService {
                     ffmpeg.setFfmpegPath(this.ffmpegChecker.ffmpegPath);
                 }
 
+
+
                 // Start encoding
                 let proc: any = new ffmpeg({
                     source: videoStream.pipe(str)
                 })
                     .audioBitrate(videoInfo.formats[0].audioBitrate)
-                    .withAudioCodec("libmp3lame")
-                    .toFormat("mp3")
-                    .addOutputOption('-id3v2_version', '4')
-                    .addOutputOption('-metadata', `title=${videoDetails.title}`)
-                    .addOutputOption('-metadata', `artist=${videoDetails.artist}`)
+                    .toFormat(selectedAudioFormat.ffmpegFormat)
                     .on("error", (error) => {
                         this.onConvertStatusChanged(false);
                         this.logger.error(`An error occurred while encoding. Error: ${error}`, "ConvertService", "convertAsync");
@@ -118,7 +153,7 @@ export class ConvertService {
                         this.onConvertStatusChanged(false);
                         this.onConvertionSuccessful(fileName);
                         this.logger.info(`Convertion of video '${videoUrl}' to file '${fileName}' was succesful`, "ConvertService", "convertAsync");
-                       
+
                     })
                     .saveToFile(fileName);
             });

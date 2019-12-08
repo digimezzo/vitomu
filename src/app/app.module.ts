@@ -43,6 +43,8 @@ import { Desktop } from './core/desktop';
 import { ClipboardWatcher } from './core/clipboard-watcher';
 import { SnackBarService } from './services/snack-bar/snack-bar.service';
 import { Delayer } from './core/delayer';
+import { AudioBitrateSwitcherComponent } from './components/audio-bitrate-switcher/audio-bitrate-switcher.component';
+import { AudioFormatSwitcherComponent } from './components/audio-format-switcher/audio-format-switcher.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -58,6 +60,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AboutComponent,
     WindowControlsComponent,
     ColorThemeSwitcherComponent,
+    AudioBitrateSwitcherComponent,
+    AudioFormatSwitcherComponent,
     LanguageSwitcherComponent,
     ErrorDialogComponent,
     LicenseDialogComponent,

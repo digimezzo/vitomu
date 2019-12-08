@@ -15,7 +15,10 @@
       },
     "SettingsTab": {
         "Language": "Taal",
-        "Color": "Kleur"
+        "Color": "Kleur",
+        "Conversion": "Conversie",
+        "AudioFormat": "Audio formaat",
+        "AudioBitrate": "Audio bitrate"
     },
     "AboutTab": {
         "About": "Over",

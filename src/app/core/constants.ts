@@ -1,5 +1,6 @@
 import { Language } from "./language";
 import { ColorTheme } from "./color-theme";
+import { AudioFormat } from "./audio-format";
 
 export class Constants {
     static readonly applicationName: string = require("../../../package.json").name;
@@ -20,6 +21,17 @@ export class Constants {
         { name: "default-pink-theme", displayName: "Pink", color: "#ec1a65" },
         { name: "default-green-theme", displayName: "Green", color: "#00b163" },
     ];
+
+
+    static readonly audioFormats: AudioFormat[] = [
+        { id: "mp3", name: "MP3", ffmpegFormat: "mp3", extension: ".mp3" },
+        { id: "flac", name: "FLAC", ffmpegFormat: "flac", extension: ".flac" },
+        { id: "ogg", name: "Ogg Vorbis", ffmpegFormat: "ogg", extension: ".ogg" },
+        { id: "m4a", name: "M4A", ffmpegFormat: "mp4", extension: ".m4a" },
+        { id: "aac", name: "AAC", ffmpegFormat: "mp4", extension: ".aac" }
+    ];
+
+    static readonly audioBitrates: number[] = [ 32, 48, 56, 64, 96, 128, 160, 192, 224, 256, 320 ];
 
     static readonly externalComponents: any[] = [
         {

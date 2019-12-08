@@ -24,6 +24,24 @@ export class Settings {
         this.settings.set('language', v);
     }
 
+    // Audio format
+    public get audioFormat(): string {
+        return this.settings.get('audioFormat');
+    }
+
+    public set audioFormat(v: string) {
+        this.settings.set('audioFormat', v);
+    }
+
+     // Bitrate
+     public get audioBitrate(): number {
+        return this.settings.get('audioBitrate');
+    }
+
+    public set audioBitrate(v: number) {
+        this.settings.set('audioBitrate', v);
+    }
+
     // Color theme
     public get colorTheme(): string {
         return this.settings.get('colorTheme');
@@ -39,6 +57,14 @@ export class Settings {
 
         if (!this.settings.has('language')) {
             this.settings.set('language', 'en');
+        }
+
+        if (!this.settings.has('audioFormat')) {
+            this.settings.set('audioFormat', 'mp3');
+        }
+
+        if (!this.settings.has('audioBitrate')) {
+            this.settings.set('audioBitrate', 320);
         }
 
         if (!this.settings.has('colorTheme')) {
