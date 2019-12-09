@@ -1,6 +1,6 @@
 {
   "name": "Vitomu",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0",
   "description": "Video to audio converter",
   "homepage": "https://github.com/digimezzo/vitomu-electron",
   "author": {
