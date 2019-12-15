@@ -47,7 +47,7 @@ export class ConvertService {
         return this._selectedAudioFormat;
     }
 
-    public set selectedColorTheme(v: AudioFormat) {
+    public set selectedAudioFormat(v: AudioFormat) {
         this._selectedAudioFormat = v;
         this.settings.audioFormat = v.id;
     }
