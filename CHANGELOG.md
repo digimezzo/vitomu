@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2019-12-21
+### Added
+### Changed
+### Removed
+### Fixed
+- Some video's cannot be converted
+
 ## [2.0.0] - 2019-12-09
 ### Added
 - GNU/Linux compatibility (Vitomu now runs on Windows and GNU/Linux)

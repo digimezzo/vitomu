@@ -130,8 +130,7 @@ export class ConvertService {
                 }
 
                 // Start encoding
-                   //.audioBitrate(videoInfo.formats[0].audioBitrate)
-                   // Non-working link: https://www.youtube.com/watch?v=A_hbnW0Axvk&list=RDA_hbnW0Axvk&start_radio=1
+                //.audioBitrate(videoInfo.formats[0].audioBitrate)
                 let proc: any = new ffmpeg({
                     source: videoStream.pipe(str)
                 })
