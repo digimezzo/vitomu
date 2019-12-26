@@ -10,8 +10,10 @@
   "ConvertTab": {
     "DropText": "Copy a video link to the clipboard",
     "ConversionSuccessful": "Conversion successful!",
+    "ConversionFailed": "Conversion failed",
     "FoundOnClipboard": "Found video link on clipboard!",
-    "ConversionInProgress": "Conversion in progress..."
+    "ConversionInProgress": "Conversion in progress...",
+    "FFmpegNotFound": "FFmpeg was not found. We need it to convert videos."
   },
   "SettingsTab": {
     "Language": "Language",

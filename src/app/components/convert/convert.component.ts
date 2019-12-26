@@ -19,7 +19,9 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   private _canConvert: boolean = false;
   private _isConverting: boolean = false;
-  private _isConvertionSuccessful: boolean = false;
+  private _isConversionSuccessful: boolean = false;
+  private _isConversionFailed: boolean = false;
+  private _isFFmpegNotFound: boolean = false;
   private _progressPercent: number = 0;
   private _downloadUrl: string = "";
   private _lastConvertedFilePath: string = "";
@@ -53,12 +55,28 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this._isConverting = v;
   }
 
-  public get isConvertionSuccessful(): boolean {
-    return this._isConvertionSuccessful;
+  public get isConversionSuccessful(): boolean {
+    return this._isConversionSuccessful;
   }
 
-  public set isConvertionSuccessful(v: boolean) {
-    this._isConvertionSuccessful = v;
+  public set isConversionSuccessful(v: boolean) {
+    this._isConversionSuccessful = v;
+  }
+
+  public get isConversionFailed(): boolean {
+    return this._isConversionFailed;
+  }
+
+  public set isConversionFailed(v: boolean) {
+    this._isConversionFailed = v;
+  }
+
+  public get isFFmpegNotFound(): boolean {
+    return this._isFFmpegNotFound;
+  }
+
+  public set isFFmpegNotFound(v: boolean) {
+    this._isFFmpegNotFound = v;
   }
 
   public get downloadUrl(): string {
@@ -89,6 +107,8 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.subscription.add(this.convert.convertStatusChanged$.subscribe((isConverting) => this.handleConvertStatusChanged(isConverting)));
     this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => this.handleConvertProgressChanged(progressPercent)));
     this.subscription.add(this.convert.conversionSuccessful$.subscribe((filePath) => this.handleConversionSuccessfulAsync(filePath)));
+    this.subscription.add(this.convert.conversionFailed$.subscribe(() => this.handleConversionFailedAsync()));
+    this.subscription.add(this.convert.ffmpegNotFound$.subscribe(() => this.handleFFmpegNotFound()));
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipboardText) => this.handleClipboardContentChanged(clipboardText)));
   }
 
@@ -124,11 +144,26 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private async handleConversionSuccessfulAsync(filePath: string): Promise<void> {
     this.zone.run(async () => {
       this.canConvert = false;
-      this.isConvertionSuccessful = true;
+      this.isConversionSuccessful = true;
       this.lastConvertedFilePath = filePath;
       this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
+      this.delayer.execute(() => this.isConversionSuccessful = false, 3000);
+    });
+  }
 
-      this.delayer.execute(() => this.isConvertionSuccessful = false, 3000);
+  private async handleConversionFailedAsync(): Promise<void> {
+    this.zone.run(async () => {
+      this.canConvert = false;
+      this.isConversionFailed = true;
+
+      this.delayer.execute(() => this.isConversionFailed = false, 3000);
+    });
+  }
+
+  private handleFFmpegNotFound(): void {
+    this.zone.run(() => {
+      this.canConvert = false;
+      this.isFFmpegNotFound = true;
     });
   }
 
@@ -137,7 +172,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
       this.canConvert = this.convert.isVideoUrlConvertible(clipboardText);
 
       if (this.canConvert) {
-        this.isConvertionSuccessful = false;
+        this.isConversionSuccessful = false;
         this.downloadUrl = clipboardText;
       }
     });

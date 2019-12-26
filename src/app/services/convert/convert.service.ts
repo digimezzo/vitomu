@@ -32,6 +32,12 @@ export class ConvertService {
     private conversionSuccessful = new Subject<string>();
     public conversionSuccessful$: Observable<string> = this.conversionSuccessful.asObservable();
 
+    private conversionFailed = new Subject<void>();
+    public conversionFailed$: Observable<void> = this.conversionFailed.asObservable();
+
+    private ffmpegNotFound = new Subject<void>();
+    public ffmpegNotFound$: Observable<void> = this.ffmpegNotFound.asObservable();
+
     private _selectedAudioFormat: AudioFormat;
     private _selectedAudioBitrate: number;
 
@@ -69,8 +75,16 @@ export class ConvertService {
         this.convertProgressChanged.next(progressPercent);
     }
 
-    public onConvertionSuccessful(fileName: string): void {
+    public onConversionSuccessful(fileName: string): void {
         this.conversionSuccessful.next(fileName);
+    }
+
+    public onConversionFailed(): void {
+        this.conversionFailed.next();
+    }
+
+    public onFFmpegNotFound(): void {
+        this.ffmpegNotFound.next();
     }
 
     public isVideoUrlConvertible(videoUrl: string): boolean {
@@ -86,13 +100,15 @@ export class ConvertService {
             await this.ffmpegChecker.ensureFFmpegIsAvailableAsync();
         } catch (error) {
             this.logger.error(`Could not ensure that FFmpeg is available. Error: ${error}`, "ConvertService", "convertAsync");
-            // TODO: make sure the user sees when this fails.
+            this.onFFmpegNotFound();
+
             return;
         }
 
         if (!this.ffmpegChecker.isFfmpegInPath && !this.ffmpegChecker.ffmpegPath) {
             this.logger.error("FFmpeg is not available.", "ConvertService", "convertAsync");
-            // TODO: make sure the user sees when this fails.
+            this.onFFmpegNotFound();
+            
             return;
         }
 
@@ -138,11 +154,12 @@ export class ConvertService {
                     .toFormat(this.selectedAudioFormat.ffmpegFormat)
                     .on("error", (error) => {
                         this.onConvertStatusChanged(false);
+                        this.onConversionFailed();
                         this.logger.error(`An error occurred while encoding. Error: ${error}`, "ConvertService", "convertAsync");
                     })
                     .on("end", () => {
                         this.onConvertStatusChanged(false);
-                        this.onConvertionSuccessful(fileName);
+                        this.onConversionSuccessful(fileName);
                         this.logger.info(`Convertion of video '${videoUrl}' to file '${fileName}' was succesful`, "ConvertService", "convertAsync");
 
                     })

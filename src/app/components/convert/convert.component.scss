@@ -96,14 +96,14 @@
   z-index: 3;
 }
 
-.drop-zone-container-drop-icon-copy {
+.drop-zone-container-drop-icon-pulsing {
   @extend .color-secondary-text;
   font-family: segoe;
   font-size: 60px;
   animation: pulse 3s infinite ease-in-out;
 }
 
-.drop-zone-container-drop-icon-success {
+.drop-zone-container-drop-icon-static {
   @extend .color-secondary-text;
   font-family: segoe;
   font-size: 60px;

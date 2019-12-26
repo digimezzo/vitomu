@@ -3,35 +3,51 @@
         <div class="drop-zone-container-circle mb-4">
             <div *ngIf="canConvert && !isConverting" class="drop-zone-container-circle-pulsating-circle">
             </div>
-            <mat-progress-spinner *ngIf="isConverting || isConvertionSuccessful"
+            <mat-progress-spinner *ngIf="isConverting || isConversionSuccessful"
                 class="drop-zone-container-circle-spinner" diameter="266" strokeWidth="4" color="primary" [mode]="progressMode"
                 [value]="progressPercent">
             </mat-progress-spinner>
             <div class="drop-zone-container-circle-background">
             </div>
+            <!-- DROP ZONE CONTENT -->
             <div *ngIf="!canConvert" class="drop-zone-container-circle-drop-icon">
-                <div class="drop-zone-container-drop-icon-copy custom-font" *ngIf="!isConvertionSuccessful">
+                <!-- Clipboard icon -->
+                <div class="drop-zone-container-drop-icon-pulsing custom-font" *ngIf="!isConversionSuccessful && !isConversionFailed && !isFFmpegNotFound">
                     &#xE77F;
                 </div>
-                <div class="drop-zone-container-drop-icon-success custom-font" *ngIf="isConvertionSuccessful">
+                <!-- Success icon -->
+                <div class="drop-zone-container-drop-icon-static custom-font" *ngIf="isConversionSuccessful">
                     &#xE8FB;
                 </div>
+                <!-- Failure icon -->
+                <div class="drop-zone-container-drop-icon-static custom-font" *ngIf="isConversionFailed || isFFmpegNotFound">
+                    &#xE711;
+                </div>
             </div>
+            <!-- Download icon -->
             <div *ngIf="canConvert && !isConverting"
                 class="drop-zone-container-circle-download-icon custom-font clickable"
                 matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}" (click)="performConvert()">
                 &#xE896;
             </div>
+            <!-- progress percent -->
             <div *ngIf="canConvert && isConverting" class="drop-zone-container-progress-text">
                 {{ progressPercent }}%
             </div>
         </div>
+         <!-- TEXT BELOW DROP ZONE -->
         <div *ngIf="!canConvert">
-            <div *ngIf="!isConvertionSuccessful">
+            <div *ngIf="!isConversionSuccessful && !isConversionFailed && !isFFmpegNotFound">
                 {{ 'ConvertTab.DropText' | translate }}
             </div>
-            <div *ngIf="isConvertionSuccessful">
+            <div *ngIf="isConversionSuccessful">
                 {{ 'ConvertTab.ConversionSuccessful' | translate }}
+            </div>
+            <div *ngIf="isConversionFailed">
+                {{ 'ConvertTab.ConversionFailed' | translate }}
+            </div>
+            <div *ngIf="isFFmpegNotFound">
+                {{ 'ConvertTab.FFmpegNotFound' | translate }}
             </div>
         </div>
         <div class="video-link-info" *ngIf="canConvert && !isConverting">

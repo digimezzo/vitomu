@@ -10,8 +10,10 @@
     "ConvertTab": {
         "DropText": "Kopieer een video link naar het klembord",
         "ConversionSuccessful": "Conversie succesvol!",
+        "ConversionFailed": "Conversie gefaald",
         "FoundOnClipboard": "Video link gevonden op klembord!",
-        "ConversionInProgress": "Conversie wordt uitgevoerd..."
+        "ConversionInProgress": "Conversie wordt uitgevoerd...",
+        "FFmpegNotFound": "FFmpeg werd niet gevonden. We hebben het nodig om video's te converteren."
       },
     "SettingsTab": {
         "Language": "Taal",

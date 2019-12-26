@@ -147,7 +147,7 @@ describe('ConvertComponent', () => {
                 fileSystemMock.object);
 
             // Assert
-            assert.equal(convertComponent.isConvertionSuccessful, false);
+            assert.equal(convertComponent.isConversionSuccessful, false);
         });
 
         it('Should not start with a download url', () => {
@@ -501,7 +501,7 @@ describe('ConvertComponent', () => {
 
             // Assert
             assert.equal(convertComponent.canConvert, true);
-            assert.equal(convertComponent.isConvertionSuccessful, false);
+            assert.equal(convertComponent.isConversionSuccessful, false);
             assert.equal(convertComponent.downloadUrl, videoUrl);
         });
 
@@ -541,7 +541,7 @@ describe('ConvertComponent', () => {
 
             // Assert
             assert.equal(convertComponent.canConvert, false);
-            assert.equal(convertComponent.isConvertionSuccessful, false);
+            assert.equal(convertComponent.isConversionSuccessful, false);
             assert.equal(convertComponent.lastConvertedFilePath, filePath);
             assert.equal(convertComponent.lastConvertedFileName, fileName);
         });
