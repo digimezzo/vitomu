@@ -3,7 +3,7 @@ import {SpectronClient} from 'spectron';
 
 import commonSetup from './common-setup';
 
-describe('vitomu-electron App', function () {
+describe('vitomu App', function () {
   commonSetup.apply(this);
 
   let browser: any;

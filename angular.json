@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "vitomu-electron": {
+    "vitomu": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -74,21 +74,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "vitomu-electron:build"
+            "browserTarget": "vitomu:build"
           },
           "configurations": {
             "dev": {
-              "browserTarget": "vitomu-electron:build:dev"
+              "browserTarget": "vitomu:build:dev"
             },
             "production": {
-              "browserTarget": "vitomu-electron:build:production"
+              "browserTarget": "vitomu:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "vitomu-electron:build"
+            "browserTarget": "vitomu:build"
           }
         },
         "test": {
@@ -131,7 +131,7 @@
         }
       }
     },
-    "vitomu-electron-e2e": {
+    "vitomu-e2e": {
       "root": "e2e",
       "projectType": "application",
       "architect": {
@@ -149,7 +149,7 @@
       }
     }
   },
-  "defaultProject": "vitomu-electron",
+  "defaultProject": "vitomu",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
