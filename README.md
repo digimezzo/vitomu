@@ -1,7 +1,7 @@
 ![Vitomu](Vitomu.full.png)
 
 # Vitomu
-Vitomu stands for **VI**deo **TO** **MU**sic converter. It allows easy conversion of online and offline videos to audio files. Just drop a URL or a local video file on the target to start the conversion. The current version supports dropping URL's of Youtube videos, and dropping of local MKV and MP4 files. The output format is currently MP3, but more output options are planned for the next version.
+Vitomu stands for **VI**deo **TO** **MU**sic converter. It allows easy conversion of online and offline videos to audio files. Just drop a URL or a local video file on the target to start the conversion. The current version supports dropping URL's of Youtube videos, and dropping of local MKV and MP4 files.
 
 [![Release](https://img.shields.io/github/release/digimezzo/Vitomu-electron.svg?style=flat-square&include_prereleases)](https://github.com/digimezzo/vitomu-electron/releases/latest)
 [![Issues](https://img.shields.io/github/issues/digimezzo/Vitomu-electron.svg?style=flat-square)](https://github.com/digimezzo/vitomu-electron/issues)
@@ -13,7 +13,7 @@ Vitomu stands for **VI**deo **TO** **MU**sic converter. It allows easy conversio
 
 ## Important ##
 
-This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href="https://github.com/digimezzo/Vitomu">here</a>
+This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href="https://github.com/FFmpeg/FFmpeg">here</a>
 
 ## Build instructions
 
