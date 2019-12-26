@@ -5,7 +5,6 @@ import { ClipboardWatcher } from '../../core/clipboard-watcher';
 import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../services/translator/translator.service';
 import { Desktop } from '../../core/desktop';
-import { FileSystem } from '../../core/file-system';
 import { Delayer } from '../../core/delayer';
 import { ConvertState } from '../../services/convert/convert-state';
 
