@@ -1,37 +1,37 @@
 <div class="container p-2">
-    <div class="drop-zone-container my-4 no-select">
-        <div class="drop-zone-container-circle mb-4">
-            <div *ngIf="canConvert && !isConverting" class="drop-zone-container-circle-pulsating-circle">
+    <div class="drop-zone my-4 no-select">
+        <div class="drop-zone-circle mb-4">
+            <div *ngIf="canConvert && !isConverting" class="drop-zone-circle-pulsating-circle">
             </div>
             <mat-progress-spinner *ngIf="isConverting || isConversionSuccessful"
-                class="drop-zone-container-circle-spinner" diameter="266" strokeWidth="4" color="primary" [mode]="progressMode"
+                class="drop-zone-circle-spinner" diameter="266" strokeWidth="4" color="primary" [mode]="progressMode"
                 [value]="progressPercent">
             </mat-progress-spinner>
-            <div class="drop-zone-container-circle-background">
+            <div class="drop-zone-circle-background">
             </div>
             <!-- DROP ZONE CONTENT -->
-            <div *ngIf="!canConvert" class="drop-zone-container-circle-drop-icon">
+            <div *ngIf="!canConvert" class="drop-zone-circle-drop-icon">
                 <!-- Clipboard icon -->
-                <div class="drop-zone-container-drop-icon-pulsing custom-font" *ngIf="!isConversionSuccessful && !isConversionFailed && !isFFmpegNotFound">
+                <div class="drop-zone-drop-icon-pulsing custom-font" *ngIf="!isConversionSuccessful && !isConversionFailed && !isFFmpegNotFound">
                     &#xE77F;
                 </div>
                 <!-- Success icon -->
-                <div class="drop-zone-container-drop-icon-static custom-font" *ngIf="isConversionSuccessful">
+                <div class="drop-zone-drop-icon-static custom-font" *ngIf="isConversionSuccessful">
                     &#xE8FB;
                 </div>
                 <!-- Failure icon -->
-                <div class="drop-zone-container-drop-icon-static custom-font" *ngIf="isConversionFailed || isFFmpegNotFound">
+                <div class="drop-zone-drop-icon-static custom-font" *ngIf="isConversionFailed || isFFmpegNotFound">
                     &#xE711;
                 </div>
             </div>
             <!-- Download icon -->
             <div *ngIf="canConvert && !isConverting"
-                class="drop-zone-container-circle-download-icon custom-font clickable"
+                class="drop-zone-circle-download-icon custom-font clickable"
                 matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}" (click)="performConvert()">
                 &#xE896;
             </div>
             <!-- progress percent -->
-            <div *ngIf="canConvert && isConverting" class="drop-zone-container-progress-text">
+            <div *ngIf="canConvert && isConverting" class="drop-zone-progress-text">
                 {{ progressPercent }}%
             </div>
         </div>
@@ -63,11 +63,11 @@
             {{ 'ConvertTab.ConversionInProgress' | translate }}
         </div>
     </div>
-    <div *ngIf="lastConvertedFileName" class="last-converted-container p-1">
-        <div class="last-converted-container-text mr-1">
+    <div *ngIf="lastConvertedFileName" class="last-converted p-1">
+        <div class="last-converted-text mr-1">
             {{ lastConvertedFileName }}
         </div>
-        <button class="grey-button" mat-mini-fab (click)="viewInFolder()" matTooltip="{{ 'Tooltips.ViewInFolder' | translate }}"><span class="last-converted-container-button custom-font">&#xE838;</span></button>
-        <button class="grey-button ml-1" mat-mini-fab (click)="play()" matTooltip="{{ 'Tooltips.Play' | translate }}"><span class="last-converted-container-button custom-font">&#xE768;</span></button>
+        <button class="grey-button" mat-mini-fab (click)="viewInFolder()" matTooltip="{{ 'Tooltips.ViewInFolder' | translate }}"><span class="last-converted-button custom-font">&#xE838;</span></button>
+        <button class="grey-button ml-1" mat-mini-fab (click)="play()" matTooltip="{{ 'Tooltips.Play' | translate }}"><span class="last-converted-button custom-font">&#xE768;</span></button>
     </div>
 </div>
