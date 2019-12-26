@@ -17,7 +17,7 @@ import { Delayer } from '../../core/delayer';
 export class ConvertComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
-  private _canConvert: boolean = false;
+  private _hasValidClipboardContent: boolean = false;
   private _isConverting: boolean = false;
   private _isConversionSuccessful: boolean = false;
   private _isConversionFailed: boolean = false;
@@ -32,12 +32,12 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   public progressMode = 'determinate';
 
-  public get canConvert(): boolean {
-    return this._canConvert;
+  public get hasValidClipboardContent(): boolean {
+    return this._hasValidClipboardContent;
   }
 
-  public set canConvert(v: boolean) {
-    this._canConvert = v;
+  public set hasValidClipboardContent(v: boolean) {
+    this._hasValidClipboardContent = v;
   }
 
   public get progressPercent(): number {
@@ -143,7 +143,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   private async handleConversionSuccessfulAsync(filePath: string): Promise<void> {
     this.zone.run(async () => {
-      this.canConvert = false;
+      this.hasValidClipboardContent = false;
       this.isConversionSuccessful = true;
       this.lastConvertedFilePath = filePath;
       this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
@@ -153,7 +153,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   private async handleConversionFailedAsync(): Promise<void> {
     this.zone.run(async () => {
-      this.canConvert = false;
+      this.hasValidClipboardContent = false;
       this.isConversionFailed = true;
 
       this.delayer.execute(() => this.isConversionFailed = false, 3000);
@@ -162,16 +162,16 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   private handleFFmpegNotFound(): void {
     this.zone.run(() => {
-      this.canConvert = false;
+      this.hasValidClipboardContent = false;
       this.isFFmpegNotFound = true;
     });
   }
 
   private handleClipboardContentChanged(clipboardText: string): void {
     this.zone.run(() => {
-      this.canConvert = this.convert.isVideoUrlConvertible(clipboardText);
+      this.hasValidClipboardContent = this.convert.isVideoUrlConvertible(clipboardText);
 
-      if (this.canConvert) {
+      if (this.hasValidClipboardContent) {
         this.isConversionSuccessful = false;
         this.downloadUrl = clipboardText;
       }

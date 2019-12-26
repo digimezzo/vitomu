@@ -66,7 +66,7 @@ describe('ConvertComponent', () => {
                 fileSystemMock.object);
 
             // Assert
-            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.hasValidClipboardContent, false);
         });
 
         it('Should not start converting', () => {
@@ -502,7 +502,7 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.canConvert, true);
+            assert.equal(convertComponent.hasValidClipboardContent, true);
             assert.equal(convertComponent.isConversionSuccessful, false);
             assert.equal(convertComponent.downloadUrl, videoUrl);
         });
@@ -543,7 +543,7 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.hasValidClipboardContent, false);
             assert.equal(convertComponent.isConversionSuccessful, true);
             assert.equal(convertComponent.lastConvertedFilePath, filePath);
             assert.equal(convertComponent.lastConvertedFileName, fileName);
@@ -585,7 +585,7 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.hasValidClipboardContent, false);
             assert.equal(convertComponent.isConversionSuccessful, false);
             assert.equal(convertComponent.lastConvertedFilePath, filePath);
             assert.equal(convertComponent.lastConvertedFileName, fileName);
@@ -627,7 +627,7 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.hasValidClipboardContent, false);
             assert.equal(convertComponent.isConversionFailed, true);
         });
 
@@ -667,7 +667,7 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.hasValidClipboardContent, false);
             assert.equal(convertComponent.isConversionFailed, false);
         });
 
@@ -707,7 +707,7 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.hasValidClipboardContent, false);
             assert.equal(convertComponent.isFFmpegNotFound, true);
         });
 
@@ -747,7 +747,7 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.hasValidClipboardContent, false);
             assert.equal(convertComponent.isFFmpegNotFound, true);
         });
     });
