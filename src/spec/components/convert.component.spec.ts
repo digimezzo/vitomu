@@ -631,7 +631,6 @@ describe('ConvertComponent', () => {
             assert.equal(convertComponent.isConversionFailed, true);
         });
 
-
         it('Should restore initial state after a failed conversion', () => {
             // Arrange
             let delayer = new Delayer();
@@ -670,6 +669,86 @@ describe('ConvertComponent', () => {
             // Assert
             assert.equal(convertComponent.canConvert, false);
             assert.equal(convertComponent.isConversionFailed, false);
+        });
+
+        it('Should indicate when FFmpeg is not found', () => {
+            // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
+            let ngZoneMock = new NgZoneMock();
+            let convertMock = new ConvertServiceMock();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+
+            let filePath: string = "/home/user/Music/Vitomu/My converted file.mp3";
+            let fileName: string = "My converted file.mp3";
+
+            fileSystemMock.setup(x => x.getFileName(filePath)).returns(() => fileName);
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            // Act
+            delayer.canExecute = false;
+            convertComponent.ngOnInit();
+            convertMock.onFFmpegNotFound();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.isFFmpegNotFound, true);
+        });
+
+        it('Should not recover when FFmpeg is not found', () => {
+            // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
+            let ngZoneMock = new NgZoneMock();
+            let convertMock = new ConvertServiceMock();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+
+            let filePath: string = "/home/user/Music/Vitomu/My converted file.mp3";
+            let fileName: string = "My converted file.mp3";
+
+            fileSystemMock.setup(x => x.getFileName(filePath)).returns(() => fileName);
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            // Act
+            delayer.canExecute = true;
+            convertComponent.ngOnInit();
+            convertMock.onFFmpegNotFound();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.isFFmpegNotFound, true);
         });
     });
 });
