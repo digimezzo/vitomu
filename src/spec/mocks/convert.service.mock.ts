@@ -24,7 +24,7 @@ export class ConvertServiceMock {
         this.convertProgressChanged.next(progressPercent);
     }
 
-    public onConvertionSuccessful(fileName: string): void {
+    public onConversionSuccessful(fileName: string): void {
         this.conversionSuccessful.next(fileName);
     }
 

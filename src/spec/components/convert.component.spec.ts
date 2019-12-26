@@ -539,7 +539,7 @@ describe('ConvertComponent', () => {
             // Act
             delayer.canExecute = false;
             convertComponent.ngOnInit();
-            convertMock.onConvertionSuccessful(filePath);
+            convertMock.onConversionSuccessful(filePath);
             convertComponent.ngOnDestroy();
 
             // Assert
@@ -581,7 +581,7 @@ describe('ConvertComponent', () => {
             // Act
             delayer.canExecute = true;
             convertComponent.ngOnInit();
-            convertMock.onConvertionSuccessful(filePath);
+            convertMock.onConversionSuccessful(filePath);
             convertComponent.ngOnDestroy();
 
             // Assert
@@ -589,6 +589,87 @@ describe('ConvertComponent', () => {
             assert.equal(convertComponent.isConversionSuccessful, false);
             assert.equal(convertComponent.lastConvertedFilePath, filePath);
             assert.equal(convertComponent.lastConvertedFileName, fileName);
+        });
+
+        it('Should indicate when a conversion was failed', () => {
+            // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
+            let ngZoneMock = new NgZoneMock();
+            let convertMock = new ConvertServiceMock();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+
+            let filePath: string = "/home/user/Music/Vitomu/My converted file.mp3";
+            let fileName: string = "My converted file.mp3";
+
+            fileSystemMock.setup(x => x.getFileName(filePath)).returns(() => fileName);
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            // Act
+            delayer.canExecute = false;
+            convertComponent.ngOnInit();
+            convertMock.onConversionFailed();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.isConversionFailed, true);
+        });
+
+
+        it('Should restore initial state after a failed conversion', () => {
+            // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
+            let ngZoneMock = new NgZoneMock();
+            let convertMock = new ConvertServiceMock();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+
+            let filePath: string = "/home/user/Music/Vitomu/My converted file.mp3";
+            let fileName: string = "My converted file.mp3";
+
+            fileSystemMock.setup(x => x.getFileName(filePath)).returns(() => fileName);
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            // Act
+            delayer.canExecute = true;
+            convertComponent.ngOnInit();
+            convertMock.onConversionFailed();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.isConversionFailed, false);
         });
     });
 });
