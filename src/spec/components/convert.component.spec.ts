@@ -482,6 +482,8 @@ describe('ConvertComponent', () => {
             convertMock.setup(x => x.convertStatusChanged$).returns(() => new Observable<boolean>());
             convertMock.setup(x => x.convertProgressChanged$).returns(() => new Observable<number>());
             convertMock.setup(x => x.conversionSuccessful$).returns(() => new Observable<string>());
+            convertMock.setup(x => x.conversionFailed$).returns(() => new Observable<void>());
+            convertMock.setup(x => x.ffmpegNotFound$).returns(() => new Observable<void>());
             convertMock.setup(x => x.isVideoUrlConvertible(videoUrl)).returns(() => true);
 
             let convertComponent: ConvertComponent = new ConvertComponent(
@@ -505,7 +507,7 @@ describe('ConvertComponent', () => {
             assert.equal(convertComponent.downloadUrl, videoUrl);
         });
 
-        it('Should handle a successful conversion correctly', () => {
+        it('Should indicate when a conversion was successful', () => {
             // Arrange
             let delayer = new Delayer();
             delayer.canDelay = false;
@@ -535,6 +537,49 @@ describe('ConvertComponent', () => {
                 fileSystemMock.object);
 
             // Act
+            delayer.canExecute = false;
+            convertComponent.ngOnInit();
+            convertMock.onConvertionSuccessful(filePath);
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.canConvert, false);
+            assert.equal(convertComponent.isConversionSuccessful, true);
+            assert.equal(convertComponent.lastConvertedFilePath, filePath);
+            assert.equal(convertComponent.lastConvertedFileName, fileName);
+        });
+
+        it('Should restore initial state after a successful conversion', () => {
+            // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
+            let ngZoneMock = new NgZoneMock();
+            let convertMock = new ConvertServiceMock();
+            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+            let fileSystemMock = Mock.ofType<FileSystem>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+
+            let filePath: string = "/home/user/Music/Vitomu/My converted file.mp3";
+            let fileName: string = "My converted file.mp3";
+
+            fileSystemMock.setup(x => x.getFileName(filePath)).returns(() => fileName);
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object,
+                fileSystemMock.object);
+
+            // Act
+            delayer.canExecute = true;
             convertComponent.ngOnInit();
             convertMock.onConvertionSuccessful(filePath);
             convertComponent.ngOnDestroy();
