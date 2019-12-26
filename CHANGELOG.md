@@ -7,12 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.0.1] - 2019-12-21
+## [2.0.1] - 2019-12-26
 ### Added
 ### Changed
 ### Removed
 ### Fixed
-- Some video's cannot be converted
+- Updated to the latest version of ytdl-core. This fixes an issue to convert some Youtube videos.
 
 ## [2.0.0] - 2019-12-09
 ### Added
