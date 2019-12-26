@@ -1,5 +1,6 @@
 ::-webkit-scrollbar {
   width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
@@ -11,4 +12,8 @@
   @extend .box-shadow-inset-0-0-10px-10px-primary;
   border: solid 3px transparent;
   border-radius: 12px;
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0);
 }
