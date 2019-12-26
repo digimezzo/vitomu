@@ -64,9 +64,9 @@
             {{ 'ConvertTab.ConversionInProgress' | translate }}
         </div>
     </div>
-    <div *ngIf="lastConvertedFileName" class="last-converted p-1">
+    <div *ngIf="convert.lastConvertedFileName" class="last-converted p-1">
         <div class="last-converted-text mr-1">
-            {{ lastConvertedFileName }}
+            {{ convert.lastConvertedFileName }}
         </div>
         <button class="grey-button" mat-mini-fab (click)="viewInFolder()"
             matTooltip="{{ 'Tooltips.ViewInFolder' | translate }}"><span

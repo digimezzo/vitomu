@@ -7,6 +7,7 @@ import { TranslatorService } from '../../services/translator/translator.service'
 import { Desktop } from '../../core/desktop';
 import { FileSystem } from '../../core/file-system';
 import { Delayer } from '../../core/delayer';
+import { ConvertState } from '../../services/convert/convert-state';
 
 @Component({
   selector: 'app-convert',
@@ -18,17 +19,12 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
   private _hasValidClipboardContent: boolean = false;
-  private _isConverting: boolean = false;
-  private _isConversionSuccessful: boolean = false;
-  private _isConversionFailed: boolean = false;
-  private _isFFmpegNotFound: boolean = false;
   private _progressPercent: number = 0;
   private _downloadUrl: string = "";
-  private _lastConvertedFilePath: string = "";
-  private _lastConvertedFileName: string = "";
+  private _convertState: ConvertState = ConvertState.Idle;
 
   constructor(private delayer: Delayer, private zone: NgZone, private convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
-    private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop, private fileSystem: FileSystem) { }
+    private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop) { }
 
   public progressMode = 'determinate';
 
@@ -47,36 +43,12 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this._progressPercent = v;
   }
 
-  public get isConverting(): boolean {
-    return this._isConverting;
+  public get convertState(): ConvertState {
+    return this._convertState;
   }
 
-  public set isConverting(v: boolean) {
-    this._isConverting = v;
-  }
-
-  public get isConversionSuccessful(): boolean {
-    return this._isConversionSuccessful;
-  }
-
-  public set isConversionSuccessful(v: boolean) {
-    this._isConversionSuccessful = v;
-  }
-
-  public get isConversionFailed(): boolean {
-    return this._isConversionFailed;
-  }
-
-  public set isConversionFailed(v: boolean) {
-    this._isConversionFailed = v;
-  }
-
-  public get isFFmpegNotFound(): boolean {
-    return this._isFFmpegNotFound;
-  }
-
-  public set isFFmpegNotFound(v: boolean) {
-    this._isFFmpegNotFound = v;
+  public set convertState(v: ConvertState) {
+    this._convertState = v;
   }
 
   public get downloadUrl(): string {
@@ -87,28 +59,9 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this._downloadUrl = v;
   }
 
-  public get lastConvertedFilePath(): string {
-    return this._lastConvertedFilePath;
-  }
-
-  public set lastConvertedFilePath(v: string) {
-    this._lastConvertedFilePath = v;
-  }
-
-  public get lastConvertedFileName(): string {
-    return this._lastConvertedFileName;
-  }
-
-  public set lastConvertedFileName(v: string) {
-    this._lastConvertedFileName = v;
-  }
-
   ngOnInit() {
-    this.subscription.add(this.convert.convertStatusChanged$.subscribe((isConverting) => this.handleConvertStatusChanged(isConverting)));
+    this.subscription.add(this.convert.convertStateChanged$.subscribe((convertState) => this.handleConvertStateChanged(convertState)));
     this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => this.handleConvertProgressChanged(progressPercent)));
-    this.subscription.add(this.convert.conversionSuccessful$.subscribe((filePath) => this.handleConversionSuccessfulAsync(filePath)));
-    this.subscription.add(this.convert.conversionFailed$.subscribe(() => this.handleConversionFailedAsync()));
-    this.subscription.add(this.convert.ffmpegNotFound$.subscribe(() => this.handleFFmpegNotFound()));
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipboardText) => this.handleClipboardContentChanged(clipboardText)));
   }
 
@@ -126,45 +79,31 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   public viewInFolder(): void {
-    this.desktop.showInFolder(this.lastConvertedFilePath);
+    this.desktop.showInFolder(this.convert.lastConvertedFilePath);
   }
 
   public play(): void {
-    this.desktop.openInDefaultApplication(this.lastConvertedFilePath);
+    this.desktop.openInDefaultApplication(this.convert.lastConvertedFilePath);
   }
 
-  private handleConvertStatusChanged(isConverting: boolean): void {
-    this.zone.run(() => this.isConverting = isConverting);
+  private handleConvertStateChanged(convertState: ConvertState): void {
+    this.zone.run(() => {
+      this.convertState = convertState;
+      let delayMilliseconds: number = 3000;
+
+      switch (convertState) {
+        case ConvertState.Failed:
+          this.delayer.execute(() => this.convertState = ConvertState.Idle, delayMilliseconds);
+          break;
+        case ConvertState.Successful:
+          this.delayer.execute(() => this.convertState = ConvertState.Idle, delayMilliseconds);
+          break;
+      }
+    });
   }
 
   private handleConvertProgressChanged(progressPercent: number): void {
     this.zone.run(() => this.progressPercent = progressPercent);
-  }
-
-  private async handleConversionSuccessfulAsync(filePath: string): Promise<void> {
-    this.zone.run(async () => {
-      this.hasValidClipboardContent = false;
-      this.isConversionSuccessful = true;
-      this.lastConvertedFilePath = filePath;
-      this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
-      this.delayer.execute(() => this.isConversionSuccessful = false, 3000);
-    });
-  }
-
-  private async handleConversionFailedAsync(): Promise<void> {
-    this.zone.run(async () => {
-      this.hasValidClipboardContent = false;
-      this.isConversionFailed = true;
-
-      this.delayer.execute(() => this.isConversionFailed = false, 3000);
-    });
-  }
-
-  private handleFFmpegNotFound(): void {
-    this.zone.run(() => {
-      this.hasValidClipboardContent = false;
-      this.isFFmpegNotFound = true;
-    });
   }
 
   private handleClipboardContentChanged(clipboardText: string): void {
@@ -172,7 +111,6 @@ export class ConvertComponent implements OnInit, OnDestroy {
       this.hasValidClipboardContent = this.convert.isVideoUrlConvertible(clipboardText);
 
       if (this.hasValidClipboardContent) {
-        this.isConversionSuccessful = false;
         this.downloadUrl = clipboardText;
       }
     });
