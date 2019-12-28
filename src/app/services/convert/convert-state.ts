@@ -1,5 +1,6 @@
 export enum ConvertState {
-    Idle,
+    WaitingForClipboardContent,
+    HasValidClipboardContent,
     FFmpegNotFound,
     Converting,
     Successful,

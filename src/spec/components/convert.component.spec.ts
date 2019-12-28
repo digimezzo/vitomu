@@ -41,7 +41,7 @@ describe('ConvertComponent', () => {
             assert.equal(convertComponent.progressMode, 'determinate');
         });
 
-        it('Should start without valid clipboard content', () => {
+        it('Should start waiting for clipboard content', () => {
             // Arrange
             let delayer = new Delayer();
             delayer.canDelay = false;
@@ -63,32 +63,7 @@ describe('ConvertComponent', () => {
                 desktopMock.object);
 
             // Assert
-            assert.equal(convertComponent.hasValidClipboardContent, false);
-        });
-
-        it('Should start idle', () => {
-            // Arrange
-            let delayer = new Delayer();
-            delayer.canDelay = false;
-            let ngZoneMock = new NgZoneMock();
-            let convertMock = Mock.ofType<ConvertService>();
-            let clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
-            let snackBarMock = Mock.ofType<SnackBarService>();
-            let translatorMock = Mock.ofType<TranslatorService>();
-            let desktopMock = Mock.ofType<Desktop>();
-
-            // Act
-            let convertComponent: ConvertComponent = new ConvertComponent(
-                delayer,
-                ngZoneMock as any,
-                convertMock.object,
-                clipboardWatcherMock.object,
-                snackBarMock.object,
-                translatorMock.object,
-                desktopMock.object);
-
-            // Assert
-            assert.equal(convertComponent.convertState, ConvertState.Idle);
+            assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
         });
 
         it('Should start without progress', () => {
@@ -290,7 +265,7 @@ describe('ConvertComponent', () => {
                 desktopMock.object);
 
             // Act
-            convertComponent.convertState = ConvertState.Idle;
+            convertComponent.convertState = ConvertState.WaitingForClipboardContent;
             convertComponent.ngOnInit();
             convertMock.onConvertStateChanged(ConvertState.Converting);
             convertComponent.ngOnDestroy();
@@ -331,7 +306,7 @@ describe('ConvertComponent', () => {
             assert.equal(convertComponent.progressPercent, 40);
         });
 
-        it('Should detect clipboard content changes', async () => {
+        it('Should detect valid clipboard content', async () => {
             // Arrange
             let delayer = new Delayer();
             delayer.canDelay = false;
@@ -363,7 +338,44 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.hasValidClipboardContent, true);
+            assert.equal(convertComponent.convertState, ConvertState.HasValidClipboardContent);
+            assert.equal(convertComponent.downloadUrl, "https://music.video.url");
+        });
+
+        it('Should ignore invalid clipboard content', async () => {
+            // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
+            let ngZoneMock = new NgZoneMock();
+            let convertMock = Mock.ofType<ConvertService>();
+            let clipboardWatcherMock = new ClipboardWatcherMock();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+
+            let videoUrl: string = "https://music.video.url";
+
+            convertMock.setup(x => x.convertStateChanged$).returns(() => new Observable<ConvertState>());
+            convertMock.setup(x => x.convertProgressChanged$).returns(() => new Observable<number>());
+            convertMock.setup(x => x.isVideoUrlConvertible(videoUrl)).returns(() => false);
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock.object,
+                clipboardWatcherMock as any,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
+
+            // Act
+            convertComponent.ngOnInit();
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
+            assert.equal(convertComponent.downloadUrl, "");
         });
 
         it('Should use video url if clipboard url is valid', async () => {
@@ -472,7 +484,7 @@ describe('ConvertComponent', () => {
             assert.equal(convertComponent.convertState, ConvertState.Successful);
         });
 
-        it('Should revert to idle state after successful conversion', () => {
+        it('Should revert to waiting for clipboard content state after successful conversion', () => {
             // Arrange
             let delayer = new Delayer();
             delayer.canDelay = false;
@@ -501,7 +513,7 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.convertState, ConvertState.Idle);
+            assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
         });
 
         it('Should detect when a conversion was failed', () => {
@@ -536,7 +548,7 @@ describe('ConvertComponent', () => {
              assert.equal(convertComponent.convertState, ConvertState.Failed);
         });
 
-        it('Should revert to idle state after failed conversion', () => {
+        it('Should revert to waiting for clipboard content state after failed conversion', () => {
             // Arrange
             let delayer = new Delayer();
             delayer.canDelay = false;
@@ -565,7 +577,7 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.convertState, ConvertState.Idle);
+            assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
         });
 
         it('Should detect if FFmpeg is not found', () => {
@@ -597,7 +609,6 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.hasValidClipboardContent, false);
             assert.equal(convertComponent.convertState, ConvertState.FFmpegNotFound);
         });
 
@@ -630,7 +641,6 @@ describe('ConvertComponent', () => {
             convertComponent.ngOnDestroy();
 
             // Assert
-            assert.equal(convertComponent.hasValidClipboardContent, false);
             assert.equal(convertComponent.convertState, ConvertState.FFmpegNotFound);
         });
     });

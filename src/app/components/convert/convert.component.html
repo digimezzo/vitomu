@@ -3,66 +3,37 @@
     <div class="drop-zone my-4 no-select">
         <!-- Drop zone circle -->
         <div class="drop-zone-circle mb-4">
-            <div *ngIf="hasValidClipboardContent && !isConverting" class="drop-zone-circle-pulsating-circle">
+            <!-- Progress spinner -->
+            <div class="drop-zone-circle-spinner">
+                <mat-progress-spinner class="drop-zone-circle-spinner" diameter="266" strokeWidth="4" color="primary"
+                    [mode]="progressMode" [value]="progressPercent">
+                </mat-progress-spinner>
             </div>
-            <mat-progress-spinner *ngIf="isConverting || isConversionSuccessful" class="drop-zone-circle-spinner"
-                diameter="266" strokeWidth="4" color="primary" [mode]="progressMode" [value]="progressPercent">
-            </mat-progress-spinner>
+            <!-- Background -->
             <div class="drop-zone-circle-background">
-            </div>
-            <!-- DROP ZONE CONTENT -->
-            <div *ngIf="!hasValidClipboardContent" class="drop-zone-circle-drop-icon">
                 <!-- Clipboard icon -->
-                <div class="drop-zone-drop-icon-pulsing custom-font"
-                    *ngIf="!isConversionSuccessful && !isConversionFailed && !isFFmpegNotFound">
+                <div class="drop-zone-icon-pulsing custom-font"
+                    *ngIf="convertState === ConvertState.WaitingForClipboardContent">
                     &#xE77F;
                 </div>
-                <!-- Success icon -->
-                <div class="drop-zone-drop-icon-static custom-font" *ngIf="isConversionSuccessful">
-                    &#xE8FB;
+                <!-- Download icon -->
+                <div class="download-icon" *ngIf="convertState === ConvertState.HasValidClipboardContent">
+                    <div class="download-icon-pulse">
+                    </div>
+                    <div class="download-icon-icon custom-font clickable"
+                        matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}" (click)="performConvert()">
+                        &#xE896;
+                    </div>
                 </div>
-                <!-- Failure icon -->
-                <div class="drop-zone-drop-icon-static custom-font" *ngIf="isConversionFailed || isFFmpegNotFound">
-                    &#xE711;
+                <!-- Error icon -->
+                <div class="drop-zone-icon-pulsing custom-font"
+                    *ngIf="convertState === ConvertState.FFmpegNotFound || convertState === ConvertState.Failed">
+                    &#xE77F;
                 </div>
-            </div>
-            <!-- Download icon -->
-            <div *ngIf="hasValidClipboardContent && !isConverting" class="drop-zone-circle-download-icon custom-font clickable"
-                matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}" (click)="performConvert()">
-                &#xE896;
-            </div>
-            <!-- progress percent -->
-            <div *ngIf="hasValidClipboardContent && isConverting" class="drop-zone-progress-text">
-                {{ progressPercent }}%
             </div>
         </div>
         <!-- Drop zone text -->
-        <div *ngIf="!hasValidClipboardContent">
-            <div *ngIf="!isConversionSuccessful && !isConversionFailed && !isFFmpegNotFound">
-                {{ 'ConvertTab.DropText' | translate }}
-            </div>
-            <div *ngIf="isConversionSuccessful">
-                {{ 'ConvertTab.ConversionSuccessful' | translate }}
-            </div>
-            <div *ngIf="isConversionFailed">
-                {{ 'ConvertTab.ConversionFailed' | translate }}
-            </div>
-            <div *ngIf="isFFmpegNotFound">
-                {{ 'ConvertTab.FFmpegNotFound' | translate }}
-            </div>
-        </div>
-        <div class="video-link-info" *ngIf="hasValidClipboardContent && !isConverting">
-            <div>
-                {{ 'ConvertTab.FoundOnClipboard' | translate }}
-            </div>
-            <div class="view-link-button custom-font ml-2" (click)="showVideoLinkAsync()"
-                matTooltip="{{ 'Tooltips.ShowVideoLink' | translate }}">
-                &#xE890;
-            </div>
-        </div>
-        <div *ngIf="isConverting">
-            {{ 'ConvertTab.ConversionInProgress' | translate }}
-        </div>
+        yoyo
     </div>
     <!-- Last converted file -->
     <div *ngIf="convert.lastConvertedFileName" class="last-converted p-1">

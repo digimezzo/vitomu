@@ -20,11 +20,49 @@
   height: 266px;
 }
 
-.drop-zone-circle-pulsating-circle {
+.drop-zone-circle-spinner {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  width: 266px;
+  height: 266px;
+}
+
+.drop-zone-circle-background {
+  @extend .background-color-background;
+  position: absolute;
+  z-index: 1;
+  left: 3px;
+  top: 3px;
+  width: 260px;
+  height: 260px;
+  border-radius: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drop-zone-icon {
+  @extend .color-secondary-text;
+  font-family: segoe;
+  font-size: 60px;
+}
+
+.drop-zone-icon-pulsing {
+  @extend .drop-zone-icon;
+  animation: pulse 3s infinite ease-in-out;
+}
+
+.drop-zone-icon-static {
+  @extend .drop-zone-icon;
+}
+
+.download-icon-pulse {
   position: absolute;
   left: 50%;
   top: 50%;
-  z-index: 2;
+  z-index: 0;
   transform: translateX(-50%) translateY(-50%);
   width: 50px;
   height: 50px;
@@ -44,47 +82,9 @@
   }
 }
 
-.drop-zone-circle-spinner {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 0;
-}
-
-.drop-zone-circle-background {
-  @extend .background-color-background;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1;
-  width: 260px;
-  height: 260px;
-  border-radius: 130px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.drop-zone-circle-drop-icon {
-  font-family: segoe;
-  font-size: 60px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 3;
-}
-
-.drop-zone-circle-download-icon {
-  font-family: segoe;
-  font-size: 60px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 3;
+.download-icon-icon {
+  @extend .drop-zone-icon;
+  animation: pulse 3s infinite ease-in-out;
 }
 
 .drop-zone-progress-text {
@@ -94,26 +94,6 @@
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
   z-index: 3;
-}
-
-.drop-zone-drop-icon-pulsing {
-  @extend .color-secondary-text;
-  font-family: segoe;
-  font-size: 60px;
-  animation: pulse 3s infinite ease-in-out;
-}
-
-.drop-zone-drop-icon-static {
-  @extend .color-secondary-text;
-  font-family: segoe;
-  font-size: 60px;
-}
-
-.drop-zone-drop-download-icon {
-  @extend .color-secondary-text;
-  font-family: segoe;
-  font-size: 60px;
-  animation: pulse 3s infinite ease-in-out;
 }
 
 .clickable {

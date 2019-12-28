@@ -16,24 +16,18 @@ import { ConvertState } from '../../services/convert/convert-state';
 })
 export class ConvertComponent implements OnInit, OnDestroy {
 
+  // This is required to use enum values in the template
+  ConvertState = ConvertState;
+
   private subscription: Subscription = new Subscription();
-  private _hasValidClipboardContent: boolean = false;
   private _progressPercent: number = 0;
   private _downloadUrl: string = "";
-  private _convertState: ConvertState = ConvertState.Idle;
+  private _convertState: ConvertState = ConvertState.WaitingForClipboardContent;
 
   constructor(private delayer: Delayer, private zone: NgZone, private convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
     private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop) { }
 
   public progressMode = 'determinate';
-
-  public get hasValidClipboardContent(): boolean {
-    return this._hasValidClipboardContent;
-  }
-
-  public set hasValidClipboardContent(v: boolean) {
-    this._hasValidClipboardContent = v;
-  }
 
   public get progressPercent(): number {
     return this._progressPercent;
@@ -92,10 +86,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
       switch (convertState) {
         case ConvertState.Failed:
-          this.delayer.execute(() => this.convertState = ConvertState.Idle, delayMilliseconds);
+          this.delayer.execute(() => this.convertState = ConvertState.WaitingForClipboardContent, delayMilliseconds);
           break;
         case ConvertState.Successful:
-          this.delayer.execute(() => this.convertState = ConvertState.Idle, delayMilliseconds);
+          this.delayer.execute(() => this.convertState = ConvertState.WaitingForClipboardContent, delayMilliseconds);
           break;
       }
     });
@@ -107,10 +101,12 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   private handleClipboardContentChanged(clipboardText: string): void {
     this.zone.run(() => {
-      this.hasValidClipboardContent = this.convert.isVideoUrlConvertible(clipboardText);
-
-      if (this.hasValidClipboardContent) {
+      if (this.convert.isVideoUrlConvertible(clipboardText)) {
+        this.convertState = ConvertState.HasValidClipboardContent;
         this.downloadUrl = clipboardText;
+      } else {
+        this.convertState = ConvertState.WaitingForClipboardContent;
+        this.downloadUrl = "";
       }
     });
   }
