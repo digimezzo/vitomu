@@ -20,12 +20,14 @@ export class ConvertComponent implements OnInit, OnDestroy {
   ConvertState = ConvertState;
 
   private subscription: Subscription = new Subscription();
-  private _progressPercent: number = 0;
-  private _downloadUrl: string = "";
-  private _convertState: ConvertState = ConvertState.WaitingForClipboardContent;
+  private _progressPercent: number;
+  private _downloadUrl: string;
+  private _convertState: ConvertState;
 
   constructor(private delayer: Delayer, private zone: NgZone, private convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
-    private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop) { }
+    private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop) { 
+      this.resetState();
+    }
 
   public progressMode = 'determinate';
 
@@ -86,13 +88,22 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
       switch (convertState) {
         case ConvertState.Failed:
-          this.delayer.execute(() => this.convertState = ConvertState.WaitingForClipboardContent, delayMilliseconds);
+          this.delayer.execute(() => {
+            this.delayer.execute(() => this.resetState(), delayMilliseconds);
+            this.progressPercent = 0;
+          }, delayMilliseconds);
           break;
         case ConvertState.Successful:
-          this.delayer.execute(() => this.convertState = ConvertState.WaitingForClipboardContent, delayMilliseconds);
+          this.delayer.execute(() => this.resetState(), delayMilliseconds);
           break;
       }
     });
+  }
+
+  private resetState(): void {
+    this.convertState = ConvertState.WaitingForClipboardContent;
+    this.progressPercent = 0;
+    this.downloadUrl = "";
   }
 
   private handleConvertProgressChanged(progressPercent: number): void {
@@ -100,13 +111,17 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   private handleClipboardContentChanged(clipboardText: string): void {
+    // Can only handle clipboard content while waiting for clipboard content
+    if(this.convertState !== ConvertState.WaitingForClipboardContent){
+      return;
+    }
+
     this.zone.run(() => {
       if (this.convert.isVideoUrlConvertible(clipboardText)) {
         this.convertState = ConvertState.HasValidClipboardContent;
         this.downloadUrl = clipboardText;
       } else {
-        this.convertState = ConvertState.WaitingForClipboardContent;
-        this.downloadUrl = "";
+        this.resetState();
       }
     });
   }

@@ -4,7 +4,7 @@
         <!-- Drop zone circle -->
         <div class="drop-zone-circle mb-4">
             <!-- Progress spinner -->
-            <div class="drop-zone-circle-spinner">
+            <div class="drop-zone-circle-spinner" *ngIf="convertState === ConvertState.Converting || convertState === ConvertState.Successful">
                 <mat-progress-spinner class="drop-zone-circle-spinner" diameter="266" strokeWidth="4" color="primary"
                     [mode]="progressMode" [value]="progressPercent">
                 </mat-progress-spinner>
@@ -29,6 +29,14 @@
                 <div class="drop-zone-icon-static custom-font"
                     *ngIf="convertState === ConvertState.FFmpegNotFound || convertState === ConvertState.Failed">
                     &#xE711;
+                </div>
+                <!-- Success icon -->
+                <div class="drop-zone-icon-static custom-font" *ngIf="convertState === ConvertState.Successful">
+                    &#xE8FB;
+                </div>
+                <!-- Progress percent -->
+                <div class="drop-zone-progress-text" *ngIf="convertState === ConvertState.Converting">
+                    {{ progressPercent }}%
                 </div>
             </div>
         </div>
