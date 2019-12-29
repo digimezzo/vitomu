@@ -775,5 +775,75 @@ describe('ConvertComponent', () => {
             // Assert
             assert.equal(convertComponent.convertState, ConvertState.FFmpegNotFound);
         });
+
+        it('Should handle clipboard content only when waiting for or having valid clipboard content', () => {
+            // Arrange
+            let delayer = new Delayer();
+            delayer.canDelay = false;
+            let ngZoneMock = new NgZoneMock();
+            let convertMock = Mock.ofType<ConvertService>();
+            let clipboardWatcherMock = new ClipboardWatcherMock();
+            let snackBarMock = Mock.ofType<SnackBarService>();
+            let translatorMock = Mock.ofType<TranslatorService>();
+            let desktopMock = Mock.ofType<Desktop>();
+
+            let videoUrl: string = "https://music.video.url";
+
+            convertMock.setup(x => x.convertStateChanged$).returns(() => new Observable<ConvertState>());
+            convertMock.setup(x => x.convertProgressChanged$).returns(() => new Observable<number>());
+            convertMock.setup(x => x.isVideoUrlConvertible(videoUrl)).returns(() => true);
+
+            let convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock.object,
+                clipboardWatcherMock as any,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
+
+            // Act
+            convertComponent.ngOnInit();
+
+            convertComponent.downloadUrl = '';
+            convertComponent.convertState = ConvertState.Converting;
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            let convertingDownloadUrl: string = convertComponent.downloadUrl;
+
+            convertComponent.downloadUrl = '';
+            convertComponent.convertState = ConvertState.FFmpegNotFound;
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            let ffmpegNotFoundDownloadUrl: string = convertComponent.downloadUrl;
+
+            convertComponent.downloadUrl = '';
+            convertComponent.convertState = ConvertState.Failed;
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            let failedDownloadUrl: string = convertComponent.downloadUrl;
+
+            convertComponent.downloadUrl = 'https://previous.music.video.url';
+            convertComponent.convertState = ConvertState.HasValidClipboardContent;
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            let hasValidClipboardContentDownloadUrl: string = convertComponent.downloadUrl;
+
+            convertComponent.downloadUrl = '';
+            convertComponent.convertState = ConvertState.Successful;
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            let successfulDownloadUrl: string = convertComponent.downloadUrl;
+
+            convertComponent.downloadUrl = '';
+            convertComponent.convertState = ConvertState.WaitingForClipboardContent;
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            let waitingForClipboardContentDownloadUrl: string = convertComponent.downloadUrl;
+
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(ffmpegNotFoundDownloadUrl, '');
+            assert.equal(convertingDownloadUrl, '');
+            assert.equal(failedDownloadUrl, '');
+            assert.equal(hasValidClipboardContentDownloadUrl, videoUrl);
+            assert.equal(successfulDownloadUrl, '');
+            assert.equal(waitingForClipboardContentDownloadUrl, videoUrl);
+        });
     });
 });
