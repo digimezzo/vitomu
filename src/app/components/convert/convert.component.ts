@@ -111,8 +111,8 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   private handleClipboardContentChanged(clipboardText: string): void {
-    // Can only handle clipboard content while waiting for clipboard content
-    if(this.convertState !== ConvertState.WaitingForClipboardContent){
+    // Can only handle clipboard content changes while waiting for or having valid clipboard content
+    if(this.convertState !== ConvertState.WaitingForClipboardContent && this.convertState !== ConvertState.HasValidClipboardContent){
       return;
     }
 

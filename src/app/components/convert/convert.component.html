@@ -4,7 +4,8 @@
         <!-- Drop zone circle -->
         <div class="drop-zone-circle mb-4">
             <!-- Progress spinner -->
-            <div class="drop-zone-circle-spinner" *ngIf="convertState === ConvertState.Converting || convertState === ConvertState.Successful">
+            <div class="drop-zone-circle-spinner"
+                *ngIf="convertState === ConvertState.Converting || convertState === ConvertState.Successful">
                 <mat-progress-spinner class="drop-zone-circle-spinner" diameter="266" strokeWidth="4" color="primary"
                     [mode]="progressMode" [value]="progressPercent">
                 </mat-progress-spinner>
@@ -41,7 +42,38 @@
             </div>
         </div>
         <!-- Drop zone text -->
-        yoyo
+        <div>
+            <!-- Drop text -->
+            <div *ngIf="convertState === ConvertState.WaitingForClipboardContent">
+                {{ 'ConvertTab.DropText' | translate }}
+            </div>
+            <!-- Success text -->
+            <div *ngIf="convertState === ConvertState.Successful">
+                {{ 'ConvertTab.ConversionSuccessful' | translate }}
+            </div>
+            <!-- Failed text -->
+            <div *ngIf="convertState === ConvertState.Failed">
+                {{ 'ConvertTab.ConversionFailed' | translate }}
+            </div>
+            <!-- FFmpeg not found text -->
+            <div *ngIf="convertState === ConvertState.FFmpegNotFound">
+                {{ 'ConvertTab.FFmpegNotFound' | translate }}
+            </div>
+            <!-- Conversion in progress text -->
+            <div *ngIf="convertState === ConvertState.Converting">
+                {{ 'ConvertTab.ConversionInProgress' | translate }}
+            </div>
+            <!-- Video link text -->
+            <div class="video-link-info" *ngIf="convertState === ConvertState.HasValidClipboardContent">
+                <div>
+                    {{ 'ConvertTab.FoundOnClipboard' | translate }}
+                </div>
+                <div class="view-link-button custom-font ml-2" (click)="showVideoLinkAsync()"
+                    matTooltip="{{ 'Tooltips.ShowVideoLink' | translate }}">
+                    &#xE890;
+                </div>
+            </div>
+        </div>
     </div>
     <!-- Last converted file -->
     <div *ngIf="convert.lastConvertedFileName" class="last-converted p-1">
