@@ -34,6 +34,10 @@ $border-color-main: #333;
     color: mat-color($foreground, secondary-text);
   }
 
+  .fill-secondary-text{
+    fill: mat-color($foreground, secondary-text);
+  }
+
   .background-color-hover{
     background-color: mat-color($background, hover) !important;
   }
