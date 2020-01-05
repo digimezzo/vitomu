@@ -45,8 +45,8 @@
 
 .drop-zone-icon {
   @extend .color-secondary-text;
-  font-family: segoe;
-  font-size: 60px;
+  font-family: la-solid;
+  font-size: 70px;
 }
 
 .drop-zone-icon-pulsing {
@@ -108,8 +108,8 @@
 
 .view-link-button {
   @extend .color-primary;
-  font-family: segoe;
-  font-size: 20px;
+  font-family: la-solid;
+  font-size: 24px;
   cursor: pointer;
 }
 
@@ -149,7 +149,7 @@
 }
 
 .last-converted-button{
-  font-family: segoe;
+  font-family: la-solid;
   font-size: 18px;
 }
 

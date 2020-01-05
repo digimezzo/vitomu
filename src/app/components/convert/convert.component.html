@@ -15,7 +15,7 @@
                 <!-- Clipboard icon -->
                 <div class="drop-zone-icon-pulsing custom-font"
                     *ngIf="convertState === ConvertState.WaitingForClipboardContent">
-                    &#xE77F;
+                    &#xF328;
                 </div>
                 <!-- Download icon -->
                 <div class="download-icon" *ngIf="convertState === ConvertState.HasValidClipboardContent">
@@ -23,13 +23,13 @@
                     </div>
                     <div class="download-icon-icon custom-font clickable"
                         matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}" (click)="performConvert()">
-                        &#xE896;
+                        &#xF019;
                     </div>
                 </div>
                 <!-- Error icon -->
                 <div class="drop-zone-icon-static custom-font"
                     *ngIf="convertState === ConvertState.FFmpegNotFound || convertState === ConvertState.Failed">
-                    &#xE711;
+                    &#xF05E;
                 </div>
                 <!-- Success icon -->
                 <div class="drop-zone-icon-static custom-font" *ngIf="convertState === ConvertState.Successful">
@@ -70,7 +70,7 @@
                 </div>
                 <div class="view-link-button custom-font ml-2" (click)="showVideoLinkAsync()"
                     matTooltip="{{ 'Tooltips.ShowVideoLink' | translate }}">
-                    &#xE890;
+                    &#xF06E;
                 </div>
             </div>
         </div>
