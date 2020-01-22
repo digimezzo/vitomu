@@ -36,8 +36,8 @@ export class ConvertService {
     private _selectedAudioBitrate: number;
 
     constructor(private logger: Logger, private ffmpegChecker: FFmpegChecker, private fileSystem: FileSystem, private settings: Settings) {
-        this._selectedAudioBitrate = this.audioBitrates.find(x => x === this.settings.audioBitrate);
         this._selectedAudioFormat = this.audioFormats.find(x => x.id === this.settings.audioFormat);
+        this._selectedAudioBitrate = this.audioBitrates.find(x => x === this.settings.audioBitrate);
     }
 
     public audioFormats: AudioFormat[] = Constants.audioFormats;
