@@ -29,32 +29,32 @@ export class AppearanceService {
     }
 
     public applyTheme(): void {
-        let themeName: string = this.settings.colorTheme;
+        const themeName: string = this.settings.colorTheme;
 
         // Apply theme to components in the overlay container: https://gist.github.com/tomastrajan/ee29cd8e180b14ce9bc120e2f7435db7
         try {
             this.updateClasses(this.overlayContainer.getContainerElement().classList, themeName);
         } catch (error) {
-            this.logger.error(`Could not update overlay container classes: Error: ${error}`, "AppearanceService", "applyTheme");
+            this.logger.error(`Could not update overlay container classes: Error: ${error}`, 'AppearanceService', 'applyTheme');
         }
 
         // Apply theme to body
         try {
             this.updateClasses(document.body.classList, themeName);
         } catch (error) {
-            this.logger.error(`Could not update body classes: Error: ${error}`, "AppearanceService", "applyTheme");
+            this.logger.error(`Could not update body classes: Error: ${error}`, 'AppearanceService', 'applyTheme');
         }
 
-        this.logger.info(`Applied theme '${themeName}'`, "AppearanceService", "applyTheme");
+        this.logger.info(`Applied theme '${themeName}'`, 'AppearanceService', 'applyTheme');
     }
 
     private updateClasses(tokenList: DOMTokenList, newThemeName: string) {
         if (tokenList === null) {
-            this.logger.error(`${tokenList} is null`, "AppearanceService", "getClassesToRemove");
+            this.logger.error(`${tokenList} is null`, 'AppearanceService', 'getClassesToRemove');
             return;
         }
 
-        let classesToRemove: string[] = Array.from(tokenList).filter((item: string) => item.includes('-theme'));
+        const classesToRemove: string[] = Array.from(tokenList).filter((item: string) => item.includes('-theme'));
 
         if (classesToRemove.length) {
             tokenList.remove(...classesToRemove);

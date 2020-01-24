@@ -3,7 +3,7 @@ import * as ffmpeg from 'fluent-ffmpeg-corrected';
 import { Logger } from '../../core/logger';
 import { VideoDetails } from './video-details';
 import { Readable } from 'stream';
-import * as progress from 'progress-stream';
+import * as progressStream from 'progress-stream';
 import * as path from 'path';
 import * as sanitize from 'sanitize-filename';
 import { Injectable } from '@angular/core';
@@ -19,17 +19,17 @@ import { ConvertState } from './convert-state';
     providedIn: 'root',
 })
 export class ConvertService {
-    private youtubeVideoQuality: string = "highest";
+    private youtubeVideoQuality: string = 'highest';
     private requestOptions: any = { maxRedirects: 5 };
     private progressTimeoutMilliseconds: number = 100;
-    private outputPath = path.join(this.fileSystem.musicDirectory(), "Vitomu");
-    private _lastConvertedFilePath: string = "";
-    private _lastConvertedFileName: string = "";
+    private outputPath: string = path.join(this.fileSystem.musicDirectory(), 'Vitomu');
+    private _lastConvertedFilePath: string = '';
+    private _lastConvertedFileName: string = '';
 
-    private convertStateChanged = new Subject<ConvertState>();
+    private convertStateChanged: Subject<ConvertState> = new Subject<ConvertState>();
     public convertStateChanged$: Observable<ConvertState> = this.convertStateChanged.asObservable();
 
-    private convertProgressChanged = new Subject<number>();
+    private convertProgressChanged: Subject<number> = new Subject<number>();
     public convertProgressChanged$: Observable<number> = this.convertProgressChanged.asObservable();
 
     private _selectedAudioFormat: AudioFormat;
@@ -97,14 +97,14 @@ export class ConvertService {
         try {
             await this.ffmpegChecker.ensureFFmpegIsAvailableAsync();
         } catch (error) {
-            this.logger.error(`Could not ensure that FFmpeg is available. Error: ${error}`, "ConvertService", "convertAsync");
+            this.logger.error(`Could not ensure that FFmpeg is available. Error: ${error}`, 'ConvertService', 'convertAsync');
             this.onConvertStateChanged(ConvertState.FFmpegNotFound);
 
             return;
         }
 
         if (!this.ffmpegChecker.isFfmpegInPath && !this.ffmpegChecker.ffmpegPath) {
-            this.logger.error("FFmpeg is not available.", "ConvertService", "convertAsync");
+            this.logger.error('FFmpeg is not available.', 'ConvertService', 'convertAsync');
             this.onConvertStateChanged(ConvertState.FFmpegNotFound);
 
             return;
@@ -115,27 +115,30 @@ export class ConvertService {
 
         try {
             // Get info
-            let videoInfo: ytdl.videoInfo = await ytdl.getInfo(videoUrl);
-            let videoDetails: VideoDetails = new VideoDetails(videoInfo);
-            let filePath: string = path.join(this.outputPath, sanitize(videoDetails.videoTitle) + this.selectedAudioFormat.extension);
+            const videoInfo: ytdl.videoInfo = await ytdl.getInfo(videoUrl);
+            const videoDetails: VideoDetails = new VideoDetails(videoInfo);
+            const filePath: string = path.join(this.outputPath, sanitize(videoDetails.videoTitle) + this.selectedAudioFormat.extension);
 
-            this.logger.info(`File path: ${filePath}`, "ConvertService", "convertAsync");
+            this.logger.info(`File path: ${filePath}`, 'ConvertService', 'convertAsync');
 
             // Make sure outputPath exists
             await this.fileSystem.ensureDirectoryAsync(this.outputPath);
 
             // Download
-            let videoStream: Readable = ytdl.downloadFromInfo(videoInfo, { quality: this.youtubeVideoQuality, requestOptions: this.requestOptions });
+            const videoStream: Readable = ytdl.downloadFromInfo(videoInfo, {
+                quality: this.youtubeVideoQuality,
+                requestOptions: this.requestOptions
+            });
 
-            videoStream.on("response", (httpResponse) => {
+            videoStream.on('response', (httpResponse) => {
                 // Setup of progress module
-                let str: any = progress({
-                    length: parseInt(httpResponse.headers["content-length"]),
+                const str: any = progressStream({
+                    length: parseInt(httpResponse.headers['content-length'], 10),
                     time: this.progressTimeoutMilliseconds
                 });
 
                 // Add progress event listener
-                str.on("progress", (progress) => {
+                str.on('progress', (progress) => {
                     this.onConvertProgressChanged(parseInt(progress.percentage, 10));
                 });
 
@@ -144,28 +147,28 @@ export class ConvertService {
                 }
 
                 // Start encoding
-                //.audioBitrate(videoInfo.formats[0].audioBitrate)
-                let proc: any = new ffmpeg({
+                // .audioBitrate(videoInfo.formats[0].audioBitrate)
+                const proc: any = new ffmpeg({
                     source: videoStream.pipe(str)
                 })
                     .audioBitrate(this.selectedAudioBitrate)
                     .toFormat(this.selectedAudioFormat.ffmpegFormat)
-                    .on("error", (error) => {
+                    .on('error', (error) => {
                         this.onConvertStateChanged(ConvertState.Failed);
-                        this.logger.error(`An error occurred while encoding. Error: ${error}`, "ConvertService", "convertAsync");
+                        this.logger.error(`An error occurred while encoding. Error: ${error}`, 'ConvertService', 'convertAsync');
                     })
-                    .on("end", () => {
+                    .on('end', () => {
                         this.onConvertStateChanged(ConvertState.Successful);
                         this.lastConvertedFilePath = filePath;
                         this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
-                        this.logger.info(`Convertion of video '${videoUrl}' to file '${filePath}' was succesful`, "ConvertService", "convertAsync");
+                        this.logger.info(`Convertion of video '${videoUrl}' to file '${filePath}' was succesful`, 'ConvertService', 'convertAsync');
 
                     })
                     .saveToFile(filePath);
             });
         } catch (error) {
             this.onConvertStateChanged(ConvertState.Failed);
-            this.logger.error(`Could not download video. Error: ${error}`, "ConvertService", "convertAsync");
+            this.logger.error(`Could not download video. Error: ${error}`, 'ConvertService', 'convertAsync');
         }
     }
 }
