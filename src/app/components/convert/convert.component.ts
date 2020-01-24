@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, NgZone, OnDestroy } from '@angular/core';
-import { ConvertService } from '../../services/convert/convert.service';
+import { Component, NgZone, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ClipboardWatcher } from '../../core/clipboard-watcher';
+import { Delayer } from '../../core/delayer';
+import { Desktop } from '../../core/desktop';
+import { ConvertState } from '../../services/convert/convert-state';
+import { ConvertService } from '../../services/convert/convert.service';
 import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../services/translator/translator.service';
-import { Desktop } from '../../core/desktop';
-import { Delayer } from '../../core/delayer';
-import { ConvertState } from '../../services/convert/convert-state';
 
 @Component({
   selector: 'app-convert',
@@ -17,7 +17,7 @@ import { ConvertState } from '../../services/convert/convert-state';
 export class ConvertComponent implements OnInit, OnDestroy {
 
   // This is required to use enum values in the template
-  ConvertState = ConvertState;
+  public ConvertState: typeof ConvertState = ConvertState;
 
   private subscription: Subscription = new Subscription();
   private _progressPercent: number;
@@ -25,11 +25,11 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private _convertState: ConvertState;
 
   constructor(private delayer: Delayer, private zone: NgZone, private convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
-    private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop) { 
-      this.resetState();
-    }
+    private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop) {
+    this.resetState();
+  }
 
-  public progressMode = 'determinate';
+  public progressMode: string = 'determinate';
 
   public get progressPercent(): number {
     return this._progressPercent;
@@ -54,22 +54,30 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this._downloadUrl = v;
   }
 
-  ngOnInit() {
-    this.subscription.add(this.convert.convertStateChanged$.subscribe((convertState) => this.handleConvertStateChanged(convertState)));
-    this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => this.handleConvertProgressChanged(progressPercent)));
-    this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipboardText) => this.handleClipboardContentChanged(clipboardText)));
+  public ngOnInit(): void {
+    this.subscription.add(this.convert.convertStateChanged$.subscribe((convertState) => {
+      this.handleConvertStateChanged(convertState);
+    }));
+
+    this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => {
+      this.handleConvertProgressChanged(progressPercent);
+    }));
+
+    this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipboardText) => {
+      this.handleClipboardContentChanged(clipboardText);
+    }));
   }
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  public performConvert() {
+  public performConvert(): void {
     this.convert.convertAsync(this.downloadUrl);
   }
 
   public async showVideoLinkAsync(): Promise<void> {
-    let action: string = await this.translator.getAsync('Buttons.Ok');
+    const action: string = await this.translator.getAsync('Buttons.Ok');
     this.snackBar.showActionSnackBar(this.downloadUrl, action);
   }
 
@@ -84,7 +92,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private handleConvertStateChanged(convertState: ConvertState): void {
     this.zone.run(() => {
       this.convertState = convertState;
-      let delayMilliseconds: number = 3000;
+      const delayMilliseconds: number = 3000;
 
       switch (convertState) {
         case ConvertState.Failed:
@@ -103,7 +111,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private resetState(): void {
     this.convertState = ConvertState.WaitingForClipboardContent;
     this.progressPercent = 0;
-    this.downloadUrl = "";
+    this.downloadUrl = '';
   }
 
   private handleConvertProgressChanged(progressPercent: number): void {
@@ -112,7 +120,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   private handleClipboardContentChanged(clipboardText: string): void {
     // Can only handle clipboard content changes while waiting for or having valid clipboard content
-    if(this.convertState !== ConvertState.WaitingForClipboardContent && this.convertState !== ConvertState.HasValidClipboardContent){
+    if (this.convertState !== ConvertState.WaitingForClipboardContent && this.convertState !== ConvertState.HasValidClipboardContent) {
       return;
     }
 

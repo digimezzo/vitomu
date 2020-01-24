@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { TranslatorService } from './services/translator/translator.service';
 import { AppearanceService } from './services/appearance/appearance.service';
 import { ConvertService } from './services/convert/convert.service';
+import { TranslatorService } from './services/translator/translator.service';
 
 @Component({
   selector: 'app-root',

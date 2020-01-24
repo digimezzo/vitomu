@@ -12,6 +12,6 @@ export class AudioFormatSwitcherComponent implements OnInit {
 
   constructor(public convert: ConvertService) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 }

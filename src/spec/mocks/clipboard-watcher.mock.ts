@@ -1,7 +1,7 @@
-import { Subject, Observable } from "rxjs";
+import { Observable, Subject } from 'rxjs';
 
 export class ClipboardWatcherMock {
-    private clipboardContentChanged = new Subject<string>();
+    private clipboardContentChanged: Subject<string> = new Subject<string>();
     public clipboardContentChanged$: Observable<string> = this.clipboardContentChanged.asObservable();
 
     public onClipboardContentChanged(clipBoardText: string): void {

@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   public applicationName: string = Constants.applicationName;
-  
-  ngOnInit() {
+
+  public ngOnInit(): void {
   }
 }

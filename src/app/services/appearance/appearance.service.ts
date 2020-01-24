@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Settings } from '../../core/settings';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Logger } from '../../core/logger';
+import { Injectable } from '@angular/core';
 import { ColorTheme } from '../../core/color-theme';
 import { Constants } from '../../core/constants';
+import { Logger } from '../../core/logger';
+import { Settings } from '../../core/settings';
 
 @Injectable({
     providedIn: 'root',
@@ -48,7 +48,7 @@ export class AppearanceService {
         this.logger.info(`Applied theme '${themeName}'`, 'AppearanceService', 'applyTheme');
     }
 
-    private updateClasses(tokenList: DOMTokenList, newThemeName: string) {
+    private updateClasses(tokenList: DOMTokenList, newThemeName: string): void {
         if (tokenList === null) {
             this.logger.error(`${tokenList} is null`, 'AppearanceService', 'getClassesToRemove');
             return;

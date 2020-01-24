@@ -1,13 +1,13 @@
-import { Logger } from '../../core/logger';
-import * as path from 'path';
 import { Injectable } from '@angular/core';
+import * as path from 'path';
 import { FileSystem } from '../../core/file-system';
+import { Logger } from '../../core/logger';
 import { FFmpegDownloader } from './ffmpeg-downloader';
 
 @Injectable()
 export class FFmpegChecker {
-    private ffmpegFolder: string = path.join(this.fileSystem.applicatioDataDirectory(), "FFmpeg");
-    private _ffmpegPath: string = "";
+    private ffmpegFolder: string = path.join(this.fileSystem.applicatioDataDirectory(), 'FFmpeg');
+    private _ffmpegPath: string = '';
     private _isFfmpegInPath: boolean;
 
     constructor(private logger: Logger, private ffmpegDownloader: FFmpegDownloader, private fileSystem: FileSystem) {
@@ -22,10 +22,10 @@ export class FFmpegChecker {
     }
 
     public async ensureFFmpegIsAvailableAsync(): Promise<void> {
-        this._isFfmpegInPath = await this.fileSystem.commanExistsAsync("ffmpeg");
+        this._isFfmpegInPath = await this.fileSystem.commanExistsAsync('ffmpeg');
 
         if (this._isFfmpegInPath) {
-            this.logger.info("FFmpeg command was found. No need to set FFmpeg path.", "FFmpegChecker", "ensureFFmpegIsAvailableAsync");
+            this.logger.info('FFmpeg command was found. No need to set FFmpeg path.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
 
             return;
         }
@@ -33,9 +33,9 @@ export class FFmpegChecker {
         let ffmpegPath: string = this.getFFmpegPath();
 
         if (!ffmpegPath) {
-            this.logger.info("Start downloading FFmpeg.", "FFmpegChecker", "ensureFFmpegIsAvailableAsync");
+            this.logger.info('Start downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
             await this.ffmpegDownloader.downloadAsync(this.ffmpegFolder);
-            this.logger.info("Finished downloading FFmpeg.", "FFmpegChecker", "ensureFFmpegIsAvailableAsync");
+            this.logger.info('Finished downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
             ffmpegPath = this.getFFmpegPath();
         }
 
@@ -44,18 +44,18 @@ export class FFmpegChecker {
 
     private getFFmpegPath(): string {
         if (this.fileSystem.pathExists(this.ffmpegFolder)) {
-            let ffmpegFile: string = this.fileSystem.readDirectory(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
+            const ffmpegFile: string = this.fileSystem.readDirectory(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
 
             if (ffmpegFile) {
-                let ffmpegPath: string = path.join(this.ffmpegFolder, ffmpegFile);
-                this.logger.info(`FFmpeg was found in at '${ffmpegPath}'`, "FFmpegChecker", "getFFmpegPath");
+                const ffmpegPath: string = path.join(this.ffmpegFolder, ffmpegFile);
+                this.logger.info(`FFmpeg was found in at '${ffmpegPath}'`, 'FFmpegChecker', 'getFFmpegPath');
 
                 return ffmpegPath;
             }
         }
 
-        this.logger.info(`FFmpeg was not found in folder ${this.ffmpegFolder}`, "FFmpegChecker", "getFFmpegPath");
+        this.logger.info(`FFmpeg was not found in folder ${this.ffmpegFolder}`, 'FFmpegChecker', 'getFFmpegPath');
 
-        return "";
+        return '';
     }
 }

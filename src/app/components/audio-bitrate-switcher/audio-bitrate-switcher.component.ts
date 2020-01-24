@@ -12,6 +12,6 @@ export class AudioBitrateSwitcherComponent implements OnInit {
 
   constructor(public convert: ConvertService) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 }

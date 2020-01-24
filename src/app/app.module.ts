@@ -1,53 +1,45 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule, MatDialogModule, MatProgressSpinnerModule, MatSelectModule, MatSnackBarModule, MatTabsModule, MatTooltipModule } from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import 'reflect-metadata';
 import '../polyfills';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
-
-// NG Translate
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
-import { ElectronService } from './services/electron.service';
-
-import { WebviewDirective } from './directives/webview.directive';
-
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { Logger } from './core/logger';
-import { Settings } from './core/settings';
-import { WindowControlsComponent } from './components/window-controls/window-controls.component';
-
-import { MatTooltipModule, MatDialogModule, MatTabsModule, MatSelectModule, MatButtonModule, MatProgressSpinnerModule, MatSnackBarModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { GlobalErrorHandler } from './global-error-handler';
-import { SettingsComponent } from './components/settings/settings.component';
 import { AboutComponent } from './components/about/about.component';
-import { ConvertComponent } from './components/convert/convert.component';
-import { ColorThemeSwitcherComponent } from './components/color-theme-switcher/color-theme-switcher.component';
-import { LanguageSwitcherComponent } from './components/language-switcher/language-switcher.component';
-import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
-import { TranslatorService } from './services/translator/translator.service';
-import { AppearanceService } from './services/appearance/appearance.service';
-import { ConvertService } from './services/convert/convert.service';
-import { LogoFullComponent } from './components/logo-full/logo-full.component';
-import { LicenseDialogComponent } from './components/dialogs/license-dialog/license-dialog.component';
-import { FFmpegChecker } from './services/convert/ffmpeg-checker';
-import { FileSystem } from './core/file-system';
-import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
-import { Desktop } from './core/desktop';
-import { ClipboardWatcher } from './core/clipboard-watcher';
-import { SnackBarService } from './services/snack-bar/snack-bar.service';
-import { Delayer } from './core/delayer';
 import { AudioBitrateSwitcherComponent } from './components/audio-bitrate-switcher/audio-bitrate-switcher.component';
 import { AudioFormatSwitcherComponent } from './components/audio-format-switcher/audio-format-switcher.component';
+import { ColorThemeSwitcherComponent } from './components/color-theme-switcher/color-theme-switcher.component';
+import { ConvertComponent } from './components/convert/convert.component';
+import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
+import { LicenseDialogComponent } from './components/dialogs/license-dialog/license-dialog.component';
+import { HomeComponent } from './components/home/home.component';
+import { LanguageSwitcherComponent } from './components/language-switcher/language-switcher.component';
+import { LogoFullComponent } from './components/logo-full/logo-full.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { WindowControlsComponent } from './components/window-controls/window-controls.component';
+import { ClipboardWatcher } from './core/clipboard-watcher';
+import { Delayer } from './core/delayer';
+import { Desktop } from './core/desktop';
+import { FileSystem } from './core/file-system';
+import { Logger } from './core/logger';
+import { Settings } from './core/settings';
+import { WebviewDirective } from './directives/webview.directive';
+import { GlobalErrorHandler } from './global-error-handler';
+import { AppearanceService } from './services/appearance/appearance.service';
+import { ConvertService } from './services/convert/convert.service';
+import { FFmpegChecker } from './services/convert/ffmpeg-checker';
+import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
+import { ElectronService } from './services/electron.service';
+import { SnackBarService } from './services/snack-bar/snack-bar.service';
+import { TranslatorService } from './services/translator/translator.service';
 
 // AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
@@ -90,12 +82,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   providers: [
-    ElectronService, 
+    ElectronService,
     TranslatorService,
     AppearanceService,
     ConvertService,
     SnackBarService,
-    Logger, 
+    Logger,
     Settings,
     FileSystem,
     Desktop,
@@ -107,7 +99,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: ErrorHandler,
       useClass: GlobalErrorHandler
     }
-  ], 
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     LicenseDialogComponent, ErrorDialogComponent

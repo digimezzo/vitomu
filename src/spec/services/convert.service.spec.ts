@@ -1,10 +1,10 @@
 import * as assert from 'assert';
-import { Mock, It, Times } from 'typemoq';
-import { Logger } from '../../app/core/logger';
-import { ConvertService } from '../../app/services/convert/convert.service';
+import { Mock } from 'typemoq';
 import { FileSystem } from '../../app/core/file-system';
-import { FFmpegChecker } from '../../app/services/convert/ffmpeg-checker';
+import { Logger } from '../../app/core/logger';
 import { Settings } from '../../app/core/settings';
+import { ConvertService } from '../../app/services/convert/convert.service';
+import { FFmpegChecker } from '../../app/services/convert/ffmpeg-checker';
 
 describe('ConvertService', () => {
     describe('constructor', () => {

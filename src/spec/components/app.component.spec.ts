@@ -1,20 +1,23 @@
-import * as assert from 'assert';
-import { Mock, It, Times } from "typemoq";
-import { AppearanceService } from '../../app/services/appearance/appearance.service';
-import { TranslatorService } from '../../app/services/translator/translator.service';
+import { Mock, Times } from 'typemoq';
 import { AppComponent } from '../../app/app.component';
+import { AppearanceService } from '../../app/services/appearance/appearance.service';
 import { ConvertService } from '../../app/services/convert/convert.service';
+import { TranslatorService } from '../../app/services/translator/translator.service';
 
 describe('AppComponent', () => {
     describe('constructor', () => {
         it('Should apply language', () => {
             // Arrange
-            let appearanceServiceMock = Mock.ofType<AppearanceService>();
-            let translatorServiceMock = Mock.ofType<TranslatorService>();
-            let convertServiceMock = Mock.ofType<ConvertService>();
+            const appearanceServiceMock = Mock.ofType<AppearanceService>();
+            const translatorServiceMock = Mock.ofType<TranslatorService>();
+            const convertServiceMock = Mock.ofType<ConvertService>();
 
             // Act
-            let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object, convertServiceMock.object);
+            const appComponent: AppComponent = new AppComponent(
+                translatorServiceMock.object,
+                appearanceServiceMock.object,
+                convertServiceMock.object
+                );
 
             // Assert
             translatorServiceMock.verify(x => x.applyLanguage(), Times.atLeastOnce());
@@ -22,12 +25,16 @@ describe('AppComponent', () => {
 
         it('Should apply theme', () => {
             // Arrange
-            let appearanceServiceMock = Mock.ofType<AppearanceService>();
-            let translatorServiceMock = Mock.ofType<TranslatorService>();
-            let convertServiceMock = Mock.ofType<ConvertService>();
+            const appearanceServiceMock = Mock.ofType<AppearanceService>();
+            const translatorServiceMock = Mock.ofType<TranslatorService>();
+            const convertServiceMock = Mock.ofType<ConvertService>();
 
             // Act
-            let appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object, convertServiceMock.object);
+            const appComponent: AppComponent = new AppComponent(
+                translatorServiceMock.object,
+                appearanceServiceMock.object,
+                convertServiceMock.object
+                );
 
             // Assert
             appearanceServiceMock.verify(x => x.applyTheme(), Times.atLeastOnce());

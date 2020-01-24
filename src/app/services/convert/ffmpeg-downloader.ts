@@ -1,5 +1,5 @@
-import * as ffbinaries from 'ffbinaries';
 import { Injectable } from '@angular/core';
+import * as ffbinaries from 'ffbinaries';
 
 @Injectable()
 export class FFmpegDownloader {

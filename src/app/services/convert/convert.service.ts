@@ -1,19 +1,19 @@
-import * as ytdl from 'ytdl-core';
-import * as ffmpeg from 'fluent-ffmpeg-corrected';
-import { Logger } from '../../core/logger';
-import { VideoDetails } from './video-details';
-import { Readable } from 'stream';
-import * as progressStream from 'progress-stream';
-import * as path from 'path';
-import * as sanitize from 'sanitize-filename';
 import { Injectable } from '@angular/core';
-import { FFmpegChecker } from './ffmpeg-checker';
-import { FileSystem } from '../../core/file-system';
-import { Subject, Observable } from 'rxjs';
+import * as ffmpeg from 'fluent-ffmpeg-corrected';
+import * as path from 'path';
+import * as progressStream from 'progress-stream';
+import { Observable, Subject } from 'rxjs';
+import * as sanitize from 'sanitize-filename';
+import { Readable } from 'stream';
+import * as ytdl from 'ytdl-core';
 import { AudioFormat } from '../../core/audio-format';
 import { Constants } from '../../core/constants';
+import { FileSystem } from '../../core/file-system';
+import { Logger } from '../../core/logger';
 import { Settings } from '../../core/settings';
 import { ConvertState } from './convert-state';
+import { FFmpegChecker } from './ffmpeg-checker';
+import { VideoDetails } from './video-details';
 
 @Injectable({
     providedIn: 'root',

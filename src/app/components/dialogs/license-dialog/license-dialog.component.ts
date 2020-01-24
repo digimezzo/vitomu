@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 @Component({
-    selector: 'license-dialog',
+    selector: 'app-license-dialog',
     templateUrl: './license-dialog.component.html',
     styleUrls: ['./license-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -12,6 +12,6 @@ export class LanguageSwitcherComponent implements OnInit {
 
   constructor(public translator: TranslatorService) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 }

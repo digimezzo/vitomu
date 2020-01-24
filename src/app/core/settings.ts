@@ -68,15 +68,15 @@ export class Settings {
         }
 
         if (!this.settings.has('colorTheme')) {
-            this.settings.set('colorTheme', "default-pink-theme");
+            this.settings.set('colorTheme', 'default-pink-theme');
         } else {
-            let settingsColorThemeName: string = this.settings.get('colorTheme');
+            const settingsColorThemeName: string = this.settings.get('colorTheme');
 
-            // Check if the color theme which is saved in the settings still exists 
+            // Check if the color theme which is saved in the settings still exists
             // in the app (The color themes might change between releases).
             // If not, reset the color theme setting to the default color theme.
             if (!Constants.colorThemes.map(x => x.name).includes(settingsColorThemeName)) {
-                this.settings.set('colorTheme', "default-pink-theme");
+                this.settings.set('colorTheme', 'default-pink-theme');
             }
         }
     }
