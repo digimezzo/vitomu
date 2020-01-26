@@ -54,7 +54,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this._downloadUrl = v;
   }
 
-  public ngOnInit(): void {
+  public async ngOnInit(): Promise<void> {
     this.subscription.add(this.convert.convertStateChanged$.subscribe((convertState) => {
       this.handleConvertStateChanged(convertState);
     }));
@@ -66,6 +66,8 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipboardText) => {
       this.handleClipboardContentChanged(clipboardText);
     }));
+
+    await this.convert.checkPrerequisitesAsync();
   }
 
   public ngOnDestroy(): void {

@@ -15,4 +15,7 @@ export class ConvertServiceMock {
     public onConvertProgressChanged(progressPercent: number): void {
         this.convertProgressChanged.next(progressPercent);
     }
+
+    public async checkPrerequisitesAsync(): Promise<void> {
+    }
 }

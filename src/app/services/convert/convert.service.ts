@@ -93,6 +93,10 @@ export class ConvertService {
         return false;
     }
 
+    public async checkPrerequisitesAsync(): Promise<void> {
+
+    }
+
     public async convertAsync(videoUrl: string): Promise<void> {
         try {
             await this.ffmpegChecker.ensureFFmpegIsAvailableAsync();
