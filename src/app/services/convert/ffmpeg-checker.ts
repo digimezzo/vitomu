@@ -22,7 +22,7 @@ export class FFmpegChecker {
     }
 
     public async ensureFFmpegIsAvailableAsync(): Promise<void> {
-        this._isFfmpegInPath = await this.fileSystem.commanExistsAsync('ffmpeg');
+        this._isFfmpegInPath = await this.isFFmpegInPathAsync();
 
         if (this._isFfmpegInPath) {
             this.logger.info('FFmpeg command was found. No need to set FFmpeg path.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
@@ -30,33 +30,37 @@ export class FFmpegChecker {
             return;
         }
 
-        let ffmpegPath: string = this.getDownloadedFFmpegPath();
+        let ffmpegPath: string = this.getPathOfDownloadedFFmpeg();
 
         if (!ffmpegPath) {
             this.logger.info('Start downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
             await this.ffmpegDownloader.downloadAsync(this.ffmpegFolder);
             this.logger.info('Finished downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
-            ffmpegPath = this.getDownloadedFFmpegPath();
+            ffmpegPath = this.getPathOfDownloadedFFmpeg();
         }
 
         this._ffmpegPath = ffmpegPath;
     }
 
-    public getDownloadedFFmpegPath(): string {
+    public async isFFmpegInPathAsync(): Promise<boolean> {
+        return await this.fileSystem.commanExistsAsync('ffmpeg');
+    }
+
+    public getPathOfDownloadedFFmpeg(): string {
         if (!this.fileSystem.pathExists(this.ffmpegFolder)) {
-            this.logger.info(`FFmpeg folder "${this.ffmpegFolder}" was not found`, 'FFmpegChecker', 'getDownloadedFFmpegPath');
+            this.logger.info(`FFmpeg folder "${this.ffmpegFolder}" was not found`, 'FFmpegChecker', 'getPathOfDownloadedFFmpeg');
             return '';
         }
 
         const ffmpegFile: string = this.fileSystem.readDirectory(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
 
         if (!ffmpegFile) {
-            this.logger.info(`FFmpeg was not found in folder ${this.ffmpegFolder}`, 'FFmpegChecker', 'getDownloadedFFmpegPath');
+            this.logger.info(`FFmpeg was not found in folder ${this.ffmpegFolder}`, 'FFmpegChecker', 'getPathOfDownloadedFFmpeg');
             return '';
         }
 
         const ffmpegPath: string = path.join(this.ffmpegFolder, ffmpegFile);
-        this.logger.info(`FFmpeg was found in at '${ffmpegPath}'`, 'FFmpegChecker', 'getDownloadedFFmpegPath');
+        this.logger.info(`FFmpeg was found in at '${ffmpegPath}'`, 'FFmpegChecker', 'getPathOfDownloadedFFmpeg');
 
         return ffmpegPath;
     }
