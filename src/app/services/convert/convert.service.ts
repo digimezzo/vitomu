@@ -103,7 +103,7 @@ export class ConvertService {
             return;
         }
 
-        if (!await this.ffmpegChecker.isFFmpegInPathAsync() && !this.ffmpegChecker.ffmpegPath) {
+        if (!await this.ffmpegChecker.isFFmpegInSystemPathAsync() && !this.ffmpegChecker.getPathOfDownloadedFFmpeg()) {
             this.logger.error('FFmpeg is not available.', 'ConvertService', 'convertAsync');
             this.onConvertStateChanged(ConvertState.FFmpegNotFound);
 
@@ -142,8 +142,8 @@ export class ConvertService {
                     this.onConvertProgressChanged(parseInt(progress.percentage, 10));
                 });
 
-                if (!await this.ffmpegChecker.isFFmpegInPathAsync()) {
-                    ffmpeg.setFfmpegPath(this.ffmpegChecker.ffmpegPath);
+                if (!await this.ffmpegChecker.isFFmpegInSystemPathAsync()) {
+                    ffmpeg.setFfmpegPath(this.ffmpegChecker.getPathOfDownloadedFFmpeg());
                 }
 
                 // Start encoding

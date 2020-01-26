@@ -158,79 +158,6 @@ describe('FFmpegInstaller', () => {
             ffmpegDownloaderMock.verify(x => x.downloadAsync(ffmpegFolder), Times.never());
         });
 
-        it('Should set empty ffmpegPath if FFmpeg is found in the path', async () => {
-            // Arrange
-            const fileSystemMock = Mock.ofType<FileSystem>();
-            const loggerMock = Mock.ofType<Logger>();
-            const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-
-            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => true);
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/home/user/.config/Vitomu');
-
-            const ffmpegChecker: FFmpegChecker = new FFmpegChecker(
-                loggerMock.object,
-                ffmpegDownloaderMock.object,
-                fileSystemMock.object);
-
-            // Act
-            await ffmpegChecker.ensureFFmpegIsAvailableAsync();
-
-            // Assert
-            assert.ok(ffmpegChecker.ffmpegPath.length === 0);
-        });
-
-        it('Should set empty ffmpegPath if FFmpeg is not found in path and also not found locally', async () => {
-            // Arrange
-            const fileSystemMock = Mock.ofType<FileSystem>();
-            const loggerMock = Mock.ofType<Logger>();
-            const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-
-            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => false);
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/home/user/.config/Vitomu');
-
-            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
-
-            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
-            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => []);
-
-            const ffmpegChecker: FFmpegChecker = new FFmpegChecker(
-                loggerMock.object,
-                ffmpegDownloaderMock.object,
-                fileSystemMock.object);
-
-            // Act
-            await ffmpegChecker.ensureFFmpegIsAvailableAsync();
-
-            // Assert
-            assert.ok(ffmpegChecker.ffmpegPath.length === 0);
-        });
-
-        it('Should set non-empty ffmpegPath if FFmpeg is not found in path but is found locally', async () => {
-            // Arrange
-            const fileSystemMock = Mock.ofType<FileSystem>();
-            const loggerMock = Mock.ofType<Logger>();
-            const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-
-            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => false);
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/home/user/.config/Vitomu');
-
-            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
-
-            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
-            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['ffmpeg']);
-
-            const ffmpegChecker: FFmpegChecker = new FFmpegChecker(
-                loggerMock.object,
-                ffmpegDownloaderMock.object,
-                fileSystemMock.object);
-
-            // Act
-            await ffmpegChecker.ensureFFmpegIsAvailableAsync();
-
-            // Assert
-            assert.ok(ffmpegChecker.ffmpegPath.length > 0);
-        });
-
         describe('isFFmpegInPathAsync', () => {
             it('Should detect when FFmpeg is in the Operating System path', async () => {
                 // Arrange
@@ -247,7 +174,7 @@ describe('FFmpegInstaller', () => {
                     fileSystemMock.object);
 
                 // Act
-                const isFFmpegInPath: boolean = await ffmpegChecker.isFFmpegInPathAsync();
+                const isFFmpegInPath: boolean = await ffmpegChecker.isFFmpegInSystemPathAsync();
 
                 // Assert
                 assert.ok(isFFmpegInPath);
@@ -268,7 +195,7 @@ describe('FFmpegInstaller', () => {
                     fileSystemMock.object);
 
                 // Act
-                const isFFmpegInPath: boolean = await ffmpegChecker.isFFmpegInPathAsync();
+                const isFFmpegInPath: boolean = await ffmpegChecker.isFFmpegInSystemPathAsync();
 
                 // Assert
                 assert.ok(!isFFmpegInPath);

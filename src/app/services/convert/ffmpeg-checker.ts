@@ -7,35 +7,25 @@ import { FFmpegDownloader } from './ffmpeg-downloader';
 @Injectable()
 export class FFmpegChecker {
     private ffmpegFolder: string = path.join(this.fileSystem.applicatioDataDirectory(), 'FFmpeg');
-    private _ffmpegPath: string = '';
 
     constructor(private logger: Logger, private ffmpegDownloader: FFmpegDownloader, private fileSystem: FileSystem) {
     }
 
-    public get ffmpegPath(): string {
-        return this._ffmpegPath;
-    }
-
     public async ensureFFmpegIsAvailableAsync(): Promise<void> {
-        if (await this.isFFmpegInPathAsync()) {
+        if (await this.isFFmpegInSystemPathAsync()) {
             this.logger.info('FFmpeg command was found. No need to set FFmpeg path.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
 
             return;
         }
 
-        let ffmpegPath: string = this.getPathOfDownloadedFFmpeg();
-
-        if (!ffmpegPath) {
+        if (!this.getPathOfDownloadedFFmpeg()) {
             this.logger.info('Start downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
             await this.ffmpegDownloader.downloadAsync(this.ffmpegFolder);
             this.logger.info('Finished downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
-            ffmpegPath = this.getPathOfDownloadedFFmpeg();
         }
-
-        this._ffmpegPath = ffmpegPath;
     }
 
-    public async isFFmpegInPathAsync(): Promise<boolean> {
+    public async isFFmpegInSystemPathAsync(): Promise<boolean> {
         return await this.fileSystem.commanExistsAsync('ffmpeg');
     }
 
