@@ -30,32 +30,34 @@ export class FFmpegChecker {
             return;
         }
 
-        let ffmpegPath: string = this.getFFmpegPath();
+        let ffmpegPath: string = this.getDownloadedFFmpegPath();
 
         if (!ffmpegPath) {
             this.logger.info('Start downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
             await this.ffmpegDownloader.downloadAsync(this.ffmpegFolder);
             this.logger.info('Finished downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
-            ffmpegPath = this.getFFmpegPath();
+            ffmpegPath = this.getDownloadedFFmpegPath();
         }
 
         this._ffmpegPath = ffmpegPath;
     }
 
-    private getFFmpegPath(): string {
-        if (this.fileSystem.pathExists(this.ffmpegFolder)) {
-            const ffmpegFile: string = this.fileSystem.readDirectory(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
-
-            if (ffmpegFile) {
-                const ffmpegPath: string = path.join(this.ffmpegFolder, ffmpegFile);
-                this.logger.info(`FFmpeg was found in at '${ffmpegPath}'`, 'FFmpegChecker', 'getFFmpegPath');
-
-                return ffmpegPath;
-            }
+    public getDownloadedFFmpegPath(): string {
+        if (!this.fileSystem.pathExists(this.ffmpegFolder)) {
+            this.logger.info(`FFmpeg folder "${this.ffmpegFolder}" was not found`, 'FFmpegChecker', 'getDownloadedFFmpegPath');
+            return '';
         }
 
-        this.logger.info(`FFmpeg was not found in folder ${this.ffmpegFolder}`, 'FFmpegChecker', 'getFFmpegPath');
+        const ffmpegFile: string = this.fileSystem.readDirectory(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
 
-        return '';
+        if (!ffmpegFile) {
+            this.logger.info(`FFmpeg was not found in folder ${this.ffmpegFolder}`, 'FFmpegChecker', 'getDownloadedFFmpegPath');
+            return '';
+        }
+
+        const ffmpegPath: string = path.join(this.ffmpegFolder, ffmpegFile);
+        this.logger.info(`FFmpeg was found in at '${ffmpegPath}'`, 'FFmpegChecker', 'getDownloadedFFmpegPath');
+
+        return ffmpegPath;
     }
 }
