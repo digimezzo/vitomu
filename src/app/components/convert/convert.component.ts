@@ -97,7 +97,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
       switch (convertState) {
         case ConvertState.Failed:
           this.delayer.execute(() => {
-            this.delayer.execute(() => this.resetState(), delayMilliseconds);
+            this.resetState();
             this.progressPercent = 0;
           }, delayMilliseconds);
           break;
