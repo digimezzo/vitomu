@@ -103,7 +103,7 @@ export class ConvertService {
             return;
         }
 
-        if (!this.ffmpegChecker.isFfmpegInPath && !this.ffmpegChecker.ffmpegPath) {
+        if (!await this.ffmpegChecker.isFFmpegInPathAsync() && !this.ffmpegChecker.ffmpegPath) {
             this.logger.error('FFmpeg is not available.', 'ConvertService', 'convertAsync');
             this.onConvertStateChanged(ConvertState.FFmpegNotFound);
 
@@ -130,7 +130,7 @@ export class ConvertService {
                 requestOptions: this.requestOptions
             });
 
-            videoStream.on('response', (httpResponse) => {
+            videoStream.on('response', async (httpResponse) => {
                 // Setup of progress module
                 const str: any = progressStream({
                     length: parseInt(httpResponse.headers['content-length'], 10),
@@ -142,7 +142,7 @@ export class ConvertService {
                     this.onConvertProgressChanged(parseInt(progress.percentage, 10));
                 });
 
-                if (!this.ffmpegChecker.isFfmpegInPath) {
+                if (!await this.ffmpegChecker.isFFmpegInPathAsync()) {
                     ffmpeg.setFfmpegPath(this.ffmpegChecker.ffmpegPath);
                 }
 

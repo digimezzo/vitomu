@@ -158,48 +158,6 @@ describe('FFmpegInstaller', () => {
             ffmpegDownloaderMock.verify(x => x.downloadAsync(ffmpegFolder), Times.never());
         });
 
-        it('Should indicate if FFmpeg was found in the path', async () => {
-            // Arrange
-            const fileSystemMock = Mock.ofType<FileSystem>();
-            const loggerMock = Mock.ofType<Logger>();
-            const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-
-            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => true);
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/home/user/.config/Vitomu');
-
-            const ffmpegChecker: FFmpegChecker = new FFmpegChecker(
-                loggerMock.object,
-                ffmpegDownloaderMock.object,
-                fileSystemMock.object);
-
-            // Act
-            await ffmpegChecker.ensureFFmpegIsAvailableAsync();
-
-            // Assert
-            assert.ok(ffmpegChecker.isFfmpegInPath === true);
-        });
-
-        it('Should indicate if FFmpeg was not found in the path', async () => {
-            // Arrange
-            const fileSystemMock = Mock.ofType<FileSystem>();
-            const loggerMock = Mock.ofType<Logger>();
-            const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-
-            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => false);
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/home/user/.config/Vitomu');
-
-            const ffmpegChecker: FFmpegChecker = new FFmpegChecker(
-                loggerMock.object,
-                ffmpegDownloaderMock.object,
-                fileSystemMock.object);
-
-            // Act
-            await ffmpegChecker.ensureFFmpegIsAvailableAsync();
-
-            // Assert
-            assert.ok(ffmpegChecker.isFfmpegInPath === false);
-        });
-
         it('Should set empty ffmpegPath if FFmpeg is found in the path', async () => {
             // Arrange
             const fileSystemMock = Mock.ofType<FileSystem>();

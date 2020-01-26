@@ -8,7 +8,6 @@ import { FFmpegDownloader } from './ffmpeg-downloader';
 export class FFmpegChecker {
     private ffmpegFolder: string = path.join(this.fileSystem.applicatioDataDirectory(), 'FFmpeg');
     private _ffmpegPath: string = '';
-    private _isFfmpegInPath: boolean;
 
     constructor(private logger: Logger, private ffmpegDownloader: FFmpegDownloader, private fileSystem: FileSystem) {
     }
@@ -17,14 +16,8 @@ export class FFmpegChecker {
         return this._ffmpegPath;
     }
 
-    public get isFfmpegInPath(): boolean {
-        return this._isFfmpegInPath;
-    }
-
     public async ensureFFmpegIsAvailableAsync(): Promise<void> {
-        this._isFfmpegInPath = await this.isFFmpegInPathAsync();
-
-        if (this._isFfmpegInPath) {
+        if (await this.isFFmpegInPathAsync()) {
             this.logger.info('FFmpeg command was found. No need to set FFmpeg path.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
 
             return;
