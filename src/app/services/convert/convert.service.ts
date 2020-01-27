@@ -99,42 +99,20 @@ export class ConvertService {
         return false;
     }
 
-    public async checkPrerequisitesAsync(): Promise<void> {
-        // Make sure outputPath exists
+    public async checkPrerequisitesAsync(): Promise<boolean> {
         await this.fileSystem.ensureDirectoryAsync(this.outputPath);
 
-        // public async ensureFFmpegIsAvailableAsync(): Promise<void> {
-        //     if (await this.isFFmpegInSystemPathAsync()) {
-        //         this.logger.info('FFmpeg command was found. No need to set FFmpeg path.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
+        if (!await this.ffmpegChecker.isFFmpegAvailableAsync()) {
+            this.logger.info('Start downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
+            this.onConvertStateChanged(ConvertState.DownloadingFFmpeg);
+            await this.ffmpegDownloader.downloadAsync(this.ffmpegChecker.downloadedFFmpegFolder);
+            this.logger.info('Finished downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
+        }
 
-        //         return;
-        //     }
-
-        //     if (!this.getPathOfDownloadedFFmpeg()) {
-        //         this.logger.info('Start downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
-        //         await this.ffmpegDownloader.downloadAsync(this.ffmpegFolder);
-        //         this.logger.info('Finished downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
-        //     }
-        // }
+        return await this.ffmpegChecker.isFFmpegAvailableAsync();
     }
 
     public async convertAsync(videoUrl: string): Promise<void> {
-        // try {
-        //     await this.ffmpegChecker.ensureFFmpegIsAvailableAsync();
-        // } catch (error) {
-        //     this.logger.error(`Could not ensure that FFmpeg is available. Error: ${error}`, 'ConvertService', 'convertAsync');
-        //     this.onConvertStateChanged(ConvertState.FFmpegNotFound);
-
-        //     return;
-        // }
-
-        // if (!await this.ffmpegChecker.isFFmpegInSystemPathAsync() && !this.ffmpegChecker.getPathOfDownloadedFFmpeg()) {
-        //     this.logger.error('FFmpeg is not available.', 'ConvertService', 'convertAsync');
-        //     this.onConvertStateChanged(ConvertState.FFmpegNotFound);
-
-        //     return;
-        // }
-
         this.onConvertProgressChanged(0);
         this.onConvertStateChanged(ConvertState.Converting);
 

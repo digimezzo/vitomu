@@ -7,9 +7,9 @@ export class FFmpegDownloader {
     constructor() {
     }
 
-    public async downloadAsync(ffmpegFolder: string): Promise<void> {
+    public async downloadAsync(downloadFolder: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            ffbinaries.downloadBinaries(['ffmpeg'], { destination: ffmpegFolder }, (error: string) => {
+            ffbinaries.downloadBinaries(['ffmpeg'], { destination: downloadFolder }, (error: string) => {
                 if (error) {
                     reject(error);
                 } else {

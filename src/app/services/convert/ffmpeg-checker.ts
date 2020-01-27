@@ -5,9 +5,11 @@ import { Logger } from '../../core/logger';
 
 @Injectable()
 export class FFmpegChecker {
-    private ffmpegFolder: string = path.join(this.fileSystem.applicatioDataDirectory(), 'FFmpeg');
-
     constructor(private logger: Logger, private fileSystem: FileSystem) {
+    }
+
+    public get downloadedFFmpegFolder(): string {
+        return path.join(this.fileSystem.applicatioDataDirectory(), 'FFmpeg');
     }
 
     public async isFFmpegAvailableAsync(): Promise<boolean> {
@@ -19,19 +21,21 @@ export class FFmpegChecker {
     }
 
     public getPathOfDownloadedFFmpeg(): string {
-        if (!this.fileSystem.pathExists(this.ffmpegFolder)) {
-            this.logger.info(`FFmpeg folder "${this.ffmpegFolder}" was not found`, 'FFmpegChecker', 'getPathOfDownloadedFFmpeg');
+        if (!this.fileSystem.pathExists(this.downloadedFFmpegFolder)) {
+            this.logger.info(`FFmpeg folder "${this.downloadedFFmpegFolder}" was not found`, 'FFmpegChecker', 'getPathOfDownloadedFFmpeg');
+
             return '';
         }
 
-        const ffmpegFile: string = this.fileSystem.readDirectory(this.ffmpegFolder).find(file => file.includes('ffmpeg'));
+        const ffmpegFile: string = this.fileSystem.readDirectory(this.downloadedFFmpegFolder).find(file => file.includes('ffmpeg'));
 
         if (!ffmpegFile) {
-            this.logger.info(`FFmpeg was not found in folder ${this.ffmpegFolder}`, 'FFmpegChecker', 'getPathOfDownloadedFFmpeg');
+            this.logger.info(`FFmpeg was not found in folder ${this.downloadedFFmpegFolder}`, 'FFmpegChecker', 'getPathOfDownloadedFFmpeg');
+
             return '';
         }
 
-        const ffmpegPath: string = path.join(this.ffmpegFolder, ffmpegFile);
+        const ffmpegPath: string = path.join(this.downloadedFFmpegFolder, ffmpegFile);
         this.logger.info(`FFmpeg was found in at '${ffmpegPath}'`, 'FFmpegChecker', 'getPathOfDownloadedFFmpeg');
 
         return ffmpegPath;

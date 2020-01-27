@@ -81,22 +81,22 @@ describe('FFmpegChecker', () => {
         });
 
         it('Should return the path to the downloaded FFmpeg if a "ffmpeg" file is found', async () => {
-             // Arrange
-             const fileSystemMock = Mock.ofType<FileSystem>();
-             const loggerMock = Mock.ofType<Logger>();
+            // Arrange
+            const fileSystemMock = Mock.ofType<FileSystem>();
+            const loggerMock = Mock.ofType<Logger>();
 
-             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
-             const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
-             fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
-             fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg']);
+            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg']);
 
-             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
+            const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
 
-             // Act
-             const pathOfDownloadedFFmpeg: string = ffmpegChecker.getPathOfDownloadedFFmpeg();
+            // Act
+            const pathOfDownloadedFFmpeg: string = ffmpegChecker.getPathOfDownloadedFFmpeg();
 
-             // Assert
-             assert.equal(pathOfDownloadedFFmpeg, '/directory/mock/FFmpeg/ffmpeg');
+            // Assert
+            assert.equal(pathOfDownloadedFFmpeg, '/directory/mock/FFmpeg/ffmpeg');
 
         });
 
@@ -199,6 +199,25 @@ describe('FFmpegChecker', () => {
 
             // Assert
             assert.ok(isFFmpegAvailable);
+        });
+    });
+
+    describe('downloadedFFmpegFolder', () => {
+        it('Should provide the folder to which FFmpeg is be downloaded', async () => {
+            // Arrange
+            const fileSystemMock = Mock.ofType<FileSystem>();
+            const loggerMock = Mock.ofType<Logger>();
+
+            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+
+            const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
+            const expectedDownloadedFFmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
+
+            // Act
+            const downloadedFFmpegFolder: string = ffmpegChecker.downloadedFFmpegFolder;
+
+            // Assert
+            assert.equal(downloadedFFmpegFolder, expectedDownloadedFFmpegFolder);
         });
     });
 });

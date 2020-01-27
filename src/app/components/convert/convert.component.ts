@@ -67,6 +67,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
       this.handleClipboardContentChanged(clipboardText);
     }));
 
+    await this.checkPrerequisitesAsync();
+  }
+
+  private async checkPrerequisitesAsync(): Promise<void> {
     await this.convert.checkPrerequisitesAsync();
   }
 
