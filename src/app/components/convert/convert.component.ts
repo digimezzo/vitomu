@@ -17,7 +17,7 @@ import { TranslatorService } from '../../services/translator/translator.service'
 export class ConvertComponent implements OnInit, OnDestroy {
 
   // This is required to use enum values in the template
-  public ConvertState: typeof ConvertState = ConvertState;
+  public ConvertStateEnum: typeof ConvertState = ConvertState;
 
   private subscription: Subscription = new Subscription();
   private _progressPercent: number;
@@ -71,7 +71,11 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   private async checkPrerequisitesAsync(): Promise<void> {
-    await this.convert.checkPrerequisitesAsync();
+    if (await this.convert.checkPrerequisitesAsync()) {
+      this.convertState = ConvertState.WaitingForClipboardContent;
+    } else {
+      this.convertState = ConvertState.FFmpegNotFound;
+    }
   }
 
   public ngOnDestroy(): void {

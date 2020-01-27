@@ -5,7 +5,7 @@
         <div class="drop-zone-circle mb-4">
             <!-- Progress spinner -->
             <div class="drop-zone-circle-spinner"
-                *ngIf="convertState === ConvertState.Converting || convertState === ConvertState.Successful">
+                *ngIf="convertState === ConvertStateEnum.Converting || convertState === ConvertStateEnum.Successful || convertState === ConvertStateEnum.DownloadingFFmpeg">
                 <mat-progress-spinner class="drop-zone-circle-spinner" diameter="266" strokeWidth="4" color="primary"
                     [mode]="progressMode" [value]="progressPercent">
                 </mat-progress-spinner>
@@ -14,11 +14,11 @@
             <div class="drop-zone-circle-background">
                 <!-- Clipboard icon -->
                 <div class="drop-zone-icon-pulsing custom-font"
-                    *ngIf="convertState === ConvertState.WaitingForClipboardContent">
+                    *ngIf="convertState === ConvertStateEnum.WaitingForClipboardContent">
                     &#xF328;
                 </div>
                 <!-- Download icon -->
-                <div class="download-icon" *ngIf="convertState === ConvertState.HasValidClipboardContent">
+                <div class="download-icon" *ngIf="convertState === ConvertStateEnum.HasValidClipboardContent">
                     <div class="download-icon-pulse">
                     </div>
                     <div class="download-icon-icon custom-font clickable"
@@ -26,17 +26,22 @@
                         &#xF019;
                     </div>
                 </div>
+                <!-- Download busy icon -->
+                <div class="drop-zone-icon-static custom-font"
+                    *ngIf="convertState === ConvertStateEnum.DownloadingFFmpeg">
+                    &#xF381;
+                </div>
                 <!-- Error icon -->
                 <div class="drop-zone-icon-static custom-font"
-                    *ngIf="convertState === ConvertState.FFmpegNotFound || convertState === ConvertState.Failed">
+                    *ngIf="convertState === ConvertStateEnum.FFmpegNotFound || convertState === ConvertStateEnum.Failed">
                     &#xF05E;
                 </div>
                 <!-- Success icon -->
-                <div class="drop-zone-icon-static custom-font" *ngIf="convertState === ConvertState.Successful">
+                <div class="drop-zone-icon-static custom-font" *ngIf="convertState === ConvertStateEnum.Successful">
                     &#xF00C;
                 </div>
                 <!-- Progress percent -->
-                <div class="drop-zone-progress-text" *ngIf="convertState === ConvertState.Converting">
+                <div class="drop-zone-progress-text" *ngIf="convertState === ConvertStateEnum.Converting">
                     {{ progressPercent }}%
                 </div>
             </div>
@@ -44,27 +49,31 @@
         <!-- Drop zone text -->
         <div>
             <!-- Drop text -->
-            <div *ngIf="convertState === ConvertState.WaitingForClipboardContent">
+            <div *ngIf="convertState === ConvertStateEnum.WaitingForClipboardContent">
                 {{ 'ConvertTab.DropText' | translate }}
             </div>
             <!-- Success text -->
-            <div *ngIf="convertState === ConvertState.Successful">
+            <div *ngIf="convertState === ConvertStateEnum.Successful">
                 {{ 'ConvertTab.ConversionSuccessful' | translate }}
             </div>
             <!-- Failed text -->
-            <div *ngIf="convertState === ConvertState.Failed">
+            <div *ngIf="convertState === ConvertStateEnum.Failed">
                 {{ 'ConvertTab.ConversionFailed' | translate }}
             </div>
+            <!-- Downloading FFmpeg text -->
+            <div *ngIf="convertState === ConvertStateEnum.DownloadingFFmpeg">
+                {{ 'ConvertTab.DownloadingFFmpeg' | translate }}
+            </div>
             <!-- FFmpeg not found text -->
-            <div *ngIf="convertState === ConvertState.FFmpegNotFound">
+            <div *ngIf="convertState === ConvertStateEnum.FFmpegNotFound">
                 {{ 'ConvertTab.FFmpegNotFound' | translate }}
             </div>
             <!-- Conversion in progress text -->
-            <div *ngIf="convertState === ConvertState.Converting">
+            <div *ngIf="convertState === ConvertStateEnum.Converting">
                 {{ 'ConvertTab.ConversionInProgress' | translate }}
             </div>
             <!-- Video link text -->
-            <div class="video-link-info" *ngIf="convertState === ConvertState.HasValidClipboardContent">
+            <div class="video-link-info" *ngIf="convertState === ConvertStateEnum.HasValidClipboardContent">
                 <div>
                     {{ 'ConvertTab.FoundOnClipboard' | translate }}
                 </div>

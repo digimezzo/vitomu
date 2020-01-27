@@ -13,6 +13,7 @@
     "ConversionFailed": "Conversion échouée",
     "FoundOnClipboard": "Lien vidéo trouvé dans le presse-papiers!",
     "ConversionInProgress": "Conversion en cours...",
+    "DownloadingFFmpeg": "Téléchargement de FFmpeg. Nous en avons besoin pour convertir des vidéos.",
     "FFmpegNotFound": "FFmpeg est introuvable. Nous en avons besoin pour convertir des vidéos."
   },
   "SettingsTab": {
