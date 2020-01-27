@@ -13,6 +13,7 @@ import { Logger } from '../../core/logger';
 import { Settings } from '../../core/settings';
 import { ConvertState } from './convert-state';
 import { FFmpegChecker } from './ffmpeg-checker';
+import { FFmpegDownloader } from './ffmpeg-downloader';
 import { VideoDetails } from './video-details';
 
 @Injectable({
@@ -35,7 +36,12 @@ export class ConvertService {
     private _selectedAudioFormat: AudioFormat;
     private _selectedAudioBitrate: number;
 
-    constructor(private logger: Logger, private ffmpegChecker: FFmpegChecker, private fileSystem: FileSystem, private settings: Settings) {
+    constructor(
+        private logger: Logger,
+        private ffmpegChecker: FFmpegChecker,
+        private ffmpegDownloader: FFmpegDownloader,
+        private fileSystem: FileSystem,
+        private settings: Settings) {
         this._selectedAudioFormat = this.audioFormats.find(x => x.id === this.settings.audioFormat);
         this._selectedAudioBitrate = this.audioBitrates.find(x => x === this.settings.audioBitrate);
     }
@@ -94,25 +100,40 @@ export class ConvertService {
     }
 
     public async checkPrerequisitesAsync(): Promise<void> {
+        // Make sure outputPath exists
+        await this.fileSystem.ensureDirectoryAsync(this.outputPath);
 
+        // public async ensureFFmpegIsAvailableAsync(): Promise<void> {
+        //     if (await this.isFFmpegInSystemPathAsync()) {
+        //         this.logger.info('FFmpeg command was found. No need to set FFmpeg path.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
+
+        //         return;
+        //     }
+
+        //     if (!this.getPathOfDownloadedFFmpeg()) {
+        //         this.logger.info('Start downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
+        //         await this.ffmpegDownloader.downloadAsync(this.ffmpegFolder);
+        //         this.logger.info('Finished downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
+        //     }
+        // }
     }
 
     public async convertAsync(videoUrl: string): Promise<void> {
-        try {
-            await this.ffmpegChecker.ensureFFmpegIsAvailableAsync();
-        } catch (error) {
-            this.logger.error(`Could not ensure that FFmpeg is available. Error: ${error}`, 'ConvertService', 'convertAsync');
-            this.onConvertStateChanged(ConvertState.FFmpegNotFound);
+        // try {
+        //     await this.ffmpegChecker.ensureFFmpegIsAvailableAsync();
+        // } catch (error) {
+        //     this.logger.error(`Could not ensure that FFmpeg is available. Error: ${error}`, 'ConvertService', 'convertAsync');
+        //     this.onConvertStateChanged(ConvertState.FFmpegNotFound);
 
-            return;
-        }
+        //     return;
+        // }
 
-        if (!await this.ffmpegChecker.isFFmpegInSystemPathAsync() && !this.ffmpegChecker.getPathOfDownloadedFFmpeg()) {
-            this.logger.error('FFmpeg is not available.', 'ConvertService', 'convertAsync');
-            this.onConvertStateChanged(ConvertState.FFmpegNotFound);
+        // if (!await this.ffmpegChecker.isFFmpegInSystemPathAsync() && !this.ffmpegChecker.getPathOfDownloadedFFmpeg()) {
+        //     this.logger.error('FFmpeg is not available.', 'ConvertService', 'convertAsync');
+        //     this.onConvertStateChanged(ConvertState.FFmpegNotFound);
 
-            return;
-        }
+        //     return;
+        // }
 
         this.onConvertProgressChanged(0);
         this.onConvertStateChanged(ConvertState.Converting);
@@ -124,9 +145,6 @@ export class ConvertService {
             const filePath: string = path.join(this.outputPath, sanitize(videoDetails.videoTitle) + this.selectedAudioFormat.extension);
 
             this.logger.info(`File path: ${filePath}`, 'ConvertService', 'convertAsync');
-
-            // Make sure outputPath exists
-            await this.fileSystem.ensureDirectoryAsync(this.outputPath);
 
             // Download
             const videoStream: Readable = ytdl.downloadFromInfo(videoInfo, {
@@ -166,7 +184,6 @@ export class ConvertService {
                         this.lastConvertedFilePath = filePath;
                         this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
                         this.logger.info(`Convertion of video '${videoUrl}' to file '${filePath}' was succesful`, 'ConvertService', 'convertAsync');
-
                     })
                     .saveToFile(filePath);
             });
