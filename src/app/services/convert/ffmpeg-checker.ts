@@ -10,7 +10,7 @@ export class FFmpegChecker {
     constructor(private logger: Logger, private fileSystem: FileSystem) {
     }
 
-    public async isFFmpegAvailable(): Promise<boolean> {
+    public async isFFmpegAvailableAsync(): Promise<boolean> {
         return await this.isFFmpegInSystemPathAsync() || this.getPathOfDownloadedFFmpeg() !== '';
     }
 

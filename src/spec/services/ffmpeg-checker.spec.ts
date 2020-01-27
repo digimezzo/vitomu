@@ -121,6 +121,84 @@ describe('FFmpegChecker', () => {
     });
 
     describe('isFFmpegAvailable', () => {
+        it('Should consider FFmpeg unavailable if FFmpeg not in system path and also not downloaded', async () => {
+            // Arrange
+            const fileSystemMock = Mock.ofType<FileSystem>();
+            const loggerMock = Mock.ofType<Logger>();
 
+            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => false);
+            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'vlc.exe']);
+
+            const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
+
+            // Act
+            const isFFmpegAvailable: boolean = await ffmpegChecker.isFFmpegAvailableAsync();
+
+            // Assert
+            assert.ok(!isFFmpegAvailable);
+        });
+
+        it('Should consider FFmpeg available if FFmpeg not in system path but is downloaded', async () => {
+            // Arrange
+            const fileSystemMock = Mock.ofType<FileSystem>();
+            const loggerMock = Mock.ofType<Logger>();
+
+            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => false);
+            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg.exe']);
+
+            const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
+
+            // Act
+            const isFFmpegAvailable: boolean = await ffmpegChecker.isFFmpegAvailableAsync();
+
+            // Assert
+            assert.ok(isFFmpegAvailable);
+        });
+
+        it('Should consider FFmpeg available if FFmpeg is in system path but not downloaded', async () => {
+            // Arrange
+            const fileSystemMock = Mock.ofType<FileSystem>();
+            const loggerMock = Mock.ofType<Logger>();
+
+            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => true);
+            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'vlc.exe']);
+
+            const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
+
+            // Act
+            const isFFmpegAvailable: boolean = await ffmpegChecker.isFFmpegAvailableAsync();
+
+            // Assert
+            assert.ok(isFFmpegAvailable);
+        });
+
+        it('Should consider FFmpeg available if FFmpeg is in system path and also downloaded', async () => {
+            // Arrange
+            const fileSystemMock = Mock.ofType<FileSystem>();
+            const loggerMock = Mock.ofType<Logger>();
+
+            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => true);
+            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg']);
+
+            const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
+
+            // Act
+            const isFFmpegAvailable: boolean = await ffmpegChecker.isFFmpegAvailableAsync();
+
+            // Assert
+            assert.ok(isFFmpegAvailable);
+        });
     });
 });
