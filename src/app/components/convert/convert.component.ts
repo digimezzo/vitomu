@@ -99,6 +99,12 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.desktop.openInDefaultApplication(this.convert.lastConvertedFilePath);
   }
 
+  private resetState(): void {
+    this.convertState = ConvertState.WaitingForClipboardContent;
+    this.progressPercent = 0;
+    this.downloadUrl = '';
+  }
+
   private handleConvertStateChanged(convertState: ConvertState): void {
     this.zone.run(() => {
       this.convertState = convertState;
@@ -107,12 +113,6 @@ export class ConvertComponent implements OnInit, OnDestroy {
         this.delayer.execute(() => this.resetState(), 3000);
       }
     });
-  }
-
-  private resetState(): void {
-    this.convertState = ConvertState.WaitingForClipboardContent;
-    this.progressPercent = 0;
-    this.downloadUrl = '';
   }
 
   private handleConvertProgressChanged(progressPercent: number): void {
