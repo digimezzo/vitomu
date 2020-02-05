@@ -1,10 +1,9 @@
 export enum ConvertState {
-    Unknown,
     WaitingForClipboardContent,
     HasValidClipboardContent,
-    FFmpegNotFound,
-    DownloadingFFmpeg,
-    Converting,
-    Successful,
-    Failed
+    PrerequisitesNotOK,
+    FixingPrerequisites,
+    ConversionInProgress,
+    ConversionSuccessful,
+    ConversionFailed
 }

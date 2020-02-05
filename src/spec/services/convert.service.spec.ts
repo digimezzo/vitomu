@@ -197,8 +197,8 @@ describe('ConvertService', () => {
         });
     });
 
-    describe('onConvertStateChanged', () => {
-        it('Should notify when convert state changes', async () => {
+    describe('onConversionSuccessful', () => {
+        it('Should notify when conversion is successful', async () => {
             // Arrange
             const loggerMock = Mock.ofType<Logger>();
             const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
@@ -217,22 +217,57 @@ describe('ConvertService', () => {
 
             const subscription: Subscription = new Subscription();
 
-            let lastConvertState: ConvertState = ConvertState.Unknown;
+            let eventReceived: boolean = false;
 
-            subscription.add(convert.convertStateChanged$.subscribe((convertState) => {
-                lastConvertState = convertState;
+            subscription.add(convert.conversionSuccessful$.subscribe(() => {
+                eventReceived = true;
             }));
 
             // Act
-            await convert.onConvertStateChanged(ConvertState.Successful);
+            await convert.onConversionSuccessful();
             subscription.unsubscribe();
 
             // Assert
-            assert.equal(lastConvertState, ConvertState.Successful);
+            assert.ok(eventReceived);
         });
     });
 
-    describe('onConvertProgressChanged', () => {
+    describe('onConversionFailed', () => {
+        it('Should notify when conversion failed', async () => {
+            // Arrange
+            const loggerMock = Mock.ofType<Logger>();
+            const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
+            const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
+            const fileSystemMock = Mock.ofType<FileSystem>();
+            const settingsMock = Mock.ofType<Settings>();
+
+            fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
+
+            const convert = new ConvertService(
+                loggerMock.object,
+                ffmpegCheckerMock.object,
+                ffmpegDownloaderMock.object,
+                fileSystemMock.object,
+                settingsMock.object);
+
+            const subscription: Subscription = new Subscription();
+
+            let eventReceived: boolean = false;
+
+            subscription.add(convert.conversionFailed$.subscribe(() => {
+                eventReceived = true;
+            }));
+
+            // Act
+            await convert.onConversionFailed();
+            subscription.unsubscribe();
+
+            // Assert
+            assert.ok(eventReceived);
+        });
+    });
+
+    describe('onConversionProgressChanged', () => {
         it('Should notify when convert progress changes', async () => {
             // Arrange
             const loggerMock = Mock.ofType<Logger>();
@@ -252,23 +287,23 @@ describe('ConvertService', () => {
 
             const subscription: Subscription = new Subscription();
 
-            let lastConvertProgress: number = 0;
+            let lastProgressPercent: number = 0;
 
-            subscription.add(convert.convertProgressChanged$.subscribe((convertProgress) => {
-                lastConvertProgress = convertProgress;
+            subscription.add(convert.conversionProgressChanged$.subscribe((progressPercent) => {
+                lastProgressPercent = progressPercent;
             }));
 
             // Act
-            await convert.onConvertProgressChanged(50);
+            await convert.onConversionProgressChanged(50);
             subscription.unsubscribe();
 
             // Assert
-            assert.equal(lastConvertProgress, 50);
+            assert.equal(lastProgressPercent, 50);
         });
     });
 
-    describe('checkPrerequisitesAsync', () => {
-        it('Should ensure that the output directory exists', async () => {
+    describe('arePrerequisitesOKAsync', () => {
+        it('Should return true if FFmpeg is available', async () => {
             // Arrange
             const loggerMock = Mock.ofType<Logger>();
             const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
@@ -276,9 +311,10 @@ describe('ConvertService', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
 
+            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
-
-            const outputPath: string = path.join(fileSystemMock.object.musicDirectory(), 'Vitomu');
+            ffmpegCheckerMock.setup(x => x.isFFmpegAvailableAsync()).returns(() => Promise.resolve(true));
+            ffmpegCheckerMock.setup(x => x.downloadedFFmpegFolder).returns(() => '/home/directory/mock');
 
             const convert = new ConvertService(
                 loggerMock.object,
@@ -288,12 +324,41 @@ describe('ConvertService', () => {
                 settingsMock.object);
 
             // Act
-            await convert.checkPrerequisitesAsync();
+            const prerequisitesAreOK: boolean = await convert.arePrerequisitesOKAsync();
 
             // Assert
-            fileSystemMock.verify(x => x.ensureDirectoryAsync(outputPath), Times.exactly(1));
+            assert.ok(prerequisitesAreOK);
         });
 
+        it('Should return false if FFmpeg is not available', async () => {
+            // Arrange
+            const loggerMock = Mock.ofType<Logger>();
+            const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
+            const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
+            const fileSystemMock = Mock.ofType<FileSystem>();
+            const settingsMock = Mock.ofType<Settings>();
+
+            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+            fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
+            ffmpegCheckerMock.setup(x => x.isFFmpegAvailableAsync()).returns(() => Promise.resolve(false));
+            ffmpegCheckerMock.setup(x => x.downloadedFFmpegFolder).returns(() => '/home/directory/mock');
+
+            const convert = new ConvertService(
+                loggerMock.object,
+                ffmpegCheckerMock.object,
+                ffmpegDownloaderMock.object,
+                fileSystemMock.object,
+                settingsMock.object);
+
+            // Act
+            const prerequisitesAreOK: boolean = await convert.arePrerequisitesOKAsync();
+
+            // Assert
+            assert.ok(!prerequisitesAreOK);
+        });
+    });
+
+    describe('fixPrerequisites', () => {
         it('Should check if FFmpeg is available', async () => {
             // Arrange
             const loggerMock = Mock.ofType<Logger>();
@@ -312,10 +377,10 @@ describe('ConvertService', () => {
                 settingsMock.object);
 
             // Act
-            await convert.checkPrerequisitesAsync();
+            await convert.fixPrerequisites();
 
             // Assert
-            ffmpegCheckerMock.verify(x => x.isFFmpegAvailableAsync(), Times.exactly(2));
+            ffmpegCheckerMock.verify(x => x.isFFmpegAvailableAsync(), Times.exactly(1));
         });
 
         it('Should download FFmpeg if it is not available', async () => {
@@ -339,7 +404,7 @@ describe('ConvertService', () => {
                 settingsMock.object);
 
             // Act
-            await convert.checkPrerequisitesAsync();
+            await convert.fixPrerequisites();
 
             // Assert
             ffmpegDownloaderMock.verify(x => x.downloadAsync('/home/directory/mock'), Times.exactly(1));
@@ -366,13 +431,15 @@ describe('ConvertService', () => {
                 settingsMock.object);
 
             // Act
-            await convert.checkPrerequisitesAsync();
+            await convert.fixPrerequisites();
 
             // Assert
             ffmpegDownloaderMock.verify(x => x.downloadAsync('/home/directory/mock'), Times.never());
         });
+    });
 
-        it('Should notify if FFmpeg is being downloaded', async () => {
+    describe('convertAsync', () => {
+        it('Should ensure that the output directory exists', async () => {
             // Arrange
             const loggerMock = Mock.ofType<Logger>();
             const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
@@ -380,10 +447,9 @@ describe('ConvertService', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
 
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
-            ffmpegCheckerMock.setup(x => x.isFFmpegAvailableAsync()).returns(() => Promise.resolve(false));
-            ffmpegCheckerMock.setup(x => x.downloadedFFmpegFolder).returns(() => '/home/directory/mock');
+
+            const outputPath: string = path.join(fileSystemMock.object.musicDirectory(), 'Vitomu');
 
             const convert = new ConvertService(
                 loggerMock.object,
@@ -392,89 +458,11 @@ describe('ConvertService', () => {
                 fileSystemMock.object,
                 settingsMock.object);
 
-            const subscription: Subscription = new Subscription();
-            const convertStates: ConvertState[] = [];
-
-            subscription.add(convert.convertStateChanged$.subscribe((convertState) => {
-                convertStates.push(convertState);
-            }));
-
             // Act
-            await convert.checkPrerequisitesAsync();
-            subscription.unsubscribe();
+            await convert.convertAsync("dummyUrl");
 
             // Assert
-            assert.equal(convertStates[0], ConvertState.DownloadingFFmpeg);
-        });
-
-        it('Should return true if FFmpeg is available', async () => {
-            // Arrange
-            const loggerMock = Mock.ofType<Logger>();
-            const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
-            const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-            const fileSystemMock = Mock.ofType<FileSystem>();
-            const settingsMock = Mock.ofType<Settings>();
-
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
-            fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
-            ffmpegCheckerMock.setup(x => x.isFFmpegAvailableAsync()).returns(() => Promise.resolve(true));
-            ffmpegCheckerMock.setup(x => x.downloadedFFmpegFolder).returns(() => '/home/directory/mock');
-
-            const convert = new ConvertService(
-                loggerMock.object,
-                ffmpegCheckerMock.object,
-                ffmpegDownloaderMock.object,
-                fileSystemMock.object,
-                settingsMock.object);
-
-            const subscription: Subscription = new Subscription();
-            const convertStates: ConvertState[] = [];
-
-            subscription.add(convert.convertStateChanged$.subscribe((convertState) => {
-                convertStates.push(convertState);
-            }));
-
-            // Act
-            const isFFmpegAvailable: boolean = await convert.checkPrerequisitesAsync();
-            subscription.unsubscribe();
-
-            // Assert
-            assert.ok(isFFmpegAvailable);
-        });
-
-        it('Should return false if FFmpeg is not available', async () => {
-            // Arrange
-            const loggerMock = Mock.ofType<Logger>();
-            const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
-            const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-            const fileSystemMock = Mock.ofType<FileSystem>();
-            const settingsMock = Mock.ofType<Settings>();
-
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
-            fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
-            ffmpegCheckerMock.setup(x => x.isFFmpegAvailableAsync()).returns(() => Promise.resolve(false));
-            ffmpegCheckerMock.setup(x => x.downloadedFFmpegFolder).returns(() => '/home/directory/mock');
-
-            const convert = new ConvertService(
-                loggerMock.object,
-                ffmpegCheckerMock.object,
-                ffmpegDownloaderMock.object,
-                fileSystemMock.object,
-                settingsMock.object);
-
-            const subscription: Subscription = new Subscription();
-            const convertStates: ConvertState[] = [];
-
-            subscription.add(convert.convertStateChanged$.subscribe((convertState) => {
-                convertStates.push(convertState);
-            }));
-
-            // Act
-            const isFFmpegAvailable: boolean = await convert.checkPrerequisitesAsync();
-            subscription.unsubscribe();
-
-            // Assert
-            assert.ok(!isFFmpegAvailable);
+            fileSystemMock.verify(x => x.ensureDirectoryAsync(outputPath), Times.exactly(1));
         });
     });
 });

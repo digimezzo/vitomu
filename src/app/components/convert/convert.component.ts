@@ -29,7 +29,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.resetState();
   }
 
-  public progressMode: string = 'determinate';
+  public progressMode: string;
 
   public get progressPercent(): number {
     return this._progressPercent;
@@ -55,13 +55,17 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   public async ngOnInit(): Promise<void> {
-    this.subscription.add(this.convert.convertStateChanged$.subscribe((convertState) => {
-      this.handleConvertStateChanged(convertState);
+    this.subscription.add(this.convert.conversionProgressChanged$.subscribe((progressPercent) => {
+      this.handleConversionProgressChanged(progressPercent);
     }));
 
-    this.subscription.add(this.convert.convertProgressChanged$.subscribe((progressPercent) => {
-      this.handleConvertProgressChanged(progressPercent);
-    }));
+    // this.subscription.add(this.convert.conversionSuccessful$.subscribe(() => {
+    //   this.handleConversionSuccessful();
+    // }));
+
+    // this.subscription.add(this.convert.conversionFailed$.subscribe(() => {
+    //   this.handleConversionFailed();
+    // }));
 
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipboardText) => {
       this.handleClipboardContentChanged(clipboardText);
@@ -71,11 +75,13 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   private async checkPrerequisitesAsync(): Promise<void> {
-    if (await this.convert.checkPrerequisitesAsync()) {
-      this.convertState = ConvertState.WaitingForClipboardContent;
-    } else {
-      this.convertState = ConvertState.FFmpegNotFound;
-    }
+    await this.convert.arePrerequisitesOKAsync();
+
+    // if (await this.convert.checkPrerequisitesAsync()) {
+       //this.convertState = ConvertState.ConversionFailed;
+    // } else {
+    //   this.convertState = ConvertState.PrerequisitesNotOK;
+    // }
   }
 
   public ngOnDestroy(): void {
@@ -103,19 +109,26 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.convertState = ConvertState.WaitingForClipboardContent;
     this.progressPercent = 0;
     this.downloadUrl = '';
+    this.progressMode = 'determinate';
   }
 
-  private handleConvertStateChanged(convertState: ConvertState): void {
-    this.zone.run(() => {
-      this.convertState = convertState;
+  // private handleConversionSuccessful(): void {
+  // }
 
-      if (convertState === ConvertState.Failed || convertState === ConvertState.Successful) {
-        this.delayer.execute(() => this.resetState(), 3000);
-      }
-    });
-  }
+  // private handleConversionFailed(): void {
+  // }
 
-  private handleConvertProgressChanged(progressPercent: number): void {
+  // private handleConvertStateChanged(convertState: ConvertState): void {
+  //   this.zone.run(() => {
+  //     this.convertState = convertState;
+
+  //     if (convertState === ConvertState.ConversionFailed || convertState === ConvertState.ConversionSuccessful) {
+  //       this.delayer.execute(() => this.resetState(), 3000);
+  //     }
+  //   });
+  // }
+
+  private handleConversionProgressChanged(progressPercent: number): void {
     this.zone.run(() => this.progressPercent = progressPercent);
   }
 

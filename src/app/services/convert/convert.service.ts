@@ -11,7 +11,6 @@ import { Constants } from '../../core/constants';
 import { FileSystem } from '../../core/file-system';
 import { Logger } from '../../core/logger';
 import { Settings } from '../../core/settings';
-import { ConvertState } from './convert-state';
 import { FFmpegChecker } from './ffmpeg-checker';
 import { FFmpegDownloader } from './ffmpeg-downloader';
 import { VideoDetails } from './video-details';
@@ -27,11 +26,14 @@ export class ConvertService {
     private _lastConvertedFilePath: string = '';
     private _lastConvertedFileName: string = '';
 
-    private convertStateChanged: Subject<ConvertState> = new Subject<ConvertState>();
-    public convertStateChanged$: Observable<ConvertState> = this.convertStateChanged.asObservable();
+    private conversionSuccessful: Subject<void> = new Subject<void>();
+    public conversionSuccessful$: Observable<void> = this.conversionSuccessful.asObservable();
 
-    private convertProgressChanged: Subject<number> = new Subject<number>();
-    public convertProgressChanged$: Observable<number> = this.convertProgressChanged.asObservable();
+    private conversionFailed: Subject<void> = new Subject<void>();
+    public conversionFailed$: Observable<void> = this.conversionFailed.asObservable();
+
+    private conversionProgressChanged: Subject<number> = new Subject<number>();
+    public conversionProgressChanged$: Observable<number> = this.conversionProgressChanged.asObservable();
 
     private _selectedAudioFormat: AudioFormat;
     private _selectedAudioBitrate: number;
@@ -83,12 +85,16 @@ export class ConvertService {
         this.settings.audioBitrate = v;
     }
 
-    public onConvertStateChanged(convertState: ConvertState): void {
-        this.convertStateChanged.next(convertState);
+    public onConversionSuccessful(): void {
+        this.conversionSuccessful.next();
     }
 
-    public onConvertProgressChanged(progressPercent: number): void {
-        this.convertProgressChanged.next(progressPercent);
+    public onConversionFailed(): void {
+        this.conversionFailed.next();
+    }
+
+    public onConversionProgressChanged(progressPercent: number): void {
+        this.conversionProgressChanged.next(progressPercent);
     }
 
     public isVideoUrlConvertible(videoUrl: string): boolean {
@@ -99,22 +105,22 @@ export class ConvertService {
         return false;
     }
 
-    public async checkPrerequisitesAsync(): Promise<boolean> {
-        await this.fileSystem.ensureDirectoryAsync(this.outputPath);
-
-        if (!await this.ffmpegChecker.isFFmpegAvailableAsync()) {
-            this.logger.info('Start downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
-            this.onConvertStateChanged(ConvertState.DownloadingFFmpeg);
-            await this.ffmpegDownloader.downloadAsync(this.ffmpegChecker.downloadedFFmpegFolder);
-            this.logger.info('Finished downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
-        }
-
+    public async arePrerequisitesOKAsync(): Promise<boolean> {
         return await this.ffmpegChecker.isFFmpegAvailableAsync();
     }
 
+    public async fixPrerequisites(): Promise<void> {
+        if (!await this.ffmpegChecker.isFFmpegAvailableAsync()) {
+            this.logger.info('Start downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
+            await this.ffmpegDownloader.downloadAsync(this.ffmpegChecker.downloadedFFmpegFolder);
+            this.logger.info('Finished downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
+        }
+    }
+
     public async convertAsync(videoUrl: string): Promise<void> {
-        this.onConvertProgressChanged(0);
-        this.onConvertStateChanged(ConvertState.Converting);
+        await this.fileSystem.ensureDirectoryAsync(this.outputPath);
+
+        this.onConversionProgressChanged(0);
 
         try {
             // Get info
@@ -139,7 +145,7 @@ export class ConvertService {
 
                 // Add progress event listener
                 str.on('progress', (progress) => {
-                    this.onConvertProgressChanged(parseInt(progress.percentage, 10));
+                    this.onConversionProgressChanged(parseInt(progress.percentage, 10));
                 });
 
                 if (!await this.ffmpegChecker.isFFmpegInSystemPathAsync()) {
@@ -154,11 +160,11 @@ export class ConvertService {
                     .audioBitrate(this.selectedAudioBitrate)
                     .toFormat(this.selectedAudioFormat.ffmpegFormat)
                     .on('error', (error) => {
-                        this.onConvertStateChanged(ConvertState.Failed);
+                        this.onConversionFailed();
                         this.logger.error(`An error occurred while encoding. Error: ${error}`, 'ConvertService', 'convertAsync');
                     })
                     .on('end', () => {
-                        this.onConvertStateChanged(ConvertState.Successful);
+                        this.onConversionSuccessful();
                         this.lastConvertedFilePath = filePath;
                         this.lastConvertedFileName = this.fileSystem.getFileName(filePath);
                         this.logger.info(`Convertion of video '${videoUrl}' to file '${filePath}' was succesful`, 'ConvertService', 'convertAsync');
@@ -166,7 +172,7 @@ export class ConvertService {
                     .saveToFile(filePath);
             });
         } catch (error) {
-            this.onConvertStateChanged(ConvertState.Failed);
+            this.onConversionFailed();
             this.logger.error(`Could not download video. Error: ${error}`, 'ConvertService', 'convertAsync');
         }
     }

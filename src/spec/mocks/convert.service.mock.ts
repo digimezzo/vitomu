@@ -1,19 +1,25 @@
 import { Observable, Subject } from 'rxjs';
-import { ConvertState } from '../../app/services/convert/convert-state';
 
 export class ConvertServiceMock {
-    private convertStateChanged: Subject<ConvertState> = new Subject<ConvertState>();
-    public convertStateChanged$: Observable<ConvertState> = this.convertStateChanged.asObservable();
+    private conversionSuccessful: Subject<void> = new Subject<void>();
+    public conversionSuccessful$: Observable<void> = this.conversionSuccessful.asObservable();
 
-    private convertProgressChanged: Subject<number> = new Subject<number>();
-    public convertProgressChanged$: Observable<number> = this.convertProgressChanged.asObservable();
+    private conversionFailed: Subject<void> = new Subject<void>();
+    public conversionFailed$: Observable<void> = this.conversionFailed.asObservable();
 
-    public onConvertStateChanged(convertState: ConvertState): void {
-        this.convertStateChanged.next(convertState);
+    private conversionProgressChanged: Subject<number> = new Subject<number>();
+    public conversionProgressChanged$: Observable<number> = this.conversionProgressChanged.asObservable();
+
+    public onConversionSuccessful(): void {
+        this.conversionSuccessful.next();
     }
 
-    public onConvertProgressChanged(progressPercent: number): void {
-        this.convertProgressChanged.next(progressPercent);
+    public onConversionFailed(): void {
+        this.conversionFailed.next();
+    }
+
+    public onConversionProgressChanged(progressPercent: number): void {
+        this.conversionProgressChanged.next(progressPercent);
     }
 
     public async checkPrerequisitesAsync(): Promise<void> {
