@@ -19,6 +19,9 @@ export class ConvertComponent implements OnInit, OnDestroy {
   // This is required to use enum values in the template
   public ConvertStateEnum: typeof ConvertState = ConvertState;
 
+  // Only used for unit testing
+  public previousConvertState: ConvertState;
+
   private subscription: Subscription = new Subscription();
   private _progressPercent: number;
   private _downloadUrl: string;
@@ -26,7 +29,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   constructor(private delayer: Delayer, private zone: NgZone, private convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
     private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop) {
-    this.resetState();
+    this.reset();
   }
 
   public progressMode: string;
@@ -43,6 +46,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   public set convertState(v: ConvertState) {
+    this.previousConvertState = this._convertState;
     this._convertState = v;
   }
 
@@ -75,13 +79,18 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   private async checkPrerequisitesAsync(): Promise<void> {
-    await this.convert.arePrerequisitesOKAsync();
+    if (!await this.convert.arePrerequisitesOKAsync()) {
+      this.convertState = ConvertState.FixingPrerequisites;
+      await this.convert.fixPrerequisites();
 
-    // if (await this.convert.checkPrerequisitesAsync()) {
-       //this.convertState = ConvertState.ConversionFailed;
-    // } else {
-    //   this.convertState = ConvertState.PrerequisitesNotOK;
-    // }
+      if (!await this.convert.arePrerequisitesOKAsync()) {
+        this.convertState = ConvertState.PrerequisitesNotOK;
+
+        return;
+      }
+    }
+
+    this.convertState = ConvertState.WaitingForClipboardContent;
   }
 
   public ngOnDestroy(): void {
@@ -89,6 +98,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   }
 
   public performConvert(): void {
+    this.convertState = ConvertState.ConversionInProgress;
     this.convert.convertAsync(this.downloadUrl);
   }
 
@@ -105,7 +115,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.desktop.openInDefaultApplication(this.convert.lastConvertedFilePath);
   }
 
-  private resetState(): void {
+  private reset(): void {
     this.convertState = ConvertState.WaitingForClipboardContent;
     this.progressPercent = 0;
     this.downloadUrl = '';
@@ -143,7 +153,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
         this.convertState = ConvertState.HasValidClipboardContent;
         this.downloadUrl = clipboardText;
       } else {
-        this.resetState();
+        this.reset();
       }
     });
   }

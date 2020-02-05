@@ -459,7 +459,7 @@ describe('ConvertService', () => {
                 settingsMock.object);
 
             // Act
-            await convert.convertAsync("dummyUrl");
+            await convert.convertAsync('dummyUrl');
 
             // Assert
             fileSystemMock.verify(x => x.ensureDirectoryAsync(outputPath), Times.exactly(1));
