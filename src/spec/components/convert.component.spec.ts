@@ -501,361 +501,330 @@ describe('ConvertComponent', () => {
             assert.equal(convertComponent.downloadUrl, '');
         });
 
-        // it('Should detect when the conversion starts', async () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = new ConvertServiceMock();
-        //     const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
+        it('Should detect when a conversion is successful', async () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = new ConvertServiceMock();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
 
-        //     clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
 
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock as any,
-        //         clipboardWatcherMock.object,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
+            // Act
+            delayer.canExecute = false;
+            convertComponent.ngOnInit();
+            convertComponent.convertState = ConvertState.WaitingForClipboardContent;
+            convertMock.onConversionSuccessful();
+            convertComponent.ngOnDestroy();
 
-        //     // Act
-        //     convertComponent.convertState = ConvertState.WaitingForClipboardContent;
-        //     convertComponent.ngOnInit();
-        //     convertMock.onConvertStateChanged(ConvertState.ConversionInProgress);
-        //     convertComponent.ngOnDestroy();
+            // Assert
+            assert.equal(convertComponent.convertState, ConvertState.ConversionSuccessful);
+        });
 
-        //     // Assert
-        //     assert.equal(convertComponent.convertState, ConvertState.ConversionInProgress);
-        // });
+        it('Should reset state after successful conversion', () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = new ConvertServiceMock();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
 
-        // it('Should detect when a conversion was successful', () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = new ConvertServiceMock();
-        //     const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
-        //     clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
 
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock as any,
-        //         clipboardWatcherMock.object,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
+            // Act
+            delayer.canExecute = true;
+            convertComponent.ngOnInit();
+            convertComponent.convertState = ConvertState.ConversionInProgress;
+            convertMock.onConversionSuccessful();
+            convertComponent.ngOnDestroy();
 
-        //     // Act
-        //     delayer.canExecute = false;
-        //     convertComponent.ngOnInit();
-        //     convertMock.onConvertStateChanged(ConvertState.ConversionSuccessful);
-        //     convertComponent.ngOnDestroy();
+            // Assert
+            assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
+        });
 
-        //     // Assert
-        //     assert.equal(convertComponent.convertState, ConvertState.ConversionSuccessful);
-        // });
+        it('Should reset progress after successful conversion', () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = new ConvertServiceMock();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
 
-        // it('Should reset state after successful conversion', () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = new ConvertServiceMock();
-        //     const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
-        //     clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
 
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock as any,
-        //         clipboardWatcherMock.object,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
+            // Act
+            delayer.canExecute = true;
+            convertComponent.ngOnInit();
+            convertComponent.progressPercent = 100;
+            convertMock.onConversionSuccessful();
+            convertComponent.ngOnDestroy();
 
-        //     // Act
-        //     delayer.canExecute = true;
-        //     convertComponent.ngOnInit();
-        //     convertMock.onConvertStateChanged(ConvertState.ConversionSuccessful);
-        //     convertComponent.ngOnDestroy();
+            // Assert
+            assert.equal(convertComponent.progressPercent, 0);
+        });
 
-        //     // Assert
-        //     assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
-        // });
+        it('Should reset download url after successful conversion', () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = new ConvertServiceMock();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
 
-        // it('Should reset progress after successful conversion', () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = new ConvertServiceMock();
-        //     const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
-        //     clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
 
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock as any,
-        //         clipboardWatcherMock.object,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
+            // Act
+            delayer.canExecute = true;
+            convertComponent.ngOnInit();
+            convertComponent.downloadUrl = 'https://dummy.url';
+            convertMock.onConversionSuccessful();
+            convertComponent.ngOnDestroy();
 
-        //     // Act
-        //     delayer.canExecute = true;
-        //     convertComponent.ngOnInit();
-        //     convertMock.onConvertProgressChanged(100);
-        //     convertMock.onConvertStateChanged(ConvertState.ConversionSuccessful);
-        //     convertComponent.ngOnDestroy();
+            // Assert
+            assert.equal(convertComponent.downloadUrl, '');
+        });
 
-        //     // Assert
-        //     assert.equal(convertComponent.progressPercent, 0);
-        // });
+        it('Should detect when a conversion was failed', () => {
+             // Arrange
+             const delayer = new Delayer();
+             delayer.canDelay = false;
+             const ngZoneMock = new NgZoneMock();
+             const convertMock = new ConvertServiceMock();
+             const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+             const snackBarMock = Mock.ofType<SnackBarService>();
+             const translatorMock = Mock.ofType<TranslatorService>();
+             const desktopMock = Mock.ofType<Desktop>();
+ 
+             const convertComponent: ConvertComponent = new ConvertComponent(
+                 delayer,
+                 ngZoneMock as any,
+                 convertMock as any,
+                 clipboardWatcherMock.object,
+                 snackBarMock.object,
+                 translatorMock.object,
+                 desktopMock.object);
+ 
+             // Act
+             delayer.canExecute = false;
+             convertComponent.ngOnInit();
+             convertComponent.convertState = ConvertState.WaitingForClipboardContent;
+             convertMock.onConversionFailed();
+             convertComponent.ngOnDestroy();
+ 
+             // Assert
+             assert.equal(convertComponent.convertState, ConvertState.ConversionFailed);
+        });
 
-        // it('Should reset download url after successful conversion', () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = new ConvertServiceMock();
-        //     const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
+        it('Should reset state after failed conversion', () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = new ConvertServiceMock();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
 
-        //     clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock as any,
-        //         clipboardWatcherMock.object,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
 
-        //     // Act
-        //     delayer.canExecute = true;
-        //     convertComponent.ngOnInit();
-        //     convertComponent.downloadUrl = 'https://music.video.url';
-        //     convertMock.onConvertStateChanged(ConvertState.ConversionSuccessful);
-        //     convertComponent.ngOnDestroy();
+            // Act
+            delayer.canExecute = true;
+            convertComponent.ngOnInit();
+            convertComponent.convertState = ConvertState.ConversionInProgress;
+            convertMock.onConversionFailed();
+            convertComponent.ngOnDestroy();
 
-        //     // Assert
-        //     assert.equal(convertComponent.downloadUrl, '');
-        // });
+            // Assert
+            assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
+        });
 
-        // it('Should detect when a conversion was failed', () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = new ConvertServiceMock();
-        //     const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
+        it('Should reset progress after failed conversion', () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = new ConvertServiceMock();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
 
-        //     clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock as any,
-        //         clipboardWatcherMock.object,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
 
-        //     // Act
-        //     delayer.canExecute = false;
-        //     convertComponent.ngOnInit();
-        //     convertMock.onConvertStateChanged(ConvertState.ConversionFailed);
-        //     convertComponent.ngOnDestroy();
+            // Act
+            delayer.canExecute = true;
+            convertComponent.ngOnInit();
+            convertComponent.progressPercent = 100;
+            convertMock.onConversionFailed();
+            convertComponent.ngOnDestroy();
 
-        //     // Assert
-        //     assert.equal(convertComponent.convertState, ConvertState.ConversionFailed);
-        // });
+            // Assert
+            assert.equal(convertComponent.progressPercent, 0);
+        });
 
-        // it('Should reset state after failed conversion', () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = new ConvertServiceMock();
-        //     const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
+        it('Should reset download url after failed conversion', () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = new ConvertServiceMock();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
 
-        //     clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
 
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock as any,
-        //         clipboardWatcherMock.object,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
 
-        //     // Act
-        //     delayer.canExecute = true;
-        //     convertComponent.ngOnInit();
-        //     convertMock.onConvertStateChanged(ConvertState.ConversionFailed);
-        //     convertComponent.ngOnDestroy();
+            // Act
+            delayer.canExecute = true;
+            convertComponent.ngOnInit();
+            convertComponent.downloadUrl = 'https://dummy.url';
+            convertMock.onConversionFailed();
+            convertComponent.ngOnDestroy();
 
-        //     // Assert
-        //     assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
-        // });
+            // Assert
+            assert.equal(convertComponent.downloadUrl, '');
+        });
 
-        // it('Should reset progress after failed conversion', () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = new ConvertServiceMock();
-        //     const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
+        it('Should handle clipboard content only when waiting for or having valid clipboard content', () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = Mock.ofType<ConvertService>();
+            const clipboardWatcherMock = new ClipboardWatcherMock();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
 
-        //     clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            const videoUrl: string = 'https://music.video.url';
 
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock as any,
-        //         clipboardWatcherMock.object,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
+            convertMock.setup(x => x.conversionSuccessful$).returns(() => new Observable<void>());
+            convertMock.setup(x => x.conversionFailed$).returns(() => new Observable<void>());
+            convertMock.setup(x => x.conversionProgressChanged$).returns(() => new Observable<number>());
+            convertMock.setup(x => x.isVideoUrlConvertible(videoUrl)).returns(() => true);
 
-        //     // Act
-        //     delayer.canExecute = true;
-        //     convertComponent.ngOnInit();
-        //     convertMock.onConvertProgressChanged(20);
-        //     convertMock.onConvertStateChanged(ConvertState.ConversionFailed);
-        //     convertComponent.ngOnDestroy();
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock.object,
+                clipboardWatcherMock as any,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
 
-        //     // Assert
-        //     assert.equal(convertComponent.progressPercent, 0);
-        // });
+            // Act
+            convertComponent.ngOnInit();
 
-        // it('Should reset download url after failed conversion', () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = new ConvertServiceMock();
-        //     const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
+            convertComponent.downloadUrl = '';
+            convertComponent.convertState = ConvertState.ConversionInProgress;
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            const convertingDownloadUrl: string = convertComponent.downloadUrl;
 
-        //     clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            convertComponent.downloadUrl = '';
+            convertComponent.convertState = ConvertState.ConversionFailed;
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            const failedDownloadUrl: string = convertComponent.downloadUrl;
 
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock as any,
-        //         clipboardWatcherMock.object,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
+            convertComponent.downloadUrl = 'https://previous.music.video.url';
+            convertComponent.convertState = ConvertState.HasValidClipboardContent;
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            const hasValidClipboardContentDownloadUrl: string = convertComponent.downloadUrl;
 
-        //     // Act
-        //     delayer.canExecute = true;
-        //     convertComponent.ngOnInit();
-        //     convertComponent.downloadUrl = 'https://music.video.url';
-        //     convertMock.onConvertStateChanged(ConvertState.ConversionFailed);
-        //     convertComponent.ngOnDestroy();
+            convertComponent.downloadUrl = '';
+            convertComponent.convertState = ConvertState.ConversionSuccessful;
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            const successfulDownloadUrl: string = convertComponent.downloadUrl;
 
-        //     // Assert
-        //     assert.equal(convertComponent.downloadUrl, '');
-        // });
+            convertComponent.downloadUrl = '';
+            convertComponent.convertState = ConvertState.WaitingForClipboardContent;
+            clipboardWatcherMock.onClipboardContentChanged(videoUrl);
+            const waitingForClipboardContentDownloadUrl: string = convertComponent.downloadUrl;
 
-        // it('Should handle clipboard content only when waiting for or having valid clipboard content', () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = Mock.ofType<ConvertService>();
-        //     const clipboardWatcherMock = new ClipboardWatcherMock();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
+            convertComponent.ngOnDestroy();
 
-        //     const videoUrl: string = 'https://music.video.url';
-
-        //     convertMock.setup(x => x.convertStateChanged$).returns(() => new Observable<ConvertState>());
-        //     convertMock.setup(x => x.convertProgressChanged$).returns(() => new Observable<number>());
-        //     convertMock.setup(x => x.isVideoUrlConvertible(videoUrl)).returns(() => true);
-
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock.object,
-        //         clipboardWatcherMock as any,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
-
-        //     // Act
-        //     convertComponent.ngOnInit();
-
-        //     convertComponent.downloadUrl = '';
-        //     convertComponent.convertState = ConvertState.ConversionInProgress;
-        //     clipboardWatcherMock.onClipboardContentChanged(videoUrl);
-        //     const convertingDownloadUrl: string = convertComponent.downloadUrl;
-
-        //     convertComponent.downloadUrl = '';
-        //     convertComponent.convertState = ConvertState.ConversionFailed;
-        //     clipboardWatcherMock.onClipboardContentChanged(videoUrl);
-        //     const failedDownloadUrl: string = convertComponent.downloadUrl;
-
-        //     convertComponent.downloadUrl = 'https://previous.music.video.url';
-        //     convertComponent.convertState = ConvertState.HasValidClipboardContent;
-        //     clipboardWatcherMock.onClipboardContentChanged(videoUrl);
-        //     const hasValidClipboardContentDownloadUrl: string = convertComponent.downloadUrl;
-
-        //     convertComponent.downloadUrl = '';
-        //     convertComponent.convertState = ConvertState.ConversionSuccessful;
-        //     clipboardWatcherMock.onClipboardContentChanged(videoUrl);
-        //     const successfulDownloadUrl: string = convertComponent.downloadUrl;
-
-        //     convertComponent.downloadUrl = '';
-        //     convertComponent.convertState = ConvertState.WaitingForClipboardContent;
-        //     clipboardWatcherMock.onClipboardContentChanged(videoUrl);
-        //     const waitingForClipboardContentDownloadUrl: string = convertComponent.downloadUrl;
-
-        //     convertComponent.ngOnDestroy();
-
-        //     // Assert
-        //     assert.equal(convertingDownloadUrl, '');
-        //     assert.equal(failedDownloadUrl, '');
-        //     assert.equal(hasValidClipboardContentDownloadUrl, videoUrl);
-        //     assert.equal(successfulDownloadUrl, '');
-        //     assert.equal(waitingForClipboardContentDownloadUrl, videoUrl);
-        // });
+            // Assert
+            assert.equal(convertingDownloadUrl, '');
+            assert.equal(failedDownloadUrl, '');
+            assert.equal(hasValidClipboardContentDownloadUrl, videoUrl);
+            assert.equal(successfulDownloadUrl, '');
+            assert.equal(waitingForClipboardContentDownloadUrl, videoUrl);
+        });
 
         it('Should check if prerequisites are OK', async () => {
             // Arrange
@@ -1262,67 +1231,5 @@ describe('ConvertComponent', () => {
             // Assert
             assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
         });
-
-        // it('Should indicate that FFmpeg was not found if checking prerequisites returns false', async () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = Mock.ofType<ConvertService>();
-        //     const clipboardWatcherMock = new ClipboardWatcherMock();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
-
-        //     convertMock.setup(x => x.checkPrerequisitesAsync()).returns(() => Promise.resolve(false));
-        //     convertMock.setup(x => x.convertStateChanged$).returns(() => new Observable<ConvertState>());
-        //     convertMock.setup(x => x.convertProgressChanged$).returns(() => new Observable<number>());
-
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock.object,
-        //         clipboardWatcherMock as any,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
-
-        //     // Act
-        //     await convertComponent.ngOnInit();
-
-        //     // Assert
-        //     assert.equal(convertComponent.convertState, ConvertState.PrerequisitesNotOK);
-        // });
-
-        // it('Should indicate that we are waiting for clipboard content if checking prerequisites returns true', async () => {
-        //     // Arrange
-        //     const delayer = new Delayer();
-        //     delayer.canDelay = false;
-        //     const ngZoneMock = new NgZoneMock();
-        //     const convertMock = Mock.ofType<ConvertService>();
-        //     const clipboardWatcherMock = new ClipboardWatcherMock();
-        //     const snackBarMock = Mock.ofType<SnackBarService>();
-        //     const translatorMock = Mock.ofType<TranslatorService>();
-        //     const desktopMock = Mock.ofType<Desktop>();
-
-        //     convertMock.setup(x => x.checkPrerequisitesAsync()).returns(() => Promise.resolve(true));
-        //     convertMock.setup(x => x.convertStateChanged$).returns(() => new Observable<ConvertState>());
-        //     convertMock.setup(x => x.convertProgressChanged$).returns(() => new Observable<number>());
-
-        //     const convertComponent: ConvertComponent = new ConvertComponent(
-        //         delayer,
-        //         ngZoneMock as any,
-        //         convertMock.object,
-        //         clipboardWatcherMock as any,
-        //         snackBarMock.object,
-        //         translatorMock.object,
-        //         desktopMock.object);
-
-        //     // Act
-        //     await convertComponent.ngOnInit();
-
-        //     // Assert
-        //     assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
-        // });
     });
 });

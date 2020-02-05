@@ -63,13 +63,13 @@ export class ConvertComponent implements OnInit, OnDestroy {
       this.handleConversionProgressChanged(progressPercent);
     }));
 
-    // this.subscription.add(this.convert.conversionSuccessful$.subscribe(() => {
-    //   this.handleConversionSuccessful();
-    // }));
+    this.subscription.add(this.convert.conversionSuccessful$.subscribe(() => {
+      this.handleConversionSuccessful();
+    }));
 
-    // this.subscription.add(this.convert.conversionFailed$.subscribe(() => {
-    //   this.handleConversionFailed();
-    // }));
+    this.subscription.add(this.convert.conversionFailed$.subscribe(() => {
+      this.handleConversionFailed();
+    }));
 
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipboardText) => {
       this.handleClipboardContentChanged(clipboardText);
@@ -122,21 +122,19 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.progressMode = 'determinate';
   }
 
-  // private handleConversionSuccessful(): void {
-  // }
+  private handleConversionSuccessful(): void {
+    this.zone.run(() => {
+      this.convertState = ConvertState.ConversionSuccessful;
+      this.delayer.execute(() => this.reset(), 3000);
+    });
+  }
 
-  // private handleConversionFailed(): void {
-  // }
-
-  // private handleConvertStateChanged(convertState: ConvertState): void {
-  //   this.zone.run(() => {
-  //     this.convertState = convertState;
-
-  //     if (convertState === ConvertState.ConversionFailed || convertState === ConvertState.ConversionSuccessful) {
-  //       this.delayer.execute(() => this.resetState(), 3000);
-  //     }
-  //   });
-  // }
+  private handleConversionFailed(): void {
+    this.zone.run(() => {
+      this.convertState = ConvertState.ConversionFailed;
+      this.delayer.execute(() => this.reset(), 3000);
+    });
+  }
 
   private handleConversionProgressChanged(progressPercent: number): void {
     this.zone.run(() => this.progressPercent = progressPercent);
