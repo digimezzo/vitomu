@@ -21,18 +21,27 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
   // Only used for unit testing
   public previousConvertState: ConvertState;
+  public previousProgressMode: string;
 
   private subscription: Subscription = new Subscription();
   private _progressPercent: number;
   private _downloadUrl: string;
   private _convertState: ConvertState;
+  private _progressMode: string;
 
   constructor(private delayer: Delayer, private zone: NgZone, private convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
     private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop) {
     this.reset();
   }
 
-  public progressMode: string;
+  public get progressMode(): string {
+    return this._progressMode;
+  }
+
+  public set progressMode(v: string) {
+    this.previousProgressMode = this._progressMode;
+    this._progressMode = v;
+  }
 
   public get progressPercent(): number {
     return this._progressPercent;
@@ -81,7 +90,9 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private async checkPrerequisitesAsync(): Promise<void> {
     if (!await this.convert.arePrerequisitesOKAsync()) {
       this.convertState = ConvertState.FixingPrerequisites;
+      this.progressMode = 'indeterminate';
       await this.convert.fixPrerequisites();
+      this.progressMode = 'determinate';
 
       if (!await this.convert.arePrerequisitesOKAsync()) {
         this.convertState = ConvertState.PrerequisitesNotOK;

@@ -116,6 +116,60 @@ describe('ConvertComponent', () => {
         });
     });
 
+    describe('progressMode', () => {
+        it('Should not have a previous progress mode when progress mode was set only once', () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = Mock.ofType<ConvertService>();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
+
+            // Act
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
+
+            // Assert
+            assert.equal(convertComponent.previousProgressMode, null);
+        });
+
+        it('Should have a previous progress mode when progress mode was set twice', () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = Mock.ofType<ConvertService>();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
+
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
+
+            // Act
+            convertComponent.progressMode = 'indeterminate';
+
+            // Assert
+            assert.equal(convertComponent.previousProgressMode, 'determinate');
+        });
+    });
+
     describe('convertState', () => {
         it('Should not have a previous convert state when convert state was set only once', () => {
             // Arrange
@@ -641,7 +695,7 @@ describe('ConvertComponent', () => {
              const snackBarMock = Mock.ofType<SnackBarService>();
              const translatorMock = Mock.ofType<TranslatorService>();
              const desktopMock = Mock.ofType<Desktop>();
- 
+
              const convertComponent: ConvertComponent = new ConvertComponent(
                  delayer,
                  ngZoneMock as any,
@@ -650,14 +704,14 @@ describe('ConvertComponent', () => {
                  snackBarMock.object,
                  translatorMock.object,
                  desktopMock.object);
- 
+
              // Act
              delayer.canExecute = false;
              convertComponent.ngOnInit();
              convertComponent.convertState = ConvertState.WaitingForClipboardContent;
              convertMock.onConversionFailed();
              convertComponent.ngOnDestroy();
- 
+
              // Assert
              assert.equal(convertComponent.convertState, ConvertState.ConversionFailed);
         });
@@ -1094,6 +1148,74 @@ describe('ConvertComponent', () => {
 
             // Assert
             assert.equal(convertComponent.previousConvertState, ConvertState.FixingPrerequisites);
+        });
+
+        it('Should set progress mode to indeterminate when fixing prerequisites', async () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = Mock.ofType<ConvertService>();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            convertMock.setup(x => x.conversionSuccessful$).returns(() => new Observable<void>());
+            convertMock.setup(x => x.conversionFailed$).returns(() => new Observable<void>());
+            convertMock.setup(x => x.conversionProgressChanged$).returns(() => new Observable<number>());
+            convertMock.setup(x => x.arePrerequisitesOKAsync()).returns(() => Promise.resolve(false));
+
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
+
+            // Act
+            await convertComponent.ngOnInit();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.previousProgressMode, 'indeterminate');
+        });
+
+        it('Should reset progress mode after fixing prerequisites', async () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = Mock.ofType<ConvertService>();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            convertMock.setup(x => x.conversionSuccessful$).returns(() => new Observable<void>());
+            convertMock.setup(x => x.conversionFailed$).returns(() => new Observable<void>());
+            convertMock.setup(x => x.conversionProgressChanged$).returns(() => new Observable<number>());
+            convertMock.setup(x => x.arePrerequisitesOKAsync()).returns(() => Promise.resolve(false));
+
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
+
+            // Act
+            await convertComponent.ngOnInit();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.progressMode, 'determinate');
         });
 
         it('Should check for prerequisites only once if prerequisites are OK', async () => {
