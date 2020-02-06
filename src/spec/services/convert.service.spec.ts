@@ -5,7 +5,7 @@ import { Mock, Times } from 'typemoq';
 import { FileSystem } from '../../app/core/file-system';
 import { Logger } from '../../app/core/logger';
 import { Settings } from '../../app/core/settings';
-import { ConvertState } from '../../app/services/convert/convert-state';
+import { ConvertState } from '../../app/core/convert-state';
 import { ConvertService } from '../../app/services/convert/convert.service';
 import { FFmpegChecker } from '../../app/services/convert/ffmpeg-checker';
 import { FFmpegDownloader } from '../../app/services/convert/ffmpeg-downloader';

@@ -5,7 +5,7 @@ import { ConvertComponent } from '../../app/components/convert/convert.component
 import { ClipboardWatcher } from '../../app/core/clipboard-watcher';
 import { Delayer } from '../../app/core/delayer';
 import { Desktop } from '../../app/core/desktop';
-import { ConvertState } from '../../app/services/convert/convert-state';
+import { ConvertState } from '../../app/core/convert-state';
 import { ConvertService } from '../../app/services/convert/convert.service';
 import { SnackBarService } from '../../app/services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../app/services/translator/translator.service';

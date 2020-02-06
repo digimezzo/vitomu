@@ -5,7 +5,7 @@
         <div class="drop-zone-circle mb-4">
             <!-- Progress spinner -->
             <div class="drop-zone-circle-spinner"
-                *ngIf="convertState === ConvertStateEnum.Converting || convertState === ConvertStateEnum.Successful || convertState === ConvertStateEnum.DownloadingFFmpeg">
+                *ngIf="convertState === ConvertStateEnum.ConversionInProgress || convertState === ConvertStateEnum.ConversionSuccessful || convertState === ConvertStateEnum.FixingPrerequisites">
                 <mat-progress-spinner class="drop-zone-circle-spinner" diameter="266" strokeWidth="4" color="primary"
                     [mode]="progressMode" [value]="progressPercent">
                 </mat-progress-spinner>
@@ -28,20 +28,20 @@
                 </div>
                 <!-- Download busy icon -->
                 <div class="drop-zone-icon-pulsing custom-font"
-                    *ngIf="convertState === ConvertStateEnum.DownloadingFFmpeg">
+                    *ngIf="convertState === ConvertStateEnum.FixingPrerequisites">
                     &#xF381;
                 </div>
                 <!-- Error icon -->
                 <div class="drop-zone-icon-static custom-font"
-                    *ngIf="convertState === ConvertStateEnum.FFmpegNotFound || convertState === ConvertStateEnum.Failed">
+                    *ngIf="convertState === ConvertStateEnum.PrerequisitesNotOK || convertState === ConvertStateEnum.ConversionFailed">
                     &#xF05E;
                 </div>
                 <!-- Success icon -->
-                <div class="drop-zone-icon-static custom-font" *ngIf="convertState === ConvertStateEnum.Successful">
+                <div class="drop-zone-icon-static custom-font" *ngIf="convertState === ConvertStateEnum.ConversionSuccessful">
                     &#xF00C;
                 </div>
                 <!-- Progress percent -->
-                <div class="drop-zone-progress-text" *ngIf="convertState === ConvertStateEnum.Converting">
+                <div class="drop-zone-progress-text" *ngIf="convertState === ConvertStateEnum.ConversionInProgress">
                     {{ progressPercent }}%
                 </div>
             </div>
@@ -53,23 +53,23 @@
                 {{ 'ConvertTab.DropText' | translate }}
             </div>
             <!-- Success text -->
-            <div *ngIf="convertState === ConvertStateEnum.Successful">
+            <div *ngIf="convertState === ConvertStateEnum.ConversionSuccessful">
                 {{ 'ConvertTab.ConversionSuccessful' | translate }}
             </div>
             <!-- Failed text -->
-            <div *ngIf="convertState === ConvertStateEnum.Failed">
+            <div *ngIf="convertState === ConvertStateEnum.ConversionFailed">
                 {{ 'ConvertTab.ConversionFailed' | translate }}
             </div>
             <!-- Downloading FFmpeg text -->
-            <div *ngIf="convertState === ConvertStateEnum.DownloadingFFmpeg">
+            <div *ngIf="convertState === ConvertStateEnum.FixingPrerequisites">
                 {{ 'ConvertTab.DownloadingFFmpeg' | translate }}
             </div>
             <!-- FFmpeg not found text -->
-            <div *ngIf="convertState === ConvertStateEnum.FFmpegNotFound">
+            <div *ngIf="convertState === ConvertStateEnum.PrerequisitesNotOK">
                 {{ 'ConvertTab.FFmpegNotFound' | translate }}
             </div>
             <!-- Conversion in progress text -->
-            <div *ngIf="convertState === ConvertStateEnum.Converting">
+            <div *ngIf="convertState === ConvertStateEnum.ConversionInProgress">
                 {{ 'ConvertTab.ConversionInProgress' | translate }}
             </div>
             <!-- Video link text -->

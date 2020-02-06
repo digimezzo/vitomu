@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { ClipboardWatcher } from '../../core/clipboard-watcher';
 import { Delayer } from '../../core/delayer';
 import { Desktop } from '../../core/desktop';
-import { ConvertState } from '../../services/convert/convert-state';
+import { ConvertState } from '../../core/convert-state';
 import { ConvertService } from '../../services/convert/convert.service';
 import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../services/translator/translator.service';
