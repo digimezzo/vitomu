@@ -29,7 +29,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
   private _convertState: ConvertState;
   private _progressMode: string;
 
-  constructor(private delayer: Delayer, private zone: NgZone, private convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
+  constructor(private delayer: Delayer, private zone: NgZone, public convert: ConvertService, private clipboardWatcher: ClipboardWatcher,
     private snackBar: SnackBarService, private translator: TranslatorService, private desktop: Desktop) {
     this.reset();
   }
