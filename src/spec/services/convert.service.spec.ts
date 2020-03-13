@@ -5,10 +5,12 @@ import { Mock, Times } from 'typemoq';
 import { FileSystem } from '../../app/core/file-system';
 import { Logger } from '../../app/core/logger';
 import { Settings } from '../../app/core/settings';
-import { ConvertState } from '../../app/core/convert-state';
 import { ConvertService } from '../../app/services/convert/convert.service';
 import { FFmpegChecker } from '../../app/services/convert/ffmpeg-checker';
 import { FFmpegDownloader } from '../../app/services/convert/ffmpeg-downloader';
+import { VideoConverterFactory } from '../../app/services/convert/video-converter.factory';
+import { ReturnStatement } from '@angular/compiler';
+import { YoutubeVideoConverter } from '../../app/services/convert/youtube-video-converter';
 
 describe('ConvertService', () => {
     describe('constructor', () => {
@@ -19,6 +21,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
 
@@ -28,7 +31,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Assert
             assert.ok(convert.audioFormats.length > 0);
@@ -41,6 +45,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
 
@@ -50,7 +55,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Assert
             assert.ok(convert.audioBitrates.length > 0);
@@ -63,6 +69,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
 
@@ -72,7 +79,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Assert
             assert.equal(convert.lastConvertedFilePath, '');
@@ -85,6 +93,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
 
@@ -94,7 +103,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Assert
             assert.equal(convert.lastConvertedFileName, '');
@@ -107,6 +117,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             settingsMock.setup(x => x.audioBitrate).returns(() => 320);
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
@@ -117,7 +128,9 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
+
             // Assert
             assert.equal(convert.selectedAudioBitrate, 320);
         });
@@ -129,6 +142,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             settingsMock.setup(x => x.audioFormat).returns(() => 'mp3');
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
@@ -139,7 +153,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Assert
             assert.equal(convert.selectedAudioFormat.id, 'mp3');
@@ -153,6 +168,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             settingsMock.setup(x => x.audioFormat).returns(() => 'mp3');
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
@@ -162,7 +178,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Act
             const isVideoUrlConvertible: boolean = convert.isVideoUrlConvertible('https://www.youtube.com/watch?v=9WQxorFEnG8');
@@ -178,6 +195,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             settingsMock.setup(x => x.audioFormat).returns(() => 'mp3');
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
@@ -187,7 +205,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Act
             const isVideoUrlConvertible: boolean = convert.isVideoUrlConvertible('https://www.google.com');
@@ -205,6 +224,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
 
@@ -213,7 +233,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             const subscription: Subscription = new Subscription();
 
@@ -240,6 +261,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
 
@@ -248,7 +270,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             const subscription: Subscription = new Subscription();
 
@@ -275,6 +298,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
 
@@ -283,7 +307,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             const subscription: Subscription = new Subscription();
 
@@ -310,6 +335,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
@@ -321,7 +347,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Act
             const prerequisitesAreOK: boolean = await convert.arePrerequisitesOKAsync();
@@ -337,6 +364,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
@@ -348,7 +376,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Act
             const prerequisitesAreOK: boolean = await convert.arePrerequisitesOKAsync();
@@ -366,6 +395,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
 
@@ -374,7 +404,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Act
             await convert.fixPrerequisites();
@@ -390,6 +421,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
@@ -401,7 +433,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Act
             await convert.fixPrerequisites();
@@ -417,6 +450,7 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
@@ -428,7 +462,8 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Act
             await convert.fixPrerequisites();
@@ -446,8 +481,10 @@ describe('ConvertService', () => {
             const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
             const fileSystemMock = Mock.ofType<FileSystem>();
             const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
 
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
+            videoConverterFactoryMock.setup(x => x.create('dummyUrl')).returns(() => new YoutubeVideoConverter(loggerMock.object));
 
             const outputPath: string = path.join(fileSystemMock.object.musicDirectory(), 'Vitomu');
 
@@ -456,13 +493,74 @@ describe('ConvertService', () => {
                 ffmpegCheckerMock.object,
                 ffmpegDownloaderMock.object,
                 fileSystemMock.object,
-                settingsMock.object);
+                settingsMock.object,
+                videoConverterFactoryMock.object);
 
             // Act
             await convert.convertAsync('dummyUrl');
 
             // Assert
             fileSystemMock.verify(x => x.ensureDirectoryAsync(outputPath), Times.exactly(1));
+        });
+
+        it('Should not get path of local ffmpeg if ffmpeg is found in system path', async () => {
+            // Arrange
+            const loggerMock = Mock.ofType<Logger>();
+            const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
+            const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
+            const fileSystemMock = Mock.ofType<FileSystem>();
+            const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
+
+            fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
+            videoConverterFactoryMock.setup(x => x.create('dummyUrl')).returns(() => new YoutubeVideoConverter(loggerMock.object));
+            ffmpegCheckerMock.setup(x => x.isFFmpegInSystemPathAsync()).returns(() => Promise.resolve(true));
+
+            const outputPath: string = path.join(fileSystemMock.object.musicDirectory(), 'Vitomu');
+
+            const convert = new ConvertService(
+                loggerMock.object,
+                ffmpegCheckerMock.object,
+                ffmpegDownloaderMock.object,
+                fileSystemMock.object,
+                settingsMock.object,
+                videoConverterFactoryMock.object);
+
+            // Act
+            await convert.convertAsync('dummyUrl');
+
+            // Assert
+            ffmpegCheckerMock.verify(x => x.getPathOfDownloadedFFmpeg(), Times.never());
+        });
+
+        it('Should get path of local ffmpeg if ffmpeg is not found in system path', async () => {
+            // Arrange
+            const loggerMock = Mock.ofType<Logger>();
+            const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
+            const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
+            const fileSystemMock = Mock.ofType<FileSystem>();
+            const settingsMock = Mock.ofType<Settings>();
+            const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
+
+            fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
+            videoConverterFactoryMock.setup(x => x.create('dummyUrl')).returns(() => new YoutubeVideoConverter(loggerMock.object));
+            ffmpegCheckerMock.setup(x => x.isFFmpegInSystemPathAsync()).returns(() => Promise.resolve(false));
+
+            const outputPath: string = path.join(fileSystemMock.object.musicDirectory(), 'Vitomu');
+
+            const convert = new ConvertService(
+                loggerMock.object,
+                ffmpegCheckerMock.object,
+                ffmpegDownloaderMock.object,
+                fileSystemMock.object,
+                settingsMock.object,
+                videoConverterFactoryMock.object);
+
+            // Act
+            await convert.convertAsync('dummyUrl');
+
+            // Assert
+            ffmpegCheckerMock.verify(x => x.getPathOfDownloadedFFmpeg(), Times.exactly(1));
         });
     });
 });

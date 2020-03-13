@@ -37,6 +37,7 @@ import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
 import { ElectronService } from './services/electron.service';
 import { SnackBarService } from './services/snack-bar/snack-bar.service';
 import { TranslatorService } from './services/translator/translator.service';
+import { VideoConverterFactory } from './services/convert/video-converter.factory';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -95,6 +96,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ClipboardWatcher,
     FFmpegDownloader,
     FFmpegChecker,
+    VideoConverterFactory,
     {
       provide: ErrorHandler,
       useClass: GlobalErrorHandler
