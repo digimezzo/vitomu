@@ -7,6 +7,7 @@ import { ConvertState } from '../../core/convert-state';
 import { ConvertService } from '../../services/convert/convert.service';
 import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../services/translator/translator.service';
+import { ConversionResult } from '../../services/convert/conversion-result';
 
 @Component({
   selector: 'app-convert',
@@ -72,14 +73,6 @@ export class ConvertComponent implements OnInit, OnDestroy {
       this.handleConversionProgressChanged(progressPercent);
     }));
 
-    this.subscription.add(this.convert.conversionSuccessful$.subscribe(() => {
-      this.handleConversionSuccessful();
-    }));
-
-    this.subscription.add(this.convert.conversionFailed$.subscribe(() => {
-      this.handleConversionFailed();
-    }));
-
     this.subscription.add(this.clipboardWatcher.clipboardContentChanged$.subscribe((clipboardText) => {
       this.handleClipboardContentChanged(clipboardText);
     }));
@@ -108,9 +101,17 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  public performConvert(): void {
+  public async performConvertAsync(): Promise<void> {
     this.convertState = ConvertState.ConversionInProgress;
-    this.convert.convertAsync(this.downloadUrl);
+    const conversionResult: ConversionResult = await this.convert.convertAsync(this.downloadUrl);
+
+    if (conversionResult.isConversionSuccessful) {
+      this.convertState = ConvertState.ConversionSuccessful;
+    } else {
+      this.convertState = ConvertState.ConversionFailed;
+    }
+
+    this.delayer.execute(() => this.reset(), 3000);
   }
 
   public async showVideoLinkAsync(): Promise<void> {
@@ -131,20 +132,6 @@ export class ConvertComponent implements OnInit, OnDestroy {
     this.progressPercent = 0;
     this.downloadUrl = '';
     this.progressMode = 'determinate';
-  }
-
-  private handleConversionSuccessful(): void {
-    this.zone.run(() => {
-      this.convertState = ConvertState.ConversionSuccessful;
-      this.delayer.execute(() => this.reset(), 3000);
-    });
-  }
-
-  private handleConversionFailed(): void {
-    this.zone.run(() => {
-      this.convertState = ConvertState.ConversionFailed;
-      this.delayer.execute(() => this.reset(), 3000);
-    });
   }
 
   private handleConversionProgressChanged(progressPercent: number): void {

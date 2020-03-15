@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as path from 'path';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { AudioFormat } from '../../core/audio-format';
 import { Constants } from '../../core/constants';
 import { FileSystem } from '../../core/file-system';
@@ -20,8 +20,6 @@ export class ConvertService {
     private _lastConvertedFilePath: string = '';
     private _lastConvertedFileName: string = '';
 
-    private conversionSuccessful: Subject<void> = new Subject<void>();
-    private conversionFailed: Subject<void> = new Subject<void>();
     private conversionProgressChanged: Subject<number> = new Subject<number>();
 
     private _selectedAudioFormat: AudioFormat;
@@ -41,8 +39,6 @@ export class ConvertService {
     public audioFormats: AudioFormat[] = Constants.audioFormats;
     public audioBitrates: number[] = Constants.audioBitrates;
 
-    public conversionSuccessful$: Observable<void> = this.conversionSuccessful.asObservable();
-    public conversionFailed$: Observable<void> = this.conversionFailed.asObservable();
     public conversionProgressChanged$: Observable<number> = this.conversionProgressChanged.asObservable();
 
     public get lastConvertedFilePath(): string {
@@ -79,14 +75,6 @@ export class ConvertService {
         this.settings.audioBitrate = v;
     }
 
-    public onConversionSuccessful(): void {
-        this.conversionSuccessful.next();
-    }
-
-    public onConversionFailed(): void {
-        this.conversionFailed.next();
-    }
-
     public onConversionProgressChanged(progressPercent: number): void {
         this.conversionProgressChanged.next(progressPercent);
     }
@@ -121,12 +109,18 @@ export class ConvertService {
         }
 
         const videoConverter: VideoConverter = this.videoConverterFactory.create(videoUrl);
+
+        const subscription: Subscription = videoConverter.conversionProgressChanged$
+            .subscribe((progressPercent) => this.onConversionProgressChanged(progressPercent));
+
         const conversionResult: ConversionResult = await videoConverter.convertAsync(
             videoUrl,
             this.outputDirectory,
             this.selectedAudioFormat,
             this.selectedAudioBitrate,
             ffmpegPathOverride);
+
+        subscription.unsubscribe();
 
         if (conversionResult) {
             this.lastConvertedFilePath = conversionResult.convertedFilePath;
