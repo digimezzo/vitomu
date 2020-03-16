@@ -122,7 +122,7 @@ export class ConvertService {
 
         subscription.unsubscribe();
 
-        if (conversionResult) {
+        if (conversionResult.isConversionSuccessful) {
             this.lastConvertedFilePath = conversionResult.convertedFilePath;
             this.lastConvertedFileName = this.fileSystem.getFileName(conversionResult.convertedFilePath);
         }

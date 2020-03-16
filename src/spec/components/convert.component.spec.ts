@@ -546,6 +546,40 @@ describe('ConvertComponent', () => {
         });
     });
 
+    describe('ngOnDestroy', () => {
+        it('Should not detect conversion progress changes', async () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = new ConvertServiceMock();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock as any,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
+
+            // Act
+            convertComponent.progressPercent = 0;
+            convertComponent.ngOnInit();
+            convertComponent.ngOnDestroy();
+            convertMock.onConversionProgressChanged(40);
+
+            // Assert
+            assert.equal(convertComponent.progressPercent, 0);
+        });
+    });
+
     describe('ngOnInit', () => {
         it('Should detect conversion progress changes', async () => {
             // Arrange
