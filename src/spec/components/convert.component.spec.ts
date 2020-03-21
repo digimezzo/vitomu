@@ -450,6 +450,108 @@ describe('ConvertComponent', () => {
             // Assert
             assert.equal(convertComponent.convertState, ConvertState.ConversionFailed);
         });
+
+        it('Should reset state after failed conversion', async () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = Mock.ofType<ConvertService>();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            convertMock.setup(x => x.convertAsync('https://my.url.is.glorious')).returns(() => Promise.resolve(new ConversionResult(false, '')));
+
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
+
+            // Act
+            delayer.canExecute = true;
+            convertComponent.ngOnInit();
+            convertComponent.downloadUrl = 'https://my.url.is.glorious';
+            await convertComponent.performConvertAsync();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
+        });
+
+        it('Should reset progress after failed conversion', async () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = Mock.ofType<ConvertService>();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            convertMock.setup(x => x.convertAsync('https://my.url.is.glorious')).returns(() => Promise.resolve(new ConversionResult(false, '')));
+
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
+
+            // Act
+            delayer.canExecute = true;
+            convertComponent.ngOnInit();
+            convertComponent.downloadUrl = 'https://my.url.is.glorious';
+            await convertComponent.performConvertAsync();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.progressPercent, 0);
+        });
+
+        it('Should reset download url after failed conversion', async () => {
+            // Arrange
+            const delayer = new Delayer();
+            delayer.canDelay = false;
+            const ngZoneMock = new NgZoneMock();
+            const convertMock = Mock.ofType<ConvertService>();
+            const clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
+            const snackBarMock = Mock.ofType<SnackBarService>();
+            const translatorMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
+
+            clipboardWatcherMock.setup(x => x.clipboardContentChanged$).returns(() => new Observable<string>());
+            convertMock.setup(x => x.convertAsync('https://my.url.is.glorious')).returns(() => Promise.resolve(new ConversionResult(false, '')));
+
+            const convertComponent: ConvertComponent = new ConvertComponent(
+                delayer,
+                ngZoneMock as any,
+                convertMock.object,
+                clipboardWatcherMock.object,
+                snackBarMock.object,
+                translatorMock.object,
+                desktopMock.object);
+
+            // Act
+            delayer.canExecute = true;
+            convertComponent.ngOnInit();
+            convertComponent.downloadUrl = 'https://my.url.is.glorious';
+            await convertComponent.performConvertAsync();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.downloadUrl, '');
+        });
     });
 
     describe('showVideoLinkAsync', () => {
