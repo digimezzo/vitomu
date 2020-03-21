@@ -531,9 +531,8 @@ describe('ConvertService', () => {
             fileSystemMock.setup(x => x.musicDirectory()).returns(() => '/home/user/Music');
             ffmpegCheckerMock.setup(x => x.isFFmpegInSystemPathAsync()).returns(() => Promise.resolve(true));
             videoConverterFactoryMock.setup(x => x.create('dummyUrl')).returns(() => videoConverterMock.object);
-            videoConverterMock.setup(x => x.conversionProgressChanged$).returns(() => new Observable<number>());
             const conversionResultFromVideoConverter: ConversionResult = new ConversionResult(true, '/home/user/Music/Vitomu/Dummy.mp3');
-            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, ''))
+            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '', It.isAny()))
             .returns(() => Promise.resolve(conversionResultFromVideoConverter));
 
             const convert = new ConvertService(
@@ -552,7 +551,7 @@ describe('ConvertService', () => {
 
             // Assert
             videoConverterMock.verify(
-                x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, ''),
+                x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '', It.isAny()),
                 Times.exactly(1));
         });
 
@@ -571,9 +570,8 @@ describe('ConvertService', () => {
             ffmpegCheckerMock.setup(x => x.isFFmpegInSystemPathAsync()).returns(() => Promise.resolve(false));
             ffmpegCheckerMock.setup(x => x.getPathOfDownloadedFFmpeg()).returns(() => '/home/user/.config/Vitomu/FFmpeg');
             videoConverterFactoryMock.setup(x => x.create('dummyUrl')).returns(() => videoConverterMock.object);
-            videoConverterMock.setup(x => x.conversionProgressChanged$).returns(() => new Observable<number>());
             const conversionResultFromVideoConverter: ConversionResult = new ConversionResult(true, '/home/user/Music/Vitomu/Dummy.mp3');
-            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg'))
+            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg', It.isAny()))
             .returns(() => Promise.resolve(conversionResultFromVideoConverter));
 
             const convert = new ConvertService(
@@ -592,7 +590,13 @@ describe('ConvertService', () => {
 
             // Assert
             videoConverterMock.verify(
-                x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg'),
+                x => x.convertAsync(
+                    'dummyUrl',
+                    '/home/user/Music/Vitomu',
+                    audioFormat,
+                    320,
+                    '/home/user/.config/Vitomu/FFmpeg',
+                    It.isAny()),
                 Times.exactly(1));
         });
 
@@ -612,9 +616,8 @@ describe('ConvertService', () => {
             ffmpegCheckerMock.setup(x => x.getPathOfDownloadedFFmpeg()).returns(() => '/home/user/.config/Vitomu/FFmpeg');
             videoConverterFactoryMock.setup(x => x.create('dummyUrl')).returns(() => videoConverterMock.object);
             const conversionResultFromVideoConverter: ConversionResult = new ConversionResult(true, '/home/user/Music/Vitomu/Dummy.mp3');
-            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg'))
+            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg', It.isAny()))
             .returns(() => Promise.resolve(conversionResultFromVideoConverter));
-            videoConverterMock.setup(x => x.conversionProgressChanged$).returns(() => new Observable<number>());
 
             const convert = new ConvertService(
                 loggerMock.object,
@@ -652,9 +655,8 @@ describe('ConvertService', () => {
             ffmpegCheckerMock.setup(x => x.getPathOfDownloadedFFmpeg()).returns(() => '/home/user/.config/Vitomu/FFmpeg');
             videoConverterFactoryMock.setup(x => x.create('dummyUrl')).returns(() => videoConverterMock.object);
             const conversionResultFromVideoConverter: ConversionResult = new ConversionResult(true, '/home/user/Music/Vitomu/Dummy.mp3');
-            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg'))
+            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg', It.isAny()))
             .returns(() => Promise.resolve(conversionResultFromVideoConverter));
-            videoConverterMock.setup(x => x.conversionProgressChanged$).returns(() => new Observable<number>());
 
             const convert = new ConvertService(
                 loggerMock.object,
@@ -691,11 +693,10 @@ describe('ConvertService', () => {
             ffmpegCheckerMock.setup(x => x.isFFmpegInSystemPathAsync()).returns(() => Promise.resolve(false));
             ffmpegCheckerMock.setup(x => x.getPathOfDownloadedFFmpeg()).returns(() => '/home/user/.config/Vitomu/FFmpeg');
             videoConverterFactoryMock.setup(x => x.create('dummyUrl')).returns(() => videoConverterMock.object);
-            videoConverterMock.setup(x => x.conversionProgressChanged$).returns(() => new Observable<number>());
 
             const audioFormat: AudioFormat = new AudioFormat('mp3', 'MP3', 'mp3', '.mp3');
 
-            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg')).returns(() => Promise.resolve(new ConversionResult(false, '')));
+            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg', It.isAny())).returns(() => Promise.resolve(new ConversionResult(false, '')));
 
             const convert = new ConvertService(
                 loggerMock.object,
@@ -730,11 +731,10 @@ describe('ConvertService', () => {
             ffmpegCheckerMock.setup(x => x.isFFmpegInSystemPathAsync()).returns(() => Promise.resolve(false));
             ffmpegCheckerMock.setup(x => x.getPathOfDownloadedFFmpeg()).returns(() => '/home/user/.config/Vitomu/FFmpeg');
             videoConverterFactoryMock.setup(x => x.create('dummyUrl')).returns(() => videoConverterMock.object);
-            videoConverterMock.setup(x => x.conversionProgressChanged$).returns(() => new Observable<number>());
 
             const audioFormat: AudioFormat = new AudioFormat('mp3', 'MP3', 'mp3', '.mp3');
 
-            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg')).returns(() => Promise.resolve(new ConversionResult(false, '')));
+            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg', It.isAny())).returns(() => Promise.resolve(new ConversionResult(false, '')));
 
             const convert = new ConvertService(
                 loggerMock.object,
@@ -769,12 +769,11 @@ describe('ConvertService', () => {
             ffmpegCheckerMock.setup(x => x.isFFmpegInSystemPathAsync()).returns(() => Promise.resolve(false));
             ffmpegCheckerMock.setup(x => x.getPathOfDownloadedFFmpeg()).returns(() => '/home/user/.config/Vitomu/FFmpeg');
             videoConverterFactoryMock.setup(x => x.create('dummyUrl')).returns(() => videoConverterMock.object);
-            videoConverterMock.setup(x => x.conversionProgressChanged$).returns(() => new Observable<number>());
 
             const audioFormat: AudioFormat = new AudioFormat('mp3', 'MP3', 'mp3', '.mp3');
 
             const conversionResultFromVideoConverter: ConversionResult = new ConversionResult(true, '/home/user/Music/Vitomu/Dummy.mp3');
-            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg')).returns(() => Promise.resolve(conversionResultFromVideoConverter));
+            videoConverterMock.setup(x => x.convertAsync('dummyUrl', '/home/user/Music/Vitomu', audioFormat, 320, '/home/user/.config/Vitomu/FFmpeg', It.isAny())).returns(() => Promise.resolve(conversionResultFromVideoConverter));
 
             const convert = new ConvertService(
                 loggerMock.object,

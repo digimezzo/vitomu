@@ -110,17 +110,13 @@ export class ConvertService {
 
         const videoConverter: VideoConverter = this.videoConverterFactory.create(videoUrl);
 
-        const subscription: Subscription = videoConverter.conversionProgressChanged$
-            .subscribe((progressPercent) => this.onConversionProgressChanged(progressPercent));
-
         const conversionResult: ConversionResult = await videoConverter.convertAsync(
             videoUrl,
             this.outputDirectory,
             this.selectedAudioFormat,
             this.selectedAudioBitrate,
-            ffmpegPathOverride);
-
-        subscription.unsubscribe();
+            ffmpegPathOverride,
+            (progressPercent) => this.onConversionProgressChanged(progressPercent));
 
         if (conversionResult.isConversionSuccessful) {
             this.lastConvertedFilePath = conversionResult.convertedFilePath;

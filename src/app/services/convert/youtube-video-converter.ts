@@ -16,15 +16,7 @@ export class YoutubeVideoConverter implements VideoConverter {
     private requestOptions: any = { maxRedirects: 5 };
     private progressTimeoutMilliseconds: number = 100;
 
-    private conversionProgressChanged: Subject<number> = new Subject<number>();
-
     constructor(private logger: Logger) {
-    }
-
-    public conversionProgressChanged$: Observable<number> = this.conversionProgressChanged.asObservable();
-
-    public onConversionProgressChanged(progressPercent: number): void {
-        this.conversionProgressChanged.next(progressPercent);
     }
 
     public async convertAsync(
@@ -32,10 +24,11 @@ export class YoutubeVideoConverter implements VideoConverter {
         outputDirectory: string,
         audioFormat: AudioFormat,
         bitrate: number,
-        ffmpegPathOverride: string): Promise<ConversionResult> {
+        ffmpegPathOverride: string,
+        progressCallback: any): Promise<ConversionResult> {
 
         const promise = new Promise<ConversionResult>(async (resolve, reject) => {
-            this.onConversionProgressChanged(0);
+            progressCallback(0);
 
             try {
                 // Get info
@@ -59,7 +52,7 @@ export class YoutubeVideoConverter implements VideoConverter {
 
                     // Add progress event listener
                     str.on('progress', (progress) => {
-                        this.onConversionProgressChanged(parseInt(progress.percentage, 10));
+                        progressCallback(parseInt(progress.percentage, 10));
                     });
 
                     if (ffmpegPathOverride) {
