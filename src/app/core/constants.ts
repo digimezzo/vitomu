@@ -1,6 +1,7 @@
 import { AudioFormat } from './audio-format';
 import { ColorTheme } from './color-theme';
 import { Language } from './language';
+import { FontSize } from './font-size';
 
 export class Constants {
     public static readonly applicationName: string = require('../../../package.json').name;
@@ -12,25 +13,30 @@ export class Constants {
     public static readonly githubUrl: string = 'https://github.com/digimezzo';
 
     public static readonly languages: Language[] = [
-        { code: 'en', englishName: 'English', localizedName: 'English' },
-        { code: 'fr', englishName: 'French', localizedName: 'Français' },
-        { code: 'nl', englishName: 'Dutch', localizedName: 'Nederlands' }
+        new Language('en', 'English', 'English'),
+        new Language('fr', 'French', 'Français'),
+        new Language('nl', 'Dutch', 'Nederlands')
+    ];
+
+    public static readonly fontSizes: FontSize[] = [
+        new FontSize(13),
+        new FontSize(14)
     ];
 
     public static readonly colorThemes: ColorTheme[] = [
-        { name: 'default-pink-theme', displayName: 'Pink', color: '#ec1a65' },
-        { name: 'default-green-theme', displayName: 'Green', color: '#00b163' },
+        new ColorTheme('default-pink-theme', 'Pink', '#ec1a65'),
+        new ColorTheme('default-green-theme', 'Green', '#00b163')
     ];
 
     public static readonly audioFormats: AudioFormat[] = [
-        { id: 'mp3', name: 'MP3', ffmpegFormat: 'mp3', extension: '.mp3' },
-        { id: 'flac', name: 'FLAC', ffmpegFormat: 'flac', extension: '.flac' },
-        { id: 'ogg', name: 'Ogg Vorbis', ffmpegFormat: 'ogg', extension: '.ogg' },
-        { id: 'm4a', name: 'M4A', ffmpegFormat: 'mp4', extension: '.m4a' },
-        { id: 'aac', name: 'AAC', ffmpegFormat: 'mp4', extension: '.aac' }
+        new AudioFormat('mp3', 'MP3', 'mp3', '.mp3'),
+        new AudioFormat('flac', 'FLAC', 'flac', '.flac'),
+        new AudioFormat('ogg', 'Ogg Vorbis', 'ogg', '.ogg'),
+        new AudioFormat('m4a', 'M4A', 'mp4', '.m4a'),
+        new AudioFormat('aac', 'AAC', 'mp4', '.aac')
     ];
 
-    public static readonly audioBitrates: number[] = [ 32, 48, 56, 64, 96, 128, 160, 192, 224, 256, 320 ];
+    public static readonly audioBitrates: number[] = [32, 48, 56, 64, 96, 128, 160, 192, 224, 256, 320];
 
     public static readonly externalComponents: any[] = [
         {

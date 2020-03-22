@@ -25,7 +25,7 @@ describe('AppearanceService', () => {
             assert.ok(appearance.colorThemes.length > 0);
         });
 
-        it('Should set the selected colorTheme', () => {
+        it('Should set the selected color theme', () => {
             // Arrange
             const settingsMock = Mock.ofType<Settings>();
             const loggerMock = Mock.ofType<Logger>();
@@ -42,6 +42,24 @@ describe('AppearanceService', () => {
 
             // Assert
             assert.notEqual(appearance.selectedColorTheme, null);
+        });
+
+        it('Should provide a list of font sizes', () => {
+            // Arrange
+            const settingsMock = Mock.ofType<Settings>();
+            const loggerMock = Mock.ofType<Logger>();
+            const overlayContainerMock = Mock.ofType<OverlayContainer>();
+            overlayContainerMock.setup(x => x.getContainerElement()).returns(() => null);
+
+            // Act
+            const appearance: AppearanceService = new AppearanceService(
+                settingsMock.object,
+                loggerMock.object,
+                overlayContainerMock.object
+                );
+
+            // Assert
+            assert.ok(appearance.fontSizes.length > 0);
         });
     });
 });

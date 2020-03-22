@@ -4,6 +4,7 @@ import { ColorTheme } from '../../core/color-theme';
 import { Constants } from '../../core/constants';
 import { Logger } from '../../core/logger';
 import { Settings } from '../../core/settings';
+import { FontSize } from '../../core/font-size';
 
 @Injectable({
     providedIn: 'root',
@@ -16,6 +17,7 @@ export class AppearanceService {
     }
 
     public colorThemes: ColorTheme[] = Constants.colorThemes;
+    public fontSizes: FontSize[] = Constants.fontSizes;
 
     public get selectedColorTheme(): ColorTheme {
         return this._selectedColorTheme;
