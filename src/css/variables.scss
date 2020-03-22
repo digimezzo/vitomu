@@ -1,7 +1,9 @@
-// Font sizes
-$fontsize-normal: 14px;
-$fontsize-larger: 20px;
-$fontsize-largest: 28px;
 
-// Sizes
+// Font sizes
+:root {
+    --fontsize-normal: 14px;
+    --fontsize-larger: 20px;
+    --fontsize-largest: 28px;
+  }
+
 $titlebar-height: 32px;

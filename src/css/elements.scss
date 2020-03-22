@@ -11,7 +11,7 @@
 
 * :not(.custom-font) {
   font-family: opensans !important;
-  font-size: $fontsize-normal;
+  font-size: var(--fontsize-normal);
 }
 
 html {
@@ -37,12 +37,12 @@ body {
 h1 {
   @extend .color-primary;
   font-weight: lighter !important;
-  font-size: $fontsize-largest !important;
+  font-size: var(--fontsize-largest) !important;
 }
 
 h2 {
   font-weight: lighter !important;
-  font-size: $fontsize-larger !important;
+  font-size: var(--fontsize-larger) !important;
 }
 
 a {
