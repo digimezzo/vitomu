@@ -14,6 +14,7 @@ import { AboutComponent } from './components/about/about.component';
 import { AudioBitrateSwitcherComponent } from './components/audio-bitrate-switcher/audio-bitrate-switcher.component';
 import { AudioFormatSwitcherComponent } from './components/audio-format-switcher/audio-format-switcher.component';
 import { ColorThemeSwitcherComponent } from './components/color-theme-switcher/color-theme-switcher.component';
+import { FontSizeSwitcherComponent } from './components/font-size-switcher/font-size-switcher.component';
 import { ConvertComponent } from './components/convert/convert.component';
 import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
 import { LicenseDialogComponent } from './components/dialogs/license-dialog/license-dialog.component';
@@ -53,6 +54,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AboutComponent,
     WindowControlsComponent,
     ColorThemeSwitcherComponent,
+    FontSizeSwitcherComponent,
     AudioBitrateSwitcherComponent,
     AudioFormatSwitcherComponent,
     LanguageSwitcherComponent,

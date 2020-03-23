@@ -19,6 +19,7 @@
     "SettingsTab": {
         "Language": "Taal",
         "Color": "Kleur",
+        "FontSize": "Lettertypegrootte",
         "Conversion": "Conversie",
         "AudioFormat": "Audio formaat",
         "AudioBitrate": "Audio bitrate"

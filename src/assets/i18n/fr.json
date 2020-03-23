@@ -19,6 +19,7 @@
   "SettingsTab": {
     "Language": "Langue",
     "Color": "Couleur",
+    "FontSize": "Taille de police",
     "Conversion": "Conversion",
     "AudioFormat": "Format audio",
     "AudioBitrate": "Bitrate audio"
