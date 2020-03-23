@@ -15,7 +15,7 @@ export class AppearanceService {
 
     constructor(private settings: Settings, private logger: Logger, private overlayContainer: OverlayContainer) {
         this._selectedColorTheme = this.colorThemes.find(x => x.name === this.settings.colorTheme);
-        this._selectedFontSize = this.fontSizes.find(x => x.normalSize === Number(this.settings.fontSize));
+        this._selectedFontSize = this.fontSizes.find(x => x.normalSize === this.settings.fontSize);
     }
 
     public colorThemes: ColorTheme[] = Constants.colorThemes;

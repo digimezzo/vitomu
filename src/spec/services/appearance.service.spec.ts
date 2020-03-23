@@ -68,7 +68,7 @@ describe('AppearanceService', () => {
             const loggerMock = Mock.ofType<Logger>();
             const overlayContainerMock = Mock.ofType<OverlayContainer>();
             overlayContainerMock.setup(x => x.getContainerElement()).returns(() => null);
-            settingsMock.setup(x => x.colorTheme).returns(() => 'default-pink-theme');
+            settingsMock.setup(x => x.fontSize).returns(() => 13);
 
             // Act
             const appearance: AppearanceService = new AppearanceService(
