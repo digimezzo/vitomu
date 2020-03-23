@@ -61,5 +61,24 @@ describe('AppearanceService', () => {
             // Assert
             assert.ok(appearance.fontSizes.length > 0);
         });
+
+        it('Should set the selected font size', () => {
+            // Arrange
+            const settingsMock = Mock.ofType<Settings>();
+            const loggerMock = Mock.ofType<Logger>();
+            const overlayContainerMock = Mock.ofType<OverlayContainer>();
+            overlayContainerMock.setup(x => x.getContainerElement()).returns(() => null);
+            settingsMock.setup(x => x.colorTheme).returns(() => 'default-pink-theme');
+
+            // Act
+            const appearance: AppearanceService = new AppearanceService(
+                settingsMock.object,
+                loggerMock.object,
+                overlayContainerMock.object
+                );
+
+            // Assert
+            assert.notEqual(appearance.selectedFontSize, null);
+        });
     });
 });

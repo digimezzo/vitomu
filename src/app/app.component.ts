@@ -8,17 +8,11 @@ import { TranslatorService } from './services/translator/translator.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   constructor(private translator: TranslatorService, private appearance: AppearanceService, private convert: ConvertService) {
 
     this.appearance.applyTheme();
+    this.appearance.applyFontSize();
     this.translator.applyLanguage();
-  }
-
-  public ngOnInit(): void {
-    // const element = document.documentElement;
-    // element.style.setProperty('--fontsize-normal', '13px');
-    // element.style.setProperty('--fontsize-larger', '18px');
-    // element.style.setProperty('--fontsize-largest', '26px');
   }
 }

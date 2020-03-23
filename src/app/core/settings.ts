@@ -33,13 +33,22 @@ export class Settings {
         this.settings.set('audioFormat', v);
     }
 
-     // Bitrate
-     public get audioBitrate(): number {
+    // Bitrate
+    public get audioBitrate(): number {
         return this.settings.get('audioBitrate');
     }
 
     public set audioBitrate(v: number) {
         this.settings.set('audioBitrate', v);
+    }
+
+    // FontSize
+    public get fontSize(): number {
+        return this.settings.get('fontSize');
+    }
+
+    public set fontSize(v: number) {
+        this.settings.set('fontSize', v);
     }
 
     // Color theme
@@ -65,6 +74,10 @@ export class Settings {
 
         if (!this.settings.has('audioBitrate')) {
             this.settings.set('audioBitrate', 320);
+        }
+
+        if (!this.settings.has('fontSize')) {
+            this.settings.set('fontSize', 13);
         }
 
         if (!this.settings.has('colorTheme')) {

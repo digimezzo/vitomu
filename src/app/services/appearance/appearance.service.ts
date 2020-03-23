@@ -11,9 +11,11 @@ import { FontSize } from '../../core/font-size';
 })
 export class AppearanceService {
     private _selectedColorTheme: ColorTheme;
+    private _selectedFontSize: FontSize;
 
     constructor(private settings: Settings, private logger: Logger, private overlayContainer: OverlayContainer) {
         this._selectedColorTheme = this.colorThemes.find(x => x.name === this.settings.colorTheme);
+        this._selectedFontSize = this.fontSizes.find(x => x.normalSize === Number(this.settings.fontSize));
     }
 
     public colorThemes: ColorTheme[] = Constants.colorThemes;
@@ -30,8 +32,19 @@ export class AppearanceService {
         this.applyTheme();
     }
 
+    public get selectedFontSize(): FontSize {
+        return this._selectedFontSize;
+    }
+
+    public set selectedFontSize(v: FontSize) {
+        this._selectedFontSize = v;
+        this.settings.fontSize = v.normalSize;
+
+        this.applyFontSize();
+    }
+
     public applyTheme(): void {
-        const themeName: string = this.settings.colorTheme;
+        const themeName: string = this._selectedColorTheme.name;
 
         // Apply theme to components in the overlay container: https://gist.github.com/tomastrajan/ee29cd8e180b14ce9bc120e2f7435db7
         try {
@@ -48,6 +61,13 @@ export class AppearanceService {
         }
 
         this.logger.info(`Applied theme '${themeName}'`, 'AppearanceService', 'applyTheme');
+    }
+
+    public applyFontSize(): void {
+        const element = document.documentElement;
+        element.style.setProperty('--fontsize-normal', this._selectedFontSize.normalSize + 'px');
+        element.style.setProperty('--fontsize-larger', this._selectedFontSize.largerSize + 'px');
+        element.style.setProperty('--fontsize-largest', this._selectedFontSize.largestSize + 'px');
     }
 
     private updateClasses(tokenList: DOMTokenList, newThemeName: string): void {
