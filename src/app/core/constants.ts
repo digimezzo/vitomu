@@ -77,6 +77,12 @@ export class Constants {
             licenseUrl: 'https://github.com/mawie81/electron-window-state/blob/master/license'
         },
         {
+            name: 'emoji-strip',
+            description: 'Use emoji-regex to Strip emoji from a string in Node.js and browsers.',
+            url: 'https://github.com/nizaroni/emoji-strip',
+            licenseUrl: 'https://github.com/nizaroni/emoji-strip/blob/master/LICENSE'
+        },
+        {
             name: 'ffbinaries downloader',
             description: 'Downloads precompiled ffmpeg, ffprobe, ffplay and ffserver binaries from ffbinaries.com.',
             url: 'https://github.com/vot/ffbinaries-node',

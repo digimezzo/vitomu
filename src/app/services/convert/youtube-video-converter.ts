@@ -1,7 +1,6 @@
 import * as ffmpeg from 'fluent-ffmpeg-corrected';
 import * as path from 'path';
 import * as progressStream from 'progress-stream';
-import { Observable, Subject } from 'rxjs';
 import * as sanitize from 'sanitize-filename';
 import { Readable } from 'stream';
 import * as ytdl from 'ytdl-core';
@@ -10,6 +9,7 @@ import { Logger } from '../../core/logger';
 import { VideoDetails } from './video-details';
 import { VideoConverter } from './video-converter';
 import { ConversionResult } from './conversion-result';
+import * as emojiStrip from 'emoji-strip';
 
 export class YoutubeVideoConverter implements VideoConverter {
     private youtubeVideoQuality: string = 'highest';
@@ -34,7 +34,7 @@ export class YoutubeVideoConverter implements VideoConverter {
                 // Get info
                 const videoInfo: ytdl.videoInfo = await ytdl.getInfo(videoUrl);
                 const videoDetails: VideoDetails = new VideoDetails(videoInfo);
-                const filePath: string = path.join(outputDirectory, sanitize(videoDetails.videoTitle) + audioFormat.extension);
+                const filePath: string = path.join(outputDirectory, sanitize(emojiStrip(videoDetails.videoTitle)) + audioFormat.extension);
 
                 this.logger.info(`File path: ${filePath}`, 'YoutubeVideoConverter', 'convertVideoAsync');
 

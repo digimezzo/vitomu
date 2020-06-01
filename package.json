@@ -95,6 +95,7 @@
     "electron-log": "^3.0.9",
     "electron-store": "^4.0.0",
     "electron-window-state": "^5.0.3",
+    "emoji-strip": "^1.0.1",
     "ffbinaries": "^1.1.4",
     "fluent-ffmpeg-corrected": "^1.0.0",
     "fs-extra": "^8.1.0",

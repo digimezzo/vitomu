@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a native title bar and an option to toggle between native and custom title bar
 ### Changed
 - Updated to the latest version of ytdl-core
+- Emoji's are now removed from file names. This improves compatibility with some devices.
 ### Removed
 ### Fixed
 - Converting Youtube videos is broken
