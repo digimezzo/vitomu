@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, Menu } from 'electron';
 // Logging needs to be imported in main.ts also. Otherwise it just doesn't work anywhere else.
 // See post by megahertz: https://github.com/megahertz/electron-log/issues/60
 // "You need to import electron-log in the main process. Without it, electron-log doesn't works in a renderer process."
@@ -7,6 +7,8 @@ import * as windowStateKeeper from 'electron-window-state';
 import * as path from 'path';
 import * as url from 'url';
 import { Events } from './src/app/core/events';
+import * as Store from 'electron-store';
+import * as os from 'os';
 
 app.commandLine.appendSwitch('disable-color-correct-rendering');
 
@@ -14,10 +16,20 @@ let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
-function createWindow(): void {
+// Workaround: Global does not allow setting custom properties.
+// We need to cast it to "any" first.
+const globalAny: any = global;
 
+// Static folder is not detected correctly in production
+if (process.env.NODE_ENV !== 'development') {
+  globalAny.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
+}
+
+function createWindow(): void {
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
+
+  Menu.setApplicationMenu(null);
 
   // Load the previous state with fallback to defaults
   const windowState = windowStateKeeper({
@@ -32,13 +44,15 @@ function createWindow(): void {
     width: windowState.width,
     height: windowState.height,
     backgroundColor: '#fff',
-    frame: false,
+    frame: windowhasFrame(),
     icon: path.join(__dirname, 'build/icon/icon.png'),
     webPreferences: {
       nodeIntegration: true,
     },
     show: false
   });
+
+  globalAny.windowHasFrame = windowhasFrame();
 
   windowState.manage(win);
 
@@ -89,6 +103,20 @@ function createWindow(): void {
 
   win.webContents.on('will-navigate', handleRedirect);
   win.webContents.on('new-window', handleRedirect);
+}
+
+function windowhasFrame(): boolean {
+  const settings: Store<any> = new Store();
+
+  if (!settings.has('useCustomTitleBar')) {
+    if (os.platform() === 'win32') {
+      settings.set('useCustomTitleBar', true);
+    } else {
+      settings.set('useCustomTitleBar', false);
+    }
+  }
+
+  return !settings.get('useCustomTitleBar');
 }
 
 try {

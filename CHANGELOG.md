@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.3] - 2020-06-01
 ### Added 
+- Added a native title bar and an option to toggle between native and custom title bar
 ### Changed
 - Updated to the latest version of ytdl-core
 ### Removed

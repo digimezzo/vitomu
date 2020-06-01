@@ -22,3 +22,9 @@
     <app-audio-format-switcher class="mt-2"></app-audio-format-switcher>
     <app-audio-bitrate-switcher class="mt-2"></app-audio-bitrate-switcher>
 </div>
+<!-- Title bar -->
+<div class="m-3">
+    <h1 class="mt-2">{{ 'SettingsTab.TitleBar' | translate }}</h1>
+    <mat-slide-toggle class="mt-2" [(ngModel)]="useCustomTitleBarChecked">
+        {{ 'SettingsTab.UseCustomTitleBar' | translate }}</mat-slide-toggle>
+</div>

@@ -22,7 +22,9 @@
         "FontSize": "Lettertypegrootte",
         "Conversion": "Conversie",
         "AudioFormat": "Audio formaat",
-        "AudioBitrate": "Audio bitrate"
+        "AudioBitrate": "Audio bitrate",
+        "TitleBar": "Titelbalk",
+        "UseCustomTitleBar": "Gebruik aangepaste titelbalk (Vereist een herstart)"
     },
     "AboutTab": {
         "About": "Over",

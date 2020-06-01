@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Settings } from '../../core/settings';
 
 @Component({
   selector: 'app-settings',
@@ -8,9 +9,15 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private settings: Settings) { }
+
+  public get useCustomTitleBarChecked(): boolean {
+    return this.settings.useCustomTitleBar;
+  }
+  public set useCustomTitleBarChecked(v: boolean) {
+    this.settings.useCustomTitleBar = v;
+  }
 
   public ngOnInit(): void {
   }
-
 }

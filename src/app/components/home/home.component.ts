@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Constants } from '../../core/constants';
+import { AppearanceService } from '../../services/appearance/appearance.service';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,7 @@ import { Constants } from '../../core/constants';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(public appearance: AppearanceService) { }
 
   public applicationName: string = Constants.applicationName;
 

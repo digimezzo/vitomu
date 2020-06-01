@@ -9,12 +9,23 @@ var windowStateKeeper = require("electron-window-state");
 var path = require("path");
 var url = require("url");
 var events_1 = require("./src/app/core/events");
+var Store = require("electron-store");
+var os = require("os");
+electron_1.app.commandLine.appendSwitch('disable-color-correct-rendering');
 var win, serve;
 var args = process.argv.slice(1);
 serve = args.some(function (val) { return val === '--serve'; });
+// Workaround: Global does not allow setting custom properties.
+// We need to cast it to "any" first.
+var globalAny = global;
+// Static folder is not detected correctly in production
+if (process.env.NODE_ENV !== 'development') {
+    globalAny.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
+}
 function createWindow() {
     var electronScreen = electron_1.screen;
     var size = electronScreen.getPrimaryDisplay().workAreaSize;
+    electron_1.Menu.setApplicationMenu(null);
     // Load the previous state with fallback to defaults
     var windowState = windowStateKeeper({
         defaultWidth: 500,
@@ -27,13 +38,14 @@ function createWindow() {
         width: windowState.width,
         height: windowState.height,
         backgroundColor: '#fff',
-        frame: false,
+        frame: windowhasFrame(),
         icon: path.join(__dirname, 'build/icon/icon.png'),
         webPreferences: {
             nodeIntegration: true,
         },
         show: false
     });
+    globalAny.windowHasFrame = windowhasFrame();
     windowState.manage(win);
     if (serve) {
         require('electron-reload')(__dirname, {
@@ -77,6 +89,18 @@ function createWindow() {
     };
     win.webContents.on('will-navigate', handleRedirect);
     win.webContents.on('new-window', handleRedirect);
+}
+function windowhasFrame() {
+    var settings = new Store();
+    if (!settings.has('useCustomTitleBar')) {
+        if (os.platform() === 'win32') {
+            settings.set('useCustomTitleBar', true);
+        }
+        else {
+            settings.set('useCustomTitleBar', false);
+        }
+    }
+    return !settings.get('useCustomTitleBar');
 }
 try {
     electron_log_1.default.info('[Main] [] +++ Starting +++');

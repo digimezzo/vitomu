@@ -22,7 +22,9 @@
     "FontSize": "Taille de police",
     "Conversion": "Conversion",
     "AudioFormat": "Format audio",
-    "AudioBitrate": "Bitrate audio"
+    "AudioBitrate": "Bitrate audio",
+    "TitleBar": "Barre de titre",
+    "UseCustomTitleBar": "Utiliser barre de titre personnalisée (Nécessite un redémarrage)"
   },
   "AboutTab": {
     "About": "À propos",

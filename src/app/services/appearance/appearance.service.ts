@@ -5,6 +5,7 @@ import { Constants } from '../../core/constants';
 import { Logger } from '../../core/logger';
 import { Settings } from '../../core/settings';
 import { FontSize } from '../../core/font-size';
+import { remote } from 'electron';
 
 @Injectable({
     providedIn: 'root',
@@ -12,10 +13,15 @@ import { FontSize } from '../../core/font-size';
 export class AppearanceService {
     private _selectedColorTheme: ColorTheme;
     private _selectedFontSize: FontSize;
+    private windowHasFrame: boolean = remote.getGlobal('windowHasFrame');
 
     constructor(private settings: Settings, private logger: Logger, private overlayContainer: OverlayContainer) {
         this._selectedColorTheme = this.colorThemes.find(x => x.name === this.settings.colorTheme);
         this._selectedFontSize = this.fontSizes.find(x => x.normalSize === this.settings.fontSize);
+    }
+
+    public get windowHasNativeTitleBar(): boolean {
+        return this.windowHasFrame;
     }
 
     public colorThemes: ColorTheme[] = Constants.colorThemes;

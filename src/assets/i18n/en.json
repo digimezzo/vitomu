@@ -22,7 +22,9 @@
     "FontSize": "Font size",
     "Conversion": "Conversion",
     "AudioFormat": "Audio format",
-    "AudioBitrate": "Audio bitrate"
+    "AudioBitrate": "Audio bitrate",
+    "TitleBar": "Title bar",
+    "UseCustomTitleBar": "Use custom title bar (Requires a restart)"
   },
   "AboutTab": {
     "About": "About",
