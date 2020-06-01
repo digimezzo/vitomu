@@ -6,8 +6,8 @@
 }
 
 .color-theme-switcher-button {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -16,16 +16,15 @@
 }
 
 .color-theme-switcher-button-selector {
-  font-family: la-solid;
-  font-size: 22px;
+  font-size: 26px;
   color: white;
   z-index: 1;
 }
 
 .color-theme-switcher-button-color {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
   position: absolute;
   z-index: 0;
 }
