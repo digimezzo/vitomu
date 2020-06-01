@@ -8,6 +8,7 @@ import * as path from 'path';
 import * as url from 'url';
 import { Events } from './src/app/core/events';
 
+app.commandLine.appendSwitch('disable-color-correct-rendering');
 
 let win, serve;
 const args = process.argv.slice(1);
