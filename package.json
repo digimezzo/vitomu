@@ -1,6 +1,6 @@
 {
   "name": "Vitomu",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Video to audio converter",
   "homepage": "https://github.com/digimezzo/vitomu",
   "author": {
@@ -98,6 +98,7 @@
     "ffbinaries": "^1.1.4",
     "fluent-ffmpeg-corrected": "^1.0.0",
     "fs-extra": "^8.1.0",
+    "line-awesome": "^1.3.0",
     "progress-stream": "^2.0.0",
     "sanitize-filename": "1.6.1",
     "ytdl-core": "^2.1.5"

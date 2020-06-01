@@ -7,11 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.3] - 2020-06-01
+### Added 
+### Changed
+- Updated to the latest version of ytdl-core
+### Removed
+### Fixed
+- Converting Youtube videos is broken
+
 ## [2.0.2] - 2020-03-23
 ### Added 
 - It is now possible to change the UI font size
 ### Changed
-- Updated to the latest version of ytdl-core.
+- Updated to the latest version of ytdl-core
 ### Removed
 ### Fixed
 - Improved indication that FFmpeg is being downloaded if not found on the system
