@@ -15,7 +15,7 @@
         "ConversionInProgress": "Conversie wordt uitgevoerd...",
         "DownloadingFFmpeg": "FFmpeg wordt gedownload. We hebben het nodig om video's te converteren.",
         "FFmpegNotFound": "FFmpeg werd niet gevonden. We hebben het nodig om video's te converteren."
-      },
+    },
     "SettingsTab": {
         "Language": "Taal",
         "Color": "Kleur",
@@ -24,7 +24,9 @@
         "AudioFormat": "Audio formaat",
         "AudioBitrate": "Audio bitrate",
         "TitleBar": "Titelbalk",
-        "UseCustomTitleBar": "Gebruik aangepaste titelbalk (Vereist een herstart)"
+        "UseCustomTitleBar": "Gebruik aangepaste titelbalk (Vereist een herstart)",
+        "Updates": "Updates",
+        "CheckForUpdates": "Controleer op updates"
     },
     "AboutTab": {
         "About": "Over",
@@ -53,5 +55,11 @@
         "ShowVideoLink": "Toon videolink",
         "ViewInFolder": "Bekijk in map",
         "Play": "Afspelen"
-      }
+    },
+    "SnackBarMessages": {
+        "NewVersionAvailable": "Er is een nieuwe versie beschikbaar: {{version}}"
+    },
+    "SnackBarActions": {
+        "Ok": "OK"
+    }
 }

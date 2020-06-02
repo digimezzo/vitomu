@@ -4,11 +4,14 @@ import { Mock } from 'typemoq';
 import { Logger } from '../../app/core/logger';
 import { Settings } from '../../app/core/settings';
 import { AppearanceService } from '../../app/services/appearance/appearance.service';
+import { ElectronRemoteProxy } from '../../app/core/electron-remote-proxy';
 
 describe('AppearanceService', () => {
     describe('constructor', () => {
         it('Should provide a list of themes', () => {
             // Arrange
+            const electronRemoteMock = Mock.ofType<ElectronRemoteProxy>();
+            electronRemoteMock.setup(x => x.getGlobal('windowHasFrame')).returns(() => true);
             const settingsMock = Mock.ofType<Settings>();
             const loggerMock = Mock.ofType<Logger>();
             const overlayContainerMock = Mock.ofType<OverlayContainer>();
@@ -18,7 +21,8 @@ describe('AppearanceService', () => {
             const appearance: AppearanceService = new AppearanceService(
                 settingsMock.object,
                 loggerMock.object,
-                overlayContainerMock.object
+                overlayContainerMock.object,
+                electronRemoteMock.object
                 );
 
             // Assert
@@ -27,6 +31,8 @@ describe('AppearanceService', () => {
 
         it('Should set the selected color theme', () => {
             // Arrange
+            const electronRemoteMock = Mock.ofType<ElectronRemoteProxy>();
+            electronRemoteMock.setup(x => x.getGlobal('windowHasFrame')).returns(() => true);
             const settingsMock = Mock.ofType<Settings>();
             const loggerMock = Mock.ofType<Logger>();
             const overlayContainerMock = Mock.ofType<OverlayContainer>();
@@ -37,7 +43,8 @@ describe('AppearanceService', () => {
             const appearance: AppearanceService = new AppearanceService(
                 settingsMock.object,
                 loggerMock.object,
-                overlayContainerMock.object
+                overlayContainerMock.object,
+                electronRemoteMock.object
                 );
 
             // Assert
@@ -46,6 +53,8 @@ describe('AppearanceService', () => {
 
         it('Should provide a list of font sizes', () => {
             // Arrange
+            const electronRemoteMock = Mock.ofType<ElectronRemoteProxy>();
+            electronRemoteMock.setup(x => x.getGlobal('windowHasFrame')).returns(() => true);
             const settingsMock = Mock.ofType<Settings>();
             const loggerMock = Mock.ofType<Logger>();
             const overlayContainerMock = Mock.ofType<OverlayContainer>();
@@ -55,7 +64,8 @@ describe('AppearanceService', () => {
             const appearance: AppearanceService = new AppearanceService(
                 settingsMock.object,
                 loggerMock.object,
-                overlayContainerMock.object
+                overlayContainerMock.object,
+                electronRemoteMock.object
                 );
 
             // Assert
@@ -64,6 +74,8 @@ describe('AppearanceService', () => {
 
         it('Should set the selected font size', () => {
             // Arrange
+            const electronRemoteMock = Mock.ofType<ElectronRemoteProxy>();
+            electronRemoteMock.setup(x => x.getGlobal('windowHasFrame')).returns(() => true);
             const settingsMock = Mock.ofType<Settings>();
             const loggerMock = Mock.ofType<Logger>();
             const overlayContainerMock = Mock.ofType<OverlayContainer>();
@@ -74,7 +86,8 @@ describe('AppearanceService', () => {
             const appearance: AppearanceService = new AppearanceService(
                 settingsMock.object,
                 loggerMock.object,
-                overlayContainerMock.object
+                overlayContainerMock.object,
+                electronRemoteMock.object
                 );
 
             // Assert

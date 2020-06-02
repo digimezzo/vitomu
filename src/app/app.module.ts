@@ -39,6 +39,10 @@ import { ElectronService } from './services/electron.service';
 import { SnackBarService } from './services/snack-bar/snack-bar.service';
 import { TranslatorService } from './services/translator/translator.service';
 import { VideoConverterFactory } from './services/convert/video-converter.factory';
+import { GitHubApi } from './core/github-api';
+import { ProductDetails } from './core/product-details';
+import { UpdateService } from './services/update/update.service';
+import { ElectronRemoteProxy } from './core/electron-remote-proxy';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -91,6 +95,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppearanceService,
     ConvertService,
     SnackBarService,
+    UpdateService,
     Logger,
     Settings,
     FileSystem,
@@ -99,6 +104,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ClipboardWatcher,
     FFmpegDownloader,
     FFmpegChecker,
+    GitHubApi,
+    ElectronRemoteProxy,
+    ProductDetails,
     VideoConverterFactory,
     {
       provide: ErrorHandler,

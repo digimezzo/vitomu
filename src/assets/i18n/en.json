@@ -24,7 +24,9 @@
     "AudioFormat": "Audio format",
     "AudioBitrate": "Audio bitrate",
     "TitleBar": "Title bar",
-    "UseCustomTitleBar": "Use custom title bar (Requires a restart)"
+    "UseCustomTitleBar": "Use custom title bar (Requires a restart)",
+    "Updates": "Updates",
+    "CheckForUpdates": "Check for updates"
   },
   "AboutTab": {
     "About": "About",
@@ -53,5 +55,11 @@
     "ShowVideoLink": "Show video link",
     "ViewInFolder": "View in folder",
     "Play": "Play"
+  },
+  "SnackBarMessages": {
+    "NewVersionAvailable": "A new version is available: {{version}}"
+  },
+  "SnackBarActions": {
+    "Ok": "OK"
   }
 }

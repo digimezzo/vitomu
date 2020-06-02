@@ -43,6 +43,15 @@ export class Settings {
         this.settings.set('audioBitrate', v);
     }
 
+    // Check for updates
+    public get checkForUpdates(): boolean {
+        return this.settings.get('checkForUpdates');
+    }
+
+    public set checkForUpdates(v: boolean) {
+        this.settings.set('checkForUpdates', v);
+    }
+
     // Custom title bar
     public get useCustomTitleBar(): boolean {
         return this.settings.get('useCustomTitleBar');
@@ -76,6 +85,10 @@ export class Settings {
 
         if (!this.settings.has('language')) {
             this.settings.set('language', 'en');
+        }
+
+        if (!this.settings.has('checkForUpdates')) {
+            this.settings.set('checkForUpdates', true);
         }
 
         if (!this.settings.has('audioFormat')) {
