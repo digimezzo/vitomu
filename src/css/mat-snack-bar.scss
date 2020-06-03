@@ -2,6 +2,10 @@
   @extend .color-secondary-text;
 }
 
+.mat-simple-snackbar > span {
+  overflow-wrap: anywhere;
+}
+
 .mat-simple-snackbar-action {
   @extend .color-primary;
 }
