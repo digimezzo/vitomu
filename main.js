@@ -39,7 +39,7 @@ function createWindow() {
         height: windowState.height,
         backgroundColor: '#fff',
         frame: windowhasFrame(),
-        icon: path.join(__dirname, 'build/icon/icon.png'),
+        icon: path.join(globalAny.__static, os.platform() === 'win32' ? 'icons/icon.ico' : 'icons/64x64.png'),
         webPreferences: {
             nodeIntegration: true,
         },
