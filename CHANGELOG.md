@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.0.3] - 2020-06-01
+## [2.0.3] - 2020-06-07
 ### Added 
 - Added a native title bar and an option to toggle between native and custom title bar
+- Added an update checker
 ### Changed
 - Updated to the latest version of ytdl-core
 - Emoji's are now removed from file names. This improves compatibility with some devices.
