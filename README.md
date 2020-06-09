@@ -41,6 +41,7 @@ $ npm start              # Start Vitomu
 $ npm run electron:windows   # Build for Windows
 $ npm run electron:linux     # Build for Linux
 $ npm run electron:mac       # Build for Mac
+```
 
 ## Pacman installation notes
 
