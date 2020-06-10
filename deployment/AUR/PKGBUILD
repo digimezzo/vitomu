@@ -3,7 +3,7 @@ _pkgname=Vitomu
 pkgname=vitomu
 pkgver=2.0.3
 pkgrel=1
-pkgdesc="Vitomu is an easy to use video to audio converter"
+pkgdesc="Easy to use video to audio converter"
 arch=('x86_64')
 url="https://www.digimezzo.com"
 license=('GPL3')
@@ -16,7 +16,7 @@ backup=()
 options=(!strip)
 source=("${_pkgname}-${pkgver}.AppImage::https://github.com/digimezzo/${pkgname}/releases/download/v${pkgver//_/-}/${_pkgname}-${pkgver}.AppImage"
 	"${pkgname}.desktop")
-sha256sums=('TODO'
+sha256sums=('d433bc85ff778948d4c743a02db864c437a79876bb929471050d4750049e1160'
 		'1330c2e18e4ffce1b7495f130441428a8e04bd04e030bd974993ac9f3fd3eddc')
 
 prepare() {
