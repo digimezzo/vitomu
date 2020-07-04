@@ -1,0 +1,65 @@
+{
+  "ErrorTexts": {
+    "GlobalError": "エラーが発生したため、アプリケーションを終了します。詳細はログを確認してください。"
+  },
+  "Tabs": {
+    "Convert": "変換",
+    "Settings": "設定",
+    "About": "Vitomu について"
+  },
+  "ConvertTab": {
+    "DropText": "動画のリンクをクリップボードへコピーしてください",
+    "ConversionSuccessful": "変換が完了しました！",
+    "ConversionFailed": "変換に失敗しました",
+    "FoundOnClipboard": "クリップボードに動画のリンクが見つかりました！",
+    "ConversionInProgress": "変換しています...",
+    "DownloadingFFmpeg": "動画の変換に必要な FFmpeg をダウンロードしています。",
+    "FFmpegNotFound": "動画の変換に必要な FFmpeg が見つかりませんでした。"
+  },
+  "SettingsTab": {
+    "Language": "言語",
+    "Color": "色",
+    "FontSize": "フォント サイズ",
+    "Conversion": "変換",
+    "AudioFormat": "音声の形式",
+    "AudioBitrate": "音声のビットレート",
+    "TitleBar": "タイトル バー",
+    "UseCustomTitleBar": "カスタム タイトル バーの使用 (再起動が必要)",
+    "Updates": "更新",
+    "CheckForUpdates": "更新の確認"
+  },
+  "AboutTab": {
+    "About": "Vitomu について",
+    "Version": "バージョン",
+    "Donate": "寄付",
+    "IsAppUseful": "Vitomu はあなたの役に立てているでしょうか？ よければ寄付をしてみてください。ありがとう！",
+    "GetInTouch": "連絡する",
+    "Website": "ウェブサイト",
+    "License": "ライセンス",
+    "Components": "コンポーネント"
+  },
+  "Buttons": {
+    "Ok": "OK",
+    "ViewLog": "ログを見る",
+    "License": "ライセンス",
+    "Donate": "寄付"
+  },
+  "DialogTitles": {
+    "Error": "エラー"
+  },
+  "LicenseDialog": {
+    "License": "ライセンス"
+  },
+  "Tooltips": {
+    "ClickToConvert": "クリックして変換",
+    "ShowVideoLink": "動画のリンクを表示",
+    "ViewInFolder": "フォルダーで見る",
+    "Play": "再生"
+  },
+  "SnackBarMessages": {
+    "NewVersionAvailable": "新しいバージョンが利用可能です: {{version}}"
+  },
+  "SnackBarActions": {
+    "Ok": "OK"
+  }
+}
