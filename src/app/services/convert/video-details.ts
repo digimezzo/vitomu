@@ -25,8 +25,8 @@ export class VideoDetails {
             this._title = this._videoTitle;
         }
 
-        if (videoInfo.author && videoInfo.author.name) {
-            this._artist = videoInfo.author.name;
+        if (videoInfo.videoDetails && videoInfo.videoDetails.author && videoInfo.videoDetails.author.name) {
+            this._artist = videoInfo.videoDetails.author.name;
         }
     }
 
