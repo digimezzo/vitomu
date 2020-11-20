@@ -85,7 +85,7 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => path.join('directory', 'mock'));
             const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
             fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
             fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg']);
@@ -96,7 +96,7 @@ describe('FFmpegChecker', () => {
             const pathOfDownloadedFFmpeg: string = ffmpegChecker.getPathOfDownloadedFFmpeg();
 
             // Assert
-            assert.equal(pathOfDownloadedFFmpeg, '/directory/mock/FFmpeg/ffmpeg');
+            assert.equal(pathOfDownloadedFFmpeg, path.join('directory', 'mock', 'FFmpeg', 'ffmpeg'));
 
         });
 
@@ -105,7 +105,7 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => path.join('directory', 'mock'));
             const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
             fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
             fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg.exe']);
@@ -116,7 +116,7 @@ describe('FFmpegChecker', () => {
             const pathOfDownloadedFFmpeg: string = ffmpegChecker.getPathOfDownloadedFFmpeg();
 
             // Assert
-            assert.equal(pathOfDownloadedFFmpeg, '/directory/mock/FFmpeg/ffmpeg.exe');
+            assert.equal(pathOfDownloadedFFmpeg, path.join('directory', 'mock', 'FFmpeg', 'ffmpeg.exe'));
         });
     });
 

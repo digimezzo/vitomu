@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import * as path from 'path';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AudioFormat } from '../../core/audio-format';
 import { Constants } from '../../core/constants';
 import { FileSystem } from '../../core/file-system';
 import { Logger } from '../../core/logger';
 import { Settings } from '../../core/settings';
+import { ConversionResult as ConversionResult } from './conversion-result';
 import { FFmpegChecker } from './ffmpeg-checker';
 import { FFmpegDownloader } from './ffmpeg-downloader';
-import { VideoConverterFactory } from './video-converter.factory';
 import { VideoConverter } from './video-converter';
-import { ConversionResult as ConversionResult } from './conversion-result';
+import { VideoConverterFactory } from './video-converter.factory';
 
 @Injectable({
     providedIn: 'root',
@@ -80,8 +80,8 @@ export class ConvertService {
     }
 
     public isVideoUrlConvertible(videoUrl: string): boolean {
-        if (videoUrl && videoUrl.includes('www.youtube.com/watch?v=')) {
-            return true;
+        if (videoUrl) {
+            return Constants.youtubeLinks.some(x => videoUrl.includes(x));
         }
 
         return false;

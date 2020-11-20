@@ -1,7 +1,7 @@
 import { AudioFormat } from './audio-format';
 import { ColorTheme } from './color-theme';
-import { Language } from './language';
 import { FontSize } from './font-size';
+import { Language } from './language';
 
 export class Constants {
     public static readonly applicationName: string = require('../../../package.json').name;
@@ -38,6 +38,11 @@ export class Constants {
     ];
 
     public static readonly audioBitrates: number[] = [32, 48, 56, 64, 96, 128, 160, 192, 224, 256, 320];
+
+    public static readonly youtubeLinks: string[] = [
+        'www.youtube.com/watch?v=',
+        'youtu.be/'
+    ];
 
     public static readonly externalComponents: any[] = [
         {
