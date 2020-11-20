@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.4] - 2020-11-20
+### Added 
+- Short Youtube links in format 'youtu.be/' are now also supported
+### Changed
+- Updated to the latest version of ytdl-core
+### Removed
+### Fixed
+- Converting Youtube videos is broken
+
 ## [2.0.3] - 2020-06-07
 ### Added 
 - Added a native title bar and an option to toggle between native and custom title bar
