@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.6] - 2021-11-06
+
+### Added
+
+- Added Mac support
+
+### Changed
+
+- Updated to the latest version of ytdl-core
+
 ## [2.0.5] - 2021-08-02
 
 ### Added
