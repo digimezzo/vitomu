@@ -10,7 +10,8 @@
                     convertState === ConvertStateEnum.ConversionInProgress ||
                     convertState === ConvertStateEnum.ConversionSuccessful ||
                     convertState === ConvertStateEnum.downloadingFfmpeg ||
-                    convertState === ConvertStateEnum.downloadingYoutubeDownloader
+                    convertState === ConvertStateEnum.downloadingYoutubeDownloader ||
+                    convertState === ConvertStateEnum.updatingYoutubeDownloader
                 "
             >
                 <mat-progress-spinner
@@ -45,7 +46,8 @@
                     class="drop-zone-icon-pulsing custom-font"
                     *ngIf="
                         convertState === ConvertStateEnum.downloadingFfmpeg ||
-                        convertState === ConvertStateEnum.downloadingYoutubeDownloader
+                        convertState === ConvertStateEnum.downloadingYoutubeDownloader ||
+                        convertState === ConvertStateEnum.updatingYoutubeDownloader
                     "
                 >
                     &#xF381;
@@ -96,6 +98,10 @@
                 {{
                     'ConvertTab.DownloadingYoutubeDownloader' | translate: { youtubeDownloaderName: this.youtubeDownloaderName | titlecase }
                 }}
+            </div>
+            <!-- Updating Youtube downloader text -->
+            <div *ngIf="convertState === ConvertStateEnum.updatingYoutubeDownloader">
+                {{ 'ConvertTab.UpdatingYoutubeDownloader' | translate: { youtubeDownloaderName: this.youtubeDownloaderName | titlecase } }}
             </div>
             <!-- Youtube downloader not found text -->
             <div *ngIf="convertState === ConvertStateEnum.youtubeDownloaderNotAvailable">

@@ -16,6 +16,7 @@
         "DownloadingFFmpeg": "Téléchargement de FFmpeg. Nous en avons besoin pour convertir des vidéos.",
         "FFmpegNotFound": "FFmpeg est introuvable. Nous en avons besoin pour convertir des vidéos.",
         "DownloadingYoutubeDownloader": "Téléchargement de {{youtubeDownloaderName}}. Nous en avons besoin pour convertir des vidéos.",
+        "UpdatingYoutubeDownloader": "Mise à jour de {{youtubeDownloaderName}}.",
         "YoutubeDownloaderNotFound": "{{youtubeDownloaderName}} est introuvable. Nous en avons besoin pour convertir des vidéos."
     },
     "SettingsTab": {

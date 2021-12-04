@@ -5,6 +5,7 @@ export enum ConvertState {
     downloadingFfmpeg,
     youtubeDownloaderNotAvailable,
     downloadingYoutubeDownloader,
+    updatingYoutubeDownloader,
     ConversionInProgress,
     ConversionSuccessful,
     ConversionFailed,

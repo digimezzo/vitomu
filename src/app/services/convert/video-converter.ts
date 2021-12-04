@@ -1,4 +1,4 @@
-import { AudioFormat } from '../../core/audio-format';
+import { AudioFormat } from '../../common/audio-format';
 import { ConversionResult } from './conversion-result';
 
 export interface VideoConverter {

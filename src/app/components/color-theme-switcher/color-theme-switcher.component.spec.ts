@@ -1,5 +1,5 @@
 import { Mock, Times } from 'typemoq';
-import { ColorTheme } from '../../core/color-theme';
+import { ColorTheme } from '../../common/color-theme';
 import { AppearanceService } from '../../services/appearance/appearance.service';
 import { ColorThemeSwitcherComponent } from './color-theme-switcher.component';
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FileSystem } from '../../core/file-system';
-import { Logger } from '../../core/logger';
+import { FileSystem } from '../../common/file-system';
+import { Logger } from '../../common/logger';
 import { DependencyChecker } from './dependency-checker';
 import { YoutubeDownloaderConstants } from './youtube-downloader-constants';
 

@@ -1,9 +1,9 @@
 import { Component, NgZone, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ClipboardWatcher } from '../../core/clipboard-watcher';
-import { ConvertState } from '../../core/convert-state';
-import { Delayer } from '../../core/delayer';
-import { Desktop } from '../../core/desktop';
+import { ClipboardWatcher } from '../../common/clipboard-watcher';
+import { ConvertState } from '../../common/convert-state';
+import { Delayer } from '../../common/delayer';
+import { Desktop } from '../../common/desktop';
 import { ConversionResult } from '../../services/convert/conversion-result';
 import { ConvertService } from '../../services/convert/convert.service';
 import { YoutubeDownloaderConstants } from '../../services/convert/youtube-downloader-constants';
@@ -108,8 +108,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
             this.progressMode = 'determinate';
         }
 
-        // Silently fire and forget. We assume this command is ready when the user wants to convert.
-        this.convert.updateYoutubeDownloader();
+        this.convertState = ConvertState.updatingYoutubeDownloader;
+        this.progressMode = 'indeterminate';
+        await this.convert.updateYoutubeDownloaderAsync();
+        this.progressMode = 'determinate';
 
         this.convertState = ConvertState.WaitingForClipboardContent;
     }

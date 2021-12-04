@@ -1,11 +1,11 @@
 import * as assert from 'assert';
 import { Observable } from 'rxjs';
 import { Mock, Times } from 'typemoq';
-import { ConvertState } from '../../app/services/convert/convert-state';
-import { ClipboardWatcher } from '../../core/clipboard-watcher';
-import { ClipboardWatcherMock } from '../../core/clipboard-watcher.mock';
-import { Delayer } from '../../core/delayer';
-import { Desktop } from '../../core/desktop';
+import { ClipboardWatcher } from '../../common/clipboard-watcher';
+import { ClipboardWatcherMock } from '../../common/clipboard-watcher.mock';
+import { ConvertState } from '../../common/convert-state';
+import { Delayer } from '../../common/delayer';
+import { Desktop } from '../../common/desktop';
 import { ConversionResult } from '../../services/convert/conversion-result';
 import { ConvertService } from '../../services/convert/convert.service';
 import { ConvertServiceMock } from '../../services/convert/convert.service.mock';

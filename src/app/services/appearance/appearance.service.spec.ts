@@ -1,9 +1,9 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import * as assert from 'assert';
 import { Mock } from 'typemoq';
-import { ElectronRemoteProxy } from '../../core/electron-remote-proxy';
-import { Logger } from '../../core/logger';
-import { Settings } from '../../core/settings';
+import { ElectronRemoteProxy } from '../../common/electron-remote-proxy';
+import { Logger } from '../../common/logger';
+import { Settings } from '../../common/settings';
 import { AppearanceService } from './appearance.service';
 
 describe('AppearanceService', () => {

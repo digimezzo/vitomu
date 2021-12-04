@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { Mock } from 'typemoq';
-import { Logger } from '../../core/logger';
+import { Logger } from '../../common/logger';
 import { VideoConverterFactory } from './video-converter.factory';
 import { YoutubeVideoConverter } from './youtube-video-converter';
 

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import * as path from 'path';
 import { Observable, Subject } from 'rxjs';
-import { AudioFormat } from '../../core/audio-format';
-import { Constants } from '../../core/constants';
-import { FileSystem } from '../../core/file-system';
-import { Logger } from '../../core/logger';
-import { Settings } from '../../core/settings';
-import { Strings } from '../../core/Strings';
+import { AudioFormat } from '../../common/audio-format';
+import { Constants } from '../../common/constants';
+import { FileSystem } from '../../common/file-system';
+import { Logger } from '../../common/logger';
+import { Settings } from '../../common/settings';
+import { Strings } from '../../common/Strings';
 import { ConversionResult as ConversionResult } from './conversion-result';
 import { DependencyChecker } from './dependency-checker';
 import { DependencyCheckerFactory } from './dependency-checker-factory';
@@ -130,15 +130,19 @@ export class ConvertService {
         }
     }
 
-    public updateYoutubeDownloader(): void {
+    public async updateYoutubeDownloaderAsync(): Promise<void> {
         // We only update the Youtube downloader if it is our own
         if (!Strings.isNullOrWhiteSpace(this.youtubeDownloaderChecker.getPathOfDownloadedDependency())) {
-            this.logger.info(`Start updating ${YoutubeDownloaderConstants.downloaderName}.`, 'ConvertService', 'updateYoutubeDownloader');
-            this.youtubeDownloaderUpdater.updateYoutubeDownloader(this.youtubeDownloaderChecker.getPathOfDownloadedDependency());
+            this.logger.info(
+                `Start updating ${YoutubeDownloaderConstants.downloaderName}.`,
+                'ConvertService',
+                'updateYoutubeDownloaderAsync'
+            );
+            await this.youtubeDownloaderUpdater.updateYoutubeDownloaderAsync(this.youtubeDownloaderChecker.getPathOfDownloadedDependency());
             this.logger.info(
                 `Finished updating ${YoutubeDownloaderConstants.downloaderName}.`,
                 'ConvertService',
-                'updateYoutubeDownloader'
+                'updateYoutubeDownloaderAsync'
             );
         }
     }

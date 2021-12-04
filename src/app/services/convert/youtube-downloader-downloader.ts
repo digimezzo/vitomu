@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DownloaderHelper } from 'node-downloader-helper';
-import { Environment } from '../../core/environment';
-import { FileSystem } from '../../core/file-system';
-import { Logger } from '../../core/logger';
+import { Environment } from '../../common/environment';
+import { FileSystem } from '../../common/file-system';
+import { Logger } from '../../common/logger';
 import { YoutubeDownloaderConstants } from './youtube-downloader-constants';
 
 @Injectable()

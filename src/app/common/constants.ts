@@ -126,5 +126,11 @@ export class Constants {
             url: 'https://github.com/parshap/node-sanitize-filename',
             licenseUrl: 'https://github.com/parshap/node-sanitize-filename/blob/master/LICENSE.md',
         },
+        {
+            name: 'yt-dlp',
+            description: 'A youtube-dl fork with additional features and fixes.',
+            url: 'https://github.com/yt-dlp/yt-dlp',
+            licenseUrl: 'https://github.com/yt-dlp/yt-dlp/blob/master/LICENSE',
+        },
     ];
 }

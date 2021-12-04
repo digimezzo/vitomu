@@ -1,8 +1,8 @@
 import { It, Mock, Times } from 'typemoq';
-import { GitHubApi } from '../../core/github-api';
-import { Logger } from '../../core/logger';
-import { ProductDetails } from '../../core/product-details';
-import { Settings } from '../../core/settings';
+import { GitHubApi } from '../../common/github-api';
+import { Logger } from '../../common/logger';
+import { ProductDetails } from '../../common/product-details';
+import { Settings } from '../../common/settings';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
 import { UpdateService } from './update.service';
 

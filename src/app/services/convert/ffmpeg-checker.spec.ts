@@ -2,8 +2,8 @@ import * as assert from 'assert';
 import * as path from 'path';
 import { Mock } from 'typemoq';
 import { FFmpegChecker } from '../../app/services/convert/ffmpeg-checker';
-import { FileSystem } from '../../core/file-system';
-import { Logger } from '../../core/logger';
+import { FileSystem } from '../../common/file-system';
+import { Logger } from '../../common/logger';
 
 describe('FFmpegChecker', () => {
     describe('isFFmpegInSystemPathAsync', () => {

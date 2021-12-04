@@ -5,12 +5,12 @@ var electron_1 = require("electron");
 // See post by megahertz: https://github.com/megahertz/electron-log/issues/60
 // "You need to import electron-log in the main process. Without it, electron-log doesn't works in a renderer process."
 var electron_log_1 = require("electron-log");
+var Store = require("electron-store");
 var windowStateKeeper = require("electron-window-state");
+var os = require("os");
 var path = require("path");
 var url = require("url");
-var events_1 = require("./src/app/core/events");
-var Store = require("electron-store");
-var os = require("os");
+var events_1 = require("./src/app/common/events");
 electron_1.app.commandLine.appendSwitch('disable-color-correct-rendering');
 var win, serve;
 var args = process.argv.slice(1);
@@ -29,7 +29,7 @@ function createWindow() {
     // Load the previous state with fallback to defaults
     var windowState = windowStateKeeper({
         defaultWidth: 500,
-        defaultHeight: 500
+        defaultHeight: 500,
     });
     // Create the window using the state information
     win = new electron_1.BrowserWindow({
@@ -43,13 +43,13 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true,
         },
-        show: false
+        show: false,
     });
     globalAny.windowHasFrame = windowhasFrame();
     windowState.manage(win);
     if (serve) {
         require('electron-reload')(__dirname, {
-            electron: require(__dirname + "/node_modules/electron")
+            electron: require(__dirname + "/node_modules/electron"),
         });
         win.loadURL('http://localhost:4200');
     }
@@ -57,7 +57,7 @@ function createWindow() {
         win.loadURL(url.format({
             pathname: path.join(__dirname, 'dist/index.html'),
             protocol: 'file:',
-            slashes: true
+            slashes: true,
         }));
     }
     if (serve) {

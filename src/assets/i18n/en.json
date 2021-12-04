@@ -16,6 +16,7 @@
         "DownloadingFFmpeg": "Downloading FFmpeg. We need it to convert videos.",
         "FFmpegNotFound": "FFmpeg was not found. We need it to convert videos.",
         "DownloadingYoutubeDownloader": "Downloading {{youtubeDownloaderName}}. We need it to convert videos.",
+        "UpdatingYoutubeDownloader": "Updating {{youtubeDownloaderName}}.",
         "YoutubeDownloaderNotFound": "{{youtubeDownloaderName}} was not found. We need it to convert videos."
     },
     "SettingsTab": {

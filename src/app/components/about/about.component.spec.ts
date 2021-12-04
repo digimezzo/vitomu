@@ -1,8 +1,8 @@
 import { MatDialog } from '@angular/material';
 import * as assert from 'assert';
 import { It, Mock, Times } from 'typemoq';
-import { Constants } from '../../core/constants';
-import { Desktop } from '../../core/desktop';
+import { Constants } from '../../common/constants';
+import { Desktop } from '../../common/desktop';
 import { AboutComponent } from './about.component';
 
 describe('AboutComponent', () => {
