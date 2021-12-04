@@ -8,7 +8,7 @@ export interface VideoConverter {
         audioFormat: AudioFormat,
         bitrate: number,
         ffmpegPathOverride: string,
-        youtubeDlPathOverride: string,
+        youtubeDownloaderPathOverride: string,
         progressCallback: any
     ): Promise<ConversionResult>;
 }

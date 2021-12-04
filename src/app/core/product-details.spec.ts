@@ -1,6 +1,5 @@
-
 import * as assert from 'assert';
-import { ProductDetails } from '../../app/core/product-details';
+import { ProductDetails } from './product-details';
 
 describe('ProductDetails', () => {
     describe('name', () => {

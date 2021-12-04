@@ -2,17 +2,17 @@ import * as assert from 'assert';
 import * as path from 'path';
 import { Subscription } from 'rxjs';
 import { It, Mock, Times } from 'typemoq';
-import { AudioFormat } from '../../app/core/audio-format';
-import { FileSystem } from '../../app/core/file-system';
-import { Logger } from '../../app/core/logger';
-import { Settings } from '../../app/core/settings';
-import { ConversionResult } from '../../app/services/convert/conversion-result';
-import { ConvertService } from '../../app/services/convert/convert.service';
 import { FFmpegChecker } from '../../app/services/convert/ffmpeg-checker';
-import { FFmpegDownloader } from '../../app/services/convert/ffmpeg-downloader';
-import { VideoConverter } from '../../app/services/convert/video-converter';
-import { VideoConverterFactory } from '../../app/services/convert/video-converter.factory';
-import { YoutubeVideoConverter } from '../../app/services/convert/youtube-video-converter';
+import { AudioFormat } from '../../core/audio-format';
+import { FileSystem } from '../../core/file-system';
+import { Logger } from '../../core/logger';
+import { Settings } from '../../core/settings';
+import { ConversionResult } from './conversion-result';
+import { ConvertService } from './convert.service';
+import { FFmpegDownloader } from './ffmpeg-downloader';
+import { VideoConverter } from './video-converter';
+import { VideoConverterFactory } from './video-converter.factory';
+import { YoutubeVideoConverter } from './youtube-video-converter';
 
 describe('ConvertService', () => {
     describe('constructor', () => {

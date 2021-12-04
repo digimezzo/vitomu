@@ -1,18 +1,18 @@
 import * as assert from 'assert';
 import { Observable } from 'rxjs';
 import { Mock, Times } from 'typemoq';
-import { ConvertComponent } from '../../app/components/convert/convert.component';
-import { ClipboardWatcher } from '../../app/core/clipboard-watcher';
-import { Delayer } from '../../app/core/delayer';
-import { Desktop } from '../../app/core/desktop';
-import { ConversionResult } from '../../app/services/convert/conversion-result';
 import { ConvertState } from '../../app/services/convert/convert-state';
-import { ConvertService } from '../../app/services/convert/convert.service';
-import { SnackBarService } from '../../app/services/snack-bar/snack-bar.service';
-import { TranslatorService } from '../../app/services/translator/translator.service';
-import { ClipboardWatcherMock } from '../mocks/clipboard-watcher.mock';
-import { ConvertServiceMock } from '../mocks/convert.service.mock';
-import { NgZoneMock } from '../mocks/ng-zone.mock';
+import { ClipboardWatcher } from '../../core/clipboard-watcher';
+import { ClipboardWatcherMock } from '../../core/clipboard-watcher.mock';
+import { Delayer } from '../../core/delayer';
+import { Desktop } from '../../core/desktop';
+import { ConversionResult } from '../../services/convert/conversion-result';
+import { ConvertService } from '../../services/convert/convert.service';
+import { ConvertServiceMock } from '../../services/convert/convert.service.mock';
+import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
+import { TranslatorService } from '../../services/translator/translator.service';
+import { ConvertComponent } from './convert.component';
+import { NgZoneMock } from './ng-zone.mock';
 
 describe('ConvertComponent', () => {
     describe('constructor', () => {

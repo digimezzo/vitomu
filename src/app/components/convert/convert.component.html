@@ -10,7 +10,7 @@
                     convertState === ConvertStateEnum.ConversionInProgress ||
                     convertState === ConvertStateEnum.ConversionSuccessful ||
                     convertState === ConvertStateEnum.downloadingFfmpeg ||
-                    convertState === ConvertStateEnum.downloadingYoutubeDl
+                    convertState === ConvertStateEnum.downloadingYoutubeDownloader
                 "
             >
                 <mat-progress-spinner
@@ -41,11 +41,23 @@
                     </div>
                 </div>
                 <!-- Download busy icon -->
-                <div class="drop-zone-icon-pulsing custom-font" *ngIf="convertState === ConvertStateEnum.downloadingFfmpeg || convertState === ConvertStateEnum.downloadingYoutubeDl">&#xF381;</div>
+                <div
+                    class="drop-zone-icon-pulsing custom-font"
+                    *ngIf="
+                        convertState === ConvertStateEnum.downloadingFfmpeg ||
+                        convertState === ConvertStateEnum.downloadingYoutubeDownloader
+                    "
+                >
+                    &#xF381;
+                </div>
                 <!-- Error icon -->
                 <div
                     class="drop-zone-icon-static custom-font"
-                    *ngIf="convertState === ConvertStateEnum.ffmpegNotAvailable || convertState === ConvertStateEnum.youtubeDlNotAvailable || convertState === ConvertStateEnum.ConversionFailed"
+                    *ngIf="
+                        convertState === ConvertStateEnum.ffmpegNotAvailable ||
+                        convertState === ConvertStateEnum.youtubeDownloaderNotAvailable ||
+                        convertState === ConvertStateEnum.ConversionFailed
+                    "
                 >
                     &#xF05E;
                 </div>
@@ -79,13 +91,15 @@
             <div *ngIf="convertState === ConvertStateEnum.ffmpegNotAvailable">
                 {{ 'ConvertTab.FFmpegNotFound' | translate }}
             </div>
-             <!-- Downloading Youtube-dl text -->
-             <div *ngIf="convertState === ConvertStateEnum.downloadingYoutubeDl">
-                {{ 'ConvertTab.DownloadingYoutubeDl' | translate }}
+            <!-- Downloading Youtube downloader text -->
+            <div *ngIf="convertState === ConvertStateEnum.downloadingYoutubeDownloader">
+                {{
+                    'ConvertTab.DownloadingYoutubeDownloader' | translate: { youtubeDownloaderName: this.youtubeDownloaderName | titlecase }
+                }}
             </div>
-            <!-- Youtube-dl not found text -->
-            <div *ngIf="convertState === ConvertStateEnum.youtubeDlNotAvailable">
-                {{ 'ConvertTab.YoutubeDlNotFound' | translate }}
+            <!-- Youtube downloader not found text -->
+            <div *ngIf="convertState === ConvertStateEnum.youtubeDownloaderNotAvailable">
+                {{ 'ConvertTab.YoutubeDownloaderNotFound' | translate: { youtubeDownloaderName: this.youtubeDownloaderName | titlecase } }}
             </div>
             <!-- Conversion in progress text -->
             <div *ngIf="convertState === ConvertStateEnum.ConversionInProgress">

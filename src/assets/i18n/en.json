@@ -15,8 +15,8 @@
         "ConversionInProgress": "Conversion in progress...",
         "DownloadingFFmpeg": "Downloading FFmpeg. We need it to convert videos.",
         "FFmpegNotFound": "FFmpeg was not found. We need it to convert videos.",
-        "DownloadingYoutubeDl": "Downloading Youtube-dl. We need it to convert videos.",
-        "YoutubeDlNotFound": "Youtube-dl was not found. We need it to convert videos."
+        "DownloadingYoutubeDownloader": "Downloading {{youtubeDownloaderName}}. We need it to convert videos.",
+        "YoutubeDownloaderNotFound": "{{youtubeDownloaderName}} was not found. We need it to convert videos."
     },
     "SettingsTab": {
         "Language": "Language",

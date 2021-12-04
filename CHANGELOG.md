@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
--   Replaced ytdl-core by Youtube-dl to improve compatibility
+-   Replaced ytdl-core by yt-dlp to improve compatibility
 -   Improved clipboard detection
 
 ### Removed

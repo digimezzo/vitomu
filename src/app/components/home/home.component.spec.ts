@@ -1,8 +1,7 @@
-import * as assert from 'assert';
-import { HomeComponent } from '../../app/components/home/home.component';
 import { Mock, Times } from 'typemoq';
-import { UpdateService } from '../../app/services/update/update.service';
-import { AppearanceService } from '../../app/services/appearance/appearance.service';
+import { AppearanceService } from '../../services/appearance/appearance.service';
+import { UpdateService } from '../../services/update/update.service';
+import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
     describe('ngOnInit', () => {
@@ -16,7 +15,7 @@ describe('HomeComponent', () => {
             homeComponent.ngOnInit();
 
             // Assert
-            updateMock.verify(x => x.checkForUpdatesAsync, Times.exactly(1));
+            updateMock.verify((x) => x.checkForUpdatesAsync, Times.exactly(1));
         });
     });
 });

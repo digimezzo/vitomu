@@ -1,8 +1,8 @@
 import * as assert from 'assert';
-import { VideoConverterFactory } from '../../app/services/convert/video-converter.factory';
-import { Logger } from '../../app/core/logger';
 import { Mock } from 'typemoq';
-import { YoutubeVideoConverter } from '../../app/services/convert/youtube-video-converter';
+import { Logger } from '../../core/logger';
+import { VideoConverterFactory } from './video-converter.factory';
+import { YoutubeVideoConverter } from './youtube-video-converter';
 
 describe('VideoConverterFactory', () => {
     describe('constructor', () => {

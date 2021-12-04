@@ -1,9 +1,9 @@
 import { MatDialog } from '@angular/material';
 import * as assert from 'assert';
 import { It, Mock, Times } from 'typemoq';
-import { AboutComponent } from '../../app/components/about/about.component';
-import { Constants } from '../../app/core/constants';
-import { Desktop } from '../../app/core/desktop';
+import { Constants } from '../../core/constants';
+import { Desktop } from '../../core/desktop';
+import { AboutComponent } from './about.component';
 
 describe('AboutComponent', () => {
     describe('constructor', () => {
@@ -25,7 +25,7 @@ describe('AboutComponent', () => {
             const desktopMock = Mock.ofType<Desktop>();
 
             // Act
-            const aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object,  desktopMock.object);
+            const aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
 
             // Assert
             assert.equal(aboutComponent.applicationCopyright, Constants.applicationCopyright);
@@ -80,7 +80,7 @@ describe('AboutComponent', () => {
             aboutComponent.openLicenseDialog();
 
             // Assert
-            matDialogMock.verify(x => x.open(It.isAny(), It.isAny()), Times.atLeastOnce());
+            matDialogMock.verify((x) => x.open(It.isAny(), It.isAny()), Times.atLeastOnce());
         });
     });
 
@@ -96,7 +96,7 @@ describe('AboutComponent', () => {
             aboutComponent.openDonateLink();
 
             // Assert
-            desktopMock.verify(x => x.openLink(Constants.donateUrl), Times.atLeastOnce());
+            desktopMock.verify((x) => x.openLink(Constants.donateUrl), Times.atLeastOnce());
         });
     });
 });

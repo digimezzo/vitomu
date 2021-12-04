@@ -1,9 +1,9 @@
 import { TranslateService } from '@ngx-translate/core';
 import * as assert from 'assert';
 import { Mock, Times } from 'typemoq';
-import { Language } from '../../app/core/language';
-import { Settings } from '../../app/core/settings';
-import { TranslatorService } from '../../app/services/translator/translator.service';
+import { Language } from '../../core/language';
+import { Settings } from '../../core/settings';
+import { TranslatorService } from './translator.service';
 
 describe('TranslatorService', () => {
     describe('constructor', () => {
@@ -23,13 +23,13 @@ describe('TranslatorService', () => {
             // Arrange
             const translateServiceMock = Mock.ofType<TranslateService>();
             const settingsMock = Mock.ofType<Settings>();
-            settingsMock.setup(x => x.defaultLanguage).returns(() => 'en');
+            settingsMock.setup((x) => x.defaultLanguage).returns(() => 'en');
 
             // Act
             const translator: TranslatorService = new TranslatorService(translateServiceMock.object, settingsMock.object);
 
             // Assert
-            translateServiceMock.verify(x => x.setDefaultLang('en'), Times.atLeastOnce());
+            translateServiceMock.verify((x) => x.setDefaultLang('en'), Times.atLeastOnce());
         });
     });
 
@@ -39,16 +39,15 @@ describe('TranslatorService', () => {
             const translateServiceMock = Mock.ofType<TranslateService>();
             const settingsMock = Mock.ofType<Settings>();
 
-            settingsMock.setup(x => x.language).returns(() => 'en');
+            settingsMock.setup((x) => x.language).returns(() => 'en');
 
             const translator: TranslatorService = new TranslatorService(translateServiceMock.object, settingsMock.object);
 
             // Act
             translator.applyLanguage();
 
-
             // Assert
-            translateServiceMock.verify(x => x.use('en'), Times.atLeastOnce());
+            translateServiceMock.verify((x) => x.use('en'), Times.atLeastOnce());
         });
     });
 
@@ -64,9 +63,8 @@ describe('TranslatorService', () => {
             const lang: Language = new Language('de', 'German', 'Deutch');
             translator.selectedLanguage = lang;
 
-
             // Assert
-            settingsMock.verify(x => x.language = 'de', Times.atLeastOnce());
+            settingsMock.verify((x) => (x.language = 'de'), Times.atLeastOnce());
         });
 
         it('Should apply the selected language', () => {
@@ -80,9 +78,8 @@ describe('TranslatorService', () => {
             const lang: Language = new Language('de', 'German', 'Deutch');
             translator.selectedLanguage = lang;
 
-
             // Assert
-            translateServiceMock.verify(x => x.use('de'), Times.atLeastOnce());
+            translateServiceMock.verify((x) => x.use('de'), Times.atLeastOnce());
         });
 
         it('Should get the selected language', () => {
@@ -90,7 +87,7 @@ describe('TranslatorService', () => {
             const translateServiceMock = Mock.ofType<TranslateService>();
             const settingsMock = Mock.ofType<Settings>();
 
-            settingsMock.setup(x => x.language).returns(() => 'de');
+            settingsMock.setup((x) => x.language).returns(() => 'de');
 
             const translator: TranslatorService = new TranslatorService(translateServiceMock.object, settingsMock.object);
             translator.languages = [new Language('en', 'English', 'English'), new Language('de', 'German', 'Deutch')];

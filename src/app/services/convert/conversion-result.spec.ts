@@ -1,5 +1,5 @@
-import { ConversionResult } from '../../app/services/convert/conversion-result';
 import * as assert from 'assert';
+import { ConversionResult } from './conversion-result';
 
 describe('ConversionResult', () => {
     describe('constructor', () => {

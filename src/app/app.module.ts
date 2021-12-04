@@ -49,8 +49,8 @@ import { ConvertService } from './services/convert/convert.service';
 import { DependencyCheckerFactory } from './services/convert/dependency-checker-factory';
 import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
 import { VideoConverterFactory } from './services/convert/video-converter.factory';
-import { YoutubeDlDownloader } from './services/convert/youtube-dl-downloader';
-import { YoutubeDlUpdater } from './services/convert/youtube-dl-updater';
+import { YoutubeDownloaderDownloader } from './services/convert/youtube-downloader-downloader';
+import { YoutubeDownloaderUpdater } from './services/convert/youtube-downloader-updater';
 import { ElectronService } from './services/electron.service';
 import { SnackBarService } from './services/snack-bar/snack-bar.service';
 import { TranslatorService } from './services/translator/translator.service';
@@ -115,8 +115,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         Delayer,
         ClipboardWatcher,
         FFmpegDownloader,
-        YoutubeDlDownloader,
-        YoutubeDlUpdater,
+        YoutubeDownloaderDownloader,
+        YoutubeDownloaderUpdater,
         GitHubApi,
         ElectronRemoteProxy,
         ProductDetails,

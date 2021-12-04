@@ -15,8 +15,8 @@
         "ConversionInProgress": "Conversion en cours...",
         "DownloadingFFmpeg": "Téléchargement de FFmpeg. Nous en avons besoin pour convertir des vidéos.",
         "FFmpegNotFound": "FFmpeg est introuvable. Nous en avons besoin pour convertir des vidéos.",
-        "DownloadingYoutubeDl": "Téléchargement de Youtube-dl. Nous en avons besoin pour convertir des vidéos.",
-        "YoutubeDlNotFound": "Youtube-dl est introuvable. Nous en avons besoin pour convertir des vidéos."
+        "DownloadingYoutubeDownloader": "Téléchargement de {{youtubeDownloaderName}}. Nous en avons besoin pour convertir des vidéos.",
+        "YoutubeDownloaderNotFound": "{{youtubeDownloaderName}} est introuvable. Nous en avons besoin pour convertir des vidéos."
     },
     "SettingsTab": {
         "Language": "Langue",

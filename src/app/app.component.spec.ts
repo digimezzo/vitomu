@@ -1,8 +1,8 @@
 import { Mock, Times } from 'typemoq';
-import { AppComponent } from '../../app/app.component';
-import { AppearanceService } from '../../app/services/appearance/appearance.service';
-import { ConvertService } from '../../app/services/convert/convert.service';
-import { TranslatorService } from '../../app/services/translator/translator.service';
+import { AppComponent } from './app.component';
+import { AppearanceService } from './services/appearance/appearance.service';
+import { ConvertService } from './services/convert/convert.service';
+import { TranslatorService } from './services/translator/translator.service';
 
 describe('AppComponent', () => {
     describe('constructor', () => {
@@ -17,10 +17,10 @@ describe('AppComponent', () => {
                 translatorServiceMock.object,
                 appearanceServiceMock.object,
                 convertServiceMock.object
-                );
+            );
 
             // Assert
-            translatorServiceMock.verify(x => x.applyLanguage(), Times.atLeastOnce());
+            translatorServiceMock.verify((x) => x.applyLanguage(), Times.atLeastOnce());
         });
 
         it('Should apply theme', () => {
@@ -34,10 +34,10 @@ describe('AppComponent', () => {
                 translatorServiceMock.object,
                 appearanceServiceMock.object,
                 convertServiceMock.object
-                );
+            );
 
             // Assert
-            appearanceServiceMock.verify(x => x.applyTheme(), Times.atLeastOnce());
+            appearanceServiceMock.verify((x) => x.applyTheme(), Times.atLeastOnce());
         });
     });
 });

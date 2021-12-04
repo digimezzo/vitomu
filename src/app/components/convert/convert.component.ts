@@ -6,6 +6,7 @@ import { Delayer } from '../../core/delayer';
 import { Desktop } from '../../core/desktop';
 import { ConversionResult } from '../../services/convert/conversion-result';
 import { ConvertService } from '../../services/convert/convert.service';
+import { YoutubeDownloaderConstants } from '../../services/convert/youtube-downloader-constants';
 import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../services/translator/translator.service';
 
@@ -16,6 +17,8 @@ import { TranslatorService } from '../../services/translator/translator.service'
     encapsulation: ViewEncapsulation.None,
 })
 export class ConvertComponent implements OnInit, OnDestroy {
+    public youtubeDownloaderName: string = YoutubeDownloaderConstants.downloaderName;
+
     // This is required to use enum values in the template
     public ConvertStateEnum: typeof ConvertState = ConvertState;
 
@@ -98,15 +101,15 @@ export class ConvertComponent implements OnInit, OnDestroy {
             this.progressMode = 'determinate';
         }
 
-        if (!(await this.convert.isYoutubeDlAvailableAsync())) {
-            this.convertState = ConvertState.downloadingYoutubeDl;
+        if (!(await this.convert.isYoutubeDownloaderAvailableAsync())) {
+            this.convertState = ConvertState.downloadingYoutubeDownloader;
             this.progressMode = 'indeterminate';
-            await this.convert.downloadYoutubeDlAsync();
+            await this.convert.downloadYoutubeDownloaderAsync();
             this.progressMode = 'determinate';
         }
 
         // Silently fire and forget. We assume this command is ready when the user wants to convert.
-        this.convert.updateYoutubeDl();
+        this.convert.updateYoutubeDownloader();
 
         this.convertState = ConvertState.WaitingForClipboardContent;
     }

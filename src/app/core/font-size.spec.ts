@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { FontSize } from '../../app/core/font-size';
+import { FontSize } from './font-size';
 
 describe('FontSize', () => {
     describe('constructor', () => {

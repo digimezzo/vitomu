@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { LogoFullComponent } from '../../app/components/logo-full/logo-full.component';
+import { LogoFullComponent } from './logo-full.component';
 
 describe('LogoFullComponent', () => {
     describe('constructor', () => {

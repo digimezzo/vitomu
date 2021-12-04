@@ -1,7 +1,7 @@
 import { Mock, Times } from 'typemoq';
-import { ColorThemeSwitcherComponent } from '../../app/components/color-theme-switcher/color-theme-switcher.component';
-import { ColorTheme } from '../../app/core/color-theme';
-import { AppearanceService } from '../../app/services/appearance/appearance.service';
+import { ColorTheme } from '../../core/color-theme';
+import { AppearanceService } from '../../services/appearance/appearance.service';
+import { ColorThemeSwitcherComponent } from './color-theme-switcher.component';
 
 describe('ColorThemeSwitcherComponent', () => {
     describe('setColorTheme', () => {
@@ -15,7 +15,7 @@ describe('ColorThemeSwitcherComponent', () => {
             colorThemeSwitcher.setColorTheme(blueColorTheme);
 
             // Assert
-            appearanceServiceMock.verify(x => x.selectedColorTheme = blueColorTheme, Times.atLeastOnce());
+            appearanceServiceMock.verify((x) => (x.selectedColorTheme = blueColorTheme), Times.atLeastOnce());
         });
     });
 });
