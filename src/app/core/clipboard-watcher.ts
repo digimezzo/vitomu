@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { clipboard, ipcRenderer } from 'electron';
+import { clipboard } from 'electron';
 import { Observable, Subject } from 'rxjs';
-import { Events } from './events';
+import { Strings } from './Strings';
 
 @Injectable()
 export class ClipboardWatcher {
@@ -17,12 +17,12 @@ export class ClipboardWatcher {
     }
 
     private startWatching(): void {
-        ipcRenderer.on(Events.windowFocusChangedEvent, () => {
+        setInterval(() => {
             const clipBoardText: string = clipboard.readText();
 
-            if (clipBoardText) {
+            if (!Strings.isNullOrWhiteSpace(clipBoardText)) {
                 this.onClipboardContentChanged(clipBoardText);
             }
-        });
+        }, 2000);
     }
 }
