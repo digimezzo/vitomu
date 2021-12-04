@@ -14,6 +14,7 @@ import { FFmpegDownloader } from './ffmpeg-downloader';
 import { VideoConverter } from './video-converter';
 import { VideoConverterFactory } from './video-converter.factory';
 import { YoutubeDlDownloader } from './youtube-dl-downloader';
+import { YoutubeDlUpdater } from './youtube-dl-updater';
 
 @Injectable({
     providedIn: 'root',
@@ -36,6 +37,7 @@ export class ConvertService {
         private dependencyCheckerFactory: DependencyCheckerFactory,
         private ffmpegDownloader: FFmpegDownloader,
         private youtubeDlDownloader: YoutubeDlDownloader,
+        private youtubeDlUpdater: YoutubeDlUpdater,
         private fileSystem: FileSystem,
         private settings: Settings,
         private videoConverterFactory: VideoConverterFactory
@@ -113,9 +115,18 @@ export class ConvertService {
 
     public async downloadYoutubeDlAsync(): Promise<void> {
         if (!(await this.youtubeDlChecker.isDependencyAvailableAsync())) {
-            this.logger.info('Start downloading Youtube-dl.', 'ConvertService', 'fixDependencies');
+            this.logger.info('Start downloading Youtube-dl.', 'ConvertService', 'downloadYoutubeDlAsync');
             await this.youtubeDlDownloader.downloadAsync(this.youtubeDlChecker.downloadedDependencyFolder);
-            this.logger.info('Finished downloading Youtube-dl.', 'ConvertService', 'fixDependencies');
+            this.logger.info('Finished downloading Youtube-dl.', 'ConvertService', 'downloadYoutubeDlAsync');
+        }
+    }
+
+    public updateYoutubeDl(): void {
+        // We only updte Youtube-dl if it is our own
+        if (!Strings.isNullOrWhiteSpace(this.youtubeDlChecker.getPathOfDownloadedDependency())) {
+            this.logger.info('Start updating Youtube-dl.', 'ConvertService', 'updateYoutubeDlAsync');
+            this.youtubeDlUpdater.updateYoutubeDl(this.youtubeDlChecker.getPathOfDownloadedDependency());
+            this.logger.info('Finished updating Youtube-dl.', 'ConvertService', 'updateYoutubeDlAsync');
         }
     }
 

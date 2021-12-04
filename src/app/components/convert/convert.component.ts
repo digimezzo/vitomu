@@ -105,6 +105,9 @@ export class ConvertComponent implements OnInit, OnDestroy {
             this.progressMode = 'determinate';
         }
 
+        // Silently fire and forget. We assume this command is ready when the user wants to convert.
+        this.convert.updateYoutubeDl();
+
         this.convertState = ConvertState.WaitingForClipboardContent;
     }
 

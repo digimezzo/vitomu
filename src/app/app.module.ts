@@ -50,6 +50,7 @@ import { DependencyCheckerFactory } from './services/convert/dependency-checker-
 import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
 import { VideoConverterFactory } from './services/convert/video-converter.factory';
 import { YoutubeDlDownloader } from './services/convert/youtube-dl-downloader';
+import { YoutubeDlUpdater } from './services/convert/youtube-dl-updater';
 import { ElectronService } from './services/electron.service';
 import { SnackBarService } from './services/snack-bar/snack-bar.service';
 import { TranslatorService } from './services/translator/translator.service';
@@ -115,6 +116,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         ClipboardWatcher,
         FFmpegDownloader,
         YoutubeDlDownloader,
+        YoutubeDlUpdater,
         GitHubApi,
         ElectronRemoteProxy,
         ProductDetails,
