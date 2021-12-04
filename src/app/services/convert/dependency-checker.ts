@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as path from 'path';
 import { FileSystem } from '../../core/file-system';
 import { Logger } from '../../core/logger';
+import { Strings } from '../../core/Strings';
 
 @Injectable()
 export class DependencyChecker {
@@ -13,7 +14,7 @@ export class DependencyChecker {
     ) {}
 
     public get downloadedDependencyFolder(): string {
-        return path.join(this.fileSystem.applicatioDataDirectory(), this.dependencyFolderName);
+        return path.join(this.fileSystem.applicationDataDirectory(), this.dependencyFolderName);
     }
 
     public async isDependencyAvailableAsync(): Promise<boolean> {
@@ -21,7 +22,7 @@ export class DependencyChecker {
     }
 
     public async isDependencyInSystemPathAsync(): Promise<boolean> {
-        return await this.fileSystem.commanExistsAsync(this.dependencyFileName);
+        return await this.fileSystem.commandExistsAsync(this.dependencyFileName);
     }
 
     public getPathOfDownloadedDependency(): string {
@@ -39,7 +40,7 @@ export class DependencyChecker {
             .readDirectory(this.downloadedDependencyFolder)
             .find((file) => file.includes(this.dependencyFileName));
 
-        if (!dependencyFile) {
+        if (Strings.isNullOrWhiteSpace(dependencyFile)) {
             this.logger.info(
                 `Dependency was not found in folder ${this.downloadedDependencyFolder}`,
                 'DependencyChecker',

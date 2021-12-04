@@ -6,10 +6,27 @@ import * as path from 'path';
 
 @Injectable()
 export class FileSystem {
+    private _pathSeparator: string = '';
+
     constructor() {
+        this._pathSeparator = path.sep;
     }
 
-    public applicatioDataDirectory(): string {
+    public combinePath(pathPieces: string[]): string {
+        if (pathPieces == undefined || pathPieces.length === 0) {
+            return '';
+        }
+
+        if (pathPieces.length === 1) {
+            return pathPieces[0];
+        }
+
+        const combinedPath: string = pathPieces.join(this._pathSeparator);
+
+        return combinedPath;
+    }
+
+    public applicationDataDirectory(): string {
         return remote.app.getPath('userData');
     }
 
@@ -29,11 +46,19 @@ export class FileSystem {
         return fs.readdirSync(directory);
     }
 
-    public async commanExistsAsync(command: string): Promise<boolean> {
+    public async commandExistsAsync(command: string): Promise<boolean> {
         return await commandExists(command);
     }
 
     public getFileName(filePath: string): string {
         return path.basename(filePath);
+    }
+
+    public createWriteStream(filePath: string): any {
+        return fs.createWriteStream(filePath);
+    }
+
+    public makeFileExecutable(filePath: string): any {
+        fs.chmodSync(filePath, '755');
     }
 }

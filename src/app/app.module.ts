@@ -36,6 +36,7 @@ import { ClipboardWatcher } from './core/clipboard-watcher';
 import { Delayer } from './core/delayer';
 import { Desktop } from './core/desktop';
 import { ElectronRemoteProxy } from './core/electron-remote-proxy';
+import { Environment } from './core/environment';
 import { FileSystem } from './core/file-system';
 import { GitHubApi } from './core/github-api';
 import { Logger } from './core/logger';
@@ -48,6 +49,7 @@ import { ConvertService } from './services/convert/convert.service';
 import { DependencyCheckerFactory } from './services/convert/dependency-checker-factory';
 import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
 import { VideoConverterFactory } from './services/convert/video-converter.factory';
+import { YoutubeDlDownloader } from './services/convert/youtube-dl-downloader';
 import { ElectronService } from './services/electron.service';
 import { SnackBarService } from './services/snack-bar/snack-bar.service';
 import { TranslatorService } from './services/translator/translator.service';
@@ -112,10 +114,12 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         Delayer,
         ClipboardWatcher,
         FFmpegDownloader,
+        YoutubeDlDownloader,
         GitHubApi,
         ElectronRemoteProxy,
         ProductDetails,
         VideoConverterFactory,
+        Environment,
         DependencyCheckerFactory,
         {
             provide: ErrorHandler,

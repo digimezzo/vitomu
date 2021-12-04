@@ -1,23 +1,17 @@
-import * as ffmpeg from 'fluent-ffmpeg-corrected';
-import * as path from 'path';
-import * as progressStream from 'progress-stream';
-import * as sanitize from 'sanitize-filename';
-import { Readable } from 'stream';
-import * as ytdl from 'ytdl-core';
+import * as child from 'child_process';
 import { AudioFormat } from '../../core/audio-format';
+import { Environment } from '../../core/environment';
 import { Logger } from '../../core/logger';
-import { VideoDetails } from './video-details';
-import { VideoConverter } from './video-converter';
+import { Strings } from '../../core/Strings';
 import { ConversionResult } from './conversion-result';
-import * as emojiStrip from 'emoji-strip';
+import { VideoConverter } from './video-converter';
 
 export class YoutubeVideoConverter implements VideoConverter {
     private youtubeVideoQuality: string = 'highest';
     private requestOptions: any = { maxRedirects: 5 };
     private progressTimeoutMilliseconds: number = 100;
 
-    constructor(private logger: Logger) {
-    }
+    constructor(private environment: Environment, private logger: Logger) {}
 
     public async convertAsync(
         videoUrl: string,
@@ -25,56 +19,53 @@ export class YoutubeVideoConverter implements VideoConverter {
         audioFormat: AudioFormat,
         bitrate: number,
         ffmpegPathOverride: string,
-        progressCallback: any): Promise<ConversionResult> {
-
+        youtubeDlPathOverride: string,
+        progressCallback: any
+    ): Promise<ConversionResult> {
         const promise = new Promise<ConversionResult>(async (resolve, reject) => {
             progressCallback(0);
 
+            let youtubeDlExecutable: string = 'youtube-dl';
+            let ffmpegLocationParameter: string = '';
+
+            if (!Strings.isNullOrWhiteSpace(youtubeDlPathOverride)) {
+                youtubeDlExecutable = youtubeDlPathOverride;
+            }
+
+            if (!Strings.isNullOrWhiteSpace(ffmpegPathOverride)) {
+                ffmpegLocationParameter = `--ffmpeg-location "${ffmpegPathOverride}"`;
+            }
+
+            let separator: string = '/';
+
+            if (this.environment.isWindows()) {
+                separator = '\\';
+            }
+
+            const youtubeDlCommand: string = `${youtubeDlExecutable} "${videoUrl}" ${ffmpegLocationParameter} --no-check-certificate --no-playlist --output "${outputDirectory}${separator}%(title)s.%(ext)s" -f bestaudio --extract-audio --audio-format ${audioFormat.ffmpegFormat} --audio-quality ${bitrate}k`;
+            this.logger.info(`Executing command: ${youtubeDlCommand}`, 'YoutubeVideoConverter', 'convertAsync');
+
             try {
-                // Get info
-                const videoInfo: ytdl.videoInfo = await ytdl.getInfo(videoUrl);
-                const videoDetails: VideoDetails = new VideoDetails(videoInfo);
-                const filePath: string = path.join(outputDirectory, sanitize(emojiStrip(videoDetails.videoTitle)) + audioFormat.extension);
+                const process: child.ChildProcess = child.exec(youtubeDlCommand, (err, stdout, stderr) => {
+                    if (err) {
+                        this.logger.error(
+                            `An error occurred while converting. Error: ${err}`,
+                            'YoutubeVideoConverter',
+                            'convertVideoAsync'
+                        );
 
-                this.logger.info(`File path: ${filePath}`, 'YoutubeVideoConverter', 'convertVideoAsync');
-
-                // Download
-                const videoStream: Readable = ytdl.downloadFromInfo(videoInfo, {
-                    quality: this.youtubeVideoQuality,
-                    requestOptions: this.requestOptions
-                });
-                videoStream.on('response', async (httpResponse) => {
-                    // Setup of progress module
-                    const str: any = progressStream({
-                        length: parseInt(httpResponse.headers['content-length'], 10),
-                        time: this.progressTimeoutMilliseconds
-                    });
-
-                    // Add progress event listener
-                    str.on('progress', (progress) => {
-                        progressCallback(parseInt(progress.percentage, 10));
-                    });
-
-                    if (ffmpegPathOverride) {
-                        ffmpeg.setFfmpegPath(ffmpegPathOverride);
+                        resolve(new ConversionResult(false, ''));
                     }
+                });
 
-                    // Start encoding
-                    // .audioBitrate(videoInfo.formats[0].audioBitrate)
-                    const proc: any = new ffmpeg({
-                        source: videoStream.pipe(str)
-                    })
-                        .audioBitrate(bitrate)
-                        .toFormat(audioFormat.ffmpegFormat)
-                        .on('error', (error) => {
-                            this.logger.error(`An error occurred while converting. Error: ${error}`, 'YoutubeVideoConverter', 'convertVideoAsync');
-                            resolve(new ConversionResult(false, ''));
-                        })
-                        .on('end', () => {
-                            this.logger.info(`Convertion of video '${videoUrl}' to file '${filePath}' was succesful`, 'YoutubeVideoConverter', 'convertVideoAsync');
-                            resolve(new ConversionResult(true, filePath));
-                        })
-                        .saveToFile(filePath);
+                process.stdout.on('data', (data) => {
+                    if (data.toString().includes('[download]')) {
+                        const progressPercent: number = this.getProgressPercentFromYoutubeDlProgress(data.toString());
+                        progressCallback(progressPercent);
+                    } else if (data.toString().includes('[ffmpeg] Destination')) {
+                        const filePath: string = this.getFilePathFromYoutubeDlProgress(data.toString());
+                        resolve(new ConversionResult(true, filePath));
+                    }
                 });
             } catch (error) {
                 this.logger.error(`Could not convert video. Error: ${error}`, 'YoutubeVideoConverter', 'convertVideoAsync');
@@ -83,5 +74,33 @@ export class YoutubeVideoConverter implements VideoConverter {
         });
 
         return promise;
+    }
+
+    private getProgressPercentFromYoutubeDlProgress(youtubeDlProgress: string): number {
+        try {
+            // [download]  98.3% of 3.98MiB at 75.19KiB/s ETA 00:00
+            const pieces: string[] = youtubeDlProgress.split('%');
+
+            return parseInt(pieces[0].replace('[download]', '').trim(), 10);
+        } catch (error) {
+            this.logger.error(
+                `Could not get progress percent. Error: ${error}`,
+                'YoutubeVideoConverter',
+                'getProgressPercentFromYoutubeDlProgress'
+            );
+        }
+
+        return 0;
+    }
+
+    private getFilePathFromYoutubeDlProgress(youtubeDlProgress: string): string {
+        try {
+            // [ffmpeg] Destination: /home/raphael/Music/Vitomu/ilan Bluestone (@iBluestone) feat. Giuseppe De Luca - Stardust & Madness.mp
+            return youtubeDlProgress.replace('[ffmpeg] Destination:', '').trim();
+        } catch (error) {
+            this.logger.error(`Could not get file path. Error: ${error}`, 'YoutubeVideoConverter', 'getFilePathFromYoutubeDlProgress');
+        }
+
+        return '';
     }
 }

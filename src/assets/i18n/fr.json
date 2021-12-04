@@ -1,65 +1,67 @@
 {
-  "ErrorTexts": {
-    "GlobalError": "Une erreur s'est produite qui entraînera la fermeture de l'application. Veuillez vérifier le log si vous avez besoin de plus d'informations."
-  },
-  "Tabs": {
-    "Convert": "Convertir",
-    "Settings": "Paramètres",
-    "About": "À propos"
-  },
-  "ConvertTab": {
-    "DropText": "Copiez un lien vidéo dans le presse-papier",
-    "ConversionSuccessful": "Conversion réussie!",
-    "ConversionFailed": "Conversion échouée",
-    "FoundOnClipboard": "Lien vidéo trouvé dans le presse-papiers!",
-    "ConversionInProgress": "Conversion en cours...",
-    "DownloadingFFmpeg": "Téléchargement de FFmpeg. Nous en avons besoin pour convertir des vidéos.",
-    "FFmpegNotFound": "FFmpeg est introuvable. Nous en avons besoin pour convertir des vidéos."
-  },
-  "SettingsTab": {
-    "Language": "Langue",
-    "Color": "Couleur",
-    "FontSize": "Taille de police",
-    "Conversion": "Conversion",
-    "AudioFormat": "Format audio",
-    "AudioBitrate": "Bitrate audio",
-    "TitleBar": "Barre de titre",
-    "UseCustomTitleBar": "Utiliser barre de titre personnalisée (Nécessite un redémarrage)",
-    "Updates": "Mises à jour",
-    "CheckForUpdates": "Vérifier les mises à jour"
-  },
-  "AboutTab": {
-    "About": "À propos",
-    "Version": "Version",
-    "Donate": "Donate",
-    "IsAppUseful": "Vitomu est utile? Prière d'envisager de faire un don. Merci!",
-    "GetInTouch": "Entrer en contact",
-    "Website": "Site web",
-    "License": "Licence",
-    "Components": "Composants"
-  },
-  "Buttons": {
-    "Ok": "OK",
-    "ViewLog": "VÉRIFIER LOG",
-    "License": "LICENCE",
-    "Donate": "FAIRE UN DON"
-  },
-  "DialogTitles": {
-    "Error": "Erreur"
-  },
-  "LicenseDialog": {
-    "License": "Licence"
-  },
-  "Tooltips": {
-    "ClickToConvert": "Cliquer pour convertir",
-    "ShowVideoLink": "Afficher le lien vidéo",
-    "ViewInFolder": "Afficher dans le dossier",
-    "Play": "Lecture"
-  },
-  "SnackBarMessages": {
-    "NewVersionAvailable": "Une nouvelle version est disponible: {{version}}"
-  },
-  "SnackBarActions": {
-    "Ok": "OK"
-  }
+    "ErrorTexts": {
+        "GlobalError": "Une erreur s'est produite qui entraînera la fermeture de l'application. Veuillez vérifier le log si vous avez besoin de plus d'informations."
+    },
+    "Tabs": {
+        "Convert": "Convertir",
+        "Settings": "Paramètres",
+        "About": "À propos"
+    },
+    "ConvertTab": {
+        "DropText": "Copiez un lien vidéo dans le presse-papier",
+        "ConversionSuccessful": "Conversion réussie!",
+        "ConversionFailed": "Conversion échouée",
+        "FoundOnClipboard": "Lien vidéo trouvé dans le presse-papiers!",
+        "ConversionInProgress": "Conversion en cours...",
+        "DownloadingFFmpeg": "Téléchargement de FFmpeg. Nous en avons besoin pour convertir des vidéos.",
+        "FFmpegNotFound": "FFmpeg est introuvable. Nous en avons besoin pour convertir des vidéos.",
+        "DownloadingYoutubeDl": "Téléchargement de Youtube-dl. Nous en avons besoin pour convertir des vidéos.",
+        "YoutubeDlNotFound": "Youtube-dl est introuvable. Nous en avons besoin pour convertir des vidéos."
+    },
+    "SettingsTab": {
+        "Language": "Langue",
+        "Color": "Couleur",
+        "FontSize": "Taille de police",
+        "Conversion": "Conversion",
+        "AudioFormat": "Format audio",
+        "AudioBitrate": "Bitrate audio",
+        "TitleBar": "Barre de titre",
+        "UseCustomTitleBar": "Utiliser barre de titre personnalisée (Nécessite un redémarrage)",
+        "Updates": "Mises à jour",
+        "CheckForUpdates": "Vérifier les mises à jour"
+    },
+    "AboutTab": {
+        "About": "À propos",
+        "Version": "Version",
+        "Donate": "Donate",
+        "IsAppUseful": "Vitomu est utile? Prière d'envisager de faire un don. Merci!",
+        "GetInTouch": "Entrer en contact",
+        "Website": "Site web",
+        "License": "Licence",
+        "Components": "Composants"
+    },
+    "Buttons": {
+        "Ok": "OK",
+        "ViewLog": "VÉRIFIER LOG",
+        "License": "LICENCE",
+        "Donate": "FAIRE UN DON"
+    },
+    "DialogTitles": {
+        "Error": "Erreur"
+    },
+    "LicenseDialog": {
+        "License": "Licence"
+    },
+    "Tooltips": {
+        "ClickToConvert": "Cliquer pour convertir",
+        "ShowVideoLink": "Afficher le lien vidéo",
+        "ViewInFolder": "Afficher dans le dossier",
+        "Play": "Lecture"
+    },
+    "SnackBarMessages": {
+        "NewVersionAvailable": "Une nouvelle version est disponible: {{version}}"
+    },
+    "SnackBarActions": {
+        "Ok": "OK"
+    }
 }

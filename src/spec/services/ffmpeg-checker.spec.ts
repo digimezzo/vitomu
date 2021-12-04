@@ -12,8 +12,8 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => true);
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+            fileSystemMock.setup((x) => x.commandExistsAsync('ffmpeg')).returns(async () => true);
+            fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
 
             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
 
@@ -29,8 +29,8 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => false);
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+            fileSystemMock.setup((x) => x.commandExistsAsync('ffmpeg')).returns(async () => false);
+            fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
 
             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
 
@@ -48,9 +48,9 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
-            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
-            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => false);
+            fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicationDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup((x) => x.pathExists(ffmpegFolder)).returns(() => false);
 
             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
 
@@ -66,10 +66,10 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
-            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
-            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
-            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'vlc.exe']);
+            fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicationDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup((x) => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup((x) => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'vlc.exe']);
 
             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
 
@@ -85,10 +85,10 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => path.join('directory', 'mock'));
-            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
-            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
-            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg']);
+            fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => path.join('directory', 'mock'));
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicationDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup((x) => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup((x) => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg']);
 
             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
 
@@ -97,7 +97,6 @@ describe('FFmpegChecker', () => {
 
             // Assert
             assert.equal(pathOfDownloadedFFmpeg, path.join('directory', 'mock', 'FFmpeg', 'ffmpeg'));
-
         });
 
         it('Should return the path to the downloaded FFmpeg if a "ffmpeg.exe" file is found', async () => {
@@ -105,10 +104,10 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => path.join('directory', 'mock'));
-            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
-            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
-            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg.exe']);
+            fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => path.join('directory', 'mock'));
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicationDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup((x) => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup((x) => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg.exe']);
 
             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
 
@@ -126,11 +125,11 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => false);
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
-            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
-            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
-            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'vlc.exe']);
+            fileSystemMock.setup((x) => x.commandExistsAsync('ffmpeg')).returns(async () => false);
+            fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicationDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup((x) => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup((x) => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'vlc.exe']);
 
             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
 
@@ -146,11 +145,11 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => false);
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
-            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
-            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
-            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg.exe']);
+            fileSystemMock.setup((x) => x.commandExistsAsync('ffmpeg')).returns(async () => false);
+            fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicationDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup((x) => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup((x) => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg.exe']);
 
             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
 
@@ -166,11 +165,11 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => true);
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
-            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
-            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
-            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'vlc.exe']);
+            fileSystemMock.setup((x) => x.commandExistsAsync('ffmpeg')).returns(async () => true);
+            fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicationDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup((x) => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup((x) => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'vlc.exe']);
 
             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
 
@@ -186,11 +185,11 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.commanExistsAsync('ffmpeg')).returns(async () => true);
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
-            const ffmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
-            fileSystemMock.setup(x => x.pathExists(ffmpegFolder)).returns(() => true);
-            fileSystemMock.setup(x => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg']);
+            fileSystemMock.setup((x) => x.commandExistsAsync('ffmpeg')).returns(async () => true);
+            fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
+            const ffmpegFolder: string = path.join(fileSystemMock.object.applicationDataDirectory(), 'FFmpeg');
+            fileSystemMock.setup((x) => x.pathExists(ffmpegFolder)).returns(() => true);
+            fileSystemMock.setup((x) => x.readDirectory(ffmpegFolder)).returns(() => ['test', 'otherfile', 'ffmpeg']);
 
             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
 
@@ -208,10 +207,10 @@ describe('FFmpegChecker', () => {
             const fileSystemMock = Mock.ofType<FileSystem>();
             const loggerMock = Mock.ofType<Logger>();
 
-            fileSystemMock.setup(x => x.applicatioDataDirectory()).returns(() => '/directory/mock');
+            fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
 
             const ffmpegChecker: FFmpegChecker = new FFmpegChecker(loggerMock.object, fileSystemMock.object);
-            const expectedDownloadedFFmpegFolder: string = path.join(fileSystemMock.object.applicatioDataDirectory(), 'FFmpeg');
+            const expectedDownloadedFFmpegFolder: string = path.join(fileSystemMock.object.applicationDataDirectory(), 'FFmpeg');
 
             // Act
             const downloadedFFmpegFolder: string = ffmpegChecker.downloadedFFmpegFolder;

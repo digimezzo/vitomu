@@ -6,12 +6,14 @@ import { Constants } from '../../core/constants';
 import { FileSystem } from '../../core/file-system';
 import { Logger } from '../../core/logger';
 import { Settings } from '../../core/settings';
+import { Strings } from '../../core/Strings';
 import { ConversionResult as ConversionResult } from './conversion-result';
 import { DependencyChecker } from './dependency-checker';
 import { DependencyCheckerFactory } from './dependency-checker-factory';
 import { FFmpegDownloader } from './ffmpeg-downloader';
 import { VideoConverter } from './video-converter';
 import { VideoConverterFactory } from './video-converter.factory';
+import { YoutubeDlDownloader } from './youtube-dl-downloader';
 
 @Injectable({
     providedIn: 'root',
@@ -33,6 +35,7 @@ export class ConvertService {
         private logger: Logger,
         private dependencyCheckerFactory: DependencyCheckerFactory,
         private ffmpegDownloader: FFmpegDownloader,
+        private youtubeDlDownloader: YoutubeDlDownloader,
         private fileSystem: FileSystem,
         private settings: Settings,
         private videoConverterFactory: VideoConverterFactory
@@ -85,22 +88,34 @@ export class ConvertService {
     }
 
     public isVideoUrlConvertible(videoUrl: string): boolean {
-        if (videoUrl) {
+        if (!Strings.isNullOrWhiteSpace(videoUrl)) {
             return Constants.youtubeLinks.some((x) => videoUrl.includes(x));
         }
 
         return false;
     }
 
-    public async arePrerequisitesOKAsync(): Promise<boolean> {
+    public async isFfmpegAvailableAsync(): Promise<boolean> {
         return await this.ffmpegChecker.isDependencyAvailableAsync();
     }
 
-    public async fixPrerequisites(): Promise<void> {
+    public async isYoutubeDlAvailableAsync(): Promise<boolean> {
+        return await this.youtubeDlChecker.isDependencyAvailableAsync();
+    }
+
+    public async downloadFfmpegAsync(): Promise<void> {
         if (!(await this.ffmpegChecker.isDependencyAvailableAsync())) {
-            this.logger.info('Start downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
+            this.logger.info('Start downloading FFmpeg.', 'ConvertService', 'downloadFfmpegAsync');
             await this.ffmpegDownloader.downloadAsync(this.ffmpegChecker.downloadedDependencyFolder);
-            this.logger.info('Finished downloading FFmpeg.', 'FFmpegChecker', 'ensureFFmpegIsAvailableAsync');
+            this.logger.info('Finished downloading FFmpeg.', 'ConvertService', 'downloadFfmpegAsync');
+        }
+    }
+
+    public async downloadYoutubeDlAsync(): Promise<void> {
+        if (!(await this.youtubeDlChecker.isDependencyAvailableAsync())) {
+            this.logger.info('Start downloading Youtube-dl.', 'ConvertService', 'fixDependencies');
+            await this.youtubeDlDownloader.downloadAsync(this.youtubeDlChecker.downloadedDependencyFolder);
+            this.logger.info('Finished downloading Youtube-dl.', 'ConvertService', 'fixDependencies');
         }
     }
 
@@ -113,6 +128,12 @@ export class ConvertService {
             ffmpegPathOverride = this.ffmpegChecker.getPathOfDownloadedDependency();
         }
 
+        let youtubeDlPathOverride: string = '';
+
+        if (!(await this.youtubeDlChecker.isDependencyInSystemPathAsync())) {
+            youtubeDlPathOverride = this.youtubeDlChecker.getPathOfDownloadedDependency();
+        }
+
         const videoConverter: VideoConverter = this.videoConverterFactory.create(videoUrl);
 
         const conversionResult: ConversionResult = await videoConverter.convertAsync(
@@ -121,6 +142,7 @@ export class ConvertService {
             this.selectedAudioFormat,
             this.selectedAudioBitrate,
             ffmpegPathOverride,
+            youtubeDlPathOverride,
             (progressPercent) => this.onConversionProgressChanged(progressPercent)
         );
 

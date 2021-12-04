@@ -1,9 +1,11 @@
 export enum ConvertState {
     WaitingForClipboardContent,
     HasValidClipboardContent,
-    PrerequisitesNotOK,
-    FixingPrerequisites,
+    ffmpegNotAvailable,
+    downloadingFfmpeg,
+    youtubeDlNotAvailable,
+    downloadingYoutubeDl,
     ConversionInProgress,
     ConversionSuccessful,
-    ConversionFailed
+    ConversionFailed,
 }

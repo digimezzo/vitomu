@@ -4,42 +4,53 @@
         <!-- Drop zone circle -->
         <div class="drop-zone-circle mb-4">
             <!-- Progress spinner -->
-            <div class="drop-zone-circle-spinner"
-                *ngIf="convertState === ConvertStateEnum.ConversionInProgress || convertState === ConvertStateEnum.ConversionSuccessful || convertState === ConvertStateEnum.FixingPrerequisites">
-                <mat-progress-spinner class="drop-zone-circle-spinner" diameter="266" strokeWidth="4" color="primary"
-                    [mode]="progressMode" [value]="progressPercent">
+            <div
+                class="drop-zone-circle-spinner"
+                *ngIf="
+                    convertState === ConvertStateEnum.ConversionInProgress ||
+                    convertState === ConvertStateEnum.ConversionSuccessful ||
+                    convertState === ConvertStateEnum.downloadingFfmpeg ||
+                    convertState === ConvertStateEnum.downloadingYoutubeDl
+                "
+            >
+                <mat-progress-spinner
+                    class="drop-zone-circle-spinner"
+                    diameter="266"
+                    strokeWidth="4"
+                    color="primary"
+                    [mode]="progressMode"
+                    [value]="progressPercent"
+                >
                 </mat-progress-spinner>
             </div>
             <!-- Background -->
             <div class="drop-zone-circle-background">
                 <!-- Clipboard icon -->
-                <div class="drop-zone-icon-pulsing custom-font"
-                    *ngIf="convertState === ConvertStateEnum.WaitingForClipboardContent">
+                <div class="drop-zone-icon-pulsing custom-font" *ngIf="convertState === ConvertStateEnum.WaitingForClipboardContent">
                     &#xF328;
                 </div>
                 <!-- Download icon -->
                 <div class="download-icon" *ngIf="convertState === ConvertStateEnum.HasValidClipboardContent">
-                    <div class="download-icon-pulse">
-                    </div>
-                    <div class="download-icon-icon custom-font clickable"
-                        matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}" (click)="performConvertAsync()">
+                    <div class="download-icon-pulse"></div>
+                    <div
+                        class="download-icon-icon custom-font clickable"
+                        matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}"
+                        (click)="performConvertAsync()"
+                    >
                         &#xF019;
                     </div>
                 </div>
                 <!-- Download busy icon -->
-                <div class="drop-zone-icon-pulsing custom-font"
-                    *ngIf="convertState === ConvertStateEnum.FixingPrerequisites">
-                    &#xF381;
-                </div>
+                <div class="drop-zone-icon-pulsing custom-font" *ngIf="convertState === ConvertStateEnum.downloadingFfmpeg || convertState === ConvertStateEnum.downloadingYoutubeDl">&#xF381;</div>
                 <!-- Error icon -->
-                <div class="drop-zone-icon-static custom-font"
-                    *ngIf="convertState === ConvertStateEnum.PrerequisitesNotOK || convertState === ConvertStateEnum.ConversionFailed">
+                <div
+                    class="drop-zone-icon-static custom-font"
+                    *ngIf="convertState === ConvertStateEnum.ffmpegNotAvailable || convertState === ConvertStateEnum.youtubeDlNotAvailable || convertState === ConvertStateEnum.ConversionFailed"
+                >
                     &#xF05E;
                 </div>
                 <!-- Success icon -->
-                <div class="drop-zone-icon-static custom-font" *ngIf="convertState === ConvertStateEnum.ConversionSuccessful">
-                    &#xF00C;
-                </div>
+                <div class="drop-zone-icon-static custom-font" *ngIf="convertState === ConvertStateEnum.ConversionSuccessful">&#xF00C;</div>
                 <!-- Progress percent -->
                 <div class="drop-zone-progress-text" *ngIf="convertState === ConvertStateEnum.ConversionInProgress">
                     {{ progressPercent }}%
@@ -61,12 +72,20 @@
                 {{ 'ConvertTab.ConversionFailed' | translate }}
             </div>
             <!-- Downloading FFmpeg text -->
-            <div *ngIf="convertState === ConvertStateEnum.FixingPrerequisites">
+            <div *ngIf="convertState === ConvertStateEnum.downloadingFfmpeg">
                 {{ 'ConvertTab.DownloadingFFmpeg' | translate }}
             </div>
             <!-- FFmpeg not found text -->
-            <div *ngIf="convertState === ConvertStateEnum.PrerequisitesNotOK">
+            <div *ngIf="convertState === ConvertStateEnum.ffmpegNotAvailable">
                 {{ 'ConvertTab.FFmpegNotFound' | translate }}
+            </div>
+             <!-- Downloading Youtube-dl text -->
+             <div *ngIf="convertState === ConvertStateEnum.downloadingYoutubeDl">
+                {{ 'ConvertTab.DownloadingYoutubeDl' | translate }}
+            </div>
+            <!-- Youtube-dl not found text -->
+            <div *ngIf="convertState === ConvertStateEnum.youtubeDlNotAvailable">
+                {{ 'ConvertTab.YoutubeDlNotFound' | translate }}
             </div>
             <!-- Conversion in progress text -->
             <div *ngIf="convertState === ConvertStateEnum.ConversionInProgress">
@@ -77,8 +96,11 @@
                 <div>
                     {{ 'ConvertTab.FoundOnClipboard' | translate }}
                 </div>
-                <div class="view-link-button custom-font ml-2" (click)="showVideoLinkAsync()"
-                    matTooltip="{{ 'Tooltips.ShowVideoLink' | translate }}">
+                <div
+                    class="view-link-button custom-font ml-2"
+                    (click)="showVideoLinkAsync()"
+                    matTooltip="{{ 'Tooltips.ShowVideoLink' | translate }}"
+                >
                     &#xF06E;
                 </div>
             </div>
@@ -89,11 +111,11 @@
         <div class="last-converted-text mr-1">
             {{ convert.lastConvertedFileName }}
         </div>
-        <button class="grey-button" mat-mini-fab (click)="viewInFolder()"
-            matTooltip="{{ 'Tooltips.ViewInFolder' | translate }}"><span
-                class="last-converted-button custom-font">&#xF07C;</span></button>
-        <button class="grey-button ml-1" mat-mini-fab (click)="play()"
-            matTooltip="{{ 'Tooltips.Play' | translate }}"><span
-                class="last-converted-button custom-font">&#xF04B;</span></button>
+        <button class="grey-button" mat-mini-fab (click)="viewInFolder()" matTooltip="{{ 'Tooltips.ViewInFolder' | translate }}">
+            <span class="last-converted-button custom-font">&#xF07C;</span>
+        </button>
+        <button class="grey-button ml-1" mat-mini-fab (click)="play()" matTooltip="{{ 'Tooltips.Play' | translate }}">
+            <span class="last-converted-button custom-font">&#xF04B;</span>
+        </button>
     </div>
 </div>

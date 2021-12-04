@@ -14,7 +14,9 @@
         "FoundOnClipboard": "Video link gevonden op klembord!",
         "ConversionInProgress": "Conversie wordt uitgevoerd...",
         "DownloadingFFmpeg": "FFmpeg wordt gedownload. We hebben het nodig om video's te converteren.",
-        "FFmpegNotFound": "FFmpeg werd niet gevonden. We hebben het nodig om video's te converteren."
+        "FFmpegNotFound": "FFmpeg werd niet gevonden. We hebben het nodig om video's te converteren.",
+        "DownloadingYoutubeDl": "Youtube-dl wordt gedownload. We hebben het nodig om video's te converteren.",
+        "YoutubeDlNotFound": "Youtube-dl werd niet gevonden. We hebben het nodig om video's te converteren."
     },
     "SettingsTab": {
         "Language": "Taal",
