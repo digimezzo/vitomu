@@ -190,156 +190,139 @@ describe('ConvertService', () => {
         });
     });
 
-    // describe('arePrerequisitesOKAsync', () => {
-    //     it('Should return true if FFmpeg is available', async () => {
-    //         // Arrange
-    //         const loggerMock = Mock.ofType<Logger>();
-    //         const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
-    //         const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-    //         const fileSystemMock = Mock.ofType<FileSystem>();
-    //         const settingsMock = Mock.ofType<Settings>();
-    //         const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
+    describe('isFfmpegAvailableAsync', () => {
+        it('Should return true if FFmpeg is available', async () => {
+            // Arrange
+            ffmpegCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => true);
+            const convertService: ConvertService = createService();
 
-    //         fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
-    //         fileSystemMock.setup((x) => x.musicDirectory()).returns(() => '/home/user/Music');
-    //         ffmpegCheckerMock.setup((x) => x.isFFmpegAvailableAsync()).returns(() => Promise.resolve(true));
-    //         ffmpegCheckerMock.setup((x) => x.downloadedFFmpegFolder).returns(() => '/home/directory/mock');
+            // Act
+            const ffmpegIsAvailable: boolean = await convertService.isFfmpegAvailableAsync();
 
-    //         const convert = new ConvertService(
-    //             loggerMock.object,
-    //             ffmpegCheckerMock.object,
-    //             ffmpegDownloaderMock.object,
-    //             fileSystemMock.object,
-    //             settingsMock.object,
-    //             videoConverterFactoryMock.object
-    //         );
+            // Assert
+            expect(ffmpegIsAvailable).toBeTruthy();
+        });
 
-    //         // Act
-    //         const prerequisitesAreOK: boolean = await convert.areDependenciesAvailableAsync();
+        it('Should return false if FFmpeg is not available', async () => {
+            // Arrange
+            ffmpegCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => false);
+            const convertService: ConvertService = createService();
 
-    //         // Assert
-    //         assert.ok(prerequisitesAreOK);
-    //     });
+            // Act
+            const ffmpegIsAvailable: boolean = await convertService.isFfmpegAvailableAsync();
 
-    //     it('Should return false if FFmpeg is not available', async () => {
-    //         // Arrange
-    //         const loggerMock = Mock.ofType<Logger>();
-    //         const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
-    //         const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-    //         const fileSystemMock = Mock.ofType<FileSystem>();
-    //         const settingsMock = Mock.ofType<Settings>();
-    //         const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
+            // Assert
+            expect(ffmpegIsAvailable).toBeFalsy();
+        });
+    });
 
-    //         fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
-    //         fileSystemMock.setup((x) => x.musicDirectory()).returns(() => '/home/user/Music');
-    //         ffmpegCheckerMock.setup((x) => x.isFFmpegAvailableAsync()).returns(() => Promise.resolve(false));
-    //         ffmpegCheckerMock.setup((x) => x.downloadedFFmpegFolder).returns(() => '/home/directory/mock');
+    describe('isYoutubeDownloaderAvailableAsync', () => {
+        it('Should return true if Youtube downloader is available', async () => {
+            // Arrange
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => true);
+            const convertService: ConvertService = createService();
 
-    //         const convert = new ConvertService(
-    //             loggerMock.object,
-    //             ffmpegCheckerMock.object,
-    //             ffmpegDownloaderMock.object,
-    //             fileSystemMock.object,
-    //             settingsMock.object,
-    //             videoConverterFactoryMock.object
-    //         );
+            // Act
+            const youtubeDownloaderIsAvailable: boolean = await convertService.isYoutubeDownloaderAvailableAsync();
 
-    //         // Act
-    //         const prerequisitesAreOK: boolean = await convert.areDependenciesAvailableAsync();
+            // Assert
+            expect(youtubeDownloaderIsAvailable).toBeTruthy();
+        });
 
-    //         // Assert
-    //         assert.ok(!prerequisitesAreOK);
-    //     });
-    // });
+        it('Should return false if FFYoutube downloadermpeg is not available', async () => {
+            // Arrange
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => false);
+            const convertService: ConvertService = createService();
 
-    // describe('fixPrerequisites', () => {
-    //     it('Should check if FFmpeg is available', async () => {
-    //         // Arrange
-    //         const loggerMock = Mock.ofType<Logger>();
-    //         const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
-    //         const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-    //         const fileSystemMock = Mock.ofType<FileSystem>();
-    //         const settingsMock = Mock.ofType<Settings>();
-    //         const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
+            // Act
+            const youtubeDownloaderIsAvailable: boolean = await convertService.isYoutubeDownloaderAvailableAsync();
 
-    //         fileSystemMock.setup((x) => x.musicDirectory()).returns(() => '/home/user/Music');
+            // Assert
+            expect(youtubeDownloaderIsAvailable).toBeFalsy();
+        });
+    });
 
-    //         const convert = new ConvertService(
-    //             loggerMock.object,
-    //             ffmpegCheckerMock.object,
-    //             ffmpegDownloaderMock.object,
-    //             fileSystemMock.object,
-    //             settingsMock.object,
-    //             videoConverterFactoryMock.object
-    //         );
+    describe('downloadFfmpegAsync', () => {
+        it('Should not download FFmpeg if it is available', async () => {
+            // Arrange
+            ffmpegCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => true);
+            ffmpegCheckerMock.setup((x) => x.downloadedDependencyFolder).returns(() => 'FFmpeg folder');
+            const convertService: ConvertService = createService();
 
-    //         // Act
-    //         await convert.fixDependencies();
+            // Act
+            await convertService.downloadFfmpegAsync();
 
-    //         // Assert
-    //         ffmpegCheckerMock.verify((x) => x.isFFmpegAvailableAsync(), Times.exactly(1));
-    //     });
+            // Assert
+            ffmpegDownloaderMock.verify((x) => x.downloadAsync('FFmpeg folder'), Times.never());
+        });
 
-    //     it('Should download FFmpeg if it is not available', async () => {
-    //         // Arrange
-    //         const loggerMock = Mock.ofType<Logger>();
-    //         const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
-    //         const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-    //         const fileSystemMock = Mock.ofType<FileSystem>();
-    //         const settingsMock = Mock.ofType<Settings>();
-    //         const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
+        it('Should download FFmpeg if it is not available', async () => {
+            // Arrange
+            ffmpegCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => false);
+            ffmpegCheckerMock.setup((x) => x.downloadedDependencyFolder).returns(() => 'FFmpeg folder');
+            const convertService: ConvertService = createService();
 
-    //         fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
-    //         fileSystemMock.setup((x) => x.musicDirectory()).returns(() => '/home/user/Music');
-    //         ffmpegCheckerMock.setup((x) => x.isFFmpegAvailableAsync()).returns(() => Promise.resolve(false));
-    //         ffmpegCheckerMock.setup((x) => x.downloadedFFmpegFolder).returns(() => '/home/directory/mock');
+            // Act
+            await convertService.downloadFfmpegAsync();
 
-    //         const convert = new ConvertService(
-    //             loggerMock.object,
-    //             ffmpegCheckerMock.object,
-    //             ffmpegDownloaderMock.object,
-    //             fileSystemMock.object,
-    //             settingsMock.object,
-    //             videoConverterFactoryMock.object
-    //         );
+            // Assert
+            ffmpegDownloaderMock.verify((x) => x.downloadAsync('FFmpeg folder'), Times.once());
+        });
+    });
 
-    //         // Act
-    //         await convert.fixDependencies();
+    describe('downloadYoutubeDownloaderAsync', () => {
+        it('Should not download Youtube downloader if it is available', async () => {
+            // Arrange
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => true);
+            youtubeDownloaderCheckerMock.setup((x) => x.downloadedDependencyFolder).returns(() => 'Youtube downloader folder');
+            const convertService: ConvertService = createService();
 
-    //         // Assert
-    //         ffmpegDownloaderMock.verify((x) => x.downloadAsync('/home/directory/mock'), Times.exactly(1));
-    //     });
+            // Act
+            await convertService.downloadYoutubeDownloaderAsync();
 
-    //     it('Should not download FFmpeg if it is available', async () => {
-    //         // Arrange
-    //         const loggerMock = Mock.ofType<Logger>();
-    //         const ffmpegCheckerMock = Mock.ofType<FFmpegChecker>();
-    //         const ffmpegDownloaderMock = Mock.ofType<FFmpegDownloader>();
-    //         const fileSystemMock = Mock.ofType<FileSystem>();
-    //         const settingsMock = Mock.ofType<Settings>();
-    //         const videoConverterFactoryMock = Mock.ofType<VideoConverterFactory>();
+            // Assert
+            youtubeDownloaderDownloaderMock.verify((x) => x.downloadAsync('Youtube downloader folder'), Times.never());
+        });
 
-    //         fileSystemMock.setup((x) => x.applicationDataDirectory()).returns(() => '/directory/mock');
-    //         fileSystemMock.setup((x) => x.musicDirectory()).returns(() => '/home/user/Music');
-    //         ffmpegCheckerMock.setup((x) => x.isFFmpegAvailableAsync()).returns(() => Promise.resolve(true));
-    //         ffmpegCheckerMock.setup((x) => x.downloadedFFmpegFolder).returns(() => '/home/directory/mock');
+        it('Should download Youtube downloader if it is not available', async () => {
+            // Arrange
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => false);
+            youtubeDownloaderCheckerMock.setup((x) => x.downloadedDependencyFolder).returns(() => 'Youtube downloader folder');
+            const convertService: ConvertService = createService();
 
-    //         const convert = new ConvertService(
-    //             loggerMock.object,
-    //             ffmpegCheckerMock.object,
-    //             ffmpegDownloaderMock.object,
-    //             fileSystemMock.object,
-    //             settingsMock.object,
-    //             videoConverterFactoryMock.object
-    //         );
+            // Act
+            await convertService.downloadYoutubeDownloaderAsync();
 
-    //         // Act
-    //         await convert.fixDependencies();
+            // Assert
+            youtubeDownloaderDownloaderMock.verify((x) => x.downloadAsync('Youtube downloader folder'), Times.once());
+        });
+    });
 
-    //         // Assert
-    //         ffmpegDownloaderMock.verify((x) => x.downloadAsync('/home/directory/mock'), Times.never());
-    //     });
-    // });
+    describe('updateYoutubeDownloaderAsync', () => {
+        it('Should not update Youtube downloader if no downloaded version is found', async () => {
+            // Arrange
+            youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => '');
+            const convertService: ConvertService = createService();
+
+            // Act
+            await convertService.updateYoutubeDownloaderAsync();
+
+            // Assert
+            youtubeDownloaderUpdaterMock.verify((x) => x.updateYoutubeDownloaderAsync(It.isAny()), Times.never());
+        });
+
+        it('Should update Youtube downloader if a downloaded version is found', async () => {
+            // Arrange
+            youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'Youtube downloader folder');
+            const convertService: ConvertService = createService();
+
+            // Act
+            await convertService.updateYoutubeDownloaderAsync();
+
+            // Assert
+            youtubeDownloaderUpdaterMock.verify((x) => x.updateYoutubeDownloaderAsync('Youtube downloader folder'), Times.once());
+        });
+    });
 
     describe('convertAsync', () => {
         it('Should ensure that the output directory exists', async () => {
