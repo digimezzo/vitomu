@@ -127,9 +127,9 @@
         </div>
     </div>
     <!-- Last converted file -->
-    <div *ngIf="convert.lastConvertedFileName" class="last-converted p-1">
+    <div *ngIf="convertService.lastConvertedFileName" class="last-converted p-1">
         <div class="last-converted-text mr-1">
-            {{ convert.lastConvertedFileName }}
+            {{ convertService.lastConvertedFileName }}
         </div>
         <button class="grey-button" mat-mini-fab (click)="viewInFolder()" matTooltip="{{ 'Tooltips.ViewInFolder' | translate }}">
             <span class="last-converted-button custom-font">&#xF07C;</span>

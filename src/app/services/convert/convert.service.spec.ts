@@ -559,5 +559,120 @@ describe('ConvertService', () => {
                 Times.once()
             );
         });
+
+        it('Should not change lastConvertedFilePath and lastConvertedFileName after a failed conversion', async () => {
+            // Arrange
+            const videoConverterMock: IMock<VideoConverter> = Mock.ofType<VideoConverter>();
+
+            videoConverterMock
+                .setup((x) =>
+                    x.convertAsync(
+                        'dummyUrl',
+                        '/home/user/Music/Vitomu',
+                        It.is<AudioFormat>((y) => y.ffmpegFormat === 'mp3'),
+                        320,
+                        It.isAny(),
+                        It.isAny(),
+                        It.isAny()
+                    )
+                )
+                .returns(async () => new ConversionResult(false, ''));
+
+            videoConverterFactoryMock.setup((x) => x.create('dummyUrl')).returns(() => videoConverterMock.object);
+
+            ffmpegCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'ffmpeg path');
+            ffmpegCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
+            youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'yt-dlp path');
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
+
+            const convertService: ConvertService = createService();
+            convertService.lastConvertedFilePath = 'previous file path';
+            convertService.lastConvertedFileName = 'previous file name';
+
+            // Act
+            await convertService.convertAsync('dummyUrl');
+
+            // Assert
+            expect(convertService.lastConvertedFilePath).toEqual('previous file path');
+            expect(convertService.lastConvertedFileName).toEqual('previous file name');
+        });
+
+        it('Should change lastConvertedFilePath and lastConvertedFileName after a successful conversion', async () => {
+            // Arrange
+            const videoConverterMock: IMock<VideoConverter> = Mock.ofType<VideoConverter>();
+
+            videoConverterMock
+                .setup((x) =>
+                    x.convertAsync(
+                        'dummyUrl',
+                        '/home/user/Music/Vitomu',
+                        It.is<AudioFormat>((y) => y.ffmpegFormat === 'mp3'),
+                        320,
+                        It.isAny(),
+                        It.isAny(),
+                        It.isAny()
+                    )
+                )
+                .returns(async () => new ConversionResult(true, '/home/user/Music/Vitomu/file2.mp3'));
+
+            videoConverterFactoryMock.setup((x) => x.create('dummyUrl')).returns(() => videoConverterMock.object);
+
+            ffmpegCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'ffmpeg path');
+            ffmpegCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
+            youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'yt-dlp path');
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
+
+            fileSystemMock.setup((x) => x.getFileName('/home/user/Music/Vitomu/file2.mp3')).returns(() => 'file2.mp3');
+
+            const convertService: ConvertService = createService();
+            convertService.lastConvertedFilePath = '/home/user/Music/Vitomu/file1.mp3';
+            convertService.lastConvertedFileName = 'file1.mp3';
+
+            // Act
+            await convertService.convertAsync('dummyUrl');
+
+            // Assert
+            expect(convertService.lastConvertedFilePath).toEqual('/home/user/Music/Vitomu/file2.mp3');
+            expect(convertService.lastConvertedFileName).toEqual('file2.mp3');
+        });
+
+        it('Should return the conversion result from the video converter', async () => {
+            // Arrange
+            const videoConverterMock: IMock<VideoConverter> = Mock.ofType<VideoConverter>();
+            const conversionResult: ConversionResult = new ConversionResult(true, '/home/user/Music/Vitomu/file2.mp3');
+
+            videoConverterMock
+                .setup((x) =>
+                    x.convertAsync(
+                        'dummyUrl',
+                        '/home/user/Music/Vitomu',
+                        It.is<AudioFormat>((y) => y.ffmpegFormat === 'mp3'),
+                        320,
+                        It.isAny(),
+                        It.isAny(),
+                        It.isAny()
+                    )
+                )
+                .returns(async () => conversionResult);
+
+            videoConverterFactoryMock.setup((x) => x.create('dummyUrl')).returns(() => videoConverterMock.object);
+
+            ffmpegCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'ffmpeg path');
+            ffmpegCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
+            youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'yt-dlp path');
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
+
+            fileSystemMock.setup((x) => x.getFileName('/home/user/Music/Vitomu/file2.mp3')).returns(() => 'file2.mp3');
+
+            const convertService: ConvertService = createService();
+            convertService.lastConvertedFilePath = '/home/user/Music/Vitomu/file1.mp3';
+            convertService.lastConvertedFileName = 'file1.mp3';
+
+            // Act
+            const returnedConversionResult: ConversionResult = await convertService.convertAsync('dummyUrl');
+
+            // Assert
+            expect(returnedConversionResult).toBe(conversionResult);
+        });
     });
 });
