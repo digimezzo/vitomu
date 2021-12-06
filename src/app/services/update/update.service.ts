@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Settings } from '../../core/settings';
+import { GitHubApi } from '../../common/github-api';
+import { Logger } from '../../common/logger';
+import { ProductDetails } from '../../common/product-details';
+import { BaseSettings } from '../../common/settings/base-settings';
+import { VersionComparer } from '../../common/version-comparer';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
-import { Logger } from '../../core/logger';
-import { GitHubApi } from '../../core/github-api';
-import { ProductDetails } from '../../core/product-details';
-import { VersionComparer } from '../../core/version-comparer';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UpdateService {
-    constructor(private snackBar: SnackBarService, private settings: Settings, private logger: Logger,
-        private gitHub: GitHubApi, private productDetails: ProductDetails) {
-    }
+    constructor(
+        private snackBar: SnackBarService,
+        private settings: BaseSettings,
+        private logger: Logger,
+        private gitHub: GitHubApi,
+        private productDetails: ProductDetails
+    ) {}
 
     public async checkForUpdatesAsync(): Promise<void> {
         if (this.settings.checkForUpdates) {
@@ -22,22 +26,21 @@ export class UpdateService {
                 const currentRelease: string = this.productDetails.version;
                 const latestRelease: string = await this.gitHub.getLastestReleaseAsync('digimezzo', 'vitomu');
 
-                this.logger.info(
-                    `Current=${currentRelease}, Latest=${latestRelease}`,
-                    'UpdateService',
-                    'checkForUpdatesAsync');
+                this.logger.info(`Current=${currentRelease}, Latest=${latestRelease}`, 'UpdateService', 'checkForUpdatesAsync');
 
                 if (VersionComparer.isNewerVersion(currentRelease, latestRelease)) {
                     this.logger.info(
                         `Latest (${latestRelease}) > Current (${currentRelease}). Notifying user.`,
                         'UpdateService',
-                        'checkForUpdatesAsync');
-                        await this.snackBar.notifyOfNewVersionAsync(latestRelease);
+                        'checkForUpdatesAsync'
+                    );
+                    await this.snackBar.notifyOfNewVersionAsync(latestRelease);
                 } else {
                     this.logger.info(
                         `Latest (${latestRelease}) <= Current (${currentRelease}). Nothing to do.`,
                         'UpdateService',
-                        'checkForUpdatesAsync');
+                        'checkForUpdatesAsync'
+                    );
                 }
             } catch (error) {
                 this.logger.error(`Could not check for updates. Cause: ${error}`, 'UpdateService', 'checkForUpdatesAsync');

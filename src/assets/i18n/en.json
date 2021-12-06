@@ -1,65 +1,68 @@
 {
-  "ErrorTexts": {
-    "GlobalError": "An error has occurred which will cause the application to close. Please verify the log if you need more information."
-  },
-  "Tabs": {
-    "Convert": "Convert",
-    "Settings": "Settings",
-    "About": "About"
-  },
-  "ConvertTab": {
-    "DropText": "Copy a video link to the clipboard",
-    "ConversionSuccessful": "Conversion successful!",
-    "ConversionFailed": "Conversion failed",
-    "FoundOnClipboard": "Found video link on clipboard!",
-    "ConversionInProgress": "Conversion in progress...",
-    "DownloadingFFmpeg": "Downloading FFmpeg. We need it to convert videos.",
-    "FFmpegNotFound": "FFmpeg was not found. We need it to convert videos."
-  },
-  "SettingsTab": {
-    "Language": "Language",
-    "Color": "Color",
-    "FontSize": "Font size",
-    "Conversion": "Conversion",
-    "AudioFormat": "Audio format",
-    "AudioBitrate": "Audio bitrate",
-    "TitleBar": "Title bar",
-    "UseCustomTitleBar": "Use custom title bar (Requires a restart)",
-    "Updates": "Updates",
-    "CheckForUpdates": "Check for updates"
-  },
-  "AboutTab": {
-    "About": "About",
-    "Version": "Version",
-    "Donate": "Donate",
-    "IsAppUseful": "Is Vitomu useful? Please consider donating. Thank you!",
-    "GetInTouch": "Get in touch",
-    "Website": "Website",
-    "License": "License",
-    "Components": "Components"
-  },
-  "Buttons": {
-    "Ok": "OK",
-    "ViewLog": "VIEW LOG",
-    "License": "LICENSE",
-    "Donate": "DONATE"
-  },
-  "DialogTitles": {
-    "Error": "Error"
-  },
-  "LicenseDialog": {
-    "License": "License"
-  },
-  "Tooltips": {
-    "ClickToConvert": "Click to convert",
-    "ShowVideoLink": "Show video link",
-    "ViewInFolder": "View in folder",
-    "Play": "Play"
-  },
-  "SnackBarMessages": {
-    "NewVersionAvailable": "A new version is available: {{version}}"
-  },
-  "SnackBarActions": {
-    "Ok": "OK"
-  }
+    "ErrorTexts": {
+        "GlobalError": "An error has occurred which will cause the application to close. Please verify the log if you need more information."
+    },
+    "Tabs": {
+        "Convert": "Convert",
+        "Settings": "Settings",
+        "About": "About"
+    },
+    "ConvertTab": {
+        "DropText": "Copy a video link to the clipboard",
+        "ConversionSuccessful": "Conversion successful!",
+        "ConversionFailed": "Conversion failed",
+        "FoundOnClipboard": "Found video link on clipboard!",
+        "ConversionInProgress": "Conversion in progress...",
+        "DownloadingFFmpeg": "Downloading FFmpeg. We need it to convert videos.",
+        "FFmpegNotFound": "FFmpeg was not found. We need it to convert videos.",
+        "DownloadingYoutubeDownloader": "Downloading {{youtubeDownloaderName}}. We need it to convert videos.",
+        "UpdatingYoutubeDownloader": "Updating {{youtubeDownloaderName}}.",
+        "YoutubeDownloaderNotFound": "{{youtubeDownloaderName}} was not found. We need it to convert videos."
+    },
+    "SettingsTab": {
+        "Language": "Language",
+        "Color": "Color",
+        "FontSize": "Font size",
+        "Conversion": "Conversion",
+        "AudioFormat": "Audio format",
+        "AudioBitrate": "Audio bitrate",
+        "TitleBar": "Title bar",
+        "UseCustomTitleBar": "Use custom title bar (Requires a restart)",
+        "Updates": "Updates",
+        "CheckForUpdates": "Check for updates"
+    },
+    "AboutTab": {
+        "About": "About",
+        "Version": "Version",
+        "Donate": "Donate",
+        "IsAppUseful": "Is Vitomu useful? Please consider donating. Thank you!",
+        "GetInTouch": "Get in touch",
+        "Website": "Website",
+        "License": "License",
+        "Components": "Components"
+    },
+    "Buttons": {
+        "Ok": "OK",
+        "ViewLog": "VIEW LOG",
+        "License": "LICENSE",
+        "Donate": "DONATE"
+    },
+    "DialogTitles": {
+        "Error": "Error"
+    },
+    "LicenseDialog": {
+        "License": "License"
+    },
+    "Tooltips": {
+        "ClickToConvert": "Click to convert",
+        "ShowVideoLink": "Show video link",
+        "ViewInFolder": "View in folder",
+        "Play": "Play"
+    },
+    "SnackBarMessages": {
+        "NewVersionAvailable": "A new version is available: {{version}}"
+    },
+    "SnackBarActions": {
+        "Ok": "OK"
+    }
 }

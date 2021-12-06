@@ -1,5 +1,4 @@
-import { Observable } from 'rxjs';
-import { AudioFormat } from '../../core/audio-format';
+import { AudioFormat } from '../../common/audio-format';
 import { ConversionResult } from './conversion-result';
 
 export interface VideoConverter {
@@ -9,5 +8,7 @@ export interface VideoConverter {
         audioFormat: AudioFormat,
         bitrate: number,
         ffmpegPathOverride: string,
-        progressCallback: any): Promise<ConversionResult>;
+        youtubeDownloaderPathOverride: string,
+        progressCallback: any
+    ): Promise<ConversionResult>;
 }

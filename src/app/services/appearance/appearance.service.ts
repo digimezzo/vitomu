@@ -1,11 +1,11 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
-import { ColorTheme } from '../../core/color-theme';
-import { Constants } from '../../core/constants';
-import { Logger } from '../../core/logger';
-import { Settings } from '../../core/settings';
-import { FontSize } from '../../core/font-size';
-import { ElectronRemoteProxy } from '../../core/electron-remote-proxy';
+import { ColorTheme } from '../../common/color-theme';
+import { Constants } from '../../common/constants';
+import { ElectronRemoteProxy } from '../../common/electron-remote-proxy';
+import { FontSize } from '../../common/font-size';
+import { Logger } from '../../common/logger';
+import { BaseSettings } from '../../common/settings/base-settings';
 
 @Injectable({
     providedIn: 'root',
@@ -15,10 +15,14 @@ export class AppearanceService {
     private _selectedFontSize: FontSize;
     private windowHasFrame: boolean = this.electronRemote.getGlobal('windowHasFrame');
 
-    constructor(private settings: Settings, private logger: Logger, private overlayContainer: OverlayContainer,
-        private electronRemote: ElectronRemoteProxy) {
-        this._selectedColorTheme = this.colorThemes.find(x => x.name === this.settings.colorTheme);
-        this._selectedFontSize = this.fontSizes.find(x => x.normalSize === this.settings.fontSize);
+    constructor(
+        private settings: BaseSettings,
+        private logger: Logger,
+        private overlayContainer: OverlayContainer,
+        private electronRemote: ElectronRemoteProxy
+    ) {
+        this._selectedColorTheme = this.colorThemes.find((x) => x.name === this.settings.colorTheme);
+        this._selectedFontSize = this.fontSizes.find((x) => x.normalSize === this.settings.fontSize);
     }
 
     public get windowHasNativeTitleBar(): boolean {
