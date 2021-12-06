@@ -22,10 +22,6 @@ export class ConvertComponent implements OnInit, OnDestroy {
     // This is required to use enum values in the template
     public ConvertStateEnum: typeof ConvertState = ConvertState;
 
-    // Only used for unit testing
-    public previousConvertState: ConvertState;
-    public previousProgressMode: string;
-
     private subscription: Subscription = new Subscription();
     private _progressPercent: number;
     private _downloadUrl: string;
@@ -35,10 +31,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
     constructor(
         private delayer: Delayer,
         private zone: NgZone,
-        public convert: ConvertService,
+        public convertService: ConvertService,
         private clipboardWatcher: ClipboardWatcher,
-        private snackBar: SnackBarService,
-        private translator: TranslatorService,
+        private snackBarService: SnackBarService,
+        private translatorService: TranslatorService,
         private desktop: Desktop
     ) {
         this.reset();
@@ -49,7 +45,6 @@ export class ConvertComponent implements OnInit, OnDestroy {
     }
 
     public set progressMode(v: string) {
-        this.previousProgressMode = this._progressMode;
         this._progressMode = v;
     }
 
@@ -65,7 +60,6 @@ export class ConvertComponent implements OnInit, OnDestroy {
     }
 
     public set convertState(v: ConvertState) {
-        this.previousConvertState = this._convertState;
         this._convertState = v;
     }
 
@@ -79,7 +73,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
     public async ngOnInit(): Promise<void> {
         this.subscription.add(
-            this.convert.conversionProgressChanged$.subscribe((progressPercent) => {
+            this.convertService.conversionProgressChanged$.subscribe((progressPercent) => {
                 this.handleConversionProgressChanged(progressPercent);
             })
         );
@@ -94,24 +88,9 @@ export class ConvertComponent implements OnInit, OnDestroy {
     }
 
     private async checkDependenciesAsync(): Promise<void> {
-        if (!(await this.convert.isFfmpegAvailableAsync())) {
-            this.convertState = ConvertState.downloadingFfmpeg;
-            this.progressMode = 'indeterminate';
-            await this.convert.downloadFfmpegAsync();
-            this.progressMode = 'determinate';
-        }
-
-        if (!(await this.convert.isYoutubeDownloaderAvailableAsync())) {
-            this.convertState = ConvertState.downloadingYoutubeDownloader;
-            this.progressMode = 'indeterminate';
-            await this.convert.downloadYoutubeDownloaderAsync();
-            this.progressMode = 'determinate';
-        }
-
-        this.convertState = ConvertState.updatingYoutubeDownloader;
-        this.progressMode = 'indeterminate';
-        await this.convert.updateYoutubeDownloaderAsync();
-        this.progressMode = 'determinate';
+        await this.checkFfmpegAsync();
+        await this.checkYoutubeDownloaderAsync();
+        await this.updateYoutubeDownloaderAsync();
 
         this.convertState = ConvertState.WaitingForClipboardContent;
     }
@@ -122,7 +101,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
     public async performConvertAsync(): Promise<void> {
         this.convertState = ConvertState.ConversionInProgress;
-        const conversionResult: ConversionResult = await this.convert.convertAsync(this.downloadUrl);
+        const conversionResult: ConversionResult = await this.convertService.convertAsync(this.downloadUrl);
 
         if (conversionResult.isConversionSuccessful) {
             this.convertState = ConvertState.ConversionSuccessful;
@@ -134,16 +113,16 @@ export class ConvertComponent implements OnInit, OnDestroy {
     }
 
     public async showVideoLinkAsync(): Promise<void> {
-        const action: string = await this.translator.getAsync('Buttons.Ok');
-        this.snackBar.showActionSnackBar(this.downloadUrl, action);
+        const action: string = await this.translatorService.getAsync('Buttons.Ok');
+        this.snackBarService.showActionSnackBar(this.downloadUrl, action);
     }
 
     public viewInFolder(): void {
-        this.desktop.showInFolder(this.convert.lastConvertedFilePath);
+        this.desktop.showInFolder(this.convertService.lastConvertedFilePath);
     }
 
     public play(): void {
-        this.desktop.openInDefaultApplication(this.convert.lastConvertedFilePath);
+        this.desktop.openInDefaultApplication(this.convertService.lastConvertedFilePath);
     }
 
     private reset(): void {
@@ -151,10 +130,6 @@ export class ConvertComponent implements OnInit, OnDestroy {
         this.progressPercent = 0;
         this.downloadUrl = '';
         this.progressMode = 'determinate';
-    }
-
-    private handleConvertStateChanged(convertState: ConvertState): void {
-        this.zone.run(() => (this.convertState = convertState));
     }
 
     private handleConversionProgressChanged(progressPercent: number): void {
@@ -168,12 +143,37 @@ export class ConvertComponent implements OnInit, OnDestroy {
         }
 
         this.zone.run(() => {
-            if (this.convert.isVideoUrlConvertible(clipboardText)) {
+            if (this.convertService.isVideoUrlConvertible(clipboardText)) {
                 this.convertState = ConvertState.HasValidClipboardContent;
                 this.downloadUrl = clipboardText;
             } else {
                 this.reset();
             }
         });
+    }
+
+    private async checkFfmpegAsync(): Promise<void> {
+        if (!(await this.convertService.isFfmpegAvailableAsync())) {
+            this.convertState = ConvertState.downloadingFfmpeg;
+            this.progressMode = 'indeterminate';
+            await this.convertService.downloadFfmpegAsync();
+            this.progressMode = 'determinate';
+        }
+    }
+
+    private async checkYoutubeDownloaderAsync(): Promise<void> {
+        if (!(await this.convertService.isYoutubeDownloaderAvailableAsync())) {
+            this.convertState = ConvertState.downloadingYoutubeDownloader;
+            this.progressMode = 'indeterminate';
+            await this.convertService.downloadYoutubeDownloaderAsync();
+            this.progressMode = 'determinate';
+        }
+    }
+
+    private async updateYoutubeDownloaderAsync(): Promise<void> {
+        this.convertState = ConvertState.updatingYoutubeDownloader;
+        this.progressMode = 'indeterminate';
+        await this.convertService.updateYoutubeDownloaderAsync();
+        this.progressMode = 'determinate';
     }
 }

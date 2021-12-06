@@ -5,7 +5,7 @@ import { Constants } from '../../common/constants';
 import { ElectronRemoteProxy } from '../../common/electron-remote-proxy';
 import { FontSize } from '../../common/font-size';
 import { Logger } from '../../common/logger';
-import { Settings } from '../../common/settings';
+import { BaseSettings } from '../../common/settings/base-settings';
 
 @Injectable({
     providedIn: 'root',
@@ -16,7 +16,7 @@ export class AppearanceService {
     private windowHasFrame: boolean = this.electronRemote.getGlobal('windowHasFrame');
 
     constructor(
-        private settings: Settings,
+        private settings: BaseSettings,
         private logger: Logger,
         private overlayContainer: OverlayContainer,
         private electronRemote: ElectronRemoteProxy

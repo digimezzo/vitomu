@@ -5,7 +5,7 @@ import { AudioFormat } from '../../common/audio-format';
 import { Constants } from '../../common/constants';
 import { FileSystem } from '../../common/file-system';
 import { Logger } from '../../common/logger';
-import { Settings } from '../../common/settings';
+import { BaseSettings } from '../../common/settings/base-settings';
 import { Strings } from '../../common/Strings';
 import { ConversionResult as ConversionResult } from './conversion-result';
 import { DependencyChecker } from './dependency-checker';
@@ -40,7 +40,7 @@ export class ConvertService {
         private youtubeDownloaderDownloader: YoutubeDownloaderDownloader,
         private youtubeDownloaderUpdater: YoutubeDownloaderUpdater,
         private fileSystem: FileSystem,
-        private settings: Settings,
+        private settings: BaseSettings,
         private videoConverterFactory: VideoConverterFactory
     ) {
         this._selectedAudioFormat = this.audioFormats.find((x) => x.id === this.settings.audioFormat);

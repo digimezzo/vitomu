@@ -3,7 +3,8 @@ import * as assert from 'assert';
 import { Mock } from 'typemoq';
 import { ElectronRemoteProxy } from '../../common/electron-remote-proxy';
 import { Logger } from '../../common/logger';
-import { Settings } from '../../common/settings';
+import { BaseSettings } from '../../common/settings/base-settings';
+import { Settings } from '../../common/settings/settings';
 import { AppearanceService } from './appearance.service';
 
 describe('AppearanceService', () => {
@@ -12,7 +13,7 @@ describe('AppearanceService', () => {
             // Arrange
             const electronRemoteMock = Mock.ofType<ElectronRemoteProxy>();
             electronRemoteMock.setup((x) => x.getGlobal('windowHasFrame')).returns(() => true);
-            const settingsMock = Mock.ofType<Settings>();
+            const settingsMock = Mock.ofType<BaseSettings>();
             const loggerMock = Mock.ofType<Logger>();
             const overlayContainerMock = Mock.ofType<OverlayContainer>();
             overlayContainerMock.setup((x) => x.getContainerElement()).returns(() => null);

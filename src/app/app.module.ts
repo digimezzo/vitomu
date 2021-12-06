@@ -28,7 +28,8 @@ import { FileSystem } from './common/file-system';
 import { GitHubApi } from './common/github-api';
 import { Logger } from './common/logger';
 import { ProductDetails } from './common/product-details';
-import { Settings } from './common/settings';
+import { BaseSettings } from './common/settings/base-settings';
+import { Settings } from './common/settings/settings';
 import { AboutComponent } from './components/about/about.component';
 import { AudioBitrateSwitcherComponent } from './components/audio-bitrate-switcher/audio-bitrate-switcher.component';
 import { AudioFormatSwitcherComponent } from './components/audio-format-switcher/audio-format-switcher.component';
@@ -123,6 +124,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         VideoConverterFactory,
         Environment,
         DependencyCheckerFactory,
+        { provide: BaseSettings, useClass: Settings },
         {
             provide: ErrorHandler,
             useClass: GlobalErrorHandler,

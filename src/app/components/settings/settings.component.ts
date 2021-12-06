@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Settings } from '../../common/settings';
+import { BaseSettings } from '../../common/settings/base-settings';
 
 @Component({
     selector: 'app-settings',
@@ -8,7 +8,7 @@ import { Settings } from '../../common/settings';
     encapsulation: ViewEncapsulation.None,
 })
 export class SettingsComponent implements OnInit {
-    constructor(private settings: Settings) {}
+    constructor(private settings: BaseSettings) {}
 
     public get useCustomTitleBarChecked(): boolean {
         return this.settings.useCustomTitleBar;

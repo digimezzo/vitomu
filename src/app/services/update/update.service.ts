@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GitHubApi } from '../../common/github-api';
 import { Logger } from '../../common/logger';
 import { ProductDetails } from '../../common/product-details';
-import { Settings } from '../../common/settings';
+import { BaseSettings } from '../../common/settings/base-settings';
 import { VersionComparer } from '../../common/version-comparer';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
 
@@ -12,7 +12,7 @@ import { SnackBarService } from '../snack-bar/snack-bar.service';
 export class UpdateService {
     constructor(
         private snackBar: SnackBarService,
-        private settings: Settings,
+        private settings: BaseSettings,
         private logger: Logger,
         private gitHub: GitHubApi,
         private productDetails: ProductDetails

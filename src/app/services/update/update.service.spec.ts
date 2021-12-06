@@ -2,7 +2,7 @@ import { It, Mock, Times } from 'typemoq';
 import { GitHubApi } from '../../common/github-api';
 import { Logger } from '../../common/logger';
 import { ProductDetails } from '../../common/product-details';
-import { Settings } from '../../common/settings';
+import { Settings } from '../../common/settings/settings';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
 import { UpdateService } from './update.service';
 
