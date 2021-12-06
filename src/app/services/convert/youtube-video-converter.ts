@@ -64,7 +64,7 @@ export class YoutubeVideoConverter implements VideoConverter {
                 });
 
                 process.stdout.on('data', (data) => {
-                    if (data.toString().includes('[download]')) {
+                    if (data.toString().includes('[download]') && data.toString().includes('%')) {
                         const progressPercent: number = this.getProgressPercentFromYoutubeDownloaderProgress(data.toString());
                         progressCallback(progressPercent);
                     } else if (data.toString().includes('[ExtractAudio] Destination:')) {
@@ -87,7 +87,11 @@ export class YoutubeVideoConverter implements VideoConverter {
             // [download] 100% of 7.33MiB in 00:01
             const pieces: string[] = youtubeDownloaderProgress.split('%');
 
-            return parseInt(pieces[0].replace('[download]', '').trim(), 10);
+            const stringToParse: string = pieces[0].replace('[download]', '').trim();
+
+            if (!Strings.isNullOrWhiteSpace(stringToParse)) {
+                return parseInt(stringToParse, 10);
+            }
         } catch (error) {
             this.logger.error(
                 `Could not get progress percent. Error: ${error}`,
