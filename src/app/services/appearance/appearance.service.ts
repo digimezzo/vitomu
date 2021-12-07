@@ -205,7 +205,7 @@ export class AppearanceService {
         // element.style.setProperty('--theme-search-box-icon', this.selectedTheme.darkColors.searchBoxIcon);
 
         // CSS theme template
-        const templateThemeName: string = 'template-theme';
+        const templateThemeName: string = 'default-theme';
 
         // Apply theme to components in the overlay container: https://gist.github.com/tomastrajan/ee29cd8e180b14ce9bc120e2f7435db7
         this.applyThemeClasses(this.overlayContainer.getContainerElement(), templateThemeName);
