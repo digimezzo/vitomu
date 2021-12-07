@@ -71,13 +71,22 @@ export class Settings implements BaseSettings {
         this.settings.set('fontSize', v);
     }
 
-    // Color theme
-    public get colorTheme(): string {
-        return this.settings.get('colorTheme');
+    // Theme
+    public get theme(): string {
+        return this.settings.get('theme');
     }
 
-    public set colorTheme(v: string) {
-        this.settings.set('colorTheme', v);
+    public set theme(v: string) {
+        this.settings.set('theme', v);
+    }
+
+    // Follow system color
+    public get followSystemColor(): boolean {
+        return this.settings.get('followSystemColor');
+    }
+
+    public set followSystemColor(v: boolean) {
+        this.settings.set('followSystemColor', v);
     }
 
     private initialize(): void {
@@ -110,6 +119,14 @@ export class Settings implements BaseSettings {
 
         if (!this.settings.has('fontSize')) {
             this.settings.set('fontSize', 13);
+        }
+
+        if (!this.settings.has('followSystemColor')) {
+            this.settings.set('followSystemColor', false);
+        }
+
+        if (!this.settings.has('theme')) {
+            this.settings.set('theme', 'Dopamine');
         }
 
         if (!this.settings.has('colorTheme')) {

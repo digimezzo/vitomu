@@ -127,6 +127,13 @@ export class Constants {
             licenseUrl: 'https://github.com/parshap/node-sanitize-filename/blob/master/LICENSE.md',
         },
         {
+            name: 'TinyColor',
+            description:
+                'TinyColor is a small, fast library for color manipulation and conversion in JavaScript. It allows many forms of input, while providing color conversions and other color utility functions. It has no dependencies.',
+            url: 'https://github.com/bgrins/TinyColor',
+            licenseUrl: 'https://github.com/bgrins/TinyColor/blob/master/LICENSE',
+        },
+        {
             name: 'yt-dlp',
             description: 'A youtube-dl fork with additional features and fixes.',
             url: 'https://github.com/yt-dlp/yt-dlp',

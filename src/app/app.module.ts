@@ -9,7 +9,7 @@ import {
     MatSlideToggleModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatTooltipModule,
+    MatTooltipModule
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,15 +19,18 @@ import 'reflect-metadata';
 import '../polyfills';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BaseRemoteProxy } from './common/base-remote-proxy';
 import { ClipboardWatcher } from './common/clipboard-watcher';
 import { Delayer } from './common/delayer';
 import { Desktop } from './common/desktop';
+import { DocumentProxy } from './common/document-proxy';
 import { ElectronRemoteProxy } from './common/electron-remote-proxy';
 import { Environment } from './common/environment';
 import { FileSystem } from './common/file-system';
 import { GitHubApi } from './common/github-api';
 import { Logger } from './common/logger';
 import { ProductDetails } from './common/product-details';
+import { RemoteProxy } from './common/remote-proxy';
 import { BaseSettings } from './common/settings/base-settings';
 import { Settings } from './common/settings/settings';
 import { AboutComponent } from './components/about/about.component';
@@ -124,7 +127,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         VideoConverterFactory,
         Environment,
         DependencyCheckerFactory,
+        DocumentProxy,
         { provide: BaseSettings, useClass: Settings },
+        { provide: BaseRemoteProxy, useClass: RemoteProxy },
         {
             provide: ErrorHandler,
             useClass: GlobalErrorHandler,

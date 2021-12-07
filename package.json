@@ -99,6 +99,7 @@
         "line-awesome": "^1.3.0",
         "node-downloader-helper": "^1.0.19",
         "progress-stream": "^2.0.0",
-        "sanitize-filename": "1.6.1"
+        "sanitize-filename": "1.6.1",
+        "tinycolor2": "^1.4.2"
     }
 }

@@ -6,7 +6,7 @@ import { Constants } from '../../common/constants';
 import { FileSystem } from '../../common/file-system';
 import { Logger } from '../../common/logger';
 import { BaseSettings } from '../../common/settings/base-settings';
-import { Strings } from '../../common/Strings';
+import { Strings } from '../../common/strings';
 import { ConversionResult as ConversionResult } from './conversion-result';
 import { DependencyChecker } from './dependency-checker';
 import { DependencyCheckerFactory } from './dependency-checker-factory';
