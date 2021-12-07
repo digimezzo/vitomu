@@ -12,6 +12,8 @@ var path = require("path");
 var url = require("url");
 var events_1 = require("./src/app/common/events");
 electron_1.app.commandLine.appendSwitch('disable-color-correct-rendering');
+electron_log_1.default.create('main');
+electron_log_1.default.transports.file.resolvePath = function () { return path.join(electron_1.app.getPath('userData'), 'logs', 'Dopamine.log'); };
 var win, serve;
 var args = process.argv.slice(1);
 serve = args.some(function (val) { return val === '--serve'; });
@@ -41,7 +43,10 @@ function createWindow() {
         frame: windowhasFrame(),
         icon: path.join(globalAny.__static, os.platform() === 'win32' ? 'icons/icon.ico' : 'icons/64x64.png'),
         webPreferences: {
+            webSecurity: false,
             nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false,
         },
         show: false,
     });
