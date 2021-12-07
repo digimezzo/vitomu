@@ -6,6 +6,7 @@ export abstract class BaseSettings {
     public abstract checkForUpdates: boolean;
     public abstract useCustomTitleBar: boolean;
     public abstract fontSize: number;
+    public abstract followSystemTheme: boolean;
     public abstract followSystemColor: boolean;
     public abstract theme: string;
 }
