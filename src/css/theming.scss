@@ -1,8 +1,13 @@
-@import "~@angular/material/theming";
-@include mat-core();
+@import '~@angular/material/theming';
 
-@import "color-themes/default-pink-theme.scss";
-@import "color-themes/default-green-theme.scss";
+$custom-typography: mat-typography-config(
+    $font-family: 'opensans',
+);
+
+@include mat-core($custom-typography);
+
+@import 'color-themes/default-pink-theme.scss';
+@import 'color-themes/default-green-theme.scss';
 
 // Custom colors
 $background-color-main: #202020;
@@ -10,45 +15,45 @@ $border-color-main: #333;
 
 // Theme-based colors
 @mixin set-colors($theme) {
-  $primary: map-get($theme, primary);
-  $foreground: map-get($theme, foreground);
-  $background: map-get($theme, background);
+    $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
 
-  .color-primary {
-    color: mat-color($primary) !important;
-  }
+    .color-primary {
+        color: mat-color($primary) !important;
+    }
 
-  .background-color-primary {
-    background-color: mat-color($primary) !important;
-  }
+    .background-color-primary {
+        background-color: mat-color($primary) !important;
+    }
 
-  .background-color-primary-0-6 {
-    background-color: mat-color($primary, 0.6) !important;
-  }
+    .background-color-primary-0-6 {
+        background-color: mat-color($primary, 0.6) !important;
+    }
 
-  .color-base{
-    color: mat-color($foreground, base);
-  }
+    .color-base {
+        color: mat-color($foreground, base);
+    }
 
-  .color-secondary-text{
-    color: mat-color($foreground, secondary-text);
-  }
+    .color-secondary-text {
+        color: mat-color($foreground, secondary-text);
+    }
 
-  .fill-secondary-text{
-    fill: mat-color($foreground, secondary-text);
-  }
+    .fill-secondary-text {
+        fill: mat-color($foreground, secondary-text);
+    }
 
-  .background-color-hover{
-    background-color: mat-color($background, hover) !important;
-  }
+    .background-color-hover {
+        background-color: mat-color($background, hover) !important;
+    }
 
-  .background-color-background{
-    background-color: mat-color($background, background) !important;
-  }
+    .background-color-background {
+        background-color: mat-color($background, background) !important;
+    }
 
-  .box-shadow-inset-0-0-10px-10px-primary{
-    box-shadow: inset 0 0 10px 10px mat-color($primary);
-  }
+    .box-shadow-inset-0-0-10px-10px-primary {
+        box-shadow: inset 0 0 10px 10px mat-color($primary);
+    }
 }
 
 // Default
@@ -57,12 +62,12 @@ $border-color-main: #333;
 
 // Default pink
 .default-pink-theme {
-  @include angular-material-theme($default-pink-theme);
-  @include set-colors($default-pink-theme);
+    @include angular-material-theme($default-pink-theme);
+    @include set-colors($default-pink-theme);
 }
 
 // Default green
 .default-green-theme {
     @include angular-material-theme($default-green-theme);
     @include set-colors($default-green-theme);
-  }
+}
