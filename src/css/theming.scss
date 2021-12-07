@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import 'custom-mat-themes';
 
 $custom-typography: mat-typography-config(
     $font-family: 'opensans',
@@ -6,68 +7,61 @@ $custom-typography: mat-typography-config(
 
 @include mat-core($custom-typography);
 
-@import 'color-themes/default-pink-theme.scss';
-@import 'color-themes/default-green-theme.scss';
+$default-palette: (
+    50: var(--theme-accent-50),
+    100: var(--theme-accent-color-100),
+    200: var(--theme-accent-color-200),
+    300: var(--theme-accent-color-300),
+    400: var(--theme-accent-color-400),
+    500: var(--theme-accent-color-500),
+    600: var(--theme-accent-color-600),
+    700: var(--theme-accent-color-700),
+    800: var(--theme-accent-color-800),
+    900: var(--theme-accent-color-900),
+    A100: var(--theme-accent-color-A100),
+    A200: var(--theme-accent-color-A200),
+    A400: var(--theme-accent-color-A400),
+    A700: var(--theme-accent-color-A700),
+    contrast: (
+        50: #000000,
+        100: #000000,
+        200: #000000,
+        300: #000000,
+        400: #000000,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff,
+        A100: #000000,
+        A200: #000000,
+        A400: #000000,
+        A700: #000000,
+    ),
+);
 
-// Custom colors
-$background-color-main: #202020;
-$border-color-main: #333;
+$default-theme-primary: mat-palette($default-palette);
+$default-theme-accent: mat-palette($default-palette);
+$default-theme-warn: mat-palette($default-palette);
 
-// Theme-based colors
-@mixin set-colors($theme) {
-    $primary: map-get($theme, primary);
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
+$default-theme-dark: custom-mat-dark-theme($default-theme-primary, $default-theme-accent, $default-theme-warn);
+$default-theme-light: custom-mat-light-theme($default-theme-primary, $default-theme-accent, $default-theme-warn);
 
-    .color-primary {
-        color: mat-color($primary) !important;
-    }
+@include angular-material-theme($default-theme-dark);
 
-    .background-color-primary {
-        background-color: mat-color($primary) !important;
-    }
-
-    .background-color-primary-0-6 {
-        background-color: mat-color($primary, 0.6) !important;
-    }
-
-    .color-base {
-        color: mat-color($foreground, base);
-    }
-
-    .color-secondary-text {
-        color: mat-color($foreground, secondary-text);
-    }
-
-    .fill-secondary-text {
-        fill: mat-color($foreground, secondary-text);
-    }
-
-    .background-color-hover {
-        background-color: mat-color($background, hover) !important;
-    }
-
-    .background-color-background {
-        background-color: mat-color($background, background) !important;
-    }
-
-    .box-shadow-inset-0-0-10px-10px-primary {
-        box-shadow: inset 0 0 10px 10px mat-color($primary);
-    }
+.default-theme-dark {
+    @include angular-material-theme($default-theme-dark);
 }
 
-// Default
-@include angular-material-theme($default-pink-theme);
-@include set-colors($default-pink-theme);
-
-// Default pink
-.default-pink-theme {
-    @include angular-material-theme($default-pink-theme);
-    @include set-colors($default-pink-theme);
+.default-theme-light {
+    @include angular-material-theme($default-theme-light);
 }
 
-// Default green
-.default-green-theme {
-    @include angular-material-theme($default-green-theme);
-    @include set-colors($default-green-theme);
+.theme-header-background {
+    background-color: var(--theme-header-background) !important;
+    border-bottom: 1px solid var(--theme-pane-separators);
+}
+
+.theme-footer-background {
+    background-color: var(--theme-footer-background) !important;
 }

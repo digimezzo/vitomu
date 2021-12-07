@@ -39,4 +39,8 @@ export class Desktop {
     public showFileInDirectory(filePath: string): void {
         remote.shell.showItemInFolder(filePath);
     }
+
+    public shouldUseDarkColors(): boolean {
+        return remote.nativeTheme.shouldUseDarkColors;
+    }
 }

@@ -1,3 +1,3 @@
 export class ThemeCoreColors {
-    constructor(public accentColor: string) {}
+    constructor(public primaryColor: string, public secondaryColor: string, public accentColor: string) {}
 }

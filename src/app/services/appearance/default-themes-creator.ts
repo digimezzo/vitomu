@@ -2,6 +2,7 @@ import { Theme } from './theme/theme';
 import { ThemeCoreColors } from './theme/theme-core-colors';
 import { ThemeCreator } from './theme/theme-creator';
 import { ThemeNeutralColors } from './theme/theme-neutral-colors';
+import { ThemeOptions } from './theme/theme-options';
 
 export class DefaultThemesCreator {
     private creator: ThemeCreator = new ThemeCreator('Digimezzo', 'info@digimezzo.com');
@@ -14,7 +15,7 @@ export class DefaultThemesCreator {
     }
 
     private createVitomuTheme(): Theme {
-        const neutralColors: ThemeNeutralColors = new ThemeNeutralColors(
+        const darkColors: ThemeNeutralColors = new ThemeNeutralColors(
             '#5e5e5e',
             'rgba(255, 255, 255, 0.05)',
             'rgba(255, 255, 255, 0.1)',
@@ -22,24 +23,22 @@ export class DefaultThemesCreator {
             '#666',
             '#fff',
             '#1a1a1a',
-            '#111',
-            '#111',
-            '#171717',
-            '#fff',
-            '#5e5e5e',
-            '#272727',
-            '#999',
-            '#fff',
-            '#5e5e5e',
-            '#202020',
-            'transparent',
-            '#363636',
-            '#4883e0',
-            '#202020',
-            '#fff',
-            '#5e5e5e'
+            '#111'
         );
 
-        return new Theme('Vitomu', this.creator, new ThemeCoreColors('#4883e0'), neutralColors);
+        const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
+            '#838383',
+            'rgba(0, 0, 0, 0.05)',
+            'rgba(0, 0, 0, 0.1)',
+            '',
+            '#909090',
+            '#000',
+            '#f5f5f5',
+            '#fdfdfd'
+        );
+
+        const options: ThemeOptions = new ThemeOptions();
+
+        return new Theme('Dopamine', this.creator, new ThemeCoreColors('#6260e3', '#3fdcdd', '#4883e0'), darkColors, lightColors, options);
     }
 }

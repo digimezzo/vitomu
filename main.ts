@@ -13,7 +13,7 @@ import { Events } from './src/app/common/events';
 app.commandLine.appendSwitch('disable-color-correct-rendering');
 
 log.create('main');
-log.transports.file.resolvePath = () => path.join(app.getPath('userData'), 'logs', 'Dopamine.log');
+log.transports.file.resolvePath = () => path.join(app.getPath('userData'), 'logs', 'Vitomu.log');
 
 let win, serve;
 const args = process.argv.slice(1);

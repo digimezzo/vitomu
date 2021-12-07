@@ -12,7 +12,7 @@ import { TranslatorService } from './services/translator/translator.service';
 export class AppComponent implements OnInit {
     constructor(private translator: TranslatorService, private appearance: AppearanceService) {
         log.create('renderer');
-        log.transports.file.resolvePath = () => path.join(remote.app.getPath('userData'), 'logs', 'Dopamine.log');
+        log.transports.file.resolvePath = () => path.join(remote.app.getPath('userData'), 'logs', 'Vitomu.log');
     }
 
     public ngOnInit(): void {

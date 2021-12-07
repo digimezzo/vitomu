@@ -2,31 +2,7 @@ import { ThemeNeutralColors } from './theme-neutral-colors';
 
 describe('ThemeNeutralColors', () => {
     function createNeutralColors(): ThemeNeutralColors {
-        return new ThemeNeutralColors(
-            'red',
-            'green',
-            'blue',
-            'white',
-            'black',
-            'white',
-            '#aaa',
-            '#bbb',
-            '#ccc',
-            '#ddd',
-            '#eee',
-            '#fff',
-            '#111',
-            '#222',
-            '#333',
-            '#444',
-            '#555',
-            '#666',
-            '#777',
-            '#888',
-            '#999',
-            '#aaa',
-            '#bbb'
-        );
+        return new ThemeNeutralColors('red', 'green', 'blue', 'white', 'black', 'eee', '#ddd', '#aaa', '#bbb');
     }
 
     beforeEach(() => {});
@@ -50,36 +26,6 @@ describe('ThemeNeutralColors', () => {
 
             // Assert
             expect(colors.windowButtonIcon).toEqual('red');
-        });
-
-        it('should set hoveredItemBackground', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.hoveredItemBackground).toEqual('green');
-        });
-
-        it('should set selectedItemBackground', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.selectedItemBackground).toEqual('blue');
-        });
-
-        it('should set selectedItemText', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.selectedItemText).toEqual('white');
         });
 
         it('should set tabText', () => {
@@ -122,26 +68,6 @@ describe('ThemeNeutralColors', () => {
             expect(colors.headerBackground).toEqual('#bbb');
         });
 
-        it('should set footerBackground', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.footerBackground).toEqual('#ccc');
-        });
-
-        it('should set sidePaneBackground', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.sidePaneBackground).toEqual('#ddd');
-        });
-
         it('should set primaryText', () => {
             // Arrange
 
@@ -159,67 +85,7 @@ describe('ThemeNeutralColors', () => {
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.secondaryText).toEqual('#fff');
-        });
-
-        it('should set breadcrumbBackground', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.breadcrumbBackground).toEqual('#111');
-        });
-
-        it('should set sliderBackground', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.sliderBackground).toEqual('#222');
-        });
-
-        it('should set sliderThumbBackground', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.sliderThumbBackground).toEqual('#333');
-        });
-
-        it('should set albumCoverLogo', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.albumCoverLogo).toEqual('#444');
-        });
-
-        it('should set albumCoverBackground', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.albumCoverBackground).toEqual('#555');
-        });
-
-        it('should set paneSeparators', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.paneSeparators).toEqual('#666');
+            expect(colors.secondaryText).toEqual('#ddd');
         });
 
         it('should set settingsSeparators', () => {
@@ -240,36 +106,6 @@ describe('ThemeNeutralColors', () => {
 
             // Assert
             expect(colors.scrollBars).toEqual('#888');
-        });
-
-        it('should set searchBox', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.searchBox).toEqual('#999');
-        });
-
-        it('should set searchBoxText', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.searchBoxText).toEqual('#aaa');
-        });
-
-        it('should set searchBoxIcon', () => {
-            // Arrange
-
-            // Act
-            const colors: ThemeNeutralColors = createNeutralColors();
-
-            // Assert
-            expect(colors.searchBoxIcon).toEqual('#bbb');
         });
     });
 });

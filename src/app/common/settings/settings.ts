@@ -89,6 +89,15 @@ export class Settings implements BaseSettings {
         this.settings.set('followSystemTheme', v);
     }
 
+    // Use light background theme
+    public get useLightBackgroundTheme(): boolean {
+        return this.settings.get('useLightBackgroundTheme');
+    }
+
+    public set useLightBackgroundTheme(v: boolean) {
+        this.settings.set('useLightBackgroundTheme', v);
+    }
+
     // Follow system color
     public get followSystemColor(): boolean {
         return this.settings.get('followSystemColor');
@@ -132,6 +141,10 @@ export class Settings implements BaseSettings {
 
         if (!this.settings.has('followSystemTheme')) {
             this.settings.set('followSystemTheme', false);
+        }
+
+        if (!this.settings.has('useLightBackgroundTheme')) {
+            this.settings.set('useLightBackgroundTheme', false);
         }
 
         if (!this.settings.has('followSystemColor')) {

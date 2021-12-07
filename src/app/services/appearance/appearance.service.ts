@@ -44,6 +44,13 @@ export class AppearanceService {
         return this._windowHasNativeTitleBar;
     }
 
+    public get isUsingLightTheme(): boolean {
+        return (
+            (!this.settings.followSystemTheme && this.settings.useLightBackgroundTheme) ||
+            (this.settings.followSystemTheme && !this.isSystemUsingDarkTheme())
+        );
+    }
+
     public get followSystemColor(): boolean {
         return this.settings.followSystemColor;
     }
@@ -149,19 +156,31 @@ export class AppearanceService {
         const element: HTMLElement = this.documentProxy.getDocumentElement();
 
         // Color
+        let primaryColorToApply: string = this.selectedTheme.coreColors.primaryColor;
+        let secondaryColorToApply: string = this.selectedTheme.coreColors.secondaryColor;
         let accentColorToApply: string = this.selectedTheme.coreColors.accentColor;
+        let scrollBarColorToApply: string = this.selectedTheme.darkColors.scrollBars;
+
+        if (this.isUsingLightTheme) {
+            scrollBarColorToApply = this.selectedTheme.lightColors.scrollBars;
+        }
 
         if (this.settings.followSystemColor) {
             const systemAccentColor: string = this.getSystemAccentColor();
 
             if (!Strings.isNullOrWhiteSpace(systemAccentColor)) {
+                primaryColorToApply = systemAccentColor;
+                secondaryColorToApply = systemAccentColor;
                 accentColorToApply = systemAccentColor;
+                scrollBarColorToApply = systemAccentColor;
             }
         }
 
         const palette: Palette = new Palette(accentColorToApply);
 
         // Core colors
+        element.style.setProperty('--theme-primary-color', primaryColorToApply);
+        element.style.setProperty('--theme-secondary-color', secondaryColorToApply);
         element.style.setProperty('--theme-accent-color', accentColorToApply);
 
         element.style.setProperty('--theme-accent-color-50', palette.color50);
@@ -180,41 +199,38 @@ export class AppearanceService {
         element.style.setProperty('--theme-accent-color-A700', palette.colorA700);
 
         // Neutral colors
-        // element.style.setProperty('--theme-window-button-icon', this.selectedTheme.darkColors.windowButtonIcon);
-        // element.style.setProperty('--theme-hovered-item-background', this.selectedTheme.darkColors.hoveredItemBackground);
-        // element.style.setProperty('--theme-selected-item-background', this.selectedTheme.darkColors.selectedItemBackground);
-        // element.style.setProperty('--theme-selected-item-text', this.selectedTheme.darkColors.selectedItemText);
-        // element.style.setProperty('--theme-tab-text', this.selectedTheme.darkColors.tabText);
-        // element.style.setProperty('--theme-selected-tab-text', this.selectedTheme.darkColors.selectedTabText);
-        // element.style.setProperty('--theme-main-background', this.selectedTheme.darkColors.mainBackground);
-        // element.style.setProperty('--theme-header-background', this.selectedTheme.darkColors.headerBackground);
-        // element.style.setProperty('--theme-footer-background', this.selectedTheme.darkColors.footerBackground);
-        // element.style.setProperty('--theme-side-pane-background', this.selectedTheme.darkColors.sidePaneBackground);
-        // element.style.setProperty('--theme-primary-text', this.selectedTheme.darkColors.primaryText);
-        // element.style.setProperty('--theme-secondary-text', this.selectedTheme.darkColors.secondaryText);
-        // element.style.setProperty('--theme-breadcrumb-background', this.selectedTheme.darkColors.breadcrumbBackground);
-        // element.style.setProperty('--theme-slider-background', this.selectedTheme.darkColors.sliderBackground);
-        // element.style.setProperty('--theme-slider-thumb-background', this.selectedTheme.darkColors.sliderThumbBackground);
-        // element.style.setProperty('--theme-album-cover-logo', this.selectedTheme.darkColors.albumCoverLogo);
-        // element.style.setProperty('--theme-album-cover-background', this.selectedTheme.darkColors.albumCoverBackground);
-        // element.style.setProperty('--theme-pane-separators', this.selectedTheme.darkColors.paneSeparators);
-        // element.style.setProperty('--theme-settings-separators', this.selectedTheme.darkColors.settingsSeparators);
-        // element.style.setProperty('--theme-scroll-bars', scrollBarColorToApply);
-        // element.style.setProperty('--theme-search-box', this.selectedTheme.darkColors.searchBox);
-        // element.style.setProperty('--theme-search-box-text', this.selectedTheme.darkColors.searchBoxText);
-        // element.style.setProperty('--theme-search-box-icon', this.selectedTheme.darkColors.searchBoxIcon);
+        let themeName: string = 'default-theme-dark';
+        element.style.setProperty('--theme-window-button-icon', this.selectedTheme.darkColors.windowButtonIcon);
+        element.style.setProperty('--theme-tab-text', this.selectedTheme.darkColors.tabText);
+        element.style.setProperty('--theme-selected-tab-text', this.selectedTheme.darkColors.selectedTabText);
+        element.style.setProperty('--theme-main-background', this.selectedTheme.darkColors.mainBackground);
+        element.style.setProperty('--theme-header-background', this.selectedTheme.darkColors.headerBackground);
+        element.style.setProperty('--theme-primary-text', this.selectedTheme.darkColors.primaryText);
+        element.style.setProperty('--theme-secondary-text', this.selectedTheme.darkColors.secondaryText);
+        element.style.setProperty('--theme-settings-separators', this.selectedTheme.darkColors.settingsSeparators);
+        element.style.setProperty('--theme-scroll-bars', scrollBarColorToApply);
 
-        // CSS theme template
-        const templateThemeName: string = 'default-theme';
+        if (this.isUsingLightTheme) {
+            themeName = 'default-theme-light';
+            element.style.setProperty('--theme-window-button-icon', this.selectedTheme.lightColors.windowButtonIcon);
+            element.style.setProperty('--theme-tab-text', this.selectedTheme.lightColors.tabText);
+            element.style.setProperty('--theme-selected-tab-text', this.selectedTheme.lightColors.selectedTabText);
+            element.style.setProperty('--theme-main-background', this.selectedTheme.lightColors.mainBackground);
+            element.style.setProperty('--theme-header-background', this.selectedTheme.lightColors.headerBackground);
+            element.style.setProperty('--theme-primary-text', this.selectedTheme.lightColors.primaryText);
+            element.style.setProperty('--theme-secondary-text', this.selectedTheme.lightColors.secondaryText);
+            element.style.setProperty('--theme-settings-separators', this.selectedTheme.lightColors.settingsSeparators);
+            element.style.setProperty('--theme-scroll-bars', scrollBarColorToApply);
+        }
 
         // Apply theme to components in the overlay container: https://gist.github.com/tomastrajan/ee29cd8e180b14ce9bc120e2f7435db7
-        this.applyThemeClasses(this.overlayContainer.getContainerElement(), templateThemeName);
+        this.applyThemeClasses(this.overlayContainer.getContainerElement(), themeName);
 
         // Apply theme to body
-        this.applyThemeClasses(this.documentProxy.getBody(), templateThemeName);
+        this.applyThemeClasses(this.documentProxy.getBody(), themeName);
 
         this.logger.info(
-            `Applied theme name=${this.selectedTheme.name}' and theme classes='${templateThemeName}'`,
+            `Applied theme name=${this.selectedTheme.name}' and theme classes='${themeName}'`,
             'AppearanceService',
             'applyTheme'
         );
@@ -242,6 +258,20 @@ export class AppearanceService {
 
     private setSelectedFontSizeFromSettings(): void {
         this._selectedFontSize = this.fontSizes.find((x) => x.normalSize === this.settings.fontSize);
+    }
+
+    private isSystemUsingDarkTheme(): boolean {
+        let systemIsUsingDarkTheme: boolean = false;
+
+        if (this.settings.followSystemTheme) {
+            try {
+                systemIsUsingDarkTheme = this.desktop.shouldUseDarkColors();
+            } catch (e) {
+                this.logger.error(`Could not get system dark mode. Error: ${e.message}`, 'AppearanceService', 'isSystemUsingDarkTheme');
+            }
+        }
+
+        return systemIsUsingDarkTheme;
     }
 
     private applyThemeClasses(element: HTMLElement, themeName: string): void {

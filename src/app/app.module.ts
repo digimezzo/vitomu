@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {
     MatButtonModule,
     MatDialogModule,
+    MatDividerModule,
     MatProgressSpinnerModule,
     MatSelectModule,
     MatSlideToggleModule,
@@ -93,6 +94,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         MatProgressSpinnerModule,
         MatSnackBarModule,
         MatSlideToggleModule,
+        MatDividerModule,
         BrowserAnimationsModule,
         BrowserModule,
         FormsModule,
