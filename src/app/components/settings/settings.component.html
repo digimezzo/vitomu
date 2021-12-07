@@ -1,21 +1,21 @@
 <!-- Theme -->
 <div class="m-3">
     <h1>{{ 'SettingsTab.Color' | translate }}</h1>
-    <app-color-theme-switcher class="mt-2"></app-color-theme-switcher>
+    <app-theme-switcher class="mt-2"></app-theme-switcher>
 </div>
-<hr>
+<hr />
 <!-- Language -->
 <div class="m-3">
     <h1 class="mt-2">{{ 'SettingsTab.Language' | translate }}</h1>
     <app-language-switcher class="mt-2"></app-language-switcher>
 </div>
-<hr>
+<hr />
 <!-- Font size -->
 <div class="m-3">
     <h1 class="mt-2">{{ 'SettingsTab.FontSize' | translate }}</h1>
     <app-font-size-switcher class="mt-2"></app-font-size-switcher>
 </div>
-<hr>
+<hr />
 <!-- Conversion -->
 <div class="m-3">
     <h1 class="mt-2">{{ 'SettingsTab.Conversion' | translate }}</h1>
@@ -26,11 +26,11 @@
 <div class="m-3">
     <h1 class="mt-2">{{ 'SettingsTab.TitleBar' | translate }}</h1>
     <mat-slide-toggle class="mt-2" [(ngModel)]="useCustomTitleBarChecked">
-        {{ 'SettingsTab.UseCustomTitleBar' | translate }}</mat-slide-toggle>
+        {{ 'SettingsTab.UseCustomTitleBar' | translate }}</mat-slide-toggle
+    >
 </div>
 <!-- Updates -->
 <div class="m-3">
     <h1 class="mt-2">{{ 'SettingsTab.Updates' | translate }}</h1>
-    <mat-slide-toggle class="mt-2" [(ngModel)]="checkForUpdatesChecked">
-        {{ 'SettingsTab.CheckForUpdates' | translate }}</mat-slide-toggle>
+    <mat-slide-toggle class="mt-2" [(ngModel)]="checkForUpdatesChecked"> {{ 'SettingsTab.CheckForUpdates' | translate }}</mat-slide-toggle>
 </div>

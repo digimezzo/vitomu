@@ -105,6 +105,16 @@ function createWindow(): void {
 
     win.webContents.on('will-navigate', handleRedirect);
     win.webContents.on('new-window', handleRedirect);
+
+    win.webContents.on('before-input-event', (event, input) => {
+        if (input.key.toLowerCase() === 'f12') {
+            // if (serve) {
+            win.webContents.toggleDevTools();
+            // }
+
+            event.preventDefault();
+        }
+    });
 }
 
 function windowhasFrame(): boolean {

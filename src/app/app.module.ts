@@ -9,7 +9,7 @@ import {
     MatSlideToggleModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatTooltipModule
+    MatTooltipModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,7 +36,6 @@ import { Settings } from './common/settings/settings';
 import { AboutComponent } from './components/about/about.component';
 import { AudioBitrateSwitcherComponent } from './components/audio-bitrate-switcher/audio-bitrate-switcher.component';
 import { AudioFormatSwitcherComponent } from './components/audio-format-switcher/audio-format-switcher.component';
-import { ColorThemeSwitcherComponent } from './components/color-theme-switcher/color-theme-switcher.component';
 import { ConvertComponent } from './components/convert/convert.component';
 import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
 import { LicenseDialogComponent } from './components/dialogs/license-dialog/license-dialog.component';
@@ -45,10 +44,12 @@ import { HomeComponent } from './components/home/home.component';
 import { LanguageSwitcherComponent } from './components/language-switcher/language-switcher.component';
 import { LogoFullComponent } from './components/logo-full/logo-full.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switcher.component';
 import { WindowControlsComponent } from './components/window-controls/window-controls.component';
 import { WebviewDirective } from './directives/webview.directive';
 import { GlobalErrorHandler } from './global-error-handler';
 import { AppearanceService } from './services/appearance/appearance.service';
+import { DefaultThemesCreator } from './services/appearance/default-themes-creator';
 import { ConvertService } from './services/convert/convert.service';
 import { DependencyCheckerFactory } from './services/convert/dependency-checker-factory';
 import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
@@ -73,7 +74,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SettingsComponent,
         AboutComponent,
         WindowControlsComponent,
-        ColorThemeSwitcherComponent,
+        ThemeSwitcherComponent,
         FontSizeSwitcherComponent,
         AudioBitrateSwitcherComponent,
         AudioFormatSwitcherComponent,
@@ -128,6 +129,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         Environment,
         DependencyCheckerFactory,
         DocumentProxy,
+        DefaultThemesCreator,
         { provide: BaseSettings, useClass: Settings },
         { provide: BaseRemoteProxy, useClass: RemoteProxy },
         {

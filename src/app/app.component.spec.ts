@@ -1,7 +1,6 @@
 import { Mock, Times } from 'typemoq';
 import { AppComponent } from './app.component';
 import { AppearanceService } from './services/appearance/appearance.service';
-import { ConvertService } from './services/convert/convert.service';
 import { TranslatorService } from './services/translator/translator.service';
 
 describe('AppComponent', () => {
@@ -10,34 +9,24 @@ describe('AppComponent', () => {
             // Arrange
             const appearanceServiceMock = Mock.ofType<AppearanceService>();
             const translatorServiceMock = Mock.ofType<TranslatorService>();
-            const convertServiceMock = Mock.ofType<ConvertService>();
 
             // Act
-            const appComponent: AppComponent = new AppComponent(
-                translatorServiceMock.object,
-                appearanceServiceMock.object,
-                convertServiceMock.object
-            );
+            const appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object);
 
             // Assert
-            translatorServiceMock.verify((x) => x.applyLanguage(), Times.atLeastOnce());
+            translatorServiceMock.verify((x) => x.applyLanguage(), Times.once());
         });
 
-        it('Should apply theme', () => {
+        it('Should apply appearance', () => {
             // Arrange
             const appearanceServiceMock = Mock.ofType<AppearanceService>();
             const translatorServiceMock = Mock.ofType<TranslatorService>();
-            const convertServiceMock = Mock.ofType<ConvertService>();
 
             // Act
-            const appComponent: AppComponent = new AppComponent(
-                translatorServiceMock.object,
-                appearanceServiceMock.object,
-                convertServiceMock.object
-            );
+            const appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object);
 
             // Assert
-            appearanceServiceMock.verify((x) => x.applyTheme(), Times.atLeastOnce());
+            appearanceServiceMock.verify((x) => x.applyAppearance(), Times.once());
         });
     });
 });
