@@ -2,7 +2,7 @@ import { ThemeNeutralColors } from './theme-neutral-colors';
 
 describe('ThemeNeutralColors', () => {
     function createNeutralColors(): ThemeNeutralColors {
-        return new ThemeNeutralColors('red', 'green', 'blue', 'white', 'black', 'eee', '#ddd', '#aaa', '#bbb');
+        return new ThemeNeutralColors('red', 'green', 'blue', 'blue', 'white', 'black', 'eee', '#ddd', '#aaa', '#bbb');
     }
 
     beforeEach(() => {});
@@ -28,6 +28,16 @@ describe('ThemeNeutralColors', () => {
             expect(colors.windowButtonIcon).toEqual('red');
         });
 
+        it('should set hoveredItemBackground', () => {
+            // Arrange
+
+            // Act
+            const colors: ThemeNeutralColors = createNeutralColors();
+
+            // Assert
+            expect(colors.hoveredItemBackground).toEqual('black');
+        });
+
         it('should set tabText', () => {
             // Arrange
 
@@ -48,24 +58,24 @@ describe('ThemeNeutralColors', () => {
             expect(colors.selectedTabText).toEqual('white');
         });
 
-        it('should set mainBackground', () => {
+        it('should set primaryBackground', () => {
             // Arrange
 
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.mainBackground).toEqual('#aaa');
+            expect(colors.primaryBackground).toEqual('#aaa');
         });
 
-        it('should set headerBackground', () => {
+        it('should set secondaryBackground', () => {
             // Arrange
 
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.headerBackground).toEqual('#bbb');
+            expect(colors.secondaryBackground).toEqual('#aaa');
         });
 
         it('should set primaryText', () => {

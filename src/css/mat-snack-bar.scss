@@ -1,15 +1,15 @@
 .mat-simple-snackbar {
-  @extend .color-secondary-text;
+    color: var(--theme-secondary-text);
 }
 
 .mat-simple-snackbar > span {
-  overflow-wrap: anywhere;
+    overflow-wrap: anywhere;
 }
 
 .mat-simple-snackbar-action {
-  @extend .color-primary;
+    color: var(--theme-accent-color);
 }
 
 .dark-snackbar {
-  @extend .background-color-background;
+    background-color: var(--theme-secondary-background);
 }

@@ -201,10 +201,11 @@ export class AppearanceService {
         // Neutral colors
         let themeName: string = 'default-theme-dark';
         element.style.setProperty('--theme-window-button-icon', this.selectedTheme.darkColors.windowButtonIcon);
+        element.style.setProperty('--theme-hovered-item-background', this.selectedTheme.darkColors.hoveredItemBackground);
         element.style.setProperty('--theme-tab-text', this.selectedTheme.darkColors.tabText);
         element.style.setProperty('--theme-selected-tab-text', this.selectedTheme.darkColors.selectedTabText);
-        element.style.setProperty('--theme-main-background', this.selectedTheme.darkColors.mainBackground);
-        element.style.setProperty('--theme-header-background', this.selectedTheme.darkColors.headerBackground);
+        element.style.setProperty('--theme-primary-background', this.selectedTheme.darkColors.primaryBackground);
+        element.style.setProperty('--theme-secondary-background', this.selectedTheme.darkColors.secondaryBackground);
         element.style.setProperty('--theme-primary-text', this.selectedTheme.darkColors.primaryText);
         element.style.setProperty('--theme-secondary-text', this.selectedTheme.darkColors.secondaryText);
         element.style.setProperty('--theme-settings-separators', this.selectedTheme.darkColors.settingsSeparators);
@@ -213,10 +214,11 @@ export class AppearanceService {
         if (this.isUsingLightTheme) {
             themeName = 'default-theme-light';
             element.style.setProperty('--theme-window-button-icon', this.selectedTheme.lightColors.windowButtonIcon);
+            element.style.setProperty('--theme-hovered-item-background', this.selectedTheme.lightColors.hoveredItemBackground);
             element.style.setProperty('--theme-tab-text', this.selectedTheme.lightColors.tabText);
             element.style.setProperty('--theme-selected-tab-text', this.selectedTheme.lightColors.selectedTabText);
-            element.style.setProperty('--theme-main-background', this.selectedTheme.lightColors.mainBackground);
-            element.style.setProperty('--theme-header-background', this.selectedTheme.lightColors.headerBackground);
+            element.style.setProperty('--theme-primary-background', this.selectedTheme.lightColors.primaryBackground);
+            element.style.setProperty('--theme-secondary-background', this.selectedTheme.lightColors.secondaryBackground);
             element.style.setProperty('--theme-primary-text', this.selectedTheme.lightColors.primaryText);
             element.style.setProperty('--theme-secondary-text', this.selectedTheme.lightColors.secondaryText);
             element.style.setProperty('--theme-settings-separators', this.selectedTheme.lightColors.settingsSeparators);

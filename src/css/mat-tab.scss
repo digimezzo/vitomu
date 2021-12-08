@@ -3,7 +3,7 @@ mat-tab-group {
 }
 
 .mat-tab-body-wrapper {
-    @extend .color-secondary-text;
+    color: var(--theme-secondary-text);
     background-color: var(--theme-main-background) !important;
     height: 100%;
 }

@@ -32,7 +32,7 @@ body {
 }
 
 h1 {
-    @extend .color-primary;
+    color: var(--theme-accent-color);
     font-weight: lighter !important;
     font-size: var(--fontsize-largest) !important;
 }
@@ -43,10 +43,10 @@ h2 {
 }
 
 a {
-    @extend .color-primary;
+    color: var(--theme-accent-color);
     outline: none; // Removes yellow outline on links
 }
 
 ::selection {
-    @extend .background-color-primary;
+    background-color: var(--theme-accent-color);
 }

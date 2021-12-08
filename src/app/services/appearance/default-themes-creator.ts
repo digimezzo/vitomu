@@ -23,7 +23,8 @@ export class DefaultThemesCreator {
             '#666',
             '#fff',
             '#1a1a1a',
-            '#111'
+            '#111',
+            '#222'
         );
 
         const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
@@ -34,7 +35,8 @@ export class DefaultThemesCreator {
             '#909090',
             '#000',
             '#f5f5f5',
-            '#fdfdfd'
+            '#fdfdfd',
+            '#fefefe'
         );
 
         const options: ThemeOptions = new ThemeOptions();
