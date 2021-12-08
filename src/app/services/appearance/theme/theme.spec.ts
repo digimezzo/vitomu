@@ -6,7 +6,7 @@ import { ThemeOptions } from './theme-options';
 
 describe('Theme', () => {
     function createNeutralColors(): ThemeNeutralColors {
-        return new ThemeNeutralColors('red', 'green', 'blue', 'white', 'black', 'white', '#eee', '#aaa', '#bbb');
+        return new ThemeNeutralColors('#000', '#111', '#222', '#333', '#444', '#555', '#666', '#777', '#888', '#999');
     }
 
     beforeEach(() => {});

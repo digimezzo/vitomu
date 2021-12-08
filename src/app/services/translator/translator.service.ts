@@ -3,13 +3,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { Constants } from '../../common/constants';
 import { Language } from '../../common/language';
 import { BaseSettings } from '../../common/settings/base-settings';
+import { BaseTranslatorService } from './base-translator.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class TranslatorService {
-    constructor(private translate: TranslateService, private settings: BaseSettings) {
-        this.translate.setDefaultLang(this.settings.defaultLanguage);
+export class TranslatorService implements BaseTranslatorService {
+    constructor(private translateService: TranslateService, private settings: BaseSettings) {
+        this.translateService.setDefaultLang(this.settings.defaultLanguage);
     }
 
     public languages: Language[] = Constants.languages;
@@ -20,14 +21,14 @@ export class TranslatorService {
 
     public set selectedLanguage(v: Language) {
         this.settings.language = v.code;
-        this.translate.use(v.code);
+        this.translateService.use(v.code);
     }
 
     public applyLanguage(): void {
-        this.translate.use(this.settings.language);
+        this.translateService.use(this.settings.language);
     }
 
     public getAsync(key: string | Array<string>, interpolateParams?: Object): Promise<string> {
-        return this.translate.get(key, interpolateParams).toPromise();
+        return this.translateService.get(key, interpolateParams).toPromise();
     }
 }

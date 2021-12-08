@@ -50,7 +50,9 @@ import { WindowControlsComponent } from './components/window-controls/window-con
 import { WebviewDirective } from './directives/webview.directive';
 import { GlobalErrorHandler } from './global-error-handler';
 import { AppearanceService } from './services/appearance/appearance.service';
+import { BaseAppearanceService } from './services/appearance/base-appearance.service';
 import { DefaultThemesCreator } from './services/appearance/default-themes-creator';
+import { BaseConvertService } from './services/convert/base-convert.service';
 import { ConvertService } from './services/convert/convert.service';
 import { DependencyCheckerFactory } from './services/convert/dependency-checker-factory';
 import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
@@ -58,8 +60,11 @@ import { VideoConverterFactory } from './services/convert/video-converter.factor
 import { YoutubeDownloaderDownloader } from './services/convert/youtube-downloader-downloader';
 import { YoutubeDownloaderUpdater } from './services/convert/youtube-downloader-updater';
 import { ElectronService } from './services/electron.service';
+import { BaseSnackBarService } from './services/snack-bar/base-snack-bar.service';
 import { SnackBarService } from './services/snack-bar/snack-bar.service';
+import { BaseTranslatorService } from './services/translator/base-translator.service';
 import { TranslatorService } from './services/translator/translator.service';
+import { BaseUpdateService } from './services/update/base-update.service';
 import { UpdateService } from './services/update/update.service';
 
 // AoT requires an exported function for factories
@@ -110,10 +115,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ],
     providers: [
         ElectronService,
-        TranslatorService,
-        AppearanceService,
-        ConvertService,
-        SnackBarService,
         UpdateService,
         Logger,
         Settings,
@@ -134,6 +135,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         DefaultThemesCreator,
         { provide: BaseSettings, useClass: Settings },
         { provide: BaseRemoteProxy, useClass: RemoteProxy },
+        { provide: BaseAppearanceService, useClass: AppearanceService },
+        { provide: BaseConvertService, useClass: ConvertService },
+        { provide: BaseSnackBarService, useClass: SnackBarService },
+        { provide: BaseTranslatorService, useClass: TranslatorService },
+        { provide: BaseUpdateService, useClass: UpdateService },
         {
             provide: ErrorHandler,
             useClass: GlobalErrorHandler,

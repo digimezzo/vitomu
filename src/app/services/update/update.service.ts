@@ -4,14 +4,15 @@ import { Logger } from '../../common/logger';
 import { ProductDetails } from '../../common/product-details';
 import { BaseSettings } from '../../common/settings/base-settings';
 import { VersionComparer } from '../../common/version-comparer';
-import { SnackBarService } from '../snack-bar/snack-bar.service';
+import { BaseSnackBarService } from '../snack-bar/base-snack-bar.service';
+import { BaseUpdateService } from './base-update.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class UpdateService {
+export class UpdateService implements BaseUpdateService {
     constructor(
-        private snackBar: SnackBarService,
+        private snackBar: BaseSnackBarService,
         private settings: BaseSettings,
         private logger: Logger,
         private gitHub: GitHubApi,

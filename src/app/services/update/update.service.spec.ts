@@ -4,6 +4,7 @@ import { Logger } from '../../common/logger';
 import { ProductDetails } from '../../common/product-details';
 import { Settings } from '../../common/settings/settings';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
+import { BaseUpdateService } from './base-update.service';
 import { UpdateService } from './update.service';
 
 describe('UpdateService', () => {
@@ -18,7 +19,7 @@ describe('UpdateService', () => {
 
             settingsMock.setup((x) => x.checkForUpdates).returns(() => false);
 
-            const update: UpdateService = new UpdateService(
+            const updateService: BaseUpdateService = new UpdateService(
                 snackBarMock.object,
                 settingsMock.object,
                 loggerMock.object,
@@ -27,7 +28,7 @@ describe('UpdateService', () => {
             );
 
             // Act
-            await update.checkForUpdatesAsync();
+            await updateService.checkForUpdatesAsync();
 
             // Assert
             gitHubMock.verify((x) => x.getLastestReleaseAsync(It.isAnyString(), It.isAnyString()), Times.never());
@@ -43,7 +44,7 @@ describe('UpdateService', () => {
 
             settingsMock.setup((x) => x.checkForUpdates).returns(() => true);
 
-            const update: UpdateService = new UpdateService(
+            const updateService: BaseUpdateService = new UpdateService(
                 snackBarMock.object,
                 settingsMock.object,
                 loggerMock.object,
@@ -52,7 +53,7 @@ describe('UpdateService', () => {
             );
 
             // Act
-            await update.checkForUpdatesAsync();
+            await updateService.checkForUpdatesAsync();
 
             // Assert
             gitHubMock.verify((x) => x.getLastestReleaseAsync('digimezzo', 'vitomu'), Times.exactly(1));
@@ -70,7 +71,7 @@ describe('UpdateService', () => {
             gitHubMock.setup((x) => x.getLastestReleaseAsync('digimezzo', 'vitomu')).returns(async () => '2.0.3');
             productDetailsMock.setup((x) => x.version).returns(() => '2.0.2');
 
-            const update: UpdateService = new UpdateService(
+            const updateService: BaseUpdateService = new UpdateService(
                 snackBarMock.object,
                 settingsMock.object,
                 loggerMock.object,
@@ -79,7 +80,7 @@ describe('UpdateService', () => {
             );
 
             // Act
-            await update.checkForUpdatesAsync();
+            await updateService.checkForUpdatesAsync();
 
             // Assert
             snackBarMock.verify((x) => x.notifyOfNewVersionAsync('2.0.3'), Times.exactly(1));
@@ -97,7 +98,7 @@ describe('UpdateService', () => {
             gitHubMock.setup((x) => x.getLastestReleaseAsync('digimezzo', 'vitomu')).returns(async () => '2.0.2');
             productDetailsMock.setup((x) => x.version).returns(() => '2.0.2');
 
-            const update: UpdateService = new UpdateService(
+            const updateService: BaseUpdateService = new UpdateService(
                 snackBarMock.object,
                 settingsMock.object,
                 loggerMock.object,
@@ -106,7 +107,7 @@ describe('UpdateService', () => {
             );
 
             // Act
-            await update.checkForUpdatesAsync();
+            await updateService.checkForUpdatesAsync();
 
             // Assert
             snackBarMock.verify((x) => x.notifyOfNewVersionAsync(It.isAnyString()), Times.never());
@@ -124,7 +125,7 @@ describe('UpdateService', () => {
             gitHubMock.setup((x) => x.getLastestReleaseAsync('digimezzo', 'vitomu')).returns(async () => '2.0.1');
             productDetailsMock.setup((x) => x.version).returns(() => '2.0.2');
 
-            const update: UpdateService = new UpdateService(
+            const updateService: BaseUpdateService = new UpdateService(
                 snackBarMock.object,
                 settingsMock.object,
                 loggerMock.object,
@@ -133,7 +134,7 @@ describe('UpdateService', () => {
             );
 
             // Act
-            await update.checkForUpdatesAsync();
+            await updateService.checkForUpdatesAsync();
 
             // Assert
             snackBarMock.verify((x) => x.notifyOfNewVersionAsync(It.isAnyString()), Times.never());

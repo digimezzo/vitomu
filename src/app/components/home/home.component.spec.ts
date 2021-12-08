@@ -1,5 +1,5 @@
 import { Mock, Times } from 'typemoq';
-import { AppearanceService } from '../../services/appearance/appearance.service';
+import { BaseAppearanceService } from '../../services/appearance/base-appearance.service';
 import { UpdateService } from '../../services/update/update.service';
 import { HomeComponent } from './home.component';
 
@@ -7,7 +7,7 @@ describe('HomeComponent', () => {
     describe('ngOnInit', () => {
         it('Should check for updates', () => {
             // Arrange
-            const appearanceMock = Mock.ofType<AppearanceService>();
+            const appearanceMock = Mock.ofType<BaseAppearanceService>();
             const updateMock = Mock.ofType<UpdateService>();
             const homeComponent: HomeComponent = new HomeComponent(appearanceMock.object, updateMock.object);
 

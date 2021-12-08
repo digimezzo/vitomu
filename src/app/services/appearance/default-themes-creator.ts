@@ -24,7 +24,8 @@ export class DefaultThemesCreator {
             '#fff',
             '#1a1a1a',
             '#111',
-            '#222'
+            '#222',
+            '#333'
         );
 
         const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
@@ -36,11 +37,12 @@ export class DefaultThemesCreator {
             '#000',
             '#f5f5f5',
             '#fdfdfd',
-            '#fefefe'
+            '#fefefe',
+            '#fdfdfd'
         );
 
         const options: ThemeOptions = new ThemeOptions();
 
-        return new Theme('Dopamine', this.creator, new ThemeCoreColors('#6260e3', '#3fdcdd', '#4883e0'), darkColors, lightColors, options);
+        return new Theme('Vitomu', this.creator, new ThemeCoreColors('#6260e3', '#3fdcdd', '#4883e0'), darkColors, lightColors, options);
     }
 }

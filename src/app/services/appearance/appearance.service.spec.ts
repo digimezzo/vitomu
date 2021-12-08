@@ -1,12 +1,12 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Observable, Subject } from 'rxjs';
 import { IMock, Mock, Times } from 'typemoq';
-import { Constants } from '../../common/application/constants';
-import { FontSize } from '../../common/application/font-size';
-import { BaseRemoteProxy } from '../../common/io/base-remote-proxy';
-import { Desktop } from '../../common/io/desktop';
-import { DocumentProxy } from '../../common/io/document-proxy';
-import { FileSystem } from '../../common/io/file-system';
+import { BaseRemoteProxy } from '../../common/base-remote-proxy';
+import { Constants } from '../../common/constants';
+import { Desktop } from '../../common/desktop';
+import { DocumentProxy } from '../../common/document-proxy';
+import { FileSystem } from '../../common/file-system';
+import { FontSize } from '../../common/font-size';
 import { Logger } from '../../common/logger';
 import { BaseSettings } from '../../common/settings/base-settings';
 import { AppearanceService } from './appearance.service';
@@ -51,68 +51,42 @@ describe('AppearanceService', () => {
         );
     }
 
-    function createDarkColors(selectedItemText: string): ThemeNeutralColors {
+    function createDarkColors(): ThemeNeutralColors {
         return new ThemeNeutralColors(
             '#000000',
             '#011111',
             '#022222',
-            selectedItemText,
             '#033333',
             '#044444',
             '#055555',
             '#066666',
             '#077777',
             '#088888',
-            '#099999',
-            '#0aaaaa',
-            '#0bbbbb',
-            '#0ccccc',
-            '#0ddddd',
-            '#0eeeee',
-            '#0fffff',
-            '#0fffff',
-            '#0fffff',
-            '#0fffff',
-            '#0fffff',
-            '#0fffff',
-            '#0fffff'
+            '#099999'
         );
     }
 
-    function createLightColors(selectedItemText: string): ThemeNeutralColors {
+    function createLightColors(): ThemeNeutralColors {
         return new ThemeNeutralColors(
             '#100000',
             '#111111',
             '#122222',
-            selectedItemText,
             '#133333',
             '#144444',
             '#155555',
             '#166666',
             '#177777',
             '#188888',
-            '#199999',
-            '#1aaaaa',
-            '#1bbbbb',
-            '#1ccccc',
-            '#1ddddd',
-            '#1eeeee',
-            '#1fffff',
-            '#1fffff',
-            '#1fffff',
-            '#1fffff',
-            '#1fffff',
-            '#1fffff',
-            '#1fffff'
+            '#199999'
         );
     }
 
-    function createTheme(name: string, selectedItemText: string): Theme {
+    function createTheme(name: string): Theme {
         const creator: ThemeCreator = new ThemeCreator('My creator', 'my@email.com');
         const coreColors: ThemeCoreColors = new ThemeCoreColors('#fff', '#000', '#ccc');
-        const darkColors: ThemeNeutralColors = createDarkColors(selectedItemText);
-        const lightColors: ThemeNeutralColors = createLightColors(selectedItemText);
-        const options: ThemeOptions = new ThemeOptions(false);
+        const darkColors: ThemeNeutralColors = createDarkColors();
+        const lightColors: ThemeNeutralColors = createLightColors();
+        const options: ThemeOptions = new ThemeOptions();
 
         const theme: Theme = new Theme(name, creator, coreColors, darkColors, lightColors, options);
 
@@ -172,56 +146,30 @@ describe('AppearanceService', () => {
         expect(documentElementMock.style.getPropertyValue('--theme-accent-color-A700')).toEqual('#1aff1a');
     }
 
-    function assertDarkColorCssProperties(selectedItemText: string, scrollBars: string): void {
+    function assertDarkColorCssProperties(scrollBars: string): void {
         expect(documentElementMock.style.getPropertyValue('--theme-window-button-icon')).toEqual('#000000');
         expect(documentElementMock.style.getPropertyValue('--theme-hovered-item-background')).toEqual('#011111');
-        expect(documentElementMock.style.getPropertyValue('--theme-selected-item-background')).toEqual('#022222');
-        expect(documentElementMock.style.getPropertyValue('--theme-selected-item-text')).toEqual(selectedItemText);
-        expect(documentElementMock.style.getPropertyValue('--theme-tab-text')).toEqual('#033333');
-        expect(documentElementMock.style.getPropertyValue('--theme-selected-tab-text')).toEqual('#044444');
-        expect(documentElementMock.style.getPropertyValue('--theme-main-background')).toEqual('#055555');
-        expect(documentElementMock.style.getPropertyValue('--theme-header-background')).toEqual('#066666');
-        expect(documentElementMock.style.getPropertyValue('--theme-footer-background')).toEqual('#077777');
-        expect(documentElementMock.style.getPropertyValue('--theme-side-pane-background')).toEqual('#088888');
-        expect(documentElementMock.style.getPropertyValue('--theme-primary-text')).toEqual('#099999');
-        expect(documentElementMock.style.getPropertyValue('--theme-secondary-text')).toEqual('#0aaaaa');
-        expect(documentElementMock.style.getPropertyValue('--theme-breadcrumb-background')).toEqual('#0bbbbb');
-        expect(documentElementMock.style.getPropertyValue('--theme-slider-background')).toEqual('#0ccccc');
-        expect(documentElementMock.style.getPropertyValue('--theme-slider-thumb-background')).toEqual('#0ddddd');
-        expect(documentElementMock.style.getPropertyValue('--theme-album-cover-logo')).toEqual('#0eeeee');
-        expect(documentElementMock.style.getPropertyValue('--theme-album-cover-background')).toEqual('#0fffff');
-        expect(documentElementMock.style.getPropertyValue('--theme-pane-separators')).toEqual('#0fffff');
-        expect(documentElementMock.style.getPropertyValue('--theme-settings-separators')).toEqual('#0fffff');
+        expect(documentElementMock.style.getPropertyValue('--theme-tab-text')).toEqual('#022222');
+        expect(documentElementMock.style.getPropertyValue('--theme-selected-tab-text')).toEqual('#033333');
+        expect(documentElementMock.style.getPropertyValue('--theme-primary-background')).toEqual('#044444');
+        expect(documentElementMock.style.getPropertyValue('--theme-secondary-background')).toEqual('#055555');
+        expect(documentElementMock.style.getPropertyValue('--theme-primary-text')).toEqual('#066666');
+        expect(documentElementMock.style.getPropertyValue('--theme-secondary-text')).toEqual('#077777');
+        expect(documentElementMock.style.getPropertyValue('--theme-settings-separators')).toEqual('#088888');
         expect(documentElementMock.style.getPropertyValue('--theme-scroll-bars')).toEqual(scrollBars);
-        expect(documentElementMock.style.getPropertyValue('--theme-search-box')).toEqual('#0fffff');
-        expect(documentElementMock.style.getPropertyValue('--theme-search-box-text')).toEqual('#0fffff');
-        expect(documentElementMock.style.getPropertyValue('--theme-search-box-icon')).toEqual('#0fffff');
     }
 
-    function assertLightColorCssProperties(selectedItemText: string, scrollBars: string): void {
+    function assertLightColorCssProperties(scrollBars: string): void {
         expect(documentElementMock.style.getPropertyValue('--theme-window-button-icon')).toEqual('#100000');
         expect(documentElementMock.style.getPropertyValue('--theme-hovered-item-background')).toEqual('#111111');
-        expect(documentElementMock.style.getPropertyValue('--theme-selected-item-background')).toEqual('#122222');
-        expect(documentElementMock.style.getPropertyValue('--theme-selected-item-text')).toEqual(selectedItemText);
-        expect(documentElementMock.style.getPropertyValue('--theme-tab-text')).toEqual('#133333');
-        expect(documentElementMock.style.getPropertyValue('--theme-selected-tab-text')).toEqual('#144444');
-        expect(documentElementMock.style.getPropertyValue('--theme-main-background')).toEqual('#155555');
-        expect(documentElementMock.style.getPropertyValue('--theme-header-background')).toEqual('#166666');
-        expect(documentElementMock.style.getPropertyValue('--theme-footer-background')).toEqual('#177777');
-        expect(documentElementMock.style.getPropertyValue('--theme-side-pane-background')).toEqual('#188888');
-        expect(documentElementMock.style.getPropertyValue('--theme-primary-text')).toEqual('#199999');
-        expect(documentElementMock.style.getPropertyValue('--theme-secondary-text')).toEqual('#1aaaaa');
-        expect(documentElementMock.style.getPropertyValue('--theme-breadcrumb-background')).toEqual('#1bbbbb');
-        expect(documentElementMock.style.getPropertyValue('--theme-slider-background')).toEqual('#1ccccc');
-        expect(documentElementMock.style.getPropertyValue('--theme-slider-thumb-background')).toEqual('#1ddddd');
-        expect(documentElementMock.style.getPropertyValue('--theme-album-cover-logo')).toEqual('#1eeeee');
-        expect(documentElementMock.style.getPropertyValue('--theme-album-cover-background')).toEqual('#1fffff');
-        expect(documentElementMock.style.getPropertyValue('--theme-pane-separators')).toEqual('#1fffff');
-        expect(documentElementMock.style.getPropertyValue('--theme-settings-separators')).toEqual('#1fffff');
+        expect(documentElementMock.style.getPropertyValue('--theme-tab-text')).toEqual('#122222');
+        expect(documentElementMock.style.getPropertyValue('--theme-selected-tab-text')).toEqual('#133333');
+        expect(documentElementMock.style.getPropertyValue('--theme-primary-background')).toEqual('#144444');
+        expect(documentElementMock.style.getPropertyValue('--theme-secondary-background')).toEqual('#155555');
+        expect(documentElementMock.style.getPropertyValue('--theme-primary-text')).toEqual('#166666');
+        expect(documentElementMock.style.getPropertyValue('--theme-secondary-text')).toEqual('#177777');
+        expect(documentElementMock.style.getPropertyValue('--theme-settings-separators')).toEqual('#188888');
         expect(documentElementMock.style.getPropertyValue('--theme-scroll-bars')).toEqual(scrollBars);
-        expect(documentElementMock.style.getPropertyValue('--theme-search-box')).toEqual('#1fffff');
-        expect(documentElementMock.style.getPropertyValue('--theme-search-box-text')).toEqual('#1fffff');
-        expect(documentElementMock.style.getPropertyValue('--theme-search-box-icon')).toEqual('#1fffff');
     }
 
     function resetElements(): void {
@@ -271,8 +219,8 @@ describe('AppearanceService', () => {
         defaultThemesCreatorMock = Mock.ofType<DefaultThemesCreator>();
         documentProxyMock = Mock.ofType<DocumentProxy>();
 
-        theme1 = createTheme('Theme 1', '');
-        theme2 = createTheme('Theme 2', '#ffffff');
+        theme1 = createTheme('Theme 1');
+        theme2 = createTheme('Theme 2');
 
         resetDefaultThemesCreatorMock();
         resetFileSystemMock();
@@ -547,7 +495,7 @@ describe('AppearanceService', () => {
             const settingsStub: any = { followSystemTheme: false };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
+            service.selectedTheme = createTheme('My theme');
 
             // Act
             service.followSystemTheme = true;
@@ -561,7 +509,7 @@ describe('AppearanceService', () => {
             const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: true };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
+            service.selectedTheme = createTheme('My theme');
             resetElements();
 
             // Act
@@ -569,7 +517,7 @@ describe('AppearanceService', () => {
 
             // Assert
             assertSelectedThemeAccentColorCssProperties();
-            assertLightColorCssProperties('', '#1fffff');
+            assertLightColorCssProperties('#199999');
             expect(containerElementMock.classList).toContain('default-theme-light');
             expect(bodyMock.classList).toContain('default-theme-light');
         });
@@ -579,7 +527,7 @@ describe('AppearanceService', () => {
             const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
+            service.selectedTheme = createTheme('My theme');
             resetElements();
 
             // Act
@@ -587,41 +535,9 @@ describe('AppearanceService', () => {
 
             // Assert
             assertSelectedThemeAccentColorCssProperties();
-            assertDarkColorCssProperties('', '#0fffff');
+            assertDarkColorCssProperties('#099999');
             expect(containerElementMock.classList).toContain('default-theme-dark');
             expect(bodyMock.classList).toContain('default-theme-dark');
-        });
-
-        it('should set shouldOverrideSelectedItemText to false if the theme selectedItemText is empty', () => {
-            // Arrange
-            const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false };
-
-            const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
-            resetElements();
-            service.shouldOverrideSelectedItemText = true;
-
-            // Act
-            service.followSystemTheme = false;
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeFalsy();
-        });
-
-        it('should set shouldOverrideSelectedItemText to true if the theme selectedItemText is not empty', () => {
-            // Arrange
-            const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false };
-
-            const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '#ffffff');
-            resetElements();
-            service.shouldOverrideSelectedItemText = false;
-
-            // Act
-            service.followSystemTheme = false;
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeTruthy();
         });
     });
 
@@ -657,7 +573,7 @@ describe('AppearanceService', () => {
             const settingsStub: any = { useLightBackgroundTheme: false };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
+            service.selectedTheme = createTheme('My theme');
 
             // Act
             service.useLightBackgroundTheme = true;
@@ -671,7 +587,7 @@ describe('AppearanceService', () => {
             const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: true };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
+            service.selectedTheme = createTheme('My theme');
             resetElements();
 
             // Act
@@ -679,7 +595,7 @@ describe('AppearanceService', () => {
 
             // Assert
             assertSelectedThemeAccentColorCssProperties();
-            assertLightColorCssProperties('', '#1fffff');
+            assertLightColorCssProperties('#199999');
             expect(containerElementMock.classList).toContain('default-theme-light');
             expect(bodyMock.classList).toContain('default-theme-light');
         });
@@ -689,7 +605,7 @@ describe('AppearanceService', () => {
             const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
+            service.selectedTheme = createTheme('My theme');
             resetElements();
 
             // Act
@@ -697,41 +613,9 @@ describe('AppearanceService', () => {
 
             // Assert
             assertSelectedThemeAccentColorCssProperties();
-            assertDarkColorCssProperties('', '#0fffff');
+            assertDarkColorCssProperties('#099999');
             expect(containerElementMock.classList).toContain('default-theme-dark');
             expect(bodyMock.classList).toContain('default-theme-dark');
-        });
-
-        it('should set shouldOverrideSelectedItemText to false if the theme selectedItemText is empty', () => {
-            // Arrange
-            const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false };
-
-            const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
-            resetElements();
-            service.shouldOverrideSelectedItemText = true;
-
-            // Act
-            service.useLightBackgroundTheme = false;
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeFalsy();
-        });
-
-        it('should set shouldOverrideSelectedItemText to true if the theme selectedItemText is not empty', () => {
-            // Arrange
-            const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false };
-
-            const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '#ffffff');
-            resetElements();
-            service.shouldOverrideSelectedItemText = false;
-
-            // Act
-            service.useLightBackgroundTheme = false;
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeTruthy();
         });
     });
 
@@ -767,7 +651,7 @@ describe('AppearanceService', () => {
             const settingsStub: any = { followSystemColor: false };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
+            service.selectedTheme = createTheme('My theme');
 
             // Act
             service.followSystemColor = true;
@@ -781,7 +665,7 @@ describe('AppearanceService', () => {
             const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: true };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
+            service.selectedTheme = createTheme('My theme');
             resetElements();
 
             // Act
@@ -789,7 +673,7 @@ describe('AppearanceService', () => {
 
             // Assert
             assertSelectedThemeAccentColorCssProperties();
-            assertLightColorCssProperties('', '#1fffff');
+            assertLightColorCssProperties('#199999');
             expect(containerElementMock.classList).toContain('default-theme-light');
             expect(bodyMock.classList).toContain('default-theme-light');
         });
@@ -799,7 +683,7 @@ describe('AppearanceService', () => {
             const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
+            service.selectedTheme = createTheme('My theme');
             resetElements();
 
             // Act
@@ -807,41 +691,9 @@ describe('AppearanceService', () => {
 
             // Assert
             assertSelectedThemeAccentColorCssProperties();
-            assertDarkColorCssProperties('', '#0fffff');
+            assertDarkColorCssProperties('#099999');
             expect(containerElementMock.classList).toContain('default-theme-dark');
             expect(bodyMock.classList).toContain('default-theme-dark');
-        });
-
-        it('should set shouldOverrideSelectedItemText to false if the theme selectedItemText is empty', () => {
-            // Arrange
-            const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false };
-
-            const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
-            resetElements();
-            service.shouldOverrideSelectedItemText = true;
-
-            // Act
-            service.followSystemColor = false;
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeFalsy();
-        });
-
-        it('should set shouldOverrideSelectedItemText to true if the theme selectedItemText is not empty', () => {
-            // Arrange
-            const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false };
-
-            const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '#ffffff');
-            resetElements();
-            service.shouldOverrideSelectedItemText = false;
-
-            // Act
-            service.followSystemColor = false;
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeTruthy();
         });
     });
 
@@ -880,7 +732,7 @@ describe('AppearanceService', () => {
     describe('selectedTheme', () => {
         it('should return the selected theme', () => {
             // Arrange
-            const theme: Theme = createTheme('My theme', '');
+            const theme: Theme = createTheme('My theme');
             const settingsStub: any = { theme: '' };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
@@ -896,7 +748,7 @@ describe('AppearanceService', () => {
 
         it('should save the theme in the settings', () => {
             // Arrange
-            const theme: Theme = createTheme('My theme', '');
+            const theme: Theme = createTheme('My theme');
             const settingsStub: any = { theme: '' };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
@@ -910,11 +762,11 @@ describe('AppearanceService', () => {
 
         it('should apply the light theme if using the light theme', () => {
             // Arrange
-            const theme: Theme = createTheme('My theme', '');
+            const theme: Theme = createTheme('My theme');
             const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: true, theme: '' };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
+            service.selectedTheme = createTheme('My theme');
             resetElements();
 
             // Act
@@ -922,18 +774,18 @@ describe('AppearanceService', () => {
 
             // Assert
             assertSelectedThemeAccentColorCssProperties();
-            assertLightColorCssProperties('', '#1fffff');
+            assertLightColorCssProperties('#199999');
             expect(containerElementMock.classList).toContain('default-theme-light');
             expect(bodyMock.classList).toContain('default-theme-light');
         });
 
         it('should apply the dark theme if using the dark theme', () => {
             // Arrange
-            const theme: Theme = createTheme('My theme', '');
+            const theme: Theme = createTheme('My theme');
             const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false, theme: '' };
 
             const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.selectedTheme = createTheme('My theme', '');
+            service.selectedTheme = createTheme('My theme');
             resetElements();
 
             // Act
@@ -941,37 +793,9 @@ describe('AppearanceService', () => {
 
             // Assert
             assertSelectedThemeAccentColorCssProperties();
-            assertDarkColorCssProperties('', '#0fffff');
+            assertDarkColorCssProperties('#099999');
             expect(containerElementMock.classList).toContain('default-theme-dark');
             expect(bodyMock.classList).toContain('default-theme-dark');
-        });
-
-        it('should set shouldOverrideSelectedItemText to false if the theme selectedItemText is empty', () => {
-            // Arrange
-            const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false };
-
-            const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.shouldOverrideSelectedItemText = true;
-
-            // Act
-            service.selectedTheme = createTheme('My theme', '');
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeFalsy();
-        });
-
-        it('should set shouldOverrideSelectedItemText to true if the theme selectedItemText is not empty', () => {
-            // Arrange
-            const settingsStub: any = { followSystemTheme: false, useLightBackgroundTheme: false };
-
-            const service: BaseAppearanceService = createServiceWithSettingsStub(settingsStub);
-            service.shouldOverrideSelectedItemText = false;
-
-            // Act
-            service.selectedTheme = createTheme('My theme', '#ffffff');
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeTruthy();
         });
     });
 
@@ -1025,10 +849,8 @@ describe('AppearanceService', () => {
 
             // Assert
             expect(documentElementMock.style.getPropertyValue('--fontsize-normal')).toEqual('13px');
-            expect(documentElementMock.style.getPropertyValue('--fontsize-medium')).toEqual('14.859px');
-            expect(documentElementMock.style.getPropertyValue('--fontsize-large')).toEqual('20.423px');
-            expect(documentElementMock.style.getPropertyValue('--fontsize-extra-large')).toEqual('24.141px');
-            expect(documentElementMock.style.getPropertyValue('--fontsize-mega')).toEqual('33.423px');
+            expect(documentElementMock.style.getPropertyValue('--fontsize-larger')).toEqual('18.46px');
+            expect(documentElementMock.style.getPropertyValue('--fontsize-largest')).toEqual('26px');
         });
     });
 
@@ -1109,36 +931,6 @@ describe('AppearanceService', () => {
             // Assert
             assertSelectedThemeAccentColorCssProperties();
         });
-
-        it('should set shouldOverrideSelectedItemText to false if the theme selectedItemText is empty', () => {
-            // Arrange
-            settingsMock.reset();
-            settingsMock.setup((x) => x.theme).returns(() => 'Theme 1');
-
-            const service: BaseAppearanceService = createService();
-            service.shouldOverrideSelectedItemText = true;
-
-            // Act
-            service.refreshThemes();
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeFalsy();
-        });
-
-        it('should set shouldOverrideSelectedItemText to true if the theme selectedItemText is not empty', () => {
-            // Arrange
-            settingsMock.reset();
-            settingsMock.setup((x) => x.theme).returns(() => 'Theme 2');
-
-            const service: BaseAppearanceService = createService();
-            service.shouldOverrideSelectedItemText = false;
-
-            // Act
-            service.refreshThemes();
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeTruthy();
-        });
     });
 
     describe('applyAppearance', () => {
@@ -1157,10 +949,8 @@ describe('AppearanceService', () => {
 
             // Assert
             expect(documentElementMock.style.getPropertyValue('--fontsize-normal')).toEqual('13px');
-            expect(documentElementMock.style.getPropertyValue('--fontsize-medium')).toEqual('14.859px');
-            expect(documentElementMock.style.getPropertyValue('--fontsize-large')).toEqual('20.423px');
-            expect(documentElementMock.style.getPropertyValue('--fontsize-extra-large')).toEqual('24.141px');
-            expect(documentElementMock.style.getPropertyValue('--fontsize-mega')).toEqual('33.423px');
+            expect(documentElementMock.style.getPropertyValue('--fontsize-larger')).toEqual('18.46px');
+            expect(documentElementMock.style.getPropertyValue('--fontsize-largest')).toEqual('26px');
         });
 
         it('should apply the dark theme of the selected theme when follow the system theme is disabled and use light background theme is disabled', () => {
@@ -1181,7 +971,7 @@ describe('AppearanceService', () => {
             service.applyAppearance();
 
             // Assert
-            assertDarkColorCssProperties('#ffffff', '#0fffff');
+            assertDarkColorCssProperties('#099999');
         });
 
         it('should apply the light theme of the selected theme when follow the system theme is disabled and use light background theme is enabled', () => {
@@ -1202,7 +992,7 @@ describe('AppearanceService', () => {
             service.applyAppearance();
 
             // Assert
-            assertLightColorCssProperties('#ffffff', '#1fffff');
+            assertLightColorCssProperties('#199999');
         });
 
         it('should apply the dark theme of the selected theme when follow the system theme is enabled and the desktop is using a dark theme', () => {
@@ -1223,7 +1013,7 @@ describe('AppearanceService', () => {
             service.applyAppearance();
 
             // Assert
-            assertDarkColorCssProperties('#ffffff', '#0fffff');
+            assertDarkColorCssProperties('#099999');
         });
 
         it('should apply the light theme of the selected theme when follow the system theme is enabled and the desktop is using a light theme', () => {
@@ -1244,7 +1034,7 @@ describe('AppearanceService', () => {
             service.applyAppearance();
 
             // Assert
-            assertLightColorCssProperties('#ffffff', '#1fffff');
+            assertLightColorCssProperties('#199999');
         });
 
         it('should apply the colors of the selected theme when follow the system color is disabled', () => {
@@ -1264,7 +1054,7 @@ describe('AppearanceService', () => {
 
             // Assert
             assertSelectedThemeAccentColorCssProperties();
-            assertDarkColorCssProperties('#ffffff', '#0fffff');
+            assertDarkColorCssProperties('#099999');
         });
 
         it('should apply the colors of the system when follow the system color is enabled', () => {
@@ -1285,131 +1075,7 @@ describe('AppearanceService', () => {
 
             // Assert
             assertSystemThemeAccentColorCssProperties();
-            assertDarkColorCssProperties('#ffffff', '#00ff00');
-        });
-
-        it('should set shouldOverrideSelectedItemText to false if the theme selectedItemText is empty', () => {
-            // Arrange
-            settingsMock.reset();
-            settingsMock.setup((x) => x.theme).returns(() => 'Theme 1');
-            settingsMock.setup((x) => x.fontSize).returns(() => 13);
-
-            const service: BaseAppearanceService = createService();
-
-            resetElements();
-            service.shouldOverrideSelectedItemText = true;
-
-            // Act
-            service.applyAppearance();
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeFalsy();
-        });
-
-        it('should set shouldOverrideSelectedItemText to true if the theme selectedItemText is not empty', () => {
-            // Arrange
-            settingsMock.reset();
-            settingsMock.setup((x) => x.theme).returns(() => 'Theme 2');
-            settingsMock.setup((x) => x.fontSize).returns(() => 13);
-
-            const service: BaseAppearanceService = createService();
-
-            resetElements();
-            service.shouldOverrideSelectedItemText = false; // Act
-            service.applyAppearance();
-
-            // Assert
-            expect(service.shouldOverrideSelectedItemText).toBeTruthy();
-        });
-
-        it('should apply a correct margin when not using system title bar search is visible', () => {
-            // Arrange
-            settingsMock.reset();
-            settingsMock.setup((x) => x.theme).returns(() => 'Theme 1');
-            settingsMock.setup((x) => x.fontSize).returns(() => 13);
-            settingsMock.setup((x) => x.useSystemTitleBar).returns(() => false);
-            const service: BaseAppearanceService = createService();
-            resetElements();
-
-            // Act
-            service.applyAppearance();
-
-            // Assert
-            expect(documentElementMock.style.getPropertyValue('--mat-tab-header-margin-right')).toEqual('350px');
-        });
-
-        it('should apply a correct margin when using system title bar search is visible', () => {
-            // Arrange
-            settingsMock.reset();
-            settingsMock.setup((x) => x.theme).returns(() => 'Theme 1');
-            settingsMock.setup((x) => x.fontSize).returns(() => 13);
-            settingsMock.setup((x) => x.useSystemTitleBar).returns(() => true);
-            const service: BaseAppearanceService = createService();
-            resetElements();
-
-            // Act
-            service.applyAppearance();
-
-            // Assert
-            expect(documentElementMock.style.getPropertyValue('--mat-tab-header-margin-right')).toEqual('215px');
-        });
-    });
-
-    describe('applyMargins', () => {
-        it('should apply a correct margin when not using system title bar search is visible', () => {
-            // Arrange
-            settingsMock.reset();
-            settingsMock.setup((x) => x.useSystemTitleBar).returns(() => false);
-            const service: BaseAppearanceService = createService();
-            resetElements();
-
-            // Act
-            service.applyMargins(true);
-
-            // Assert
-            expect(documentElementMock.style.getPropertyValue('--mat-tab-header-margin-right')).toEqual('350px');
-        });
-
-        it('should apply a correct margin when not using system title bar search is not visible', () => {
-            // Arrange
-            settingsMock.reset();
-            settingsMock.setup((x) => x.useSystemTitleBar).returns(() => false);
-            const service: BaseAppearanceService = createService();
-            resetElements();
-
-            // Act
-            service.applyMargins(false);
-
-            // Assert
-            expect(documentElementMock.style.getPropertyValue('--mat-tab-header-margin-right')).toEqual('180px');
-        });
-
-        it('should apply a correct margin when using system title bar search is visible', () => {
-            // Arrange
-            settingsMock.reset();
-            settingsMock.setup((x) => x.useSystemTitleBar).returns(() => true);
-            const service: BaseAppearanceService = createService();
-            resetElements();
-
-            // Act
-            service.applyMargins(true);
-
-            // Assert
-            expect(documentElementMock.style.getPropertyValue('--mat-tab-header-margin-right')).toEqual('215px');
-        });
-
-        it('should apply a correct margin when using system title bar search is not visible', () => {
-            // Arrange
-            settingsMock.reset();
-            settingsMock.setup((x) => x.useSystemTitleBar).returns(() => true);
-            const service: BaseAppearanceService = createService();
-            resetElements();
-
-            // Act
-            service.applyMargins(false);
-
-            // Assert
-            expect(documentElementMock.style.getPropertyValue('--mat-tab-header-margin-right')).toEqual('45px');
+            assertDarkColorCssProperties('#00ff00');
         });
     });
 });

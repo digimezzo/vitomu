@@ -1,8 +1,6 @@
 <mat-form-field>
     <mat-label>{{ 'SettingsTab.AudioBitrate' | translate }}</mat-label>
-    <mat-select [(ngModel)]="convert.selectedAudioBitrate">
-        <mat-option *ngFor="let audioBitrate of convert.audioBitrates" [value]="audioBitrate">
-            {{ audioBitrate }} kbps
-        </mat-option>
+    <mat-select [(ngModel)]="convertService.selectedAudioBitrate">
+        <mat-option *ngFor="let audioBitrate of convertService.audioBitrates" [value]="audioBitrate"> {{ audioBitrate }} kbps </mat-option>
     </mat-select>
 </mat-form-field>

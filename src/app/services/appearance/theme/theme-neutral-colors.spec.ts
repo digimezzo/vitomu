@@ -2,7 +2,18 @@ import { ThemeNeutralColors } from './theme-neutral-colors';
 
 describe('ThemeNeutralColors', () => {
     function createNeutralColors(): ThemeNeutralColors {
-        return new ThemeNeutralColors('red', 'green', 'blue', 'blue', 'white', 'black', 'eee', '#ddd', '#aaa', '#bbb');
+        return new ThemeNeutralColors(
+            '#000000',
+            '#111111',
+            '#222222',
+            '#333333',
+            '#444444',
+            '#555555',
+            '#666666',
+            '#777777',
+            '#888888',
+            '#999999'
+        );
     }
 
     beforeEach(() => {});
@@ -25,7 +36,7 @@ describe('ThemeNeutralColors', () => {
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.windowButtonIcon).toEqual('red');
+            expect(colors.windowButtonIcon).toEqual('#000000');
         });
 
         it('should set hoveredItemBackground', () => {
@@ -35,7 +46,7 @@ describe('ThemeNeutralColors', () => {
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.hoveredItemBackground).toEqual('black');
+            expect(colors.hoveredItemBackground).toEqual('#111111');
         });
 
         it('should set tabText', () => {
@@ -45,7 +56,7 @@ describe('ThemeNeutralColors', () => {
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.tabText).toEqual('black');
+            expect(colors.tabText).toEqual('#222222');
         });
 
         it('should set selectedTabText', () => {
@@ -55,7 +66,7 @@ describe('ThemeNeutralColors', () => {
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.selectedTabText).toEqual('white');
+            expect(colors.selectedTabText).toEqual('#333333');
         });
 
         it('should set primaryBackground', () => {
@@ -65,7 +76,7 @@ describe('ThemeNeutralColors', () => {
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.primaryBackground).toEqual('#aaa');
+            expect(colors.primaryBackground).toEqual('#444444');
         });
 
         it('should set secondaryBackground', () => {
@@ -75,7 +86,7 @@ describe('ThemeNeutralColors', () => {
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.secondaryBackground).toEqual('#aaa');
+            expect(colors.secondaryBackground).toEqual('#555555');
         });
 
         it('should set primaryText', () => {
@@ -85,7 +96,7 @@ describe('ThemeNeutralColors', () => {
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.primaryText).toEqual('#eee');
+            expect(colors.primaryText).toEqual('#666666');
         });
 
         it('should set secondaryText', () => {
@@ -95,7 +106,7 @@ describe('ThemeNeutralColors', () => {
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.secondaryText).toEqual('#ddd');
+            expect(colors.secondaryText).toEqual('#777777');
         });
 
         it('should set settingsSeparators', () => {
@@ -105,7 +116,7 @@ describe('ThemeNeutralColors', () => {
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.settingsSeparators).toEqual('#777');
+            expect(colors.settingsSeparators).toEqual('#888888');
         });
 
         it('should set scrollBars', () => {
@@ -115,7 +126,7 @@ describe('ThemeNeutralColors', () => {
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
-            expect(colors.scrollBars).toEqual('#888');
+            expect(colors.scrollBars).toEqual('#999999');
         });
     });
 });

@@ -11,12 +11,13 @@ import { FontSize } from '../../common/font-size';
 import { Logger } from '../../common/logger';
 import { BaseSettings } from '../../common/settings/base-settings';
 import { Strings } from '../../common/strings';
+import { BaseAppearanceService } from './base-appearance.service';
 import { DefaultThemesCreator } from './default-themes-creator';
 import { Palette } from './palette';
 import { Theme } from './theme/theme';
 
 @Injectable()
-export class AppearanceService {
+export class AppearanceService implements BaseAppearanceService {
     private interval: number;
     private _themes: Theme[] = [];
 
@@ -49,6 +50,24 @@ export class AppearanceService {
             (!this.settings.followSystemTheme && this.settings.useLightBackgroundTheme) ||
             (this.settings.followSystemTheme && !this.isSystemUsingDarkTheme())
         );
+    }
+
+    public get followSystemTheme(): boolean {
+        return this.settings.followSystemTheme;
+    }
+
+    public set followSystemTheme(v: boolean) {
+        this.settings.followSystemTheme = v;
+        this.applyTheme();
+    }
+
+    public get useLightBackgroundTheme(): boolean {
+        return this.settings.useLightBackgroundTheme;
+    }
+
+    public set useLightBackgroundTheme(v: boolean) {
+        this.settings.useLightBackgroundTheme = v;
+        this.applyTheme();
     }
 
     public get followSystemColor(): boolean {
@@ -147,6 +166,12 @@ export class AppearanceService {
     private addSubscriptions(): void {
         this.subscription.add(
             this.desktop.accentColorChanged$.subscribe(() => {
+                this.applyTheme();
+            })
+        );
+
+        this.subscription.add(
+            this.desktop.nativeThemeUpdated$.subscribe(() => {
                 this.applyTheme();
             })
         );

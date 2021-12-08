@@ -44,57 +44,31 @@ describe('ColorSchemeSwitcherComponent', () => {
             const themeCreator: ThemeCreator = new ThemeCreator('My creator', 'my@email.com');
             const coreColors: ThemeCoreColors = new ThemeCoreColors('red', 'green', 'blue');
             const darkColors: ThemeNeutralColors = new ThemeNeutralColors(
-                'red',
-                'green',
-                'blue',
-                '#fff',
-                '#000',
-                '#111',
-                '#222',
-                '#333',
-                '#444',
-                '#555',
-                '#666',
-                '#777',
-                '#888',
-                '#999',
-                '#aaa',
-                '#bbb',
-                '#ccc',
-                '#ddd',
-                '#eee',
-                '#fff',
-                '#fff',
-                '#fff',
-                '#fff'
+                '#0000000',
+                '#0111111',
+                '#0222222',
+                '#0333333',
+                '#0444444',
+                '#0555555',
+                '#0666666',
+                '#0777777',
+                '#0888888',
+                '#0999999'
             );
             const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
-                'red',
-                'green',
-                'blue',
-                '#fff',
-                '#000',
-                '#111',
-                '#222',
-                '#333',
-                '#444',
-                '#555',
-                '#666',
-                '#777',
-                '#888',
-                '#999',
-                '#aaa',
-                '#bbb',
-                '#ccc',
-                '#ddd',
-                '#eee',
-                '#fff',
-                '#fff',
-                '#fff',
-                '#fff'
+                '#1000000',
+                '#1111111',
+                '#1222222',
+                '#1333333',
+                '#1444444',
+                '#1555555',
+                '#1666666',
+                '#1777777',
+                '#1888888',
+                '#1999999'
             );
 
-            const options: ThemeOptions = new ThemeOptions(false);
+            const options: ThemeOptions = new ThemeOptions();
 
             // Act
             const defaultColorScheme: Theme = new Theme('My theme', themeCreator, coreColors, darkColors, lightColors, options);

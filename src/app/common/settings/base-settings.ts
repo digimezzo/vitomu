@@ -4,7 +4,7 @@ export abstract class BaseSettings {
     public abstract audioFormat: string;
     public abstract audioBitrate: number;
     public abstract checkForUpdates: boolean;
-    public abstract useCustomTitleBar: boolean;
+    public abstract useSystemTitleBar: boolean;
     public abstract fontSize: number;
     public abstract followSystemTheme: boolean;
     public abstract useLightBackgroundTheme: boolean;
