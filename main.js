@@ -10,7 +10,6 @@ var windowStateKeeper = require("electron-window-state");
 var os = require("os");
 var path = require("path");
 var url = require("url");
-var events_1 = require("./src/app/common/events");
 electron_1.app.commandLine.appendSwitch('disable-color-correct-rendering');
 electron_log_1.default.create('main');
 electron_log_1.default.transports.file.resolvePath = function () { return path.join(electron_1.app.getPath('userData'), 'logs', 'Vitomu.log'); };
@@ -80,9 +79,6 @@ function createWindow() {
     win.on('ready-to-show', function () {
         win.show();
         win.focus();
-    });
-    win.on('focus', function () {
-        win.webContents.send(events_1.Events.windowFocusChangedEvent);
     });
     // Makes links open in external browser
     var handleRedirect = function (e, link) {

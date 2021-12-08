@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { GitHubApi } from '../../common/github-api';
+import { GitHubApi } from '../../common/api/github-api';
+import { ProductDetails } from '../../common/application/product-details';
 import { Logger } from '../../common/logger';
-import { ProductDetails } from '../../common/product-details';
 import { BaseSettings } from '../../common/settings/base-settings';
-import { VersionComparer } from '../../common/version-comparer';
 import { BaseSnackBarService } from '../snack-bar/base-snack-bar.service';
 import { BaseUpdateService } from './base-update.service';
+import { VersionComparer } from './version-comparer';
 
 @Injectable({
     providedIn: 'root',

@@ -1,4 +1,4 @@
-import { FontSize } from '../../common/font-size';
+import { FontSize } from './theme/font-size';
 import { Theme } from './theme/theme';
 
 export abstract class BaseAppearanceService {

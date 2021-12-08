@@ -1,13 +1,12 @@
-import { AudioFormat } from './audio-format';
-import { ColorTheme } from './color-theme';
-import { FontSize } from './font-size';
-import { Language } from './language';
+import { FontSize } from '../../services/appearance/theme/font-size';
+import { Language } from '../../services/appearance/theme/language';
+import { AudioFormat } from '../audio-format';
 
 export class Constants {
     public static readonly logFileName: string = 'Vitomu.log';
 
-    public static readonly applicationName: string = require('../../../package.json').name;
-    public static readonly applicationVersion: string = require('../../../package.json').version;
+    public static readonly applicationName: string = require('../../../../package.json').name;
+    public static readonly applicationVersion: string = require('../../../../package.json').version;
     public static readonly applicationCopyright: string = 'Copyright Digimezzo Ⓒ 2017 - 2021';
     public static readonly donateUrl: string = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MQALEWTEZ7HX8';
     public static readonly websiteUrl: string = 'https://www.digimezzo.com';
@@ -21,11 +20,6 @@ export class Constants {
     ];
 
     public static readonly fontSizes: FontSize[] = [new FontSize(13), new FontSize(14), new FontSize(15)];
-
-    public static readonly colorThemes: ColorTheme[] = [
-        new ColorTheme('default-pink-theme', 'Pink', '#ec1a65'),
-        new ColorTheme('default-green-theme', 'Green', '#00b163'),
-    ];
 
     public static readonly audioFormats: AudioFormat[] = [
         new AudioFormat('mp3', 'MP3', 'mp3', '.mp3'),

@@ -1,8 +1,8 @@
 import { TranslateService } from '@ngx-translate/core';
 import * as assert from 'assert';
 import { Mock, Times } from 'typemoq';
-import { Language } from '../../common/language';
 import { Settings } from '../../common/settings/settings';
+import { Language } from '../appearance/theme/language';
 import { BaseTranslatorService } from './base-translator.service';
 import { TranslatorService } from './translator.service';
 

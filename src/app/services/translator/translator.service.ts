@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Constants } from '../../common/constants';
-import { Language } from '../../common/language';
+import { Constants } from '../../common/application/constants';
 import { BaseSettings } from '../../common/settings/base-settings';
+import { Language } from '../appearance/theme/language';
 import { BaseTranslatorService } from './base-translator.service';
 
 @Injectable({

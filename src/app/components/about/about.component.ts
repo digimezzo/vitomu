@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { Constants } from '../../common/constants';
-import { Desktop } from '../../common/desktop';
+import { Constants } from '../../common/application/constants';
+import { Desktop } from '../../common/io/desktop';
 import { LicenseDialogComponent } from '../dialogs/license-dialog/license-dialog.component';
 
 @Component({

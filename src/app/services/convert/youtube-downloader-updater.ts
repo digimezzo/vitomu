@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as child from 'child_process';
-import { Environment } from '../../common/environment';
-import { FileSystem } from '../../common/file-system';
+import { Environment } from '../../common/io/environment';
+import { FileSystem } from '../../common/io/file-system';
 import { Logger } from '../../common/logger';
 import { YoutubeDownloaderConstants } from './youtube-downloader-constants';
 

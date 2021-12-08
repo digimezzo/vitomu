@@ -5,11 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class ProductDetails {
     public get name(): string {
-        return require('../../../package.json').name;
+        return require('../../../../package.json').name;
     }
 
     public get version(): string {
-        return require('../../../package.json').version;
+        return require('../../../../package.json').version;
     }
 
     public get copyright(): string {

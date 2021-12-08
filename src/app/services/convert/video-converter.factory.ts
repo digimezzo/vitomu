@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Environment } from '../../common/environment';
+import { Environment } from '../../common/io/environment';
 import { Logger } from '../../common/logger';
 import { VideoConverter } from './video-converter';
 import { YoutubeVideoConverter } from './youtube-video-converter';

@@ -1,11 +1,11 @@
 import * as assert from 'assert';
 import { Observable, Subject } from 'rxjs';
 import { IMock, Mock, Times } from 'typemoq';
-import { ClipboardWatcher } from '../../common/clipboard-watcher';
-import { ConvertState } from '../../common/convert-state';
 import { Delayer } from '../../common/delayer';
-import { Desktop } from '../../common/desktop';
+import { ClipboardWatcher } from '../../common/io/clipboard-watcher';
+import { Desktop } from '../../common/io/desktop';
 import { ConversionResult } from '../../services/convert/conversion-result';
+import { ConvertState } from '../../services/convert/convert-state';
 import { ConvertService } from '../../services/convert/convert.service';
 import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 import { TranslatorService } from '../../services/translator/translator.service';

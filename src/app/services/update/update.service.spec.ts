@@ -1,5 +1,5 @@
 import { It, Mock, Times } from 'typemoq';
-import { GitHubApi } from '../../common/github-api';
+import { GitHubApi } from '../../common/api/github-api';
 import { Logger } from '../../common/logger';
 import { ProductDetails } from '../../common/product-details';
 import { Settings } from '../../common/settings/settings';

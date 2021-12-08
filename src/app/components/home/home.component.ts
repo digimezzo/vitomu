@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Constants } from '../../common/constants';
+import { Constants } from '../../common/application/constants';
 import { BaseAppearanceService } from '../../services/appearance/base-appearance.service';
 import { UpdateService } from '../../services/update/update.service';
 

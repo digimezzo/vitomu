@@ -1,19 +1,19 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ApplicationPaths } from '../../common/application-paths';
-import { BaseRemoteProxy } from '../../common/base-remote-proxy';
-import { Constants } from '../../common/constants';
-import { Desktop } from '../../common/desktop';
-import { DocumentProxy } from '../../common/document-proxy';
-import { FileSystem } from '../../common/file-system';
-import { FontSize } from '../../common/font-size';
+import { ApplicationPaths } from '../../common/application/application-paths';
+import { Constants } from '../../common/application/constants';
+import { BaseRemoteProxy } from '../../common/io/base-remote-proxy';
+import { Desktop } from '../../common/io/desktop';
+import { DocumentProxy } from '../../common/io/document-proxy';
+import { FileSystem } from '../../common/io/file-system';
 import { Logger } from '../../common/logger';
 import { BaseSettings } from '../../common/settings/base-settings';
 import { Strings } from '../../common/strings';
 import { BaseAppearanceService } from './base-appearance.service';
 import { DefaultThemesCreator } from './default-themes-creator';
 import { Palette } from './palette';
+import { FontSize } from './theme/font-size';
 import { Theme } from './theme/theme';
 
 @Injectable()

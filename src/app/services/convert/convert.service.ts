@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as path from 'path';
 import { Observable, Subject } from 'rxjs';
+import { Constants } from '../../common/application/constants';
 import { AudioFormat } from '../../common/audio-format';
-import { Constants } from '../../common/constants';
-import { FileSystem } from '../../common/file-system';
+import { FileSystem } from '../../common/io/file-system';
 import { Logger } from '../../common/logger';
 import { BaseSettings } from '../../common/settings/base-settings';
 import { Strings } from '../../common/strings';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { clipboard } from 'electron';
 import { Observable, Subject } from 'rxjs';
-import { Strings } from './strings';
+import { Strings } from '../strings';
 
 @Injectable()
 export class ClipboardWatcher {

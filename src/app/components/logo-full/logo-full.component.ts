@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { Constants } from '../../common/constants';
+import { Constants } from '../../common/application/constants';
 
 @Component({
     selector: 'app-logo-full',

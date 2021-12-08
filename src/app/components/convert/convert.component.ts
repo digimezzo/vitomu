@@ -1,11 +1,11 @@
 import { Component, NgZone, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ClipboardWatcher } from '../../common/clipboard-watcher';
-import { ConvertState } from '../../common/convert-state';
 import { Delayer } from '../../common/delayer';
-import { Desktop } from '../../common/desktop';
+import { ClipboardWatcher } from '../../common/io/clipboard-watcher';
+import { Desktop } from '../../common/io/desktop';
 import { BaseConvertService } from '../../services/convert/base-convert.service';
 import { ConversionResult } from '../../services/convert/conversion-result';
+import { ConvertState } from '../../services/convert/convert-state';
 import { YoutubeDownloaderConstants } from '../../services/convert/youtube-downloader-constants';
 import { BaseSnackBarService } from '../../services/snack-bar/base-snack-bar.service';
 import { BaseTranslatorService } from '../../services/translator/base-translator.service';

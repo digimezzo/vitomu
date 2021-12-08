@@ -8,7 +8,6 @@ import * as windowStateKeeper from 'electron-window-state';
 import * as os from 'os';
 import * as path from 'path';
 import * as url from 'url';
-import { Events } from './src/app/common/events';
 
 app.commandLine.appendSwitch('disable-color-correct-rendering');
 
@@ -94,10 +93,6 @@ function createWindow(): void {
     win.on('ready-to-show', () => {
         win.show();
         win.focus();
-    });
-
-    win.on('focus', () => {
-        win.webContents.send(Events.windowFocusChangedEvent);
     });
 
     // Makes links open in external browser
