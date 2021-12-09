@@ -10,11 +10,11 @@ import { BaseSettings } from '../../common/settings/base-settings';
 export class SettingsComponent implements OnInit {
     constructor(private settings: BaseSettings) {}
 
-    public get useCustomTitleBarChecked(): boolean {
-        return !this.settings.useSystemTitleBar;
+    public get useSystemTitleBarChecked(): boolean {
+        return this.settings.useSystemTitleBar;
     }
-    public set useCustomTitleBarChecked(v: boolean) {
-        this.settings.useSystemTitleBar = !v;
+    public set useSystemTitleBarChecked(v: boolean) {
+        this.settings.useSystemTitleBar = v;
     }
 
     public get checkForUpdatesChecked(): boolean {

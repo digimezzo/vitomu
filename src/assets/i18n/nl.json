@@ -27,7 +27,7 @@
         "AudioFormat": "Audio formaat",
         "AudioBitrate": "Audio bitrate",
         "TitleBar": "Titelbalk",
-        "UseCustomTitleBar": "Gebruik aangepaste titelbalk (Vereist een herstart)",
+        "UseSystemTitleBar": "Systeem titelbalk gebruiken (vereist een herstart)",
         "Updates": "Updates",
         "CheckForUpdates": "Controleer op updates"
     },
