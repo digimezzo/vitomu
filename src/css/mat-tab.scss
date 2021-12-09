@@ -3,15 +3,32 @@ mat-tab-group {
 }
 
 .mat-tab-body-wrapper {
-    color: var(--theme-secondary-text);
-    background-color: var(--theme-main-background) !important;
+    flex-grow: 1;
     height: 100%;
 }
 
 .mat-tab-label {
     user-select: none; // Prevents accidental selection of the header text
+    -webkit-app-region: no-drag;
+    opacity: 1 !important;
+}
+
+.mat-tab-label-content {
+    font-weight: lighter !important;
+    font-size: var(--fontsize-larger) !important;
+    color: var(--theme-tab-text) !important;
+}
+
+.mat-tab-label-active .mat-tab-label-content {
+    color: var(--theme-selected-tab-text) !important;
 }
 
 .mat-tab-header {
     border-bottom-style: none !important;
+    background-color: var(--theme-secondary-background) !important;
+}
+
+.cdk-focused,
+.cdk-keyboard-focused {
+    background-color: transparent !important;
 }

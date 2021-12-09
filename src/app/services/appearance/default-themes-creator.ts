@@ -10,39 +10,72 @@ export class DefaultThemesCreator {
     public createAllThemes(): Theme[] {
         const themes: Theme[] = [];
         themes.push(this.createVitomuTheme());
+        themes.push(this.createGreenTheme());
 
         return themes;
     }
 
     private createVitomuTheme(): Theme {
         const darkColors: ThemeNeutralColors = new ThemeNeutralColors(
-            '#5e5e5e',
+            '#a4a4a4',
             'rgba(255, 255, 255, 0.05)',
-            'rgba(255, 255, 255, 0.1)',
-            '',
-            '#666',
-            '#fff',
-            '#1a1a1a',
-            '#111',
-            '#222',
-            '#333'
+            '#b4b4b4',
+            '#ffffff',
+            '#202020',
+            '#333',
+            '#bdbdbd',
+            '#9b9b9b',
+            '#333',
+            '#ec1a65'
         );
 
         const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
-            '#838383',
-            'rgba(0, 0, 0, 0.05)',
-            'rgba(0, 0, 0, 0.1)',
-            '',
-            '#909090',
-            '#000',
-            '#f5f5f5',
-            '#fdfdfd',
-            '#fefefe',
-            '#fdfdfd'
+            '#a4a4a4',
+            'rgba(255, 255, 255, 0.05)',
+            '#b4b4b4',
+            '#ffffff',
+            '#202020',
+            '#333',
+            '#bdbdbd',
+            '#9b9b9b',
+            '#333',
+            '#ec1a65'
         );
 
         const options: ThemeOptions = new ThemeOptions();
 
-        return new Theme('Vitomu', this.creator, new ThemeCoreColors('#6260e3', '#3fdcdd', '#4883e0'), darkColors, lightColors, options);
+        return new Theme('Vitomu', this.creator, new ThemeCoreColors('#ec1a65', '#ec1a65', '#ec1a65'), darkColors, lightColors, options);
+    }
+
+    private createGreenTheme(): Theme {
+        const darkColors: ThemeNeutralColors = new ThemeNeutralColors(
+            '#a4a4a4',
+            'rgba(255, 255, 255, 0.05)',
+            '#b4b4b4',
+            '#ffffff',
+            '#202020',
+            '#333',
+            '#bdbdbd',
+            '#9b9b9b',
+            '#333',
+            '#00b163'
+        );
+
+        const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
+            '#a4a4a4',
+            'rgba(255, 255, 255, 0.05)',
+            '#b4b4b4',
+            '#ffffff',
+            '#202020',
+            '#333',
+            '#bdbdbd',
+            '#9b9b9b',
+            '#333',
+            '#00b163'
+        );
+
+        const options: ThemeOptions = new ThemeOptions();
+
+        return new Theme('Green', this.creator, new ThemeCoreColors('#00b163', '#00b163', '#00b163'), darkColors, lightColors, options);
     }
 }
