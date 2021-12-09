@@ -82,33 +82,33 @@ export class DefaultThemesCreator {
 
     private createPalenightTheme(): Theme {
         const darkColors: ThemeNeutralColors = new ThemeNeutralColors(
-            '#747e88',
+            '#7b83a7',
             'rgba(255, 255, 255, 0.05)',
-            '#b4b4b4',
-            '#ffffff',
-            '#292d3e',
-            '#25293a',
-            '#eeffff',
-            '#747e88',
-            '#3b415c',
-            '#7e57c2'
+            '#7b83a7',
+            '#fbfdfd',
+            '#2f3447',
+            '#272b3b',
+            '#fbfdfd',
+            '#7b83a7',
+            '#282c3d',
+            '#00908c'
         );
 
         const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
-            '#747e88',
+            '#7b83a7',
             'rgba(255, 255, 255, 0.05)',
-            '#b4b4b4',
-            '#ffffff',
-            '#292d3e',
-            '#25293a',
-            '#eeffff',
-            '#747e88',
-            '#3b415c',
-            '#7e57c2'
+            '#7b83a7',
+            '#fbfdfd',
+            '#2f3447',
+            '#272b3b',
+            '#fbfdfd',
+            '#7b83a7',
+            '#282c3d',
+            '#00908c'
         );
 
         const options: ThemeOptions = new ThemeOptions();
 
-        return new Theme('Palenight', this.creator, new ThemeCoreColors('#7e57c2', '#7e57c2', '#7e57c2'), darkColors, lightColors, options);
+        return new Theme('Palenight', this.creator, new ThemeCoreColors('#00908c', '#00908c', '#00908c'), darkColors, lightColors, options);
     }
 }
