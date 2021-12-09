@@ -11,6 +11,7 @@ export class DefaultThemesCreator {
         const themes: Theme[] = [];
         themes.push(this.createVitomuTheme());
         themes.push(this.createGreenTheme());
+        themes.push(this.createPalenightTheme());
 
         return themes;
     }
@@ -77,5 +78,37 @@ export class DefaultThemesCreator {
         const options: ThemeOptions = new ThemeOptions();
 
         return new Theme('Green', this.creator, new ThemeCoreColors('#00b163', '#00b163', '#00b163'), darkColors, lightColors, options);
+    }
+
+    private createPalenightTheme(): Theme {
+        const darkColors: ThemeNeutralColors = new ThemeNeutralColors(
+            '#747e88',
+            'rgba(255, 255, 255, 0.05)',
+            '#b4b4b4',
+            '#ffffff',
+            '#292d3e',
+            '#25293a',
+            '#eeffff',
+            '#747e88',
+            '#3b415c',
+            '#7e57c2'
+        );
+
+        const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
+            '#747e88',
+            'rgba(255, 255, 255, 0.05)',
+            '#b4b4b4',
+            '#ffffff',
+            '#292d3e',
+            '#25293a',
+            '#eeffff',
+            '#747e88',
+            '#3b415c',
+            '#7e57c2'
+        );
+
+        const options: ThemeOptions = new ThemeOptions();
+
+        return new Theme('Palenight', this.creator, new ThemeCoreColors('#7e57c2', '#7e57c2', '#7e57c2'), darkColors, lightColors, options);
     }
 }

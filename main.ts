@@ -121,15 +121,11 @@ function createWindow(): void {
 function windowhasFrame(): boolean {
     const settings: Store<any> = new Store();
 
-    if (!settings.has('useCustomTitleBar')) {
-        if (os.platform() === 'win32') {
-            settings.set('useCustomTitleBar', true);
-        } else {
-            settings.set('useCustomTitleBar', false);
-        }
+    if (!settings.has('useSystemTitleBar')) {
+        settings.set('useSystemTitleBar', false);
     }
 
-    return !settings.get('useCustomTitleBar');
+    return settings.get('useSystemTitleBar');
 }
 
 try {
