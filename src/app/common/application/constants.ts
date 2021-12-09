@@ -48,6 +48,12 @@ export class Constants {
             licenseUrl: 'https://github.com/angular/material2/blob/master/LICENSE',
         },
         {
+            name: 'command-exists-promise',
+            description: 'Node module to check if a command-line command exists.',
+            url: 'https://github.com/raftario/command-exists',
+            licenseUrl: 'https://github.com/raftario/command-exists/blob/master/LICENSE',
+        },
+        {
             name: 'Electron',
             description:
                 'The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS. It is based on Node.js and Chromium.',
@@ -84,6 +90,13 @@ export class Constants {
             description: 'Downloads precompiled ffmpeg, ffprobe, ffplay and ffserver binaries from ffbinaries.com.',
             url: 'https://github.com/vot/ffbinaries-node',
             licenseUrl: 'https://github.com/vot/ffbinaries-node',
+        },
+        {
+            name: 'FFmpeg',
+            description:
+                'FFmpeg is the leading multimedia framework, able to decode, encode, transcode, mux, demux, stream, filter and play pretty much anything that humans and machines have created.',
+            url: 'http://www.ffmpeg.org/',
+            licenseUrl: 'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html',
         },
         {
             name: 'fs-extra',
