@@ -10,7 +10,7 @@ import { BaseAppearanceService } from '../../services/appearance/base-appearance
     encapsulation: ViewEncapsulation.None,
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-    constructor(private appearanceService: BaseAppearanceService, private desktop: Desktop, private settings: BaseSettings) {}
+    constructor(public appearanceService: BaseAppearanceService, private desktop: Desktop, private settings: BaseSettings) {}
 
     public get useSystemTitleBarChecked(): boolean {
         return this.settings.useSystemTitleBar;
