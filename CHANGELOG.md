@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+-   Added theming
+
 ### Changed
 
 -   Replaced ytdl-core by yt-dlp to improve compatibility and download speed
