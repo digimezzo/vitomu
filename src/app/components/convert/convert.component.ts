@@ -122,7 +122,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     }
 
     public play(): void {
-        this.desktop.openInDefaultApplication(this.convertService.lastConvertedFilePath);
+        this.desktop.openPath(this.convertService.lastConvertedFilePath);
     }
 
     private reset(): void {

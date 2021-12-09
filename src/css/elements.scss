@@ -44,8 +44,18 @@ h2 {
 }
 
 a {
-    color: var(--theme-accent-color);
+    color: var(--theme-accent-color) !important;
     outline: none; // Removes yellow outline on links
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a > * {
+    color: var(--theme-accent-color) !important;
+}
+
+a:hover {
+    opacity: 0.8;
 }
 
 ::selection {

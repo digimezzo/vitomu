@@ -28,10 +28,6 @@ export class Desktop {
         remote.shell.showItemInFolder(fileName);
     }
 
-    public openInDefaultApplication(fileName: string): void {
-        remote.shell.openPath(fileName);
-    }
-
     public getAccentColor(): string {
         return remote.systemPreferences.getAccentColor();
     }
@@ -42,5 +38,9 @@ export class Desktop {
 
     public shouldUseDarkColors(): boolean {
         return remote.nativeTheme.shouldUseDarkColors;
+    }
+
+    public openPath(path: string): void {
+        remote.shell.openPath(path);
     }
 }

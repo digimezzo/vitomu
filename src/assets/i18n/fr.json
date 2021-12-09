@@ -29,7 +29,9 @@
         "TitleBar": "Barre de titre",
         "UseSystemTitleBar": "Utiliser barre de titre système (nécessite un redémarrage)",
         "Updates": "Mises à jour",
-        "CheckForUpdates": "Vérifier les mises à jour"
+        "CheckForUpdates": "Vérifier les mises à jour",
+        "AddMoreThemes": "Ajouter plus de thèmes",
+        "RefreshThemes": "Actualiser les thèmes"
     },
     "AboutTab": {
         "About": "À propos",

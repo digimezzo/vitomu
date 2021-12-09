@@ -337,7 +337,7 @@ describe('ConvertComponent', () => {
             convertComponent.play();
 
             // Assert
-            desktopMock.verify((x) => x.openInDefaultApplication('/home/user/Music/Vitomu/Converted file.mp3'), Times.exactly(1));
+            desktopMock.verify((x) => x.openPath('/home/user/Music/Vitomu/Converted file.mp3'), Times.exactly(1));
         });
     });
 
