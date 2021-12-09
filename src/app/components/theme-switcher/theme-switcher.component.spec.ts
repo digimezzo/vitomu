@@ -44,28 +44,30 @@ describe('ColorSchemeSwitcherComponent', () => {
             const themeCreator: ThemeCreator = new ThemeCreator('My creator', 'my@email.com');
             const coreColors: ThemeCoreColors = new ThemeCoreColors('red', 'green', 'blue');
             const darkColors: ThemeNeutralColors = new ThemeNeutralColors(
-                '#0000000',
-                '#0111111',
-                '#0222222',
-                '#0333333',
-                '#0444444',
-                '#0555555',
-                '#0666666',
-                '#0777777',
-                '#0888888',
-                '#0999999'
+                '#000000',
+                '#011111',
+                '#022222',
+                '#033333',
+                '#044444',
+                '#055555',
+                '#066666',
+                '#077777',
+                '#088888',
+                '#099999',
+                '#0fffff'
             );
             const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
-                '#1000000',
-                '#1111111',
-                '#1222222',
-                '#1333333',
-                '#1444444',
-                '#1555555',
-                '#1666666',
-                '#1777777',
-                '#1888888',
-                '#1999999'
+                '#100000',
+                '#111111',
+                '#122222',
+                '#133333',
+                '#144444',
+                '#155555',
+                '#166666',
+                '#177777',
+                '#188888',
+                '#199999',
+                '#1fffff'
             );
 
             const options: ThemeOptions = new ThemeOptions();

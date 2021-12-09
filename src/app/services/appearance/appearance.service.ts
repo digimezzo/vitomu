@@ -235,6 +235,7 @@ export class AppearanceService implements BaseAppearanceService {
         element.style.setProperty('--theme-secondary-text', this.selectedTheme.darkColors.secondaryText);
         element.style.setProperty('--theme-settings-separators', this.selectedTheme.darkColors.settingsSeparators);
         element.style.setProperty('--theme-scroll-bars', scrollBarColorToApply);
+        element.style.setProperty('--theme-button-text', this.selectedTheme.darkColors.buttonText);
 
         if (this.isUsingLightTheme) {
             themeName = 'default-theme-light';
@@ -248,6 +249,7 @@ export class AppearanceService implements BaseAppearanceService {
             element.style.setProperty('--theme-secondary-text', this.selectedTheme.lightColors.secondaryText);
             element.style.setProperty('--theme-settings-separators', this.selectedTheme.lightColors.settingsSeparators);
             element.style.setProperty('--theme-scroll-bars', scrollBarColorToApply);
+            element.style.setProperty('--theme-button-text', this.selectedTheme.lightColors.buttonText);
         }
 
         // Apply theme to components in the overlay container: https://gist.github.com/tomastrajan/ee29cd8e180b14ce9bc120e2f7435db7

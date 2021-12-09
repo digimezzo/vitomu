@@ -62,7 +62,8 @@ describe('AppearanceService', () => {
             '#066666',
             '#077777',
             '#088888',
-            '#099999'
+            '#099999',
+            '#0fffff'
         );
     }
 
@@ -77,7 +78,8 @@ describe('AppearanceService', () => {
             '#166666',
             '#177777',
             '#188888',
-            '#199999'
+            '#199999',
+            '#1fffff'
         );
     }
 
@@ -157,6 +159,7 @@ describe('AppearanceService', () => {
         expect(documentElementMock.style.getPropertyValue('--theme-secondary-text')).toEqual('#077777');
         expect(documentElementMock.style.getPropertyValue('--theme-settings-separators')).toEqual('#088888');
         expect(documentElementMock.style.getPropertyValue('--theme-scroll-bars')).toEqual(scrollBars);
+        expect(documentElementMock.style.getPropertyValue('--theme-button-text')).toEqual('#0fffff');
     }
 
     function assertLightColorCssProperties(scrollBars: string): void {
@@ -170,6 +173,7 @@ describe('AppearanceService', () => {
         expect(documentElementMock.style.getPropertyValue('--theme-secondary-text')).toEqual('#177777');
         expect(documentElementMock.style.getPropertyValue('--theme-settings-separators')).toEqual('#188888');
         expect(documentElementMock.style.getPropertyValue('--theme-scroll-bars')).toEqual(scrollBars);
+        expect(documentElementMock.style.getPropertyValue('--theme-button-text')).toEqual('#1fffff');
     }
 
     function resetElements(): void {

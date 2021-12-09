@@ -12,7 +12,8 @@ describe('ThemeNeutralColors', () => {
             '#666666',
             '#777777',
             '#888888',
-            '#999999'
+            '#999999',
+            '#ffffff'
         );
     }
 
@@ -127,6 +128,16 @@ describe('ThemeNeutralColors', () => {
 
             // Assert
             expect(colors.scrollBars).toEqual('#999999');
+        });
+
+        it('should set buttonText', () => {
+            // Arrange
+
+            // Act
+            const colors: ThemeNeutralColors = createNeutralColors();
+
+            // Assert
+            expect(colors.buttonText).toEqual('#ffffff');
         });
     });
 });

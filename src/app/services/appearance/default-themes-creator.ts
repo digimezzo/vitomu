@@ -27,7 +27,8 @@ export class DefaultThemesCreator {
             '#bdbdbd',
             '#9b9b9b',
             '#333',
-            '#ec1a65'
+            '#ec1a65',
+            '#ffffff'
         );
 
         const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
@@ -40,7 +41,8 @@ export class DefaultThemesCreator {
             '#bdbdbd',
             '#9b9b9b',
             '#333',
-            '#ec1a65'
+            '#ec1a65',
+            '#ffffff'
         );
 
         const options: ThemeOptions = new ThemeOptions();
@@ -59,7 +61,8 @@ export class DefaultThemesCreator {
             '#bdbdbd',
             '#9b9b9b',
             '#333',
-            '#00b163'
+            '#00b163',
+            '#ffffff'
         );
 
         const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
@@ -72,7 +75,8 @@ export class DefaultThemesCreator {
             '#bdbdbd',
             '#9b9b9b',
             '#333',
-            '#00b163'
+            '#00b163',
+            '#ffffff'
         );
 
         const options: ThemeOptions = new ThemeOptions();
@@ -91,7 +95,8 @@ export class DefaultThemesCreator {
             '#fbfdfd',
             '#7b83a7',
             '#282c3d',
-            '#00908c'
+            '#00908c',
+            '#ffffff'
         );
 
         const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
@@ -104,7 +109,8 @@ export class DefaultThemesCreator {
             '#fbfdfd',
             '#7b83a7',
             '#282c3d',
-            '#00908c'
+            '#00908c',
+            '#ffffff'
         );
 
         const options: ThemeOptions = new ThemeOptions();

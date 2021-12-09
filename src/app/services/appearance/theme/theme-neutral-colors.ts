@@ -9,6 +9,7 @@ export class ThemeNeutralColors {
         public primaryText: string,
         public secondaryText: string,
         public settingsSeparators: string,
-        public scrollBars: string
+        public scrollBars: string,
+        public buttonText: string
     ) {}
 }
