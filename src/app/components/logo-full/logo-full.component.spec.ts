@@ -1,16 +1,18 @@
-import * as assert from 'assert';
+import { Mock } from 'typemoq';
+import { ProductInformation } from '../../common/application/product-information';
 import { LogoFullComponent } from './logo-full.component';
 
 describe('LogoFullComponent', () => {
     describe('constructor', () => {
-        it('Should provide correct application name', () => {
+        it('Should define productInformation', () => {
             // Arrange
+            const productInformationMock = Mock.ofType<ProductInformation>();
 
             // Act
-            const logoFullComponent: LogoFullComponent = new LogoFullComponent();
+            const logoFullComponent: LogoFullComponent = new LogoFullComponent(productInformationMock.object);
 
             // Assert
-            assert.equal(logoFullComponent.applicationName, 'Vitomu');
+            expect(logoFullComponent.productInformation).toBeDefined();
         });
     });
 });

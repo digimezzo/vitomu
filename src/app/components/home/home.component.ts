@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Constants } from '../../common/application/constants';
+import { ProductInformation } from '../../common/application/product-information';
 import { BaseAppearanceService } from '../../services/appearance/base-appearance.service';
 import { UpdateService } from '../../services/update/update.service';
 
@@ -10,9 +10,11 @@ import { UpdateService } from '../../services/update/update.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit {
-    constructor(public appearanceService: BaseAppearanceService, private updateService: UpdateService) {}
-
-    public applicationName: string = Constants.applicationName;
+    constructor(
+        public appearanceService: BaseAppearanceService,
+        public productInformation: ProductInformation,
+        private updateService: UpdateService
+    ) {}
 
     public ngOnInit(): void {
         // Check for updates (don't await)

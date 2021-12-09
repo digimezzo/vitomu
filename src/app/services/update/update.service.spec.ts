@@ -1,7 +1,7 @@
 import { It, Mock, Times } from 'typemoq';
 import { GitHubApi } from '../../common/api/github-api';
+import { ProductInformation } from '../../common/application/product-information';
 import { Logger } from '../../common/logger';
-import { ProductDetails } from '../../common/product-details';
 import { Settings } from '../../common/settings/settings';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
 import { BaseUpdateService } from './base-update.service';
@@ -15,7 +15,7 @@ describe('UpdateService', () => {
             const settingsMock = Mock.ofType<Settings>();
             const loggerMock = Mock.ofType<Logger>();
             const gitHubMock = Mock.ofType<GitHubApi>();
-            const productDetailsMock = Mock.ofType<ProductDetails>();
+            const productInformationMock = Mock.ofType<ProductInformation>();
 
             settingsMock.setup((x) => x.checkForUpdates).returns(() => false);
 
@@ -24,7 +24,7 @@ describe('UpdateService', () => {
                 settingsMock.object,
                 loggerMock.object,
                 gitHubMock.object,
-                productDetailsMock.object
+                productInformationMock.object
             );
 
             // Act
@@ -40,7 +40,7 @@ describe('UpdateService', () => {
             const settingsMock = Mock.ofType<Settings>();
             const loggerMock = Mock.ofType<Logger>();
             const gitHubMock = Mock.ofType<GitHubApi>();
-            const productDetailsMock = Mock.ofType<ProductDetails>();
+            const productInformationMock = Mock.ofType<ProductInformation>();
 
             settingsMock.setup((x) => x.checkForUpdates).returns(() => true);
 
@@ -49,7 +49,7 @@ describe('UpdateService', () => {
                 settingsMock.object,
                 loggerMock.object,
                 gitHubMock.object,
-                productDetailsMock.object
+                productInformationMock.object
             );
 
             // Act
@@ -65,18 +65,18 @@ describe('UpdateService', () => {
             const settingsMock = Mock.ofType<Settings>();
             const loggerMock = Mock.ofType<Logger>();
             const gitHubMock = Mock.ofType<GitHubApi>();
-            const productDetailsMock = Mock.ofType<ProductDetails>();
+            const productInformationMock = Mock.ofType<ProductInformation>();
 
             settingsMock.setup((x) => x.checkForUpdates).returns(() => true);
             gitHubMock.setup((x) => x.getLastestReleaseAsync('digimezzo', 'vitomu')).returns(async () => '2.0.3');
-            productDetailsMock.setup((x) => x.version).returns(() => '2.0.2');
+            productInformationMock.setup((x) => x.version).returns(() => '2.0.2');
 
             const updateService: BaseUpdateService = new UpdateService(
                 snackBarMock.object,
                 settingsMock.object,
                 loggerMock.object,
                 gitHubMock.object,
-                productDetailsMock.object
+                productInformationMock.object
             );
 
             // Act
@@ -92,18 +92,18 @@ describe('UpdateService', () => {
             const settingsMock = Mock.ofType<Settings>();
             const loggerMock = Mock.ofType<Logger>();
             const gitHubMock = Mock.ofType<GitHubApi>();
-            const productDetailsMock = Mock.ofType<ProductDetails>();
+            const productInformationMock = Mock.ofType<ProductInformation>();
 
             settingsMock.setup((x) => x.checkForUpdates).returns(() => true);
             gitHubMock.setup((x) => x.getLastestReleaseAsync('digimezzo', 'vitomu')).returns(async () => '2.0.2');
-            productDetailsMock.setup((x) => x.version).returns(() => '2.0.2');
+            productInformationMock.setup((x) => x.version).returns(() => '2.0.2');
 
             const updateService: BaseUpdateService = new UpdateService(
                 snackBarMock.object,
                 settingsMock.object,
                 loggerMock.object,
                 gitHubMock.object,
-                productDetailsMock.object
+                productInformationMock.object
             );
 
             // Act
@@ -119,18 +119,18 @@ describe('UpdateService', () => {
             const settingsMock = Mock.ofType<Settings>();
             const loggerMock = Mock.ofType<Logger>();
             const gitHubMock = Mock.ofType<GitHubApi>();
-            const productDetailsMock = Mock.ofType<ProductDetails>();
+            const productInformationMock = Mock.ofType<ProductInformation>();
 
             settingsMock.setup((x) => x.checkForUpdates).returns(() => true);
             gitHubMock.setup((x) => x.getLastestReleaseAsync('digimezzo', 'vitomu')).returns(async () => '2.0.1');
-            productDetailsMock.setup((x) => x.version).returns(() => '2.0.2');
+            productInformationMock.setup((x) => x.version).returns(() => '2.0.2');
 
             const updateService: BaseUpdateService = new UpdateService(
                 snackBarMock.object,
                 settingsMock.object,
                 loggerMock.object,
                 gitHubMock.object,
-                productDetailsMock.object
+                productInformationMock.object
             );
 
             // Act

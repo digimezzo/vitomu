@@ -3,8 +3,8 @@
     <app-logo-full class="mt-2"></app-logo-full>
     <div class="mt-2">
         {{ 'AboutTab.Version' | translate }}:
-        <strong> {{ applicationVersion }}</strong>
-        <br />{{ applicationCopyright }}
+        <strong> {{ productInformation.version }}</strong>
+        <br />{{ productInformation.copyright }}
     </div>
     <button class="mt-2" mat-raised-button color="primary" (click)="openLicenseDialog()">
         {{ 'Buttons.License' | translate }}

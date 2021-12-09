@@ -2,42 +2,41 @@ import { MatDialog } from '@angular/material';
 import * as assert from 'assert';
 import { It, Mock, Times } from 'typemoq';
 import { Constants } from '../../common/application/constants';
+import { ProductInformation } from '../../common/application/product-information';
 import { Desktop } from '../../common/io/desktop';
 import { AboutComponent } from './about.component';
 
 describe('AboutComponent', () => {
     describe('constructor', () => {
-        it('Should provide application version', () => {
+        it('Should define productInformation', () => {
             // Arrange
+            const productInformationMock = Mock.ofType<ProductInformation>();
             const matDialogMock = Mock.ofType<MatDialog>();
             const desktopMock = Mock.ofType<Desktop>();
 
             // Act
-            const aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
+            const aboutComponent: AboutComponent = new AboutComponent(
+                productInformationMock.object,
+                matDialogMock.object,
+                desktopMock.object
+            );
 
             // Assert
-            assert.equal(aboutComponent.applicationVersion, Constants.applicationVersion);
-        });
-
-        it('Should provide application copyright', () => {
-            // Arrange
-            const matDialogMock = Mock.ofType<MatDialog>();
-            const desktopMock = Mock.ofType<Desktop>();
-
-            // Act
-            const aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
-
-            // Assert
-            assert.equal(aboutComponent.applicationCopyright, Constants.applicationCopyright);
+            expect(aboutComponent.productInformation).toBeDefined();
         });
 
         it('Should provide website url', () => {
             // Arrange
+            const productInformationMock = Mock.ofType<ProductInformation>();
             const matDialogMock = Mock.ofType<MatDialog>();
             const desktopMock = Mock.ofType<Desktop>();
 
             // Act
-            const aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
+            const aboutComponent: AboutComponent = new AboutComponent(
+                productInformationMock.object,
+                matDialogMock.object,
+                desktopMock.object
+            );
 
             // Assert
             assert.equal(aboutComponent.websiteUrl, Constants.websiteUrl);
@@ -45,11 +44,16 @@ describe('AboutComponent', () => {
 
         it('Should provide github url', () => {
             // Arrange
+            const productInformationMock = Mock.ofType<ProductInformation>();
             const matDialogMock = Mock.ofType<MatDialog>();
             const desktopMock = Mock.ofType<Desktop>();
 
             // Act
-            const aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
+            const aboutComponent: AboutComponent = new AboutComponent(
+                productInformationMock.object,
+                matDialogMock.object,
+                desktopMock.object
+            );
 
             // Assert
             assert.equal(aboutComponent.githubUrl, Constants.githubUrl);
@@ -57,11 +61,16 @@ describe('AboutComponent', () => {
 
         it('Should provide twitter url', () => {
             // Arrange
+            const productInformationMock = Mock.ofType<ProductInformation>();
             const matDialogMock = Mock.ofType<MatDialog>();
             const desktopMock = Mock.ofType<Desktop>();
 
             // Act
-            const aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
+            const aboutComponent: AboutComponent = new AboutComponent(
+                productInformationMock.object,
+                matDialogMock.object,
+                desktopMock.object
+            );
 
             // Assert
             assert.equal(aboutComponent.twitterUrl, Constants.twitterUrl);
@@ -71,10 +80,15 @@ describe('AboutComponent', () => {
     describe('openLicenseDialog', () => {
         it('Should open the license dialog', () => {
             // Arrange
+            const productInformationMock = Mock.ofType<ProductInformation>();
             const matDialogMock = Mock.ofType<MatDialog>();
             const desktopMock = Mock.ofType<Desktop>();
 
-            const aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
+            const aboutComponent: AboutComponent = new AboutComponent(
+                productInformationMock.object,
+                matDialogMock.object,
+                desktopMock.object
+            );
 
             // Act
             aboutComponent.openLicenseDialog();
@@ -87,10 +101,15 @@ describe('AboutComponent', () => {
     describe('openDonateLink', () => {
         it('Should open the the donate link', () => {
             // Arrange
+            const productInformationMock = Mock.ofType<ProductInformation>();
             const matDialogMock = Mock.ofType<MatDialog>();
             const desktopMock = Mock.ofType<Desktop>();
 
-            const aboutComponent: AboutComponent = new AboutComponent(matDialogMock.object, desktopMock.object);
+            const aboutComponent: AboutComponent = new AboutComponent(
+                productInformationMock.object,
+                matDialogMock.object,
+                desktopMock.object
+            );
 
             // Act
             aboutComponent.openDonateLink();

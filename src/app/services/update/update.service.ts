@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GitHubApi } from '../../common/api/github-api';
-import { ProductDetails } from '../../common/application/product-details';
+import { ProductInformation } from '../../common/application/product-information';
 import { Logger } from '../../common/logger';
 import { BaseSettings } from '../../common/settings/base-settings';
 import { BaseSnackBarService } from '../snack-bar/base-snack-bar.service';
@@ -16,7 +16,7 @@ export class UpdateService implements BaseUpdateService {
         private settings: BaseSettings,
         private logger: Logger,
         private gitHub: GitHubApi,
-        private productDetails: ProductDetails
+        private productInformation: ProductInformation
     ) {}
 
     public async checkForUpdatesAsync(): Promise<void> {
@@ -24,7 +24,7 @@ export class UpdateService implements BaseUpdateService {
             this.logger.info('Checking for updates', 'UpdateService', 'checkForUpdatesAsync');
 
             try {
-                const currentRelease: string = this.productDetails.version;
+                const currentRelease: string = this.productInformation.version;
                 const latestRelease: string = await this.gitHub.getLastestReleaseAsync('digimezzo', 'vitomu');
 
                 this.logger.info(`Current=${currentRelease}, Latest=${latestRelease}`, 'UpdateService', 'checkForUpdatesAsync');

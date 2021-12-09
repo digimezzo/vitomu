@@ -21,7 +21,7 @@ import '../polyfills';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GitHubApi } from './common/api/github-api';
-import { ProductDetails } from './common/application/product-details';
+import { ProductInformation } from './common/application/product-information';
 import { Delayer } from './common/delayer';
 import { BaseRemoteProxy } from './common/io/base-remote-proxy';
 import { ClipboardWatcher } from './common/io/clipboard-watcher';
@@ -127,7 +127,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         YoutubeDownloaderUpdater,
         GitHubApi,
         ElectronRemoteProxy,
-        ProductDetails,
+        ProductInformation,
         VideoConverterFactory,
         Environment,
         DependencyCheckerFactory,

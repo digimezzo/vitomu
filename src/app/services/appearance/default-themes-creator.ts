@@ -77,7 +77,7 @@ export class DefaultThemesCreator {
 
         const options: ThemeOptions = new ThemeOptions();
 
-        return new Theme('Green', this.creator, new ThemeCoreColors('#00b163', '#00b163', '#00b163'), darkColors, lightColors, options);
+        return new Theme('Jade', this.creator, new ThemeCoreColors('#00b163', '#00b163', '#00b163'), darkColors, lightColors, options);
     }
 
     private createPalenightTheme(): Theme {

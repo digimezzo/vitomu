@@ -25,8 +25,10 @@ describe('DefaultThemesCreator', () => {
             const defaultThemes: Theme[] = defaultThemesCreator.createAllThemes();
 
             // Assert
-            expect(defaultThemes.length).toEqual(1);
+            expect(defaultThemes.length).toEqual(3);
             expect(defaultThemes[0].name).toEqual('Vitomu');
+            expect(defaultThemes[1].name).toEqual('Jade');
+            expect(defaultThemes[2].name).toEqual('Palenight');
         });
     });
 });
