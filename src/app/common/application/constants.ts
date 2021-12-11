@@ -20,9 +20,9 @@ export class Constants {
     public static readonly audioFormats: AudioFormat[] = [
         new AudioFormat('mp3', 'MP3', 'mp3', '.mp3'),
         new AudioFormat('flac', 'FLAC', 'flac', '.flac'),
-        new AudioFormat('ogg', 'Ogg Vorbis', 'ogg', '.ogg'),
-        new AudioFormat('m4a', 'M4A', 'mp4', '.m4a'),
-        new AudioFormat('aac', 'AAC', 'mp4', '.aac'),
+        new AudioFormat('ogg', 'Ogg Vorbis', 'vorbis', '.ogg'),
+        new AudioFormat('m4a', 'M4A', 'm4a', '.m4a'),
+        new AudioFormat('aac', 'AAC', 'aac', '.aac'),
     ];
 
     public static readonly audioBitrates: number[] = [32, 48, 56, 64, 96, 128, 160, 192, 224, 256, 320];
