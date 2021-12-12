@@ -332,7 +332,7 @@ describe('ConvertService', () => {
                 .setup((x) =>
                     x.convertAsync(
                         'dummyUrl',
-                        '/home/user/Music/Vitomu',
+                        It.isAny(),
                         It.is<AudioFormat>((y) => y.ffmpegFormat === 'mp3'),
                         320,
                         It.isAny(),
