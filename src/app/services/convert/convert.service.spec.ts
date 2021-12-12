@@ -1,5 +1,4 @@
 import * as assert from 'assert';
-import * as path from 'path';
 import { Subscription } from 'rxjs';
 import { IMock, It, Mock, Times } from 'typemoq';
 import { AudioFormat } from '../../common/audio-format';
@@ -44,6 +43,7 @@ describe('ConvertService', () => {
         ffmpegCheckerMock = Mock.ofType<DependencyChecker>();
         youtubeDownloaderCheckerMock = Mock.ofType<DependencyChecker>();
         fileSystemMock.setup((x) => x.musicDirectory()).returns(() => '/home/user/Music');
+        fileSystemMock.setup((x) => x.combinePath(['/home/user/Music', 'Vitomu'])).returns(() => '/home/user/Music/Vitomu');
         dependencyCheckerFactoryMock.setup((x) => x.createFfmpegChecker()).returns(() => ffmpegCheckerMock.object);
         dependencyCheckerFactoryMock.setup((x) => x.createYoutubeDownloaderChecker()).returns(() => youtubeDownloaderCheckerMock.object);
         settingsMock.setup((x) => x.audioFormat).returns(() => 'mp3');
@@ -168,8 +168,6 @@ describe('ConvertService', () => {
     describe('onConversionProgressChanged', () => {
         it('Should notify when convert progress changes', async () => {
             // Arrange
-            fileSystemMock.setup((x) => x.musicDirectory()).returns(() => '/home/user/Music');
-
             const convertService: BaseConvertService = createService();
 
             const subscription: Subscription = new Subscription();
@@ -349,15 +347,13 @@ describe('ConvertService', () => {
             ffmpegCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => true);
             youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => true);
 
-            const outputDirectory: string = path.join(fileSystemMock.object.musicDirectory(), 'Vitomu');
-
             const convertService: BaseConvertService = createService();
 
             // Act
             await convertService.convertAsync('dummyUrl');
 
             // Assert
-            fileSystemMock.verify((x) => x.ensureDirectoryAsync(outputDirectory), Times.once());
+            fileSystemMock.verify((x) => x.ensureDirectoryAsync('/home/user/Music/Vitomu'), Times.once());
         });
 
         it('Should convert using system Ffmpeg and Youtube converter if both are found in system path', async () => {

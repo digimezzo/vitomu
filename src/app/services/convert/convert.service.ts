@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as path from 'path';
 import { Observable, Subject } from 'rxjs';
 import { Constants } from '../../common/application/constants';
 import { AudioFormat } from '../../common/audio-format';
@@ -22,7 +21,7 @@ import { YoutubeDownloaderUpdater } from './youtube-downloader-updater';
     providedIn: 'root',
 })
 export class ConvertService implements BaseConvertService {
-    private outputDirectory: string = path.join(this.fileSystem.musicDirectory(), 'Vitomu');
+    private outputDirectory: string = '';
     private _lastConvertedFilePath: string = '';
     private _lastConvertedFileName: string = '';
 
@@ -44,6 +43,7 @@ export class ConvertService implements BaseConvertService {
         private settings: BaseSettings,
         private videoConverterFactory: VideoConverterFactory
     ) {
+        this.outputDirectory = this.fileSystem.combinePath([this.fileSystem.musicDirectory(), 'Vitomu']);
         this._selectedAudioFormat = this.audioFormats.find((x) => x.id === this.settings.audioFormat);
         this._selectedAudioBitrate = this.audioBitrates.find((x) => x === this.settings.audioBitrate);
     }

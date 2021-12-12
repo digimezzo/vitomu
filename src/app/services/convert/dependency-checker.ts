@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as path from 'path';
 import { FileSystem } from '../../common/io/file-system';
 import { Logger } from '../../common/logger';
 import { Strings } from '../../common/strings';
@@ -14,7 +13,7 @@ export class DependencyChecker {
     ) {}
 
     public get downloadedDependencyFolder(): string {
-        return path.join(this.fileSystem.applicationDataDirectory(), this.dependencyFolderName);
+        return this.fileSystem.combinePath([this.fileSystem.applicationDataDirectory(), this.dependencyFolderName]);
     }
 
     public async isDependencyAvailableAsync(): Promise<boolean> {
@@ -50,7 +49,7 @@ export class DependencyChecker {
             return '';
         }
 
-        const dependencyFilePath: string = path.join(this.downloadedDependencyFolder, dependencyFile);
+        const dependencyFilePath: string = this.fileSystem.combinePath([this.downloadedDependencyFolder, dependencyFile]);
         this.logger.info(`Dependency was found in at '${dependencyFilePath}'`, 'DependencyChecker', 'getPathOfDownloadedDependency');
 
         return dependencyFilePath;
