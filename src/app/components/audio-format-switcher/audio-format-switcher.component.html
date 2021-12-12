@@ -1,8 +1,8 @@
 <mat-form-field>
-        <mat-label>{{ 'SettingsTab.AudioFormat' | translate }}</mat-label>
-        <mat-select [(ngModel)]="convert.selectedAudioFormat">
-            <mat-option *ngFor="let audioFormat of convert.audioFormats" [value]="audioFormat">
-                {{ audioFormat.name }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+    <mat-label>{{ 'SettingsTab.AudioFormat' | translate }}</mat-label>
+    <mat-select [(ngModel)]="convertService.selectedAudioFormat">
+        <mat-option *ngFor="let audioFormat of convertService.audioFormats" [value]="audioFormat">
+            {{ audioFormat.name }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

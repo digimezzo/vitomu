@@ -10,8 +10,9 @@ var windowStateKeeper = require("electron-window-state");
 var os = require("os");
 var path = require("path");
 var url = require("url");
-var events_1 = require("./src/app/common/events");
 electron_1.app.commandLine.appendSwitch('disable-color-correct-rendering');
+electron_log_1.default.create('main');
+electron_log_1.default.transports.file.resolvePath = function () { return path.join(electron_1.app.getPath('userData'), 'logs', 'Vitomu.log'); };
 var win, serve;
 var args = process.argv.slice(1);
 serve = args.some(function (val) { return val === '--serve'; });
@@ -41,7 +42,10 @@ function createWindow() {
         frame: windowhasFrame(),
         icon: path.join(globalAny.__static, os.platform() === 'win32' ? 'icons/icon.ico' : 'icons/64x64.png'),
         webPreferences: {
+            webSecurity: false,
             nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false,
         },
         show: false,
     });
@@ -76,9 +80,6 @@ function createWindow() {
         win.show();
         win.focus();
     });
-    win.on('focus', function () {
-        win.webContents.send(events_1.Events.windowFocusChangedEvent);
-    });
     // Makes links open in external browser
     var handleRedirect = function (e, link) {
         // Check that the requested link is not the current page
@@ -89,18 +90,26 @@ function createWindow() {
     };
     win.webContents.on('will-navigate', handleRedirect);
     win.webContents.on('new-window', handleRedirect);
+    win.webContents.on('before-input-event', function (event, input) {
+        if (input.key.toLowerCase() === 'f12') {
+            // if (serve) {
+            win.webContents.toggleDevTools();
+            // }
+            event.preventDefault();
+        }
+    });
 }
 function windowhasFrame() {
     var settings = new Store();
-    if (!settings.has('useCustomTitleBar')) {
+    if (!settings.has('useSystemTitleBar')) {
         if (os.platform() === 'win32') {
-            settings.set('useCustomTitleBar', true);
+            settings.set('useSystemTitleBar', false);
         }
         else {
-            settings.set('useCustomTitleBar', false);
+            settings.set('useSystemTitleBar', true);
         }
     }
-    return !settings.get('useCustomTitleBar');
+    return settings.get('useSystemTitleBar');
 }
 try {
     electron_log_1.default.info('[Main] [] +++ Starting +++');

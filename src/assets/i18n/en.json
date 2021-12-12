@@ -27,9 +27,11 @@
         "AudioFormat": "Audio format",
         "AudioBitrate": "Audio bitrate",
         "TitleBar": "Title bar",
-        "UseCustomTitleBar": "Use custom title bar (Requires a restart)",
+        "UseSystemTitleBar": "Use system title bar (requires a restart)",
         "Updates": "Updates",
-        "CheckForUpdates": "Check for updates"
+        "CheckForUpdates": "Check for updates",
+        "AddMoreThemes": "Add more themes",
+        "RefreshThemes": "Refresh themes"
     },
     "AboutTab": {
         "About": "About",

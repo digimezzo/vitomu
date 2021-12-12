@@ -8,9 +8,11 @@ import * as windowStateKeeper from 'electron-window-state';
 import * as os from 'os';
 import * as path from 'path';
 import * as url from 'url';
-import { Events } from './src/app/common/events';
 
 app.commandLine.appendSwitch('disable-color-correct-rendering');
+
+log.create('main');
+log.transports.file.resolvePath = () => path.join(app.getPath('userData'), 'logs', 'Vitomu.log');
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -47,7 +49,10 @@ function createWindow(): void {
         frame: windowhasFrame(),
         icon: path.join(globalAny.__static, os.platform() === 'win32' ? 'icons/icon.ico' : 'icons/64x64.png'),
         webPreferences: {
+            webSecurity: false,
             nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false,
         },
         show: false,
     });
@@ -90,10 +95,6 @@ function createWindow(): void {
         win.focus();
     });
 
-    win.on('focus', () => {
-        win.webContents.send(Events.windowFocusChangedEvent);
-    });
-
     // Makes links open in external browser
     const handleRedirect = (e, link) => {
         // Check that the requested link is not the current page
@@ -105,20 +106,30 @@ function createWindow(): void {
 
     win.webContents.on('will-navigate', handleRedirect);
     win.webContents.on('new-window', handleRedirect);
+
+    win.webContents.on('before-input-event', (event, input) => {
+        if (input.key.toLowerCase() === 'f12') {
+            // if (serve) {
+            win.webContents.toggleDevTools();
+            // }
+
+            event.preventDefault();
+        }
+    });
 }
 
 function windowhasFrame(): boolean {
     const settings: Store<any> = new Store();
 
-    if (!settings.has('useCustomTitleBar')) {
+    if (!settings.has('useSystemTitleBar')) {
         if (os.platform() === 'win32') {
-            settings.set('useCustomTitleBar', true);
+            settings.set('useSystemTitleBar', false);
         } else {
-            settings.set('useCustomTitleBar', false);
+            settings.set('useSystemTitleBar', true);
         }
     }
 
-    return !settings.get('useCustomTitleBar');
+    return settings.get('useSystemTitleBar');
 }
 
 try {

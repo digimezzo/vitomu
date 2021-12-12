@@ -1,14 +1,14 @@
 import { Component, NgZone, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ClipboardWatcher } from '../../common/clipboard-watcher';
-import { ConvertState } from '../../common/convert-state';
 import { Delayer } from '../../common/delayer';
-import { Desktop } from '../../common/desktop';
+import { ClipboardWatcher } from '../../common/io/clipboard-watcher';
+import { Desktop } from '../../common/io/desktop';
+import { BaseConvertService } from '../../services/convert/base-convert.service';
 import { ConversionResult } from '../../services/convert/conversion-result';
-import { ConvertService } from '../../services/convert/convert.service';
+import { ConvertState } from '../../services/convert/convert-state';
 import { YoutubeDownloaderConstants } from '../../services/convert/youtube-downloader-constants';
-import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
-import { TranslatorService } from '../../services/translator/translator.service';
+import { BaseSnackBarService } from '../../services/snack-bar/base-snack-bar.service';
+import { BaseTranslatorService } from '../../services/translator/base-translator.service';
 
 @Component({
     selector: 'app-convert',
@@ -31,10 +31,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
     constructor(
         private delayer: Delayer,
         private zone: NgZone,
-        public convertService: ConvertService,
+        public convertService: BaseConvertService,
         private clipboardWatcher: ClipboardWatcher,
-        private snackBarService: SnackBarService,
-        private translatorService: TranslatorService,
+        private snackBarService: BaseSnackBarService,
+        private translatorService: BaseTranslatorService,
         private desktop: Desktop
     ) {
         this.reset();
@@ -122,7 +122,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     }
 
     public play(): void {
-        this.desktop.openInDefaultApplication(this.convertService.lastConvertedFilePath);
+        this.desktop.openPath(this.convertService.lastConvertedFilePath);
     }
 
     private reset(): void {

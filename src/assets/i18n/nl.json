@@ -27,9 +27,11 @@
         "AudioFormat": "Audio formaat",
         "AudioBitrate": "Audio bitrate",
         "TitleBar": "Titelbalk",
-        "UseCustomTitleBar": "Gebruik aangepaste titelbalk (Vereist een herstart)",
+        "UseSystemTitleBar": "Systeem titelbalk gebruiken (vereist een herstart)",
         "Updates": "Updates",
-        "CheckForUpdates": "Controleer op updates"
+        "CheckForUpdates": "Controleer op updates",
+        "AddMoreThemes": "Meer thema's toevoegen",
+        "RefreshThemes": "Thema's verversen"
     },
     "AboutTab": {
         "About": "Over",

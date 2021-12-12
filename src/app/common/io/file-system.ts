@@ -61,4 +61,26 @@ export class FileSystem {
     public makeFileExecutable(filePath: string): any {
         fs.chmodSync(filePath, '755');
     }
+
+    public getFilesInDirectory(directoryPath: string): string[] {
+        const fileNames: string[] = fs.readdirSync(directoryPath);
+
+        return fileNames
+            .filter((fileName) => fs.lstatSync(this.combinePath([directoryPath, fileName])).isFile())
+            .map((fileName) => this.combinePath([directoryPath, fileName]));
+    }
+
+    public createFullDirectoryPathIfDoesNotExist(directoryPath: string): void {
+        if (!fs.existsSync(directoryPath)) {
+            fs.mkdirSync(directoryPath, { recursive: true });
+        }
+    }
+
+    public getFileContent(filePath: string): string {
+        return fs.readFileSync(filePath, 'utf-8');
+    }
+
+    public writeToFile(filePath: string, textToWrite: string): void {
+        fs.writeFileSync(filePath, textToWrite);
+    }
 }

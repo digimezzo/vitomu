@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as path from 'path';
-import { FileSystem } from '../../common/file-system';
+import { FileSystem } from '../../common/io/file-system';
 import { Logger } from '../../common/logger';
-import { Strings } from '../../common/Strings';
+import { Strings } from '../../common/strings';
 
 @Injectable()
 export class DependencyChecker {

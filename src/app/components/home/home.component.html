@@ -1,33 +1,33 @@
 <div class="window-frame">
-  <div class="window-frame-titlebar">
-    <div class="window-frame-titlebar-dragarea pl-1" *ngIf="!appearance.windowHasNativeTitleBar">
-      {{ applicationName }}
+    <div class="window-frame-titlebar">
+        <div class="window-frame-titlebar-dragarea pl-1" *ngIf="!appearanceService.windowHasNativeTitleBar">
+            {{ productInformation.name }}
+        </div>
+        <app-window-controls *ngIf="!appearanceService.windowHasNativeTitleBar"></app-window-controls>
     </div>
-    <app-window-controls *ngIf="!appearance.windowHasNativeTitleBar"></app-window-controls>
-  </div>
-  <div class="window-frame-content" [ngStyle]="{'top': appearance.windowHasNativeTitleBar ? '0px' : '32px' }">
-    <mat-tab-group>
-      <!-- Convert -->
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <h2>{{ 'Tabs.Convert' | translate }}</h2>
-        </ng-template>
-        <app-convert></app-convert>
-      </mat-tab>
-      <!-- Settings -->
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <h2>{{ 'Tabs.Settings' | translate }}</h2>
-        </ng-template>
-        <app-settings></app-settings>
-      </mat-tab>
-      <!-- About -->
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <h2>{{ 'Tabs.About' | translate }}</h2>
-        </ng-template>
-        <app-about></app-about>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
+    <div class="window-frame-content" [ngStyle]="{ top: appearanceService.windowHasNativeTitleBar ? '0px' : '32px' }">
+        <mat-tab-group>
+            <!-- Convert -->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    {{ 'Tabs.Convert' | translate }}
+                </ng-template>
+                <app-convert></app-convert>
+            </mat-tab>
+            <!-- Settings -->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    {{ 'Tabs.Settings' | translate }}
+                </ng-template>
+                <app-settings></app-settings>
+            </mat-tab>
+            <!-- About -->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    {{ 'Tabs.About' | translate }}
+                </ng-template>
+                <app-about></app-about>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
 </div>

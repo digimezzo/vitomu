@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as Store from 'electron-store';
 import * as os from 'os';
-import { Constants } from '../constants';
 import { BaseSettings } from './base-settings';
 
 @Injectable()
@@ -53,13 +52,13 @@ export class Settings implements BaseSettings {
         this.settings.set('checkForUpdates', v);
     }
 
-    // Custom title bar
-    public get useCustomTitleBar(): boolean {
-        return this.settings.get('useCustomTitleBar');
+    // System title bar
+    public get useSystemTitleBar(): boolean {
+        return this.settings.get('useSystemTitleBar');
     }
 
-    public set useCustomTitleBar(v: boolean) {
-        this.settings.set('useCustomTitleBar', v);
+    public set useSystemTitleBar(v: boolean) {
+        this.settings.set('useSystemTitleBar', v);
     }
 
     // FontSize
@@ -71,19 +70,43 @@ export class Settings implements BaseSettings {
         this.settings.set('fontSize', v);
     }
 
-    // Color theme
-    public get colorTheme(): string {
-        return this.settings.get('colorTheme');
+    // Theme
+    public get theme(): string {
+        return this.settings.get('theme');
     }
 
-    public set colorTheme(v: string) {
-        this.settings.set('colorTheme', v);
+    public set theme(v: string) {
+        this.settings.set('theme', v);
+    }
+
+    // Follow system theme
+    public get followSystemTheme(): boolean {
+        return this.settings.get('followSystemTheme');
+    }
+
+    public set followSystemTheme(v: boolean) {
+        this.settings.set('followSystemTheme', v);
+    }
+
+    // Use light background theme
+    public get useLightBackgroundTheme(): boolean {
+        return this.settings.get('useLightBackgroundTheme');
+    }
+
+    public set useLightBackgroundTheme(v: boolean) {
+        this.settings.set('useLightBackgroundTheme', v);
+    }
+
+    // Follow system color
+    public get followSystemColor(): boolean {
+        return this.settings.get('followSystemColor');
+    }
+
+    public set followSystemColor(v: boolean) {
+        this.settings.set('followSystemColor', v);
     }
 
     private initialize(): void {
-        // storageDirectory and activeCollection cannot be initialized here.
-        // Their value is set later, depending on user action.
-
         if (!this.settings.has('language')) {
             this.settings.set('language', 'en');
         }
@@ -100,11 +123,11 @@ export class Settings implements BaseSettings {
             this.settings.set('audioBitrate', 320);
         }
 
-        if (!this.settings.has('useCustomTitleBar')) {
+        if (!this.settings.has('useSystemTitleBar')) {
             if (os.platform() === 'win32') {
-                this.settings.set('useCustomTitleBar', true);
+                this.settings.set('useSystemTitleBar', false);
             } else {
-                this.settings.set('useCustomTitleBar', false);
+                this.settings.set('useSystemTitleBar', true);
             }
         }
 
@@ -112,17 +135,20 @@ export class Settings implements BaseSettings {
             this.settings.set('fontSize', 13);
         }
 
-        if (!this.settings.has('colorTheme')) {
-            this.settings.set('colorTheme', 'default-pink-theme');
-        } else {
-            const settingsColorThemeName: string = this.settings.get('colorTheme');
+        if (!this.settings.has('followSystemTheme')) {
+            this.settings.set('followSystemTheme', false);
+        }
 
-            // Check if the color theme which is saved in the settings still exists
-            // in the app (The color themes might change between releases).
-            // If not, reset the color theme setting to the default color theme.
-            if (!Constants.colorThemes.map((x) => x.name).includes(settingsColorThemeName)) {
-                this.settings.set('colorTheme', 'default-pink-theme');
-            }
+        if (!this.settings.has('useLightBackgroundTheme')) {
+            this.settings.set('useLightBackgroundTheme', false);
+        }
+
+        if (!this.settings.has('followSystemColor')) {
+            this.settings.set('followSystemColor', false);
+        }
+
+        if (!this.settings.has('theme')) {
+            this.settings.set('theme', 'Vitomu');
         }
     }
 }

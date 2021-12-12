@@ -1,8 +1,8 @@
 import * as child from 'child_process';
 import { AudioFormat } from '../../common/audio-format';
-import { Environment } from '../../common/environment';
+import { Environment } from '../../common/io/environment';
 import { Logger } from '../../common/logger';
-import { Strings } from '../../common/Strings';
+import { Strings } from '../../common/strings';
 import { ConversionResult } from './conversion-result';
 import { VideoConverter } from './video-converter';
 import { YoutubeDownloaderConstants } from './youtube-downloader-constants';

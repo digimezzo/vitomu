@@ -7,42 +7,42 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-  }
-  
-  .window-frame-titlebar {
+}
+
+.window-frame-titlebar {
     width: 100%;
     height: $titlebar-height;
     display: flex;
     flex-direction: row;
-  }
-  
-  .window-frame-titlebar-dragarea {
-    @extend .color-secondary-text;
+    background-color: var(--theme-secondary-background) !important;
+}
+
+.window-frame-titlebar-dragarea {
+    color: var(--theme-secondary-text);
     width: 100%;
     height: $titlebar-height;
     line-height: $titlebar-height;
     flex: 1;
     -webkit-app-region: drag;
-  }
-  
-  .window-frame-overlay{
+}
+
+.window-frame-overlay {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, 0.2);
     z-index: 99;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .window-frame-content {
+}
+
+.window-frame-content {
     position: absolute;
     top: $titlebar-height;
     bottom: 0;
     left: 0;
     right: 0;
-  }
-  
+}

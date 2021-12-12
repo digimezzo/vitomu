@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Desktop } from '../../common/io/desktop';
 import { BaseSettings } from '../../common/settings/base-settings';
+import { BaseAppearanceService } from '../../services/appearance/base-appearance.service';
 
 @Component({
     selector: 'app-settings',
@@ -7,14 +9,14 @@ import { BaseSettings } from '../../common/settings/base-settings';
     styleUrls: ['./settings.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class SettingsComponent implements OnInit {
-    constructor(private settings: BaseSettings) {}
+export class SettingsComponent implements OnInit, OnDestroy {
+    constructor(public appearanceService: BaseAppearanceService, private desktop: Desktop, private settings: BaseSettings) {}
 
-    public get useCustomTitleBarChecked(): boolean {
-        return this.settings.useCustomTitleBar;
+    public get useSystemTitleBarChecked(): boolean {
+        return this.settings.useSystemTitleBar;
     }
-    public set useCustomTitleBarChecked(v: boolean) {
-        this.settings.useCustomTitleBar = v;
+    public set useSystemTitleBarChecked(v: boolean) {
+        this.settings.useSystemTitleBar = v;
     }
 
     public get checkForUpdatesChecked(): boolean {
@@ -24,5 +26,15 @@ export class SettingsComponent implements OnInit {
         this.settings.checkForUpdates = v;
     }
 
-    public ngOnInit(): void {}
+    public ngOnDestroy(): void {
+        this.appearanceService.stopWatchingThemesDirectory();
+    }
+
+    public async ngOnInit(): Promise<void> {
+        this.appearanceService.startWatchingThemesDirectory();
+    }
+
+    public openThemesDirectory(): void {
+        this.desktop.openPath(this.appearanceService.themesDirectoryPath);
+    }
 }

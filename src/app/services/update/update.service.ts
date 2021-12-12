@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
-import { GitHubApi } from '../../common/github-api';
+import { GitHubApi } from '../../common/api/github-api';
+import { ProductInformation } from '../../common/application/product-information';
 import { Logger } from '../../common/logger';
-import { ProductDetails } from '../../common/product-details';
 import { BaseSettings } from '../../common/settings/base-settings';
-import { VersionComparer } from '../../common/version-comparer';
-import { SnackBarService } from '../snack-bar/snack-bar.service';
+import { BaseSnackBarService } from '../snack-bar/base-snack-bar.service';
+import { BaseUpdateService } from './base-update.service';
+import { VersionComparer } from './version-comparer';
 
 @Injectable({
     providedIn: 'root',
 })
-export class UpdateService {
+export class UpdateService implements BaseUpdateService {
     constructor(
-        private snackBar: SnackBarService,
+        private snackBar: BaseSnackBarService,
         private settings: BaseSettings,
         private logger: Logger,
         private gitHub: GitHubApi,
-        private productDetails: ProductDetails
+        private productInformation: ProductInformation
     ) {}
 
     public async checkForUpdatesAsync(): Promise<void> {
@@ -23,7 +24,7 @@ export class UpdateService {
             this.logger.info('Checking for updates', 'UpdateService', 'checkForUpdatesAsync');
 
             try {
-                const currentRelease: string = this.productDetails.version;
+                const currentRelease: string = this.productInformation.version;
                 const latestRelease: string = await this.gitHub.getLastestReleaseAsync('digimezzo', 'vitomu');
 
                 this.logger.info(`Current=${currentRelease}, Latest=${latestRelease}`, 'UpdateService', 'checkForUpdatesAsync');

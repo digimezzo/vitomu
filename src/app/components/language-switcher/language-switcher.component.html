@@ -1,6 +1,6 @@
 <mat-form-field>
-    <mat-select [(ngModel)]="translator.selectedLanguage">
-        <mat-option *ngFor="let language of translator.languages" [value]="language">
+    <mat-select [(ngModel)]="translatorService.selectedLanguage">
+        <mat-option *ngFor="let language of translatorService.languages" [value]="language">
             {{ language.localizedName }}
         </mat-option>
     </mat-select>

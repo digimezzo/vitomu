@@ -1,60 +1,63 @@
-@import "variables";
-@import "font-faces";
+@import 'variables';
+@import 'font-faces';
 
 * {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-  outline: none; // Removes yellow outline on elements
-  -webkit-font-smoothing: subpixel-antialiased;
-}
-
-* :not(.custom-font) {
-  font-family: opensans !important;
-  font-size: var(--fontsize-normal);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    outline: none; // Removes yellow outline on elements
+    -webkit-font-smoothing: subpixel-antialiased;
+    font-size: var(--fontsize-normal);
+    color: var(--theme-primary-text);
 }
 
 html {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+    box-sizing: inherit;
 }
 
 html,
 body {
-  height: 100%;
-  margin: 0;
+    height: 100%;
+    margin: 0;
 }
 
 body {
-  overflow-y: hidden;
+    overflow-y: hidden;
 }
 
 h1 {
-  @extend .color-primary;
-  font-weight: lighter !important;
-  font-size: var(--fontsize-largest) !important;
+    color: var(--theme-accent-color);
+    font-weight: lighter !important;
+    font-size: var(--fontsize-largest) !important;
 }
 
 h2 {
-  font-weight: lighter !important;
-  font-size: var(--fontsize-larger) !important;
+    font-weight: lighter !important;
+    font-size: var(--fontsize-larger) !important;
 }
 
 a {
-  @extend .color-primary;
-  outline: none; // Removes yellow outline on links
+    color: var(--theme-accent-color) !important;
+    outline: none; // Removes yellow outline on links
+    cursor: pointer;
+    text-decoration: none;
 }
 
-hr {
-  border-bottom: 1px solid $border-color-main;
+a > * {
+    color: var(--theme-accent-color) !important;
+}
+
+a:hover {
+    opacity: 0.8;
 }
 
 ::selection {
-  @extend .background-color-primary;
+    background-color: var(--theme-accent-color);
 }

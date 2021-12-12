@@ -1,12 +1,9 @@
-import { AudioFormat } from './audio-format';
-import { ColorTheme } from './color-theme';
-import { FontSize } from './font-size';
-import { Language } from './language';
+import { FontSize } from '../../services/appearance/theme/font-size';
+import { Language } from '../../services/appearance/theme/language';
+import { AudioFormat } from '../audio-format';
 
 export class Constants {
-    public static readonly applicationName: string = require('../../../package.json').name;
-    public static readonly applicationVersion: string = require('../../../package.json').version;
-    public static readonly applicationCopyright: string = 'Copyright Digimezzo Ⓒ 2017 - 2021';
+    public static readonly logFileName: string = 'Vitomu.log';
     public static readonly donateUrl: string = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MQALEWTEZ7HX8';
     public static readonly websiteUrl: string = 'https://www.digimezzo.com';
     public static readonly twitterUrl: string = 'https://twitter.com/digimezzo';
@@ -20,17 +17,12 @@ export class Constants {
 
     public static readonly fontSizes: FontSize[] = [new FontSize(13), new FontSize(14), new FontSize(15)];
 
-    public static readonly colorThemes: ColorTheme[] = [
-        new ColorTheme('default-pink-theme', 'Pink', '#ec1a65'),
-        new ColorTheme('default-green-theme', 'Green', '#00b163'),
-    ];
-
     public static readonly audioFormats: AudioFormat[] = [
         new AudioFormat('mp3', 'MP3', 'mp3', '.mp3'),
         new AudioFormat('flac', 'FLAC', 'flac', '.flac'),
-        new AudioFormat('ogg', 'Ogg Vorbis', 'ogg', '.ogg'),
-        new AudioFormat('m4a', 'M4A', 'mp4', '.m4a'),
-        new AudioFormat('aac', 'AAC', 'mp4', '.aac'),
+        new AudioFormat('ogg', 'Ogg Vorbis', 'vorbis', '.ogg'),
+        new AudioFormat('m4a', 'M4A', 'm4a', '.m4a'),
+        new AudioFormat('aac', 'AAC', 'aac', '.aac'),
     ];
 
     public static readonly audioBitrates: number[] = [32, 48, 56, 64, 96, 128, 160, 192, 224, 256, 320];
@@ -50,6 +42,12 @@ export class Constants {
             description: 'Component infrastructure and Material Design components for Angular.',
             url: 'https://material.angular.io/',
             licenseUrl: 'https://github.com/angular/material2/blob/master/LICENSE',
+        },
+        {
+            name: 'command-exists-promise',
+            description: 'Node module to check if a command-line command exists.',
+            url: 'https://github.com/raftario/command-exists',
+            licenseUrl: 'https://github.com/raftario/command-exists/blob/master/LICENSE',
         },
         {
             name: 'Electron',
@@ -90,6 +88,13 @@ export class Constants {
             licenseUrl: 'https://github.com/vot/ffbinaries-node',
         },
         {
+            name: 'FFmpeg',
+            description:
+                'FFmpeg is the leading multimedia framework, able to decode, encode, transcode, mux, demux, stream, filter and play pretty much anything that humans and machines have created.',
+            url: 'http://www.ffmpeg.org/',
+            licenseUrl: 'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html',
+        },
+        {
             name: 'fs-extra',
             description:
                 "Adds file system methods that aren't included in the native fs module and adds promise support to the fs methods.",
@@ -125,6 +130,13 @@ export class Constants {
             description: 'Sanitize a string to be safe for use as a filename by removing directory paths and invalid characters.',
             url: 'https://github.com/parshap/node-sanitize-filename',
             licenseUrl: 'https://github.com/parshap/node-sanitize-filename/blob/master/LICENSE.md',
+        },
+        {
+            name: 'TinyColor',
+            description:
+                'TinyColor is a small, fast library for color manipulation and conversion in JavaScript. It allows many forms of input, while providing color conversions and other color utility functions. It has no dependencies.',
+            url: 'https://github.com/bgrins/TinyColor',
+            licenseUrl: 'https://github.com/bgrins/TinyColor/blob/master/LICENSE',
         },
         {
             name: 'yt-dlp',
