@@ -168,8 +168,6 @@ describe('ConvertService', () => {
     describe('onConversionProgressChanged', () => {
         it('Should notify when convert progress changes', async () => {
             // Arrange
-            fileSystemMock.setup((x) => x.musicDirectory()).returns(() => '/home/user/Music');
-
             const convertService: BaseConvertService = createService();
 
             const subscription: Subscription = new Subscription();
