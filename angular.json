@@ -92,7 +92,6 @@
             }
         }
     },
-    "defaultProject": "vitomu",
     "schematics": {
         "@schematics/angular:component": {
             "prefix": "app",
