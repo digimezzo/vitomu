@@ -145,7 +145,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
             useClass: GlobalErrorHandler,
         },
     ],
-    bootstrap: [AppComponent],
-    entryComponents: [LicenseDialogComponent, ErrorDialogComponent],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
