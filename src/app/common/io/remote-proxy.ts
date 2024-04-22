@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import { Observable, Subject } from 'rxjs';
 import { BaseRemoteProxy } from './base-remote-proxy';
+import * as remote from '@electron/remote';
 
 @Injectable()
 export class RemoteProxy implements BaseRemoteProxy {

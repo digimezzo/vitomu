@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Constants } from '../../../common/application/constants';
 import { Desktop } from '../../../common/io/desktop';
 import { FileSystem } from '../../../common/io/file-system';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
     selector: 'app-error-dialog',
     templateUrl: './error-dialog.component.html',

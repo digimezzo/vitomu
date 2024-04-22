@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { remote } from 'electron';
+import * as remote from '@electron/remote';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable()
@@ -42,5 +42,9 @@ export class Desktop {
 
     public openPath(path: string): void {
         remote.shell.openPath(path);
+    }
+
+    public getApplicationDataDirectory(): string {
+        return remote.app.getPath('userData');
     }
 }

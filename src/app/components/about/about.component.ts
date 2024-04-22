@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
 import { Constants } from '../../common/application/constants';
 import { ProductInformation } from '../../common/application/product-information';
 import { Desktop } from '../../common/io/desktop';
 import { LicenseDialogComponent } from '../dialogs/license-dialog/license-dialog.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-about',

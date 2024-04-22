@@ -1,17 +1,6 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-    MatButtonModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatTabsModule,
-    MatTooltipModule,
-} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -27,7 +16,6 @@ import { BaseRemoteProxy } from './common/io/base-remote-proxy';
 import { ClipboardWatcher } from './common/io/clipboard-watcher';
 import { Desktop } from './common/io/desktop';
 import { DocumentProxy } from './common/io/document-proxy';
-import { ElectronRemoteProxy } from './common/io/electron-remote-proxy';
 import { Environment } from './common/io/environment';
 import { FileSystem } from './common/io/file-system';
 import { RemoteProxy } from './common/io/remote-proxy';
@@ -66,6 +54,15 @@ import { BaseTranslatorService } from './services/translator/base-translator.ser
 import { TranslatorService } from './services/translator/translator.service';
 import { BaseUpdateService } from './services/update/base-update.service';
 import { UpdateService } from './services/update/update.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDividerModule } from '@angular/material/divider';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -126,7 +123,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         YoutubeDownloaderDownloader,
         YoutubeDownloaderUpdater,
         GitHubApi,
-        ElectronRemoteProxy,
         ProductInformation,
         VideoConverterFactory,
         Environment,

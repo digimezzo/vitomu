@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
 import { BaseTranslatorService } from '../translator/base-translator.service';
 import { BaseSnackBarService } from './base-snack-bar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
     providedIn: 'root',

@@ -74,6 +74,7 @@
     "@angular/animations": "16.2.12",
     "@angular/cdk": "16.2.12",
     "@angular/material": "16.2.12",
+    "@electron/remote": "^2.1.2",
     "command-exists-promise": "^2.0.2",
     "electron-log": "4.4.8",
     "electron-store": "8.1.0",
