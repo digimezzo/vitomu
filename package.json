@@ -71,6 +71,7 @@
     "zone.js": "~0.13.3"
   },
   "dependencies": {
+    "@angular-builders/custom-webpack": "^16.0.0",
     "@angular/animations": "16.2.12",
     "@angular/cdk": "16.2.12",
     "@angular/material": "16.2.12",
