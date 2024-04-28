@@ -1,37 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var electron_1 = require("electron");
+const electron_1 = require("electron");
 // Logging needs to be imported in main.ts also. Otherwise it just doesn't work anywhere else.
 // See post by megahertz: https://github.com/megahertz/electron-log/issues/60
 // "You need to import electron-log in the main process. Without it, electron-log doesn't works in a renderer process."
-var electron_log_1 = require("electron-log");
-var Store = require("electron-store");
-var windowStateKeeper = require("electron-window-state");
-var os = require("os");
-var path = require("path");
-var url = require("url");
+const electron_log_1 = require("electron-log");
+const Store = require("electron-store");
+const windowStateKeeper = require("electron-window-state");
+const os = require("os");
+const path = require("path");
+const url = require("url");
 electron_1.app.commandLine.appendSwitch('disable-color-correct-rendering');
 electron_log_1.default.create('main');
-electron_log_1.default.transports.file.resolvePath = function () { return path.join(electron_1.app.getPath('userData'), 'logs', 'Vitomu.log'); };
-var win, serve;
-var args = process.argv.slice(1);
-serve = args.some(function (val) { return val === '--serve'; });
+electron_log_1.default.transports.file.resolvePath = () => path.join(electron_1.app.getPath('userData'), 'logs', 'Vitomu.log');
+let win, serve;
+const args = process.argv.slice(1);
+serve = args.some((val) => val === '--serve');
 // Workaround: Global does not allow setting custom properties.
 // We need to cast it to "any" first.
-var globalAny = global;
+const globalAny = global;
 // Static folder is not detected correctly in production
 if (process.env.NODE_ENV !== 'development') {
     globalAny.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
 }
 function createWindow() {
-    var electronScreen = electron_1.screen;
-    var size = electronScreen.getPrimaryDisplay().workAreaSize;
+    const electronScreen = electron_1.screen;
+    const size = electronScreen.getPrimaryDisplay().workAreaSize;
     electron_1.Menu.setApplicationMenu(null);
     // Load the previous state with fallback to defaults
-    var windowState = windowStateKeeper({
+    const windowState = windowStateKeeper({
         defaultWidth: 500,
         defaultHeight: 500,
     });
+    const remoteMain = require('@electron/remote/main');
+    remoteMain.initialize();
     // Create the window using the state information
     win = new electron_1.BrowserWindow({
         x: windowState.x,
@@ -44,16 +46,16 @@ function createWindow() {
         webPreferences: {
             webSecurity: false,
             nodeIntegration: true,
-            enableRemoteModule: true,
             contextIsolation: false,
         },
         show: false,
     });
+    remoteMain.enable(win.webContents);
     globalAny.windowHasFrame = windowhasFrame();
     windowState.manage(win);
     if (serve) {
         require('electron-reload')(__dirname, {
-            electron: require(__dirname + "/node_modules/electron"),
+            electron: require(`${__dirname}/node_modules/electron`),
         });
         win.loadURL('http://localhost:4200');
     }
@@ -68,7 +70,7 @@ function createWindow() {
         // win.webContents.openDevTools();
     }
     // Emitted when the window is closed.
-    win.on('closed', function () {
+    win.on('closed', () => {
         // Dereference the window object, usually you would store window
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
@@ -76,12 +78,12 @@ function createWindow() {
     });
     // 'ready-to-show' doesn't fire on Windows in dev mode. In prod it seems to work.
     // See: https://github.com/electron/electron/issues/7779
-    win.on('ready-to-show', function () {
+    win.on('ready-to-show', () => {
         win.show();
         win.focus();
     });
     // Makes links open in external browser
-    var handleRedirect = function (e, link) {
+    const handleRedirect = (e, link) => {
         // Check that the requested link is not the current page
         if (link !== win.webContents.getURL()) {
             e.preventDefault();
@@ -90,7 +92,7 @@ function createWindow() {
     };
     win.webContents.on('will-navigate', handleRedirect);
     win.webContents.on('new-window', handleRedirect);
-    win.webContents.on('before-input-event', function (event, input) {
+    win.webContents.on('before-input-event', (event, input) => {
         if (input.key.toLowerCase() === 'f12') {
             // if (serve) {
             win.webContents.toggleDevTools();
@@ -100,7 +102,7 @@ function createWindow() {
     });
 }
 function windowhasFrame() {
-    var settings = new Store();
+    const settings = new Store();
     if (!settings.has('useSystemTitleBar')) {
         if (os.platform() === 'win32') {
             settings.set('useSystemTitleBar', false);
@@ -118,7 +120,7 @@ try {
     // Some APIs can only be used after this event occurs.
     electron_1.app.on('ready', createWindow);
     // Quit when all windows are closed.
-    electron_1.app.on('window-all-closed', function () {
+    electron_1.app.on('window-all-closed', () => {
         electron_log_1.default.info('[App] [window-all-closed] +++ Stopping +++');
         // On OS X it is common for applications and their menu bar
         // to stay active until the user quits explicitly with Cmd + Q
@@ -126,7 +128,7 @@ try {
             electron_1.app.quit();
         }
     });
-    electron_1.app.on('activate', function () {
+    electron_1.app.on('activate', () => {
         // On OS X it's common to re-create a window in the app when the
         // dock icon is clicked and there are no other windows open.
         if (win === null) {

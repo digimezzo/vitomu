@@ -10,7 +10,7 @@ export class YoutubeDownloaderUpdater {
     constructor(private environment: Environment, private fileSystem: FileSystem, private logger: Logger) {}
 
     public async updateYoutubeDownloaderAsync(youtubeDownloaderPath: string): Promise<void> {
-        const promise = new Promise<void>(async (resolve, reject) => {
+        return new Promise<void>(async (resolve, reject) => {
             try {
                 const updateCommand: string = `${youtubeDownloaderPath} -U`;
 
@@ -28,7 +28,7 @@ export class YoutubeDownloaderUpdater {
                     }
                 });
 
-                process.stdout.on('data', (data) => {
+                process.stdout!.on('data', (data) => {
                     this.logger.info(data.toString(), 'YoutubeDownloaderUpdater', 'updateYoutubeDownloader');
                 });
 
@@ -51,7 +51,5 @@ export class YoutubeDownloaderUpdater {
                 resolve();
             }
         });
-
-        return promise;
     }
 }

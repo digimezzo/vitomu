@@ -39,6 +39,9 @@ function createWindow(): void {
         defaultHeight: 500,
     });
 
+    const remoteMain = require('@electron/remote/main');
+    remoteMain.initialize();
+
     // Create the window using the state information
     win = new BrowserWindow({
         x: windowState.x,
@@ -55,6 +58,8 @@ function createWindow(): void {
         },
         show: false,
     });
+
+    remoteMain.enable(win.webContents);
 
     globalAny.windowHasFrame = windowhasFrame();
 

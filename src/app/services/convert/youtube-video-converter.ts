@@ -8,10 +8,6 @@ import { VideoConverter } from './video-converter';
 import { YoutubeDownloaderConstants } from './youtube-downloader-constants';
 
 export class YoutubeVideoConverter implements VideoConverter {
-    private youtubeVideoQuality: string = 'highest';
-    private requestOptions: any = { maxRedirects: 5 };
-    private progressTimeoutMilliseconds: number = 100;
-
     private convertedFilePath: string = '';
 
     constructor(private environment: Environment, private logger: Logger) {}
@@ -25,7 +21,7 @@ export class YoutubeVideoConverter implements VideoConverter {
         youtubeDownloaderPathOverride: string,
         progressCallback: any
     ): Promise<ConversionResult> {
-        const promise = new Promise<ConversionResult>(async (resolve, reject) => {
+        return new Promise<ConversionResult>(async (resolve, reject) => {
             this.convertedFilePath = '';
 
             progressCallback(0);
@@ -63,7 +59,7 @@ export class YoutubeVideoConverter implements VideoConverter {
                     }
                 });
 
-                process.stdout.on('data', (data) => {
+                process.stdout!.on('data', (data) => {
                     if (data.toString().includes('[download]') && data.toString().includes('%')) {
                         const progressPercent: number = this.getProgressPercentFromYoutubeDownloaderProgress(data.toString());
                         progressCallback(progressPercent);
@@ -78,8 +74,6 @@ export class YoutubeVideoConverter implements VideoConverter {
                 resolve(new ConversionResult(false, ''));
             }
         });
-
-        return promise;
     }
 
     private getProgressPercentFromYoutubeDownloaderProgress(youtubeDownloaderProgress: string): number {

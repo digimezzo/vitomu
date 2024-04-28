@@ -1,7 +1,20 @@
 module.exports = {
     externals: {
         assert: 'commonjs assert',
+        child_process: 'commonjs child_process',
+        constants: 'commonjs constants',
+        crypto: 'commonjs crypto',
+        fs: 'commonjs fs',
+        http: 'commonjs http',
         https: 'commonjs https',
+        net: 'commonjs net',
+        os: 'commonjs os',
+        path: 'commonjs path',
+        querystring: 'commonjs querystring',
+        stream: 'commonjs stream',
+        tls: 'commonjs tls',
+        url: 'commonjs url',
         util: 'commonjs util',
+        zlib: 'commonjs zlib',
     },
 };

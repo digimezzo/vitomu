@@ -21,7 +21,7 @@ import { YoutubeDownloaderUpdater } from './youtube-downloader-updater';
     providedIn: 'root',
 })
 export class ConvertService implements BaseConvertService {
-    private outputDirectory: string = '';
+    private readonly outputDirectory: string = '';
     private _lastConvertedFilePath: string = '';
     private _lastConvertedFileName: string = '';
 
@@ -44,8 +44,8 @@ export class ConvertService implements BaseConvertService {
         private videoConverterFactory: VideoConverterFactory
     ) {
         this.outputDirectory = this.fileSystem.combinePath([this.fileSystem.musicDirectory(), 'Vitomu']);
-        this._selectedAudioFormat = this.audioFormats.find((x) => x.id === this.settings.audioFormat);
-        this._selectedAudioBitrate = this.audioBitrates.find((x) => x === this.settings.audioBitrate);
+        this._selectedAudioFormat = this.audioFormats.find((x) => x.id === this.settings.audioFormat)!;
+        this._selectedAudioBitrate = this.audioBitrates.find((x) => x === this.settings.audioBitrate)!;
     }
 
     public audioFormats: AudioFormat[] = Constants.audioFormats;

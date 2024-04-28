@@ -1,5 +1,4 @@
 @import 'variables';
-@import 'theming';
 
 .logo {
     display: flex;
@@ -12,7 +11,7 @@
 
 .logo-text {
     flex-grow: 1;
-    margin: auto 0px auto 20px;
+    margin: auto 0 auto 20px;
     font-weight: lighter !important;
     font-size: 48px;
 }
