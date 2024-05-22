@@ -36,7 +36,7 @@ describe('ProductInformation', () => {
             const applicationCopyright: string = productInformation.copyright;
 
             // Assert
-            expect(applicationCopyright).toEqual('Copyright Digimezzo Ⓒ 2017 - 2021');
+            expect(applicationCopyright).toEqual('Copyright Digimezzo Ⓒ 2017 - 2024');
         });
     });
 });

@@ -15,6 +15,8 @@ import { DefaultThemesCreator } from './default-themes-creator';
 import { Palette } from './palette';
 import { FontSize } from './theme/font-size';
 import { Theme } from './theme/theme';
+import { ColorConverter } from '../../common/color-converter';
+import { RgbColor } from '../../common/rgb-color';
 
 @Injectable()
 export class AppearanceService implements BaseAppearanceService {
@@ -224,7 +226,10 @@ export class AppearanceService implements BaseAppearanceService {
         element.style.setProperty('--theme-accent-color-A700', palette.colorA700);
 
         // Neutral colors
+        const primaryTextRgbColor: RgbColor = ColorConverter.stringToRgbColor(this.selectedTheme.darkColors.primaryText);
+        
         let themeName: string = 'default-theme-dark';
+        element.style.setProperty('--theme-rgb-base', primaryTextRgbColor.toString());
         element.style.setProperty('--theme-window-button-icon', this.selectedTheme.darkColors.windowButtonIcon);
         element.style.setProperty('--theme-hovered-item-background', this.selectedTheme.darkColors.hoveredItemBackground);
         element.style.setProperty('--theme-tab-text', this.selectedTheme.darkColors.tabText);
@@ -239,6 +244,7 @@ export class AppearanceService implements BaseAppearanceService {
 
         if (this.isUsingLightTheme) {
             themeName = 'default-theme-light';
+            element.style.setProperty('--theme-rgb-base', primaryTextRgbColor.toString());
             element.style.setProperty('--theme-window-button-icon', this.selectedTheme.lightColors.windowButtonIcon);
             element.style.setProperty('--theme-hovered-item-background', this.selectedTheme.lightColors.hoveredItemBackground);
             element.style.setProperty('--theme-tab-text', this.selectedTheme.lightColors.tabText);
@@ -269,7 +275,7 @@ export class AppearanceService implements BaseAppearanceService {
         let themeFromSettings: Theme | undefined = this.themes.find((x) => x.name === this.settings.theme);
 
         if (themeFromSettings == undefined) {
-            themeFromSettings = this.themes.find((x) => x.name === 'Dopamine');
+            themeFromSettings = this.themes.find((x) => x.name === 'Vitomu');
 
             if (themeFromSettings == undefined) {
                 themeFromSettings = this.themes[0];

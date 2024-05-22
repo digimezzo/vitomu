@@ -1,0 +1,102 @@
+// Letter spacing
+// -----------------------------------------------------------------------------------------------------------------------------------------
+* {
+  letter-spacing: unset !important;
+}
+
+// Background color
+// -----------------------------------------------------------------------------------------------------------------------------------------
+.mat-app-background {
+  background-color: var(--theme-primary-background) !important;
+}
+
+// Dialog
+// -----------------------------------------------------------------------------------------------------------------------------------------
+.mat-mdc-dialog-surface {
+  background-color: var(--theme-secondary-background) !important;
+}
+
+.mat-mdc-dialog-content {
+  color: var(--theme-primary-text) !important;
+  font-size: var(--fontsize) !important;
+}
+
+.mdc-dialog .mdc-dialog__content {
+  padding: 0 24px 0 24px !important;
+}
+
+// Divider
+// -----------------------------------------------------------------------------------------------------------------------------------------
+.mat-divider {
+  border-top-color: var(--theme-settings-separators) !important;
+}
+
+// Menu
+// -----------------------------------------------------------------------------------------------------------------------------------------
+.mat-mdc-menu-item > * {
+  font-size: var(--fontsize) !important;
+}
+
+.mat-mdc-menu-item {
+  min-height: 32px !important;
+}
+
+.mat-mdc-menu-panel {
+  background-color: var(--theme-secondary-background) !important;
+}
+
+.mat-mdc-menu-content .mat-divider {
+  border-top-color: var(--theme-context-menu-separators) !important;
+  margin: 4px;
+}
+
+.mat-mdc-menu-item:hover {
+  background-color: rgba(var(--theme-rgb-base), 0.06) !important;
+}
+
+// Tooltip
+// -----------------------------------------------------------------------------------------------------------------------------------------
+.mdc-tooltip__surface {
+  font-size: var(--fontsize) !important;
+  background-color: var(--theme-accent-color) !important;
+  color: var(--theme-tooltip-text) !important;
+}
+
+// Form Field, Input, Select, Autocomplete
+// -----------------------------------------------------------------------------------------------------------------------------------------
+
+.mdc-text-field {
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  padding: 0 4px !important;
+}
+
+.mdc-form-field {
+  font-size: var(--fontsize) !important;
+}
+
+.mat-mdc-option {
+  font-size: var(--fontsize) !important;
+  min-height: unset !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+
+.mat-mdc-form-field-infix {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  min-height: unset !important;
+}
+
+.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after {
+  width: 12px !important;
+  height: 5px !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: unset !important;
+}
+
+.mat-mdc-form-field-focus-overlay {
+  background-color: unset !important;
+}

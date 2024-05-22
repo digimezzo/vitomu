@@ -13,6 +13,6 @@ export class ProductInformation {
     }
 
     public get copyright(): string {
-        return 'Copyright Digimezzo Ⓒ 2017 - 2021';
+        return 'Copyright Digimezzo Ⓒ 2017 - 2024';
     }
 }
