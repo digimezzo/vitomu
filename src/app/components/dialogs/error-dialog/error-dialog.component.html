@@ -4,6 +4,7 @@
     <p *ngIf="data.isGlobalError">{{ 'ErrorTexts.GlobalError' | translate }}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-raised-button color="primary" [mat-dialog-close]>{{ 'Buttons.Ok' | translate }}</button>
-    <button mat-raised-button [mat-dialog-close] (click)=viewLog()>{{ 'Buttons.ViewLog' | translate }}</button>
+    <app-accent-button [mat-dialog-close]>{{ 'Buttons.Ok' | translate }}</app-accent-button>
+    <app-transparent-button [mat-dialog-close] (click)="viewLog()">{{ 'Buttons.ViewLog' | translate }}
+    </app-transparent-button>
 </mat-dialog-actions>

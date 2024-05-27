@@ -30,6 +30,7 @@ export class DefaultThemesCreator {
             '#9b9b9b',
             '#333',
             '#ec1a65',
+            '#ffffff',
             '#ffffff'
         );
 
@@ -44,6 +45,7 @@ export class DefaultThemesCreator {
             '#9b9b9b',
             '#333',
             '#ec1a65',
+            '#ffffff',
             '#ffffff'
         );
 
@@ -64,6 +66,7 @@ export class DefaultThemesCreator {
             '#9b9b9b',
             '#333',
             '#00b163',
+            '#ffffff',
             '#ffffff'
         );
 
@@ -78,6 +81,7 @@ export class DefaultThemesCreator {
             '#9b9b9b',
             '#333',
             '#00b163',
+            '#ffffff',
             '#ffffff'
         );
 
@@ -98,6 +102,7 @@ export class DefaultThemesCreator {
             '#7b83a7',
             '#282c3d',
             '#00908c',
+            '#ffffff',
             '#ffffff'
         );
 
@@ -112,6 +117,7 @@ export class DefaultThemesCreator {
             '#7b83a7',
             '#282c3d',
             '#00908c',
+            '#ffffff',
             '#ffffff'
         );
 

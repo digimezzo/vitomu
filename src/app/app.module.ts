@@ -63,6 +63,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
+import { AccentButtonComponent } from './components/controls/accent-button/accent-button.component';
+import { TransparentButtonComponent } from './components/controls/transparent-button/transparent-button.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -84,6 +86,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         LanguageSwitcherComponent,
         ErrorDialogComponent,
         LicenseDialogComponent,
+        AccentButtonComponent,
+        TransparentButtonComponent,
         LogoFullComponent,
         WebviewDirective,
     ],

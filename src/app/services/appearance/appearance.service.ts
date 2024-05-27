@@ -30,6 +30,8 @@ export class AppearanceService implements BaseAppearanceService {
 
     private _themesDirectoryPath: string;
 
+    private _accentRgbColor: RgbColor = RgbColor.default();
+
     constructor(
         private settings: BaseSettings,
         private logger: Logger,
@@ -203,12 +205,16 @@ export class AppearanceService implements BaseAppearanceService {
             }
         }
 
+        this._accentRgbColor = ColorConverter.stringToRgbColor(accentColorToApply);
+
         const palette: Palette = new Palette(accentColorToApply);
 
         // Core colors
         element.style.setProperty('--theme-primary-color', primaryColorToApply);
         element.style.setProperty('--theme-secondary-color', secondaryColorToApply);
         element.style.setProperty('--theme-accent-color', accentColorToApply);
+        
+        element.style.setProperty('--theme-rgb-accent', this._accentRgbColor.toString());
 
         element.style.setProperty('--theme-accent-color-50', palette.color50);
         element.style.setProperty('--theme-accent-color-100', palette.color100);
@@ -241,6 +247,7 @@ export class AppearanceService implements BaseAppearanceService {
         element.style.setProperty('--theme-settings-separators', this.selectedTheme.darkColors.settingsSeparators);
         element.style.setProperty('--theme-scroll-bars', scrollBarColorToApply);
         element.style.setProperty('--theme-button-text', this.selectedTheme.darkColors.buttonText);
+        element.style.setProperty('--theme-highlight-foreground', this.selectedTheme.darkColors.highlightForeground);
 
         if (this.isUsingLightTheme) {
             themeName = 'default-theme-light';
@@ -256,6 +263,7 @@ export class AppearanceService implements BaseAppearanceService {
             element.style.setProperty('--theme-settings-separators', this.selectedTheme.lightColors.settingsSeparators);
             element.style.setProperty('--theme-scroll-bars', scrollBarColorToApply);
             element.style.setProperty('--theme-button-text', this.selectedTheme.lightColors.buttonText);
+            element.style.setProperty('--theme-highlight-foreground', this.selectedTheme.lightColors.highlightForeground);
         }
 
         // Apply theme to components in the overlay container: https://gist.github.com/tomastrajan/ee29cd8e180b14ce9bc120e2f7435db7

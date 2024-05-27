@@ -160,6 +160,7 @@ describe('AppearanceService', () => {
         expect(documentElementMock.style.getPropertyValue('--theme-settings-separators')).toEqual('#088888');
         expect(documentElementMock.style.getPropertyValue('--theme-scroll-bars')).toEqual(scrollBars);
         expect(documentElementMock.style.getPropertyValue('--theme-button-text')).toEqual('#0fffff');
+        expect(documentElementMock.style.getPropertyValue('--theme-highlight-foreground')).toEqual('#0eeeee');
     }
 
     function assertLightColorCssProperties(scrollBars: string): void {
@@ -174,6 +175,7 @@ describe('AppearanceService', () => {
         expect(documentElementMock.style.getPropertyValue('--theme-settings-separators')).toEqual('#188888');
         expect(documentElementMock.style.getPropertyValue('--theme-scroll-bars')).toEqual(scrollBars);
         expect(documentElementMock.style.getPropertyValue('--theme-button-text')).toEqual('#1fffff');
+        expect(documentElementMock.style.getPropertyValue('--theme-highlight-foreground')).toEqual('#0eeeee');
     }
 
     function resetElements(): void {

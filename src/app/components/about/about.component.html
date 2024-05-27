@@ -6,17 +6,13 @@
         <strong> {{ productInformation.version }}</strong>
         <br />{{ productInformation.copyright }}
     </div>
-    <button class="mt-2" mat-raised-button color="primary" (click)="openLicenseDialog()">
-        {{ 'Buttons.License' | translate }}
-    </button>
+    <app-accent-button class="mt-2" (click)="openLicenseDialog()">{{ 'Buttons.License' | translate }}</app-accent-button>
 </div>
 <mat-divider></mat-divider>
 <div class="m-3">
     <h1>{{ 'AboutTab.Donate' | translate }}</h1>
     <div class="mt-2">{{ 'AboutTab.IsAppUseful' | translate }}</div>
-    <button class="mt-2" mat-raised-button color="primary" (click)="openDonateLink()">
-        {{ 'Buttons.Donate' | translate }}
-    </button>
+    <app-accent-button class="mt-2" (click)="openDonateLink()">{{ 'Buttons.Donate' | translate }}</app-accent-button>
 </div>
 <mat-divider></mat-divider>
 <div class="m-3">

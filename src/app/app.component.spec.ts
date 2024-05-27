@@ -2,6 +2,7 @@ import { Mock, Times } from 'typemoq';
 import { AppComponent } from './app.component';
 import { BaseAppearanceService } from './services/appearance/base-appearance.service';
 import { TranslatorService } from './services/translator/translator.service';
+import { Desktop } from './common/io/desktop';
 
 describe('AppComponent', () => {
     describe('constructor', () => {
@@ -9,9 +10,13 @@ describe('AppComponent', () => {
             // Arrange
             const appearanceServiceMock = Mock.ofType<BaseAppearanceService>();
             const translatorServiceMock = Mock.ofType<TranslatorService>();
+            const desktopMock = Mock.ofType<Desktop>();
 
             // Act
-            const appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object);
+            const appComponent: AppComponent = new AppComponent(
+                translatorServiceMock.object, 
+                appearanceServiceMock.object, 
+                desktopMock.object);
 
             // Assert
             expect(appComponent).toBeDefined();
@@ -23,7 +28,12 @@ describe('AppComponent', () => {
             // Arrange
             const appearanceServiceMock = Mock.ofType<BaseAppearanceService>();
             const translatorServiceMock = Mock.ofType<TranslatorService>();
-            const appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object);
+            const desktopMock = Mock.ofType<Desktop>();
+
+            const appComponent: AppComponent = new AppComponent(
+                translatorServiceMock.object,
+                appearanceServiceMock.object,
+                desktopMock.object);
 
             // Act
             appComponent.ngOnInit();
@@ -36,7 +46,12 @@ describe('AppComponent', () => {
             // Arrange
             const appearanceServiceMock = Mock.ofType<BaseAppearanceService>();
             const translatorServiceMock = Mock.ofType<TranslatorService>();
-            const appComponent: AppComponent = new AppComponent(translatorServiceMock.object, appearanceServiceMock.object);
+            const desktopMock = Mock.ofType<Desktop>();
+            
+            const appComponent: AppComponent = new AppComponent(
+                translatorServiceMock.object,
+                appearanceServiceMock.object,
+                desktopMock.object);
 
             // Act
             appComponent.ngOnInit();
