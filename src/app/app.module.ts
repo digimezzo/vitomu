@@ -65,6 +65,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { AccentButtonComponent } from './components/controls/accent-button/accent-button.component';
 import { TransparentButtonComponent } from './components/controls/transparent-button/transparent-button.component';
+import { ToggleSwitchComponent } from './components/controls/toggle-switch/toggle-switch.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -88,6 +89,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         LicenseDialogComponent,
         AccentButtonComponent,
         TransparentButtonComponent,
+        ToggleSwitchComponent,
         LogoFullComponent,
         WebviewDirective,
     ],

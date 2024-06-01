@@ -248,6 +248,8 @@ export class AppearanceService implements BaseAppearanceService {
         element.style.setProperty('--theme-scroll-bars', scrollBarColorToApply);
         element.style.setProperty('--theme-button-text', this.selectedTheme.darkColors.buttonText);
         element.style.setProperty('--theme-highlight-foreground', this.selectedTheme.darkColors.highlightForeground);
+        element.style.setProperty('--theme-slider-background', this.selectedTheme.darkColors.sliderBackground);
+        element.style.setProperty('--theme-slider-thumb-background', this.selectedTheme.darkColors.sliderThumbBackground);
 
         if (this.isUsingLightTheme) {
             themeName = 'default-theme-light';
@@ -264,6 +266,8 @@ export class AppearanceService implements BaseAppearanceService {
             element.style.setProperty('--theme-scroll-bars', scrollBarColorToApply);
             element.style.setProperty('--theme-button-text', this.selectedTheme.lightColors.buttonText);
             element.style.setProperty('--theme-highlight-foreground', this.selectedTheme.lightColors.highlightForeground);
+            element.style.setProperty('--theme-slider-background', this.selectedTheme.lightColors.sliderBackground);
+            element.style.setProperty('--theme-slider-thumb-background', this.selectedTheme.lightColors.sliderThumbBackground);
         }
 
         // Apply theme to components in the overlay container: https://gist.github.com/tomastrajan/ee29cd8e180b14ce9bc120e2f7435db7

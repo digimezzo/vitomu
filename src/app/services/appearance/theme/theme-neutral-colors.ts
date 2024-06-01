@@ -12,5 +12,7 @@ export class ThemeNeutralColors {
         public scrollBars: string,
         public buttonText: string,
         public highlightForeground: string,
+        public sliderBackground: string,
+        public sliderThumbBackground: string,
     ) {}
 }

@@ -63,7 +63,10 @@ describe('AppearanceService', () => {
             '#077777',
             '#088888',
             '#099999',
-            '#0fffff'
+            '#0fffff',
+            '#0ffff1',
+            '#0ffff2',
+            '#0ffff3'
         );
     }
 
@@ -79,7 +82,10 @@ describe('AppearanceService', () => {
             '#177777',
             '#188888',
             '#199999',
-            '#1fffff'
+            '#1fffff',
+            '#1ffff1',
+            '#1ffff2',
+            '#1ffff3'
         );
     }
 
@@ -160,7 +166,9 @@ describe('AppearanceService', () => {
         expect(documentElementMock.style.getPropertyValue('--theme-settings-separators')).toEqual('#088888');
         expect(documentElementMock.style.getPropertyValue('--theme-scroll-bars')).toEqual(scrollBars);
         expect(documentElementMock.style.getPropertyValue('--theme-button-text')).toEqual('#0fffff');
-        expect(documentElementMock.style.getPropertyValue('--theme-highlight-foreground')).toEqual('#0eeeee');
+        expect(documentElementMock.style.getPropertyValue('--theme-highlight-foreground')).toEqual('#0ffff1');
+        expect(documentElementMock.style.getPropertyValue('--theme-slider-background')).toEqual('#0ffff2');
+        expect(documentElementMock.style.getPropertyValue('--theme-slider-thumb-background')).toEqual('#0ffff3');
     }
 
     function assertLightColorCssProperties(scrollBars: string): void {
@@ -175,7 +183,9 @@ describe('AppearanceService', () => {
         expect(documentElementMock.style.getPropertyValue('--theme-settings-separators')).toEqual('#188888');
         expect(documentElementMock.style.getPropertyValue('--theme-scroll-bars')).toEqual(scrollBars);
         expect(documentElementMock.style.getPropertyValue('--theme-button-text')).toEqual('#1fffff');
-        expect(documentElementMock.style.getPropertyValue('--theme-highlight-foreground')).toEqual('#0eeeee');
+        expect(documentElementMock.style.getPropertyValue('--theme-highlight-foreground')).toEqual('#1ffff1');
+        expect(documentElementMock.style.getPropertyValue('--theme-slider-background')).toEqual('#1ffff2');
+        expect(documentElementMock.style.getPropertyValue('--theme-slider-thumb-background')).toEqual('#1ffff3');
     }
 
     function resetElements(): void {
