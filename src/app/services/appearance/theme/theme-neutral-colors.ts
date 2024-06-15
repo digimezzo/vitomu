@@ -14,5 +14,6 @@ export class ThemeNeutralColors {
         public highlightForeground: string,
         public sliderBackground: string,
         public sliderThumbBackground: string,
+        public tooltipText: string
     ) {}
 }

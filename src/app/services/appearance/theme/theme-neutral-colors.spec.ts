@@ -13,7 +13,11 @@ describe('ThemeNeutralColors', () => {
             '#777777',
             '#888888',
             '#999999',
-            '#ffffff'
+            '#ffffff',
+            '#fffff1',
+            '#fffff2',
+            '#fffff3',
+            '#fffff4'
         );
     }
 
@@ -21,8 +25,6 @@ describe('ThemeNeutralColors', () => {
 
     describe('constructor', () => {
         it('should create', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
@@ -31,8 +33,6 @@ describe('ThemeNeutralColors', () => {
         });
 
         it('should set windowButtonIcon', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
@@ -41,8 +41,6 @@ describe('ThemeNeutralColors', () => {
         });
 
         it('should set hoveredItemBackground', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
@@ -51,8 +49,6 @@ describe('ThemeNeutralColors', () => {
         });
 
         it('should set tabText', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
@@ -61,8 +57,6 @@ describe('ThemeNeutralColors', () => {
         });
 
         it('should set selectedTabText', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
@@ -71,8 +65,6 @@ describe('ThemeNeutralColors', () => {
         });
 
         it('should set primaryBackground', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
@@ -81,8 +73,6 @@ describe('ThemeNeutralColors', () => {
         });
 
         it('should set secondaryBackground', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
@@ -91,8 +81,6 @@ describe('ThemeNeutralColors', () => {
         });
 
         it('should set primaryText', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
@@ -101,8 +89,6 @@ describe('ThemeNeutralColors', () => {
         });
 
         it('should set secondaryText', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
@@ -111,8 +97,6 @@ describe('ThemeNeutralColors', () => {
         });
 
         it('should set settingsSeparators', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
@@ -121,8 +105,6 @@ describe('ThemeNeutralColors', () => {
         });
 
         it('should set scrollBars', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
@@ -131,13 +113,43 @@ describe('ThemeNeutralColors', () => {
         });
 
         it('should set buttonText', () => {
-            // Arrange
-
             // Act
             const colors: ThemeNeutralColors = createNeutralColors();
 
             // Assert
             expect(colors.buttonText).toEqual('#ffffff');
+        });
+
+        it('should set highlightForeground', () => {
+            // Act
+            const colors: ThemeNeutralColors = createNeutralColors();
+
+            // Assert
+            expect(colors.highlightForeground).toEqual('#fffff1');
+        });
+
+        it('should set sliderBackground', () => {
+            // Act
+            const colors: ThemeNeutralColors = createNeutralColors();
+
+            // Assert
+            expect(colors.sliderBackground).toEqual('#fffff2');
+        });
+
+        it('should set sliderThumbBackground', () => {
+            // Act
+            const colors: ThemeNeutralColors = createNeutralColors();
+
+            // Assert
+            expect(colors.sliderThumbBackground).toEqual('#fffff3');
+        });
+
+        it('should set tooltipText', () => {
+            // Act
+            const colors: ThemeNeutralColors = createNeutralColors();
+
+            // Assert
+            expect(colors.tooltipText).toEqual('#fffff4');
         });
     });
 });

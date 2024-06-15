@@ -6,7 +6,23 @@ import { ThemeOptions } from './theme-options';
 
 describe('Theme', () => {
     function createNeutralColors(): ThemeNeutralColors {
-        return new ThemeNeutralColors('#000', '#111', '#222', '#333', '#444', '#555', '#666', '#777', '#888', '#999', '#fff');
+        return new ThemeNeutralColors(
+            '#000', 
+            '#111', 
+            '#222', 
+            '#333', 
+            '#444', 
+            '#555', 
+            '#666', 
+            '#777', 
+            '#888', 
+            '#999', 
+            '#fff',
+            '#f1f1f1',
+            '#f2f2f2',
+            '#f3f3f3',
+            '#f4f4f4'
+        );
     }
 
     beforeEach(() => {});

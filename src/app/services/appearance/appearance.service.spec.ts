@@ -66,7 +66,8 @@ describe('AppearanceService', () => {
             '#0fffff',
             '#0ffff1',
             '#0ffff2',
-            '#0ffff3'
+            '#0ffff3',
+            '#0ffff4'
         );
     }
 
@@ -85,7 +86,8 @@ describe('AppearanceService', () => {
             '#1fffff',
             '#1ffff1',
             '#1ffff2',
-            '#1ffff3'
+            '#1ffff3',
+            '#1ffff4'
         );
     }
 
@@ -169,6 +171,7 @@ describe('AppearanceService', () => {
         expect(documentElementMock.style.getPropertyValue('--theme-highlight-foreground')).toEqual('#0ffff1');
         expect(documentElementMock.style.getPropertyValue('--theme-slider-background')).toEqual('#0ffff2');
         expect(documentElementMock.style.getPropertyValue('--theme-slider-thumb-background')).toEqual('#0ffff3');
+        expect(documentElementMock.style.getPropertyValue('--theme-tooltip-text')).toEqual('#0ffff4');
     }
 
     function assertLightColorCssProperties(scrollBars: string): void {
@@ -186,6 +189,7 @@ describe('AppearanceService', () => {
         expect(documentElementMock.style.getPropertyValue('--theme-highlight-foreground')).toEqual('#1ffff1');
         expect(documentElementMock.style.getPropertyValue('--theme-slider-background')).toEqual('#1ffff2');
         expect(documentElementMock.style.getPropertyValue('--theme-slider-thumb-background')).toEqual('#1ffff3');
+        expect(documentElementMock.style.getPropertyValue('--theme-tooltip-text')).toEqual('#1ffff4');
     }
 
     function resetElements(): void {
