@@ -6,7 +6,6 @@ import { Environment } from '../../common/io/environment';
 import { FileSystem } from '../../common/io/file-system';
 import { Logger } from '../../common/logger';
 import { BaseSettings } from '../../common/settings/base-settings';
-import { BaseConvertService } from './base-convert.service';
 import { ConversionResult } from './conversion-result';
 import { ConvertService } from './convert.service';
 import { DependencyChecker } from './dependency-checker';
@@ -52,7 +51,7 @@ describe('ConvertService', () => {
         settingsMock.setup((x) => x.audioBitrate).returns(() => 320);
     });
 
-    function createService(): BaseConvertService {
+    function createService(): ConvertService {
         return new ConvertService(
             loggerMock.object,
             dependencyCheckerFactoryMock.object,
@@ -70,7 +69,7 @@ describe('ConvertService', () => {
             // Arrange
 
             // Act
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Assert
             assert.ok(convertService.audioFormats.length > 0);
@@ -80,7 +79,7 @@ describe('ConvertService', () => {
             // Arrange
 
             // Act
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Assert
             assert.ok(convertService.audioBitrates.length > 0);
@@ -90,7 +89,7 @@ describe('ConvertService', () => {
             // Arrange
 
             // Act
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Assert
             assert.equal(convertService.lastConvertedFilePath, '');
@@ -100,7 +99,7 @@ describe('ConvertService', () => {
             // Arrange
 
             // Act
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Assert
             assert.equal(convertService.lastConvertedFileName, '');
@@ -110,7 +109,7 @@ describe('ConvertService', () => {
             // Arrange
 
             // Act
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Assert
             assert.equal(convertService.selectedAudioBitrate, 320);
@@ -120,7 +119,7 @@ describe('ConvertService', () => {
             // Arrange
 
             // Act
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Assert
             assert.equal(convertService.selectedAudioFormat.id, 'mp3');
@@ -131,7 +130,7 @@ describe('ConvertService', () => {
             // Arrange
             settingsMock.setup((x) => x.audioFormat).returns(() => 'mp3');
 
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             const isVideoUrlConvertible: boolean = convertService.isVideoUrlConvertible('https://www.youtube.com/watch?v=9WQxorFEnG8');
@@ -144,7 +143,7 @@ describe('ConvertService', () => {
             // Arrange
             settingsMock.setup((x) => x.audioFormat).returns(() => 'mp3');
 
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             const isVideoUrlConvertible: boolean = convertService.isVideoUrlConvertible('http://youtu.be/7DQPgw7gxtc');
@@ -157,7 +156,7 @@ describe('ConvertService', () => {
             // Arrange
             settingsMock.setup((x) => x.audioFormat).returns(() => 'mp3');
 
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             const isVideoUrlConvertible: boolean = convertService.isVideoUrlConvertible('https://www.google.com');
@@ -170,7 +169,7 @@ describe('ConvertService', () => {
     describe('onConversionProgressChanged', () => {
         it('Should notify when convert progress changes', async () => {
             // Arrange
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             const subscription: Subscription = new Subscription();
 
@@ -195,7 +194,7 @@ describe('ConvertService', () => {
         it('Should return true if FFmpeg is available', async () => {
             // Arrange
             ffmpegCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => true);
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             const ffmpegIsAvailable: boolean = await convertService.isFfmpegAvailableAsync();
@@ -207,7 +206,7 @@ describe('ConvertService', () => {
         it('Should return false if FFmpeg is not available', async () => {
             // Arrange
             ffmpegCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => false);
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             const ffmpegIsAvailable: boolean = await convertService.isFfmpegAvailableAsync();
@@ -221,7 +220,7 @@ describe('ConvertService', () => {
         it('Should return true if Youtube downloader is available', async () => {
             // Arrange
             youtubeDownloaderCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => true);
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             const youtubeDownloaderIsAvailable: boolean = await convertService.isYoutubeDownloaderAvailableAsync();
@@ -233,7 +232,7 @@ describe('ConvertService', () => {
         it('Should return false if FFYoutube downloadermpeg is not available', async () => {
             // Arrange
             youtubeDownloaderCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => false);
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             const youtubeDownloaderIsAvailable: boolean = await convertService.isYoutubeDownloaderAvailableAsync();
@@ -248,7 +247,7 @@ describe('ConvertService', () => {
             // Arrange
             ffmpegCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => true);
             ffmpegCheckerMock.setup((x) => x.downloadedDependencyFolder).returns(() => 'FFmpeg folder');
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             await convertService.downloadFfmpegAsync();
@@ -261,7 +260,7 @@ describe('ConvertService', () => {
             // Arrange
             ffmpegCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => false);
             ffmpegCheckerMock.setup((x) => x.downloadedDependencyFolder).returns(() => 'FFmpeg folder');
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             await convertService.downloadFfmpegAsync();
@@ -276,7 +275,7 @@ describe('ConvertService', () => {
             // Arrange
             youtubeDownloaderCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => true);
             youtubeDownloaderCheckerMock.setup((x) => x.downloadedDependencyFolder).returns(() => 'Youtube downloader folder');
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             await convertService.downloadYoutubeDownloaderAsync();
@@ -289,7 +288,7 @@ describe('ConvertService', () => {
             // Arrange
             youtubeDownloaderCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => false);
             youtubeDownloaderCheckerMock.setup((x) => x.downloadedDependencyFolder).returns(() => 'Youtube downloader folder');
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             await convertService.downloadYoutubeDownloaderAsync();
@@ -303,7 +302,7 @@ describe('ConvertService', () => {
         it('Should not update Youtube downloader if no downloaded version is found', async () => {
             // Arrange
             youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => '');
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             await convertService.updateYoutubeDownloaderAsync();
@@ -315,7 +314,7 @@ describe('ConvertService', () => {
         it('Should update Youtube downloader if a downloaded version is found', async () => {
             // Arrange
             youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'Youtube downloader folder');
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             await convertService.updateYoutubeDownloaderAsync();
@@ -349,7 +348,7 @@ describe('ConvertService', () => {
             ffmpegCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => true);
             youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => true);
 
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             await convertService.convertAsync('dummyUrl');
@@ -383,7 +382,7 @@ describe('ConvertService', () => {
             youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'yt-dlp path');
             youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => true);
 
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             await convertService.convertAsync('dummyUrl');
@@ -429,7 +428,7 @@ describe('ConvertService', () => {
             youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'yt-dlp path');
             youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => true);
 
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             await convertService.convertAsync('dummyUrl');
@@ -475,7 +474,7 @@ describe('ConvertService', () => {
             youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'yt-dlp path');
             youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
 
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             await convertService.convertAsync('dummyUrl');
@@ -521,7 +520,7 @@ describe('ConvertService', () => {
             youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'yt-dlp path');
             youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
 
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
 
             // Act
             await convertService.convertAsync('dummyUrl');
@@ -567,7 +566,7 @@ describe('ConvertService', () => {
             youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'yt-dlp path');
             youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
 
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
             convertService.lastConvertedFilePath = 'previous file path';
             convertService.lastConvertedFileName = 'previous file name';
 
@@ -606,7 +605,7 @@ describe('ConvertService', () => {
 
             fileSystemMock.setup((x) => x.getFileName('/home/user/Music/Vitomu/file2.mp3')).returns(() => 'file2.mp3');
 
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
             convertService.lastConvertedFilePath = '/home/user/Music/Vitomu/file1.mp3';
             convertService.lastConvertedFileName = 'file1.mp3';
 
@@ -646,7 +645,7 @@ describe('ConvertService', () => {
 
             fileSystemMock.setup((x) => x.getFileName('/home/user/Music/Vitomu/file2.mp3')).returns(() => 'file2.mp3');
 
-            const convertService: BaseConvertService = createService();
+            const convertService = createService();
             convertService.lastConvertedFilePath = '/home/user/Music/Vitomu/file1.mp3';
             convertService.lastConvertedFileName = 'file1.mp3';
 

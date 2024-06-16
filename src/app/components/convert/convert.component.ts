@@ -3,12 +3,12 @@ import { Subscription } from 'rxjs';
 import { Delayer } from '../../common/delayer';
 import { ClipboardWatcher } from '../../common/io/clipboard-watcher';
 import { Desktop } from '../../common/io/desktop';
-import { BaseConvertService } from '../../services/convert/base-convert.service';
 import { ConversionResult } from '../../services/convert/conversion-result';
 import { ConvertState } from '../../services/convert/convert-state';
 import { YoutubeDownloaderConstants } from '../../services/convert/youtube-downloader-constants';
 import { PersistanceService } from '../../services/persistance/persistance.service';
 import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
+import { ConvertService } from '../../services/convert/convert.service';
 
 @Component({
     selector: 'app-convert',
@@ -32,7 +32,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     constructor(
         private delayer: Delayer,
         private zone: NgZone,
-        public convertService: BaseConvertService,
+        public convertService: ConvertService,
         private clipboardWatcher: ClipboardWatcher,
         private snackBarService: SnackBarService,
         private persistanceService: PersistanceService,

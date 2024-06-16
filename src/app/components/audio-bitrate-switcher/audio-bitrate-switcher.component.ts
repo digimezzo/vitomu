@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { BaseConvertService } from '../../services/convert/base-convert.service';
+import { ConvertService } from '../../services/convert/convert.service';
 
 @Component({
     selector: 'app-audio-bitrate-switcher',
@@ -9,7 +9,7 @@ import { BaseConvertService } from '../../services/convert/base-convert.service'
     encapsulation: ViewEncapsulation.None,
 })
 export class AudioBitrateSwitcherComponent implements OnInit {
-    constructor(public convertService: BaseConvertService) {}
+    constructor(public convertService: ConvertService) {}
 
     public ngOnInit(): void {}
 }

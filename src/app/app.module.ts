@@ -39,7 +39,6 @@ import { WebviewDirective } from './directives/webview.directive';
 import { GlobalErrorHandler } from './global-error-handler';
 import { AppearanceService } from './services/appearance/appearance.service';
 import { DefaultThemesCreator } from './services/appearance/default-themes-creator';
-import { BaseConvertService } from './services/convert/base-convert.service';
 import { ConvertService } from './services/convert/convert.service';
 import { DependencyCheckerFactory } from './services/convert/dependency-checker-factory';
 import { FFmpegDownloader } from './services/convert/ffmpeg-downloader';
@@ -129,6 +128,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SnackBarService,
         PersistanceService,
         AppearanceService,
+        ConvertService,
         Logger,
         Settings,
         FileSystem,
@@ -147,7 +147,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         DefaultThemesCreator,
         { provide: BaseSettings, useClass: Settings },
         { provide: BaseRemoteProxy, useClass: RemoteProxy },
-        { provide: BaseConvertService, useClass: ConvertService },
         { provide: BaseTranslatorService, useClass: TranslatorService },
         { provide: BaseUpdateService, useClass: UpdateService },
         { provide: SchedulerBase, useClass: Scheduler },

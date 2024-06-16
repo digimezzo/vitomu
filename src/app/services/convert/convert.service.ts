@@ -6,7 +6,6 @@ import { FileSystem } from '../../common/io/file-system';
 import { Logger } from '../../common/logger';
 import { BaseSettings } from '../../common/settings/base-settings';
 import { Strings } from '../../common/strings';
-import { BaseConvertService } from './base-convert.service';
 import { ConversionResult as ConversionResult } from './conversion-result';
 import { DependencyChecker } from './dependency-checker';
 import { DependencyCheckerFactory } from './dependency-checker-factory';
@@ -20,7 +19,7 @@ import { YoutubeDownloaderUpdater } from './youtube-downloader-updater';
 @Injectable({
     providedIn: 'root',
 })
-export class ConvertService implements BaseConvertService {
+export class ConvertService {
     private readonly outputDirectory: string = '';
     private _lastConvertedFilePath: string = '';
     private _lastConvertedFileName: string = '';
