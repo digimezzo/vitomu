@@ -57,15 +57,16 @@ import { UpdateService } from './services/update/update.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { AccentButtonComponent } from './components/controls/accent-button/accent-button.component';
 import { TransparentButtonComponent } from './components/controls/transparent-button/transparent-button.component';
 import { ToggleSwitchComponent } from './components/controls/toggle-switch/toggle-switch.component';
+import { SubMenuItemComponent } from './components/sub-menu/sub-menu-item/sub-menu-item.component';
+import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
+import { LogoSmallComponent } from './components/logo-small/logo-small.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -91,17 +92,18 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         TransparentButtonComponent,
         ToggleSwitchComponent,
         LogoFullComponent,
+        SubMenuComponent,
+        SubMenuItemComponent,
+        LogoSmallComponent,
         WebviewDirective,
     ],
     imports: [
         MatButtonModule,
         MatTooltipModule,
         MatDialogModule,
-        MatTabsModule,
         MatSelectModule,
         MatProgressSpinnerModule,
         MatSnackBarModule,
-        MatSlideToggleModule,
         MatDividerModule,
         BrowserAnimationsModule,
         BrowserModule,

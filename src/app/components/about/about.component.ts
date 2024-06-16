@@ -7,6 +7,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-about',
+    host: { style: 'display: block; width: 100%;' },
     templateUrl: './about.component.html',
     styleUrls: ['./about.component.scss'],
     encapsulation: ViewEncapsulation.None,

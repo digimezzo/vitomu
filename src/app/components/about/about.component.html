@@ -8,13 +8,13 @@
     </div>
     <app-accent-button class="mt-2" (click)="openLicenseDialog()">{{ 'Buttons.License' | translate }}</app-accent-button>
 </div>
-<mat-divider></mat-divider>
+<hr>
 <div class="m-3">
     <h1>{{ 'AboutTab.Donate' | translate }}</h1>
     <div class="mt-2">{{ 'AboutTab.IsAppUseful' | translate }}</div>
     <app-accent-button class="mt-2" (click)="openDonateLink()">{{ 'Buttons.Donate' | translate }}</app-accent-button>
 </div>
-<mat-divider></mat-divider>
+<hr>
 <div class="m-3">
     <h1>{{ 'AboutTab.GetInTouch' | translate }}</h1>
     <div class="contact-item mb-1 mt-2">
@@ -30,7 +30,7 @@
         <a href="{{ githubUrl }}" matTooltip="{{ githubUrl }}">GitHub</a>
     </div>
 </div>
-<mat-divider></mat-divider>
+<hr>
 <div class="m-3">
     <h1>{{ 'AboutTab.Components' | translate }}</h1>
     <div class="mt-2" *ngFor="let externalComponent of externalComponents">

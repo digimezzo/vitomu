@@ -5,3 +5,7 @@
 .hidden {
   visibility: hidden;
 }
+
+.draggable {
+  -webkit-app-region: drag;
+}

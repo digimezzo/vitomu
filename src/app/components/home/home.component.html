@@ -1,33 +1,29 @@
 <div class="window-frame">
     <div class="window-frame-titlebar">
-        <div class="window-frame-titlebar-dragarea pl-1" *ngIf="!appearanceService.windowHasNativeTitleBar">
-            {{ productInformation.name }}
-        </div>
+        <app-logo-small class="m-2 draggable"></app-logo-small>
+        <app-sub-menu>
+            <app-sub-menu-item [page]="0" [selectedPage]="this.page" (click)="this.setPage(0)">
+                {{ 'Tabs.Convert' | translate }}
+            </app-sub-menu-item>
+            <app-sub-menu-item [page]="1" [selectedPage]="this.page" (click)="this.setPage(1)">
+                {{ 'Tabs.Settings' | translate }}
+            </app-sub-menu-item>
+            <app-sub-menu-item [page]="2" [selectedPage]="this.page" (click)="this.setPage(2)">
+                {{ 'Tabs.About' | translate }}
+            </app-sub-menu-item>
+        </app-sub-menu>
+        <div class="window-frame-titlebar-dragarea"></div>
         <app-window-controls *ngIf="!appearanceService.windowHasNativeTitleBar"></app-window-controls>
     </div>
     <div class="window-frame-content" [ngStyle]="{ top: appearanceService.windowHasNativeTitleBar ? '0px' : '32px' }">
-        <mat-tab-group>
-            <!-- Convert -->
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    {{ 'Tabs.Convert' | translate }}
-                </ng-template>
-                <app-convert></app-convert>
-            </mat-tab>
-            <!-- Settings -->
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    {{ 'Tabs.Settings' | translate }}
-                </ng-template>
-                <app-settings></app-settings>
-            </mat-tab>
-            <!-- About -->
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    {{ 'Tabs.About' | translate }}
-                </ng-template>
-                <app-about></app-about>
-            </mat-tab>
-        </mat-tab-group>
+        <!-- Convert -->
+        <app-convert *ngIf="this.leftToRight(0)" [@enterLeftToRight]></app-convert>
+        <app-convert *ngIf="this.rightToLeft(0)" [@enterRightToLeft]></app-convert>
+        <!-- Settings -->
+        <app-settings *ngIf="this.leftToRight(1)" [@enterLeftToRight]></app-settings>
+        <app-settings *ngIf="this.rightToLeft(1)" [@enterRightToLeft]></app-settings>
+        <!-- About -->
+        <app-about *ngIf="this.leftToRight(2)" [@enterLeftToRight]></app-about>
+        <app-about *ngIf="this.rightToLeft(2)" [@enterRightToLeft]></app-about>
     </div>
 </div>

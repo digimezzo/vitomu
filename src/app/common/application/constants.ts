@@ -9,6 +9,8 @@ export class Constants {
     public static readonly twitterUrl: string = 'https://twitter.com/digimezzo';
     public static readonly githubUrl: string = 'https://github.com/digimezzo';
 
+    public static readonly screenEaseSpeedMilliseconds: number = 350;
+
     public static readonly languages: Language[] = [
         new Language('en', 'English', 'English'),
         new Language('fr', 'French', 'Français'),

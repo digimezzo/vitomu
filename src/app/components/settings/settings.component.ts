@@ -5,6 +5,7 @@ import { BaseAppearanceService } from '../../services/appearance/base-appearance
 
 @Component({
     selector: 'app-settings',
+    host: { style: 'display: block; width: 100%;' },
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.scss'],
     encapsulation: ViewEncapsulation.None,

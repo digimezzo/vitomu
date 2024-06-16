@@ -12,6 +12,7 @@ import { BaseTranslatorService } from '../../services/translator/base-translator
 
 @Component({
     selector: 'app-convert',
+    host: { style: 'display: block; width: 100%;' },
     templateUrl: './convert.component.html',
     styleUrls: ['./convert.component.scss'],
     encapsulation: ViewEncapsulation.None,
