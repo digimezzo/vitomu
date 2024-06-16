@@ -23,7 +23,7 @@ describe('ProductInformation', () => {
             const applicationVersion: string = productInformation.version;
 
             // Assert
-            expect(applicationVersion).toEqual('2.1.1');
+            expect(applicationVersion).toEqual('2.2.0');
         });
     });
 
