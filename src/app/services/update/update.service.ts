@@ -3,14 +3,13 @@ import { GitHubApi } from '../../common/api/github-api';
 import { ProductInformation } from '../../common/application/product-information';
 import { Logger } from '../../common/logger';
 import { BaseSettings } from '../../common/settings/base-settings';
-import { BaseUpdateService } from './base-update.service';
 import { VersionComparer } from './version-comparer';
 import { SnackBarService } from '../snack-bar/snack-bar.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class UpdateService implements BaseUpdateService {
+export class UpdateService {
     constructor(
         private snackBar: SnackBarService,
         private settings: BaseSettings,

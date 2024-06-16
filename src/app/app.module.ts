@@ -49,7 +49,6 @@ import { ElectronService } from './services/electron.service';
 import { SnackBarService } from './services/snack-bar/snack-bar.service';
 import { BaseTranslatorService } from './services/translator/base-translator.service';
 import { TranslatorService } from './services/translator/translator.service';
-import { BaseUpdateService } from './services/update/base-update.service';
 import { UpdateService } from './services/update/update.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -129,6 +128,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         PersistanceService,
         AppearanceService,
         ConvertService,
+        UpdateService,
         Logger,
         Settings,
         FileSystem,
@@ -148,7 +148,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         { provide: BaseSettings, useClass: Settings },
         { provide: BaseRemoteProxy, useClass: RemoteProxy },
         { provide: BaseTranslatorService, useClass: TranslatorService },
-        { provide: BaseUpdateService, useClass: UpdateService },
         { provide: SchedulerBase, useClass: Scheduler },
         {
             provide: ErrorHandler,
