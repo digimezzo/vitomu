@@ -32,10 +32,6 @@ export class Desktop {
         return remote.systemPreferences.getAccentColor();
     }
 
-    public showFileInDirectory(filePath: string): void {
-        remote.shell.showItemInFolder(filePath);
-    }
-
     public shouldUseDarkColors(): boolean {
         return remote.nativeTheme.shouldUseDarkColors;
     }

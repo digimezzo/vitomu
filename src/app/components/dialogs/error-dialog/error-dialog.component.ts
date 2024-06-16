@@ -23,7 +23,7 @@ export class ErrorDialogComponent implements OnInit {
 
     public viewLog(): void {
         // See: https://stackoverflow.com/questions/30381450/open-external-file-with-electron
-        this.desktop.showFileInDirectory(
+        this.desktop.showInFolder(
             this.fileSystem.combinePath([this.fileSystem.applicationDataDirectory(), 'logs', Constants.logFileName])
         );
     }
