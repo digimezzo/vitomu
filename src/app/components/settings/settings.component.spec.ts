@@ -4,6 +4,8 @@ import { BaseSettings } from '../../common/settings/base-settings';
 import { BaseAppearanceService } from '../../services/appearance/base-appearance.service';
 import { SettingsComponent } from './settings.component';
 
+jest.mock('@electron/remote', () => ({ exec: jest.fn() }));
+
 describe('SettingsComponent', () => {
     describe('constructor', () => {
         it('Should define appearanceService', () => {

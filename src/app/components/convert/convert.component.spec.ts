@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { Observable, Subject } from 'rxjs';
-import { IMock, Mock, Times } from 'typemoq';
+import { IMock, It, Mock, Times } from 'typemoq';
 import { Delayer } from '../../common/delayer';
 import { ClipboardWatcher } from '../../common/io/clipboard-watcher';
 import { Desktop } from '../../common/io/desktop';
@@ -8,17 +8,19 @@ import { ConversionResult } from '../../services/convert/conversion-result';
 import { ConvertState } from '../../services/convert/convert-state';
 import { ConvertService } from '../../services/convert/convert.service';
 import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
-import { TranslatorService } from '../../services/translator/translator.service';
 import { ConvertComponent } from './convert.component';
 import { NgZoneMock } from './ng-zone.mock';
+
+jest.mock('@electron/remote', () => ({ exec: jest.fn() }));
 
 describe('ConvertComponent', () => {
     let convertServiceMock: IMock<ConvertService>;
     let clipboardWatcherMock: IMock<ClipboardWatcher>;
     let snackBarServiceMock: IMock<SnackBarService>;
-    let translatorServiceMock: IMock<TranslatorService>;
     let desktopMock: IMock<Desktop>;
     let ngZoneMock: any;
+
+    let persistanceServiceMock;
 
     let delayer: Delayer;
 
@@ -29,9 +31,12 @@ describe('ConvertComponent', () => {
         convertServiceMock = Mock.ofType<ConvertService>();
         clipboardWatcherMock = Mock.ofType<ClipboardWatcher>();
         snackBarServiceMock = Mock.ofType<SnackBarService>();
-        translatorServiceMock = Mock.ofType<TranslatorService>();
         desktopMock = Mock.ofType<Desktop>();
         ngZoneMock = new NgZoneMock();
+
+        persistanceServiceMock = {
+            dependenciesAreChecked: false
+        };
 
         delayer = new Delayer();
 
@@ -51,10 +56,11 @@ describe('ConvertComponent', () => {
             convertServiceMock.object,
             clipboardWatcherMock.object,
             snackBarServiceMock.object,
-            translatorServiceMock.object,
+            persistanceServiceMock,
             desktopMock.object
         );
     }
+
     describe('constructor', () => {
         it('Should start with progress mode determinate', () => {
             // Arrange
@@ -150,7 +156,7 @@ describe('ConvertComponent', () => {
 
             // Act
             delayer.canExecute = true;
-            convertComponent.ngOnInit();
+            await convertComponent.ngOnInit();
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
             await convertComponent.performConvertAsync();
             convertComponent.ngOnDestroy();
@@ -235,7 +241,7 @@ describe('ConvertComponent', () => {
 
             // Act
             delayer.canExecute = true;
-            convertComponent.ngOnInit();
+            await convertComponent.ngOnInit();
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
             await convertComponent.performConvertAsync();
             convertComponent.ngOnDestroy();
@@ -296,14 +302,12 @@ describe('ConvertComponent', () => {
 
             const convertComponent: ConvertComponent = createComponent();
 
-            translatorServiceMock.setup((x) => x.getAsync('Buttons.Ok')).returns(() => Promise.resolve('OK'));
-
             // Act
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
             await convertComponent.showVideoLinkAsync();
 
             // Assert
-            snackBarServiceMock.verify((x) => x.showActionSnackBar('https://my.url.is.glorious', 'OK'), Times.exactly(1));
+            snackBarServiceMock.verify((x) => x.showDownloadUrl('https://my.url.is.glorious'), Times.exactly(1));
         });
     });
 
@@ -416,7 +420,7 @@ describe('ConvertComponent', () => {
             const convertComponent: ConvertComponent = createComponent();
             convertComponent.downloadUrl = '';
             // Act
-            convertComponent.ngOnInit();
+            await convertComponent.ngOnInit();
             clipboardContentChanged.next(videoUrl);
             convertComponent.ngOnDestroy();
             // Assert

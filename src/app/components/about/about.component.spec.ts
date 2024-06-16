@@ -1,10 +1,12 @@
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import * as assert from 'assert';
 import { It, Mock, Times } from 'typemoq';
 import { Constants } from '../../common/application/constants';
 import { ProductInformation } from '../../common/application/product-information';
 import { Desktop } from '../../common/io/desktop';
 import { AboutComponent } from './about.component';
+
+jest.mock('@electron/remote', () => ({ exec: jest.fn() }));
 
 describe('AboutComponent', () => {
     describe('constructor', () => {

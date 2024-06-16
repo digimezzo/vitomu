@@ -54,7 +54,11 @@ describe('ColorSchemeSwitcherComponent', () => {
                 '#077777',
                 '#088888',
                 '#099999',
-                '#0fffff'
+                '#0fffff',
+                '0ffff1',
+                '0ffff2',
+                '0ffff3',
+                '0ffff4'
             );
             const lightColors: ThemeNeutralColors = new ThemeNeutralColors(
                 '#100000',
@@ -67,7 +71,11 @@ describe('ColorSchemeSwitcherComponent', () => {
                 '#177777',
                 '#188888',
                 '#199999',
-                '#1fffff'
+                '#1fffff',
+                '1ffff1',
+                '1ffff2',
+                '1ffff3',
+                '1ffff4'
             );
 
             const options: ThemeOptions = new ThemeOptions();

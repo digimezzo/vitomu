@@ -20,8 +20,8 @@ export class AppComponent implements OnInit {
         log.transports.file.resolvePath = () => path.join(this.desktop.getApplicationDataDirectory(), 'logs', 'Vitomu.log');
     }
 
-    public ngOnInit(): void {
+    public async ngOnInit(): Promise<void> {
         this.appearanceService.applyAppearance();
-        this.translatorService.applyLanguage();
+        await this.translatorService.applyLanguageAsync();
     }
 }

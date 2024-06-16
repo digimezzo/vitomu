@@ -65,7 +65,6 @@ import { TransparentButtonComponent } from './components/controls/transparent-bu
 import { ToggleSwitchComponent } from './components/controls/toggle-switch/toggle-switch.component';
 import { SubMenuItemComponent } from './components/sub-menu/sub-menu-item/sub-menu-item.component';
 import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
-import { LogoSmallComponent } from './components/logo-small/logo-small.component';
 import { SchedulerBase } from './common/scheduling/scheduler.base';
 import { Scheduler } from './common/scheduling/scheduler';
 import { PersistanceService } from './services/persistance/persistance.service';
@@ -98,7 +97,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         LogoFullComponent,
         SubMenuComponent,
         SubMenuItemComponent,
-        LogoSmallComponent,
         SnackBarComponent,
         IconButtonComponent,
         WebviewDirective,

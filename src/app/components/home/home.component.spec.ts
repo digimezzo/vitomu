@@ -10,10 +10,11 @@ describe('HomeComponent', () => {
             // Arrange
             const productInformationMock = Mock.ofType<ProductInformation>();
             const appearanceMock = Mock.ofType<BaseAppearanceService>();
-            const updateMock = Mock.ofType<UpdateService>();
+            const updateServiceMock = Mock.ofType<UpdateService>();
+            updateServiceMock.setup((x) => x.checkForUpdatesAsync()).returns(() => Promise.resolve());
 
             // Act
-            const homeComponent: HomeComponent = new HomeComponent(appearanceMock.object, productInformationMock.object, updateMock.object);
+            const homeComponent: HomeComponent = new HomeComponent(appearanceMock.object, productInformationMock.object, updateServiceMock.object);
 
             // Assert
             expect(homeComponent.productInformation).toBeDefined();
@@ -25,14 +26,15 @@ describe('HomeComponent', () => {
             // Arrange
             const productInformationMock = Mock.ofType<ProductInformation>();
             const appearanceMock = Mock.ofType<BaseAppearanceService>();
-            const updateMock = Mock.ofType<UpdateService>();
-            const homeComponent: HomeComponent = new HomeComponent(appearanceMock.object, productInformationMock.object, updateMock.object);
+            const updateServiceMock = Mock.ofType<UpdateService>();
+            updateServiceMock.setup((x) => x.checkForUpdatesAsync()).returns(() => Promise.resolve());
+            const homeComponent: HomeComponent = new HomeComponent(appearanceMock.object, productInformationMock.object, updateServiceMock.object);
 
             // Act
             homeComponent.ngOnInit();
 
             // Assert
-            updateMock.verify((x) => x.checkForUpdatesAsync, Times.exactly(1));
+            updateServiceMock.verify((x) => x.checkForUpdatesAsync, Times.exactly(1));
         });
     });
 });

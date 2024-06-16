@@ -4,14 +4,15 @@ import { TranslateServiceProxy } from '../../common/io/translate-service-proxy';
 import { BaseSettings } from '../../common/settings/base-settings';
 import { Language } from '../appearance/theme/language';
 import { PromiseUtils } from '../../common/utils/promise-utils';
+import { BaseTranslatorService } from './base-translator.service';
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
-export class TranslatorService {
+export class TranslatorService implements BaseTranslatorService {
     public constructor(
         private translateServiceProxy: TranslateServiceProxy,
-        private settings: BaseSettings,
+        private settings: BaseSettings
     ) {
         this.translateServiceProxy.setDefaultLang(this.settings.defaultLanguage);
     }
@@ -19,15 +20,15 @@ export class TranslatorService {
     public languages: Language[] = Constants.languages;
 
     public get selectedLanguage(): Language {
-        return this.languages.find((x) => x.code === this.settings.language)!;
+        return this.languages.find((x) => x.code === this.settings.language) ?? this.languages.find((x) => x.code === 'en')!;
     }
 
     public set selectedLanguage(v: Language) {
         this.settings.language = v.code;
-        PromiseUtils.noAwait(this.applyLanguage());
+        this.applyLanguageAsync();
     }
 
-    public async applyLanguage(): Promise<void> {
+    public async applyLanguageAsync(): Promise<void> {
         await this.translateServiceProxy.use(this.settings.language);
     }
 

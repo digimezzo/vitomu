@@ -4,6 +4,8 @@ import { BaseAppearanceService } from './services/appearance/base-appearance.ser
 import { TranslatorService } from './services/translator/translator.service';
 import { Desktop } from './common/io/desktop';
 
+jest.mock('@electron/remote', () => ({ exec: jest.fn() }));
+
 describe('AppComponent', () => {
     describe('constructor', () => {
         it('Should create', () => {
@@ -39,7 +41,7 @@ describe('AppComponent', () => {
             appComponent.ngOnInit();
 
             // Assert
-            translatorServiceMock.verify((x) => x.applyLanguage(), Times.once());
+            translatorServiceMock.verify((x) => x.applyLanguageAsync(), Times.once());
         });
 
         it('Should apply appearance', () => {

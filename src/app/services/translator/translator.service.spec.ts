@@ -35,7 +35,7 @@ describe('TranslatorService', () => {
     });
 
     describe('applyLanguage', () => {
-        it('Should apply the language from the settings', () => {
+        it('Should apply the language from the settings', async () => {
             // Arrange
             const translateServiceProxyMock = Mock.ofType<TranslateServiceProxy>();
             const settingsMock = Mock.ofType<Settings>();
@@ -45,7 +45,7 @@ describe('TranslatorService', () => {
             const translatorService: BaseTranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
 
             // Act
-            translatorService.applyLanguage();
+            await translatorService.applyLanguageAsync();
 
             // Assert
             translateServiceProxyMock.verify((x) => x.use('en'), Times.atLeastOnce());
@@ -61,8 +61,7 @@ describe('TranslatorService', () => {
             const translatorService: BaseTranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
 
             // Act
-            const lang: Language = new Language('de', 'German', 'Deutch');
-            translatorService.selectedLanguage = lang;
+            translatorService.selectedLanguage = new Language('de', 'German', 'Deutch');
 
             // Assert
             settingsMock.verify((x) => (x.language = 'de'), Times.atLeastOnce());
@@ -71,13 +70,11 @@ describe('TranslatorService', () => {
         it('Should apply the selected language', () => {
             // Arrange
             const translateServiceProxyMock = Mock.ofType<TranslateServiceProxy>();
-            const settingsMock = Mock.ofType<Settings>();
-
-            const translatorService: BaseTranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
+            const settingsMock: any = { language: 'en' };
+            const translatorService: BaseTranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock);
 
             // Act
-            const lang: Language = new Language('de', 'German', 'Deutch');
-            translatorService.selectedLanguage = lang;
+            translatorService.selectedLanguage = new Language('de', 'German', 'Deutch');
 
             // Assert
             translateServiceProxyMock.verify((x) => x.use('de'), Times.atLeastOnce());

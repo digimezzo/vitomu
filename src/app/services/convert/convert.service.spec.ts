@@ -17,6 +17,8 @@ import { VideoConverterFactory } from './video-converter.factory';
 import { YoutubeDownloaderDownloader } from './youtube-downloader-downloader';
 import { YoutubeDownloaderUpdater } from './youtube-downloader-updater';
 
+jest.mock('@electron/remote', () => ({ exec: jest.fn() }));
+
 describe('ConvertService', () => {
     let environmentMock: IMock<Environment>;
     let loggerMock: IMock<Logger>;
