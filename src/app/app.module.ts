@@ -67,6 +67,12 @@ import { ToggleSwitchComponent } from './components/controls/toggle-switch/toggl
 import { SubMenuItemComponent } from './components/sub-menu/sub-menu-item/sub-menu-item.component';
 import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
 import { LogoSmallComponent } from './components/logo-small/logo-small.component';
+import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
+import { NotificationServiceBase } from './services/notification/notification.service.base';
+import { NotificationService } from './services/notification/notification.service';
+import { SchedulerBase } from './common/scheduling/scheduler.base';
+import { Scheduler } from './common/scheduling/scheduler';
+import { PersistanceService } from './services/persistance/persistance.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -95,6 +101,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SubMenuComponent,
         SubMenuItemComponent,
         LogoSmallComponent,
+        NotificationBarComponent,
         WebviewDirective,
     ],
     imports: [
@@ -121,6 +128,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     providers: [
         ElectronService,
         UpdateService,
+        PersistanceService,
         Logger,
         Settings,
         FileSystem,
@@ -144,6 +152,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         { provide: BaseSnackBarService, useClass: SnackBarService },
         { provide: BaseTranslatorService, useClass: TranslatorService },
         { provide: BaseUpdateService, useClass: UpdateService },
+        { provide: NotificationServiceBase, useClass: NotificationService },
+        { provide: SchedulerBase, useClass: Scheduler },
         {
             provide: ErrorHandler,
             useClass: GlobalErrorHandler,

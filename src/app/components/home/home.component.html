@@ -15,6 +15,7 @@
         <div class="window-frame-titlebar-dragarea"></div>
         <app-window-controls *ngIf="!appearanceService.windowHasNativeTitleBar"></app-window-controls>
     </div>
+    <app-notification-bar></app-notification-bar>
     <div class="window-frame-content" [ngStyle]="{ top: appearanceService.windowHasNativeTitleBar ? '0px' : '32px' }">
         <!-- Convert -->
         <app-convert *ngIf="this.leftToRight(0)" [@enterLeftToRight]></app-convert>

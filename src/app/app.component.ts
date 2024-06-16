@@ -25,6 +25,6 @@ export class AppComponent implements OnInit {
     public ngOnInit(): void {
         this.appearanceService.applyAppearance();
         this.translatorService.applyLanguage();
-        this.snackBarService.showActionSnackBar('this.downloadUrl', 'action');
+        // this.snackBarService.showActionSnackBar('this.downloadUrl', 'action');
     }
 }

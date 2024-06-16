@@ -9,13 +9,14 @@ import { ConvertState } from '../../services/convert/convert-state';
 import { YoutubeDownloaderConstants } from '../../services/convert/youtube-downloader-constants';
 import { BaseSnackBarService } from '../../services/snack-bar/base-snack-bar.service';
 import { BaseTranslatorService } from '../../services/translator/base-translator.service';
+import { PersistanceService } from '../../services/persistance/persistance.service';
 
 @Component({
     selector: 'app-convert',
     host: { style: 'display: block; width: 100%;' },
     templateUrl: './convert.component.html',
     styleUrls: ['./convert.component.scss'],
-    encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None
 })
 export class ConvertComponent implements OnInit, OnDestroy {
     public youtubeDownloaderName: string = YoutubeDownloaderConstants.downloaderName;
@@ -36,6 +37,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
         private clipboardWatcher: ClipboardWatcher,
         private snackBarService: BaseSnackBarService,
         private translatorService: BaseTranslatorService,
+        private persistanceService: PersistanceService,
         private desktop: Desktop
     ) {
         this.reset();
@@ -52,6 +54,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     public get progressPercent(): number {
         return this._progressPercent;
     }
+
     public set progressPercent(v: number) {
         this._progressPercent = v;
     }
@@ -89,6 +92,13 @@ export class ConvertComponent implements OnInit, OnDestroy {
     }
 
     private async checkDependenciesAsync(): Promise<void> {
+        // TODO: this is a workaround to prevent multiple checks. This should be done in a better way.
+        if (this.persistanceService.dependenciesAreChecked) {
+            return;
+        }
+
+        this.persistanceService.dependenciesAreChecked = true;
+        
         await this.checkFfmpegAsync();
         await this.checkYoutubeDownloaderAsync();
         await this.updateYoutubeDownloaderAsync();
