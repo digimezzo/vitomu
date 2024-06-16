@@ -48,7 +48,6 @@ import { VideoConverterFactory } from './services/convert/video-converter.factor
 import { YoutubeDownloaderDownloader } from './services/convert/youtube-downloader-downloader';
 import { YoutubeDownloaderUpdater } from './services/convert/youtube-downloader-updater';
 import { ElectronService } from './services/electron.service';
-import { BaseSnackBarService } from './services/snack-bar/base-snack-bar.service';
 import { SnackBarService } from './services/snack-bar/snack-bar.service';
 import { BaseTranslatorService } from './services/translator/base-translator.service';
 import { TranslatorService } from './services/translator/translator.service';
@@ -67,12 +66,11 @@ import { ToggleSwitchComponent } from './components/controls/toggle-switch/toggl
 import { SubMenuItemComponent } from './components/sub-menu/sub-menu-item/sub-menu-item.component';
 import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
 import { LogoSmallComponent } from './components/logo-small/logo-small.component';
-import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
-import { NotificationServiceBase } from './services/notification/notification.service.base';
-import { NotificationService } from './services/notification/notification.service';
 import { SchedulerBase } from './common/scheduling/scheduler.base';
 import { Scheduler } from './common/scheduling/scheduler';
 import { PersistanceService } from './services/persistance/persistance.service';
+import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
+import { IconButtonComponent } from './components/controls/icon-button/icon-button.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -101,7 +99,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SubMenuComponent,
         SubMenuItemComponent,
         LogoSmallComponent,
-        NotificationBarComponent,
+        SnackBarComponent,
+        IconButtonComponent,
         WebviewDirective,
     ],
     imports: [
@@ -128,6 +127,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     providers: [
         ElectronService,
         UpdateService,
+        SnackBarService,
         PersistanceService,
         Logger,
         Settings,
@@ -149,10 +149,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         { provide: BaseRemoteProxy, useClass: RemoteProxy },
         { provide: BaseAppearanceService, useClass: AppearanceService },
         { provide: BaseConvertService, useClass: ConvertService },
-        { provide: BaseSnackBarService, useClass: SnackBarService },
         { provide: BaseTranslatorService, useClass: TranslatorService },
         { provide: BaseUpdateService, useClass: UpdateService },
-        { provide: NotificationServiceBase, useClass: NotificationService },
         { provide: SchedulerBase, useClass: Scheduler },
         {
             provide: ErrorHandler,

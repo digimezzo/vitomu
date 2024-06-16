@@ -1,23 +1,35 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BaseTranslatorService } from '../translator/base-translator.service';
-import { BaseSnackBarService } from './base-snack-bar.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
-export class SnackBarService implements BaseSnackBarService {
-    constructor(private zone: NgZone, private matSnackBar: MatSnackBar, private translatorService: BaseTranslatorService) {}
+export class SnackBarService {
+    private showNotification: Subject<string> = new Subject();
+    private dismissNotification: Subject<void> = new Subject();
+    
+    public constructor(private translatorService: BaseTranslatorService) {}
+
+    public showNotification$: Observable<string> = this.showNotification.asObservable();
+    public dismissNotification$: Observable<void> = this.dismissNotification.asObservable();
+
+    public dismiss(): void {
+        this.dismissNotification.next();
+    }
+    
+    public showDownloadUrl(downloadUrl: string): void {
+        this.showNotification.next(downloadUrl)
+    }
 
     public async notifyOfNewVersionAsync(version: string): Promise<void> {
         const message: string = await this.translatorService.getAsync('SnackBarMessages.NewVersionAvailable', { version: version });
-        const action: string = await this.translatorService.getAsync('SnackBarActions.Ok');
-        this.showActionSnackBar(message, action);
+        this.showNotification.next(message);
     }
-
-    public showActionSnackBar(message: string, action: string): void {
-        this.zone.run(() => {
-            this.matSnackBar.open(message, action, { panelClass: ['dark-snackbar'] });
-        });
-    }
+    //
+    // public showActionSnackBar(message: string, action: string): void {
+    //     this.zone.run(() => {
+    //         this.matSnackBar.open(message, action, { panelClass: ['dark-snackbar'] });
+    //     });
+    // }
 }

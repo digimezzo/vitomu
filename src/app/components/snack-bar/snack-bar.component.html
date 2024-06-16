@@ -1,0 +1,8 @@
+<div [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'" class="snack-bar__container">
+    <div class="snack-bar__text">
+        {{ this.text }}
+    </div>
+    <div class="snack-bar__button">
+        <app-accent-button (click)="this.dismiss()">{{ 'SnackBarActions.Ok' | translate }}</app-accent-button>
+    </div>
+</div>

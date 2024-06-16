@@ -7,9 +7,8 @@ import { BaseConvertService } from '../../services/convert/base-convert.service'
 import { ConversionResult } from '../../services/convert/conversion-result';
 import { ConvertState } from '../../services/convert/convert-state';
 import { YoutubeDownloaderConstants } from '../../services/convert/youtube-downloader-constants';
-import { BaseSnackBarService } from '../../services/snack-bar/base-snack-bar.service';
-import { BaseTranslatorService } from '../../services/translator/base-translator.service';
 import { PersistanceService } from '../../services/persistance/persistance.service';
+import { SnackBarService } from '../../services/snack-bar/snack-bar.service';
 
 @Component({
     selector: 'app-convert',
@@ -35,8 +34,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
         private zone: NgZone,
         public convertService: BaseConvertService,
         private clipboardWatcher: ClipboardWatcher,
-        private snackBarService: BaseSnackBarService,
-        private translatorService: BaseTranslatorService,
+        private snackBarService: SnackBarService,
         private persistanceService: PersistanceService,
         private desktop: Desktop
     ) {
@@ -124,8 +122,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     }
 
     public async showVideoLinkAsync(): Promise<void> {
-        const action: string = await this.translatorService.getAsync('Buttons.Ok');
-        this.snackBarService.showActionSnackBar(this.downloadUrl, action);
+        this.snackBarService.showDownloadUrl(this.downloadUrl);
     }
 
     public viewInFolder(): void {

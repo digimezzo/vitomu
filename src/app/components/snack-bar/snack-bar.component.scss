@@ -1,0 +1,23 @@
+.snack-bar__container {
+  background-color: var(--theme-secondary-background);
+  margin: 8px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.snack-bar__text {
+  color: var(--theme-highlight-foreground);
+  display: flex;
+  flex-grow: 1;
+  margin: 8px;
+}
+
+.snack-bar__button {
+  color: var(--theme-highlight-foreground);
+  margin: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1.7px !important;
+}

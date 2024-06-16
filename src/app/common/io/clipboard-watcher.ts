@@ -23,6 +23,6 @@ export class ClipboardWatcher {
             if (!Strings.isNullOrWhiteSpace(clipBoardText)) {
                 this.onClipboardContentChanged(clipBoardText);
             }
-        }, 2000);
+        }, 1000);
     }
 }
