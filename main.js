@@ -29,8 +29,8 @@ function createWindow() {
     electron_1.Menu.setApplicationMenu(null);
     // Load the previous state with fallback to defaults
     const windowState = windowStateKeeper({
-        defaultWidth: 500,
-        defaultHeight: 500,
+        defaultWidth: 550,
+        defaultHeight: 550,
     });
     const remoteMain = require('@electron/remote/main');
     remoteMain.initialize();

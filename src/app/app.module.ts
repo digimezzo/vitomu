@@ -70,6 +70,7 @@ import { Scheduler } from './common/scheduling/scheduler';
 import { PersistanceService } from './services/persistance/persistance.service';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { IconButtonComponent } from './components/controls/icon-button/icon-button.component';
+import { LogoSmallComponent } from './components/logo-small/logo-small.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -99,6 +100,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SubMenuItemComponent,
         SnackBarComponent,
         IconButtonComponent,
+        LogoSmallComponent,
         WebviewDirective,
     ],
     imports: [

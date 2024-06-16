@@ -1,0 +1,15 @@
+.logo-small__background {
+  background-color: var(--theme-accent-color);
+  width: 30px;
+  min-width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-small__image {
+  width: 30px;
+  height: 30px;
+}
