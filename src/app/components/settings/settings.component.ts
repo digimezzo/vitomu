@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Desktop } from '../../common/io/desktop';
 import { BaseSettings } from '../../common/settings/base-settings';
-import { BaseAppearanceService } from '../../services/appearance/base-appearance.service';
+import { AppearanceService } from '../../services/appearance/appearance.service';
 
 @Component({
     selector: 'app-settings',
@@ -11,7 +11,7 @@ import { BaseAppearanceService } from '../../services/appearance/base-appearance
     encapsulation: ViewEncapsulation.None,
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-    constructor(public appearanceService: BaseAppearanceService, private desktop: Desktop, private settings: BaseSettings) {}
+    constructor(public appearanceService: AppearanceService, private desktop: Desktop, private settings: BaseSettings) {}
 
     public get useSystemTitleBarChecked(): boolean {
         return this.settings.useSystemTitleBar;

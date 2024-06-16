@@ -10,7 +10,6 @@ import { FileSystem } from '../../common/io/file-system';
 import { Logger } from '../../common/logger';
 import { BaseSettings } from '../../common/settings/base-settings';
 import { Strings } from '../../common/strings';
-import { BaseAppearanceService } from './base-appearance.service';
 import { DefaultThemesCreator } from './default-themes-creator';
 import { Palette } from './palette';
 import { FontSize } from './theme/font-size';
@@ -19,7 +18,7 @@ import { ColorConverter } from '../../common/color-converter';
 import { RgbColor } from '../../common/rgb-color';
 
 @Injectable()
-export class AppearanceService implements BaseAppearanceService {
+export class AppearanceService  {
     private interval: number;
     private _themes: Theme[] = [];
 

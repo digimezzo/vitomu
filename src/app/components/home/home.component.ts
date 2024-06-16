@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ProductInformation } from '../../common/application/product-information';
-import { BaseAppearanceService } from '../../services/appearance/base-appearance.service';
 import { UpdateService } from '../../services/update/update.service';
 import { AnimatedPage } from '../animated-page';
 import { PromiseUtils } from '../../common/utils/promise-utils';
 import { enterLeftToRight, enterRightToLeft } from '../../animations/animations';
+import { AppearanceService } from '../../services/appearance/appearance.service';
 
 @Component({
     selector: 'app-home',
@@ -15,7 +15,7 @@ import { enterLeftToRight, enterRightToLeft } from '../../animations/animations'
 })
 export class HomeComponent extends AnimatedPage implements OnInit {
     constructor(
-        public appearanceService: BaseAppearanceService,
+        public appearanceService: AppearanceService,
         public productInformation: ProductInformation,
         private updateService: UpdateService
     ) {

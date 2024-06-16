@@ -1,19 +1,21 @@
 import { IMock, Mock, Times } from 'typemoq';
-import { BaseAppearanceService } from '../../services/appearance/base-appearance.service';
 import { Theme } from '../../services/appearance/theme/theme';
 import { ThemeCoreColors } from '../../services/appearance/theme/theme-core-colors';
 import { ThemeCreator } from '../../services/appearance/theme/theme-creator';
 import { ThemeNeutralColors } from '../../services/appearance/theme/theme-neutral-colors';
 import { ThemeOptions } from '../../services/appearance/theme/theme-options';
 import { ThemeSwitcherComponent } from './theme-switcher.component';
+import { AppearanceService } from '../../services/appearance/appearance.service';
+
+jest.mock('@electron/remote', () => ({ exec: jest.fn() }));
 
 describe('ColorSchemeSwitcherComponent', () => {
-    let appearanceServiceMock: IMock<BaseAppearanceService> = Mock.ofType<BaseAppearanceService>();
+    let appearanceServiceMock: IMock<AppearanceService> = Mock.ofType<AppearanceService>();
 
     let component: ThemeSwitcherComponent;
 
     beforeEach(() => {
-        appearanceServiceMock = Mock.ofType<BaseAppearanceService>();
+        appearanceServiceMock = Mock.ofType<AppearanceService>();
 
         component = new ThemeSwitcherComponent(appearanceServiceMock.object);
     });

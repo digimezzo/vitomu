@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { BaseAppearanceService } from '../../services/appearance/base-appearance.service';
+import { AppearanceService } from '../../services/appearance/appearance.service';
 
 @Component({
     selector: 'app-font-size-switcher',
@@ -9,7 +9,7 @@ import { BaseAppearanceService } from '../../services/appearance/base-appearance
     encapsulation: ViewEncapsulation.None,
 })
 export class FontSizeSwitcherComponent implements OnInit {
-    constructor(public appearanceService: BaseAppearanceService) {}
+    constructor(public appearanceService: AppearanceService) {}
 
     public ngOnInit(): void {}
 }

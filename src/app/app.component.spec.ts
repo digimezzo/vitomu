@@ -1,8 +1,8 @@
 import { Mock, Times } from 'typemoq';
 import { AppComponent } from './app.component';
-import { BaseAppearanceService } from './services/appearance/base-appearance.service';
 import { TranslatorService } from './services/translator/translator.service';
 import { Desktop } from './common/io/desktop';
+import { AppearanceService } from './services/appearance/appearance.service';
 
 jest.mock('@electron/remote', () => ({ exec: jest.fn() }));
 
@@ -10,7 +10,7 @@ describe('AppComponent', () => {
     describe('constructor', () => {
         it('Should create', () => {
             // Arrange
-            const appearanceServiceMock = Mock.ofType<BaseAppearanceService>();
+            const appearanceServiceMock = Mock.ofType<AppearanceService>();
             const translatorServiceMock = Mock.ofType<TranslatorService>();
             const desktopMock = Mock.ofType<Desktop>();
 
@@ -28,7 +28,7 @@ describe('AppComponent', () => {
     describe('ngOnInit', () => {
         it('Should apply language', () => {
             // Arrange
-            const appearanceServiceMock = Mock.ofType<BaseAppearanceService>();
+            const appearanceServiceMock = Mock.ofType<AppearanceService>();
             const translatorServiceMock = Mock.ofType<TranslatorService>();
             const desktopMock = Mock.ofType<Desktop>();
 
@@ -46,7 +46,7 @@ describe('AppComponent', () => {
 
         it('Should apply appearance', () => {
             // Arrange
-            const appearanceServiceMock = Mock.ofType<BaseAppearanceService>();
+            const appearanceServiceMock = Mock.ofType<AppearanceService>();
             const translatorServiceMock = Mock.ofType<TranslatorService>();
             const desktopMock = Mock.ofType<Desktop>();
             
