@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { BaseTranslatorService } from '../../services/translator/base-translator.service';
+import { TranslatorService } from '../../services/translator/translator.service';
 
 @Component({
     selector: 'app-language-switcher',
@@ -9,7 +9,7 @@ import { BaseTranslatorService } from '../../services/translator/base-translator
     encapsulation: ViewEncapsulation.None,
 })
 export class LanguageSwitcherComponent implements OnInit {
-    constructor(public translatorService: BaseTranslatorService) {}
+    constructor(public translatorService: TranslatorService) {}
 
     public ngOnInit(): void {}
 }

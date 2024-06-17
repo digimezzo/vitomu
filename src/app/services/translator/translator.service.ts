@@ -3,13 +3,11 @@ import { Constants } from '../../common/application/constants';
 import { TranslateServiceProxy } from '../../common/io/translate-service-proxy';
 import { BaseSettings } from '../../common/settings/base-settings';
 import { Language } from '../appearance/theme/language';
-import { PromiseUtils } from '../../common/utils/promise-utils';
-import { BaseTranslatorService } from './base-translator.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TranslatorService implements BaseTranslatorService {
+export class TranslatorService {
     public constructor(
         private translateServiceProxy: TranslateServiceProxy,
         private settings: BaseSettings

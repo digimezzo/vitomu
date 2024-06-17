@@ -2,7 +2,6 @@ import * as assert from 'assert';
 import { Mock, Times } from 'typemoq';
 import { Settings } from '../../common/settings/settings';
 import { Language } from '../appearance/theme/language';
-import { BaseTranslatorService } from './base-translator.service';
 import { TranslatorService } from './translator.service';
 import { TranslateServiceProxy } from '../../common/io/translate-service-proxy';
 
@@ -14,7 +13,7 @@ describe('TranslatorService', () => {
             const settingsMock = Mock.ofType<Settings>();
 
             // Act
-            const translatorService: BaseTranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
+            const translatorService: TranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
 
             // Assert
             assert.ok(translatorService.languages.length > 0);
@@ -27,7 +26,7 @@ describe('TranslatorService', () => {
             settingsMock.setup((x) => x.defaultLanguage).returns(() => 'en');
 
             // Act
-            const translatorService: BaseTranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
+            const translatorService: TranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
 
             // Assert
             translateServiceProxyMock.verify((x) => x.setDefaultLang('en'), Times.atLeastOnce());
@@ -42,7 +41,7 @@ describe('TranslatorService', () => {
 
             settingsMock.setup((x) => x.language).returns(() => 'en');
 
-            const translatorService: BaseTranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
+            const translatorService: TranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
 
             // Act
             await translatorService.applyLanguageAsync();
@@ -58,7 +57,7 @@ describe('TranslatorService', () => {
             const translateServiceProxyMock = Mock.ofType<TranslateServiceProxy>();
             const settingsMock = Mock.ofType<Settings>();
 
-            const translatorService: BaseTranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
+            const translatorService: TranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
 
             // Act
             translatorService.selectedLanguage = new Language('de', 'German', 'Deutch');
@@ -71,7 +70,7 @@ describe('TranslatorService', () => {
             // Arrange
             const translateServiceProxyMock = Mock.ofType<TranslateServiceProxy>();
             const settingsMock: any = { language: 'en' };
-            const translatorService: BaseTranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock);
+            const translatorService: TranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock);
 
             // Act
             translatorService.selectedLanguage = new Language('de', 'German', 'Deutch');
@@ -87,7 +86,7 @@ describe('TranslatorService', () => {
 
             settingsMock.setup((x) => x.language).returns(() => 'de');
 
-            const translatorService: BaseTranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
+            const translatorService: TranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
             translatorService.languages = [new Language('en', 'English', 'English'), new Language('de', 'German', 'Deutch')];
 
             // Act
@@ -106,7 +105,7 @@ describe('TranslatorService', () => {
 
             settingsMock.setup((x) => x.language).returns(() => 'de');
 
-            const translatorService: BaseTranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
+            const translatorService: TranslatorService = new TranslatorService(translateServiceProxyMock.object, settingsMock.object);
             translatorService.languages = [new Language('en', 'English', 'English'), new Language('nl', 'Dutch', 'Nederlands')];
 
             // Act

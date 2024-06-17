@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import log from 'electron-log';
 import * as path from 'path';
-import { BaseTranslatorService } from './services/translator/base-translator.service';
 import { Desktop } from './common/io/desktop';
 import { AppearanceService } from './services/appearance/appearance.service';
+import { TranslatorService } from './services/translator/translator.service';
 
 @Component({
     selector: 'app-root',
@@ -12,7 +12,7 @@ import { AppearanceService } from './services/appearance/appearance.service';
 })
 export class AppComponent implements OnInit {
     constructor(
-        private translatorService: BaseTranslatorService,
+        private translatorService: TranslatorService,
         private appearanceService: AppearanceService,
         private desktop: Desktop,
     ) {

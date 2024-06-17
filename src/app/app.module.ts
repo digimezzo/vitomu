@@ -47,7 +47,6 @@ import { YoutubeDownloaderDownloader } from './services/convert/youtube-download
 import { YoutubeDownloaderUpdater } from './services/convert/youtube-downloader-updater';
 import { ElectronService } from './services/electron.service';
 import { SnackBarService } from './services/snack-bar/snack-bar.service';
-import { BaseTranslatorService } from './services/translator/base-translator.service';
 import { TranslatorService } from './services/translator/translator.service';
 import { UpdateService } from './services/update/update.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -129,6 +128,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AppearanceService,
         ConvertService,
         UpdateService,
+        TranslatorService,
         Logger,
         Settings,
         FileSystem,
@@ -147,7 +147,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         DefaultThemesCreator,
         { provide: BaseSettings, useClass: Settings },
         { provide: BaseRemoteProxy, useClass: RemoteProxy },
-        { provide: BaseTranslatorService, useClass: TranslatorService },
         { provide: SchedulerBase, useClass: Scheduler },
         {
             provide: ErrorHandler,
