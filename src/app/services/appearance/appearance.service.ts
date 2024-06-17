@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ApplicationPaths } from '../../common/application/application-paths';
 import { Constants } from '../../common/application/constants';
-import { BaseRemoteProxy } from '../../common/io/base-remote-proxy';
 import { Desktop } from '../../common/io/desktop';
 import { DocumentProxy } from '../../common/io/document-proxy';
 import { FileSystem } from '../../common/io/file-system';
@@ -16,6 +15,7 @@ import { FontSize } from './theme/font-size';
 import { Theme } from './theme/theme';
 import { ColorConverter } from '../../common/color-converter';
 import { RgbColor } from '../../common/rgb-color';
+import { RemoteProxy } from '../../common/io/remote-proxy';
 
 @Injectable()
 export class AppearanceService  {
@@ -35,7 +35,7 @@ export class AppearanceService  {
         private settings: BaseSettings,
         private logger: Logger,
         private overlayContainer: OverlayContainer,
-        private remoteProxy: BaseRemoteProxy,
+        private remoteProxy: RemoteProxy,
         private fileSystem: FileSystem,
         private desktop: Desktop,
         private defaultThemesCreator: DefaultThemesCreator,

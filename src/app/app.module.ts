@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { GitHubApi } from './common/api/github-api';
 import { ProductInformation } from './common/application/product-information';
 import { Delayer } from './common/delayer';
-import { BaseRemoteProxy } from './common/io/base-remote-proxy';
 import { ClipboardWatcher } from './common/io/clipboard-watcher';
 import { Desktop } from './common/io/desktop';
 import { DocumentProxy } from './common/io/document-proxy';
@@ -144,9 +143,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         Environment,
         DependencyCheckerFactory,
         DocumentProxy,
+        RemoteProxy,
         DefaultThemesCreator,
         { provide: BaseSettings, useClass: Settings },
-        { provide: BaseRemoteProxy, useClass: RemoteProxy },
         { provide: SchedulerBase, useClass: Scheduler },
         {
             provide: ErrorHandler,

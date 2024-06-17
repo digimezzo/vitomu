@@ -2,7 +2,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { Observable, Subject } from 'rxjs';
 import { IMock, Mock, Times } from 'typemoq';
 import { Constants } from '../../common/application/constants';
-import { BaseRemoteProxy } from '../../common/io/base-remote-proxy';
 import { Desktop } from '../../common/io/desktop';
 import { DocumentProxy } from '../../common/io/document-proxy';
 import { FileSystem } from '../../common/io/file-system';
@@ -16,6 +15,7 @@ import { ThemeCoreColors } from './theme/theme-core-colors';
 import { ThemeCreator } from './theme/theme-creator';
 import { ThemeNeutralColors } from './theme/theme-neutral-colors';
 import { ThemeOptions } from './theme/theme-options';
+import { RemoteProxy } from '../../common/io/remote-proxy';
 
 jest.mock('@electron/remote', () => ({ exec: jest.fn() }));
 
@@ -23,7 +23,7 @@ describe('AppearanceService', () => {
     let settingsMock: IMock<BaseSettings>;
     let loggerMock: IMock<Logger>;
     let overlayContainerMock: IMock<OverlayContainer>;
-    let remoteProxyMock: IMock<BaseRemoteProxy>;
+    let remoteProxyMock: IMock<RemoteProxy>;
     let fileSystemMock: IMock<FileSystem>;
     let desktopMock: IMock<Desktop>;
     let defaultThemesCreatorMock: IMock<DefaultThemesCreator>;
@@ -234,7 +234,7 @@ describe('AppearanceService', () => {
         settingsMock = Mock.ofType<BaseSettings>();
         loggerMock = Mock.ofType<Logger>();
         overlayContainerMock = Mock.ofType<OverlayContainer>();
-        remoteProxyMock = Mock.ofType<BaseRemoteProxy>();
+        remoteProxyMock = Mock.ofType<RemoteProxy>();
         fileSystemMock = Mock.ofType<FileSystem>();
         desktopMock = Mock.ofType<Desktop>();
         defaultThemesCreatorMock = Mock.ofType<DefaultThemesCreator>();
