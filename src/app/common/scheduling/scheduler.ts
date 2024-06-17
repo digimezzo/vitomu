@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { SchedulerBase } from './scheduler.base';
 
 @Injectable()
-export class Scheduler implements SchedulerBase {
+export class Scheduler {
     public async sleepAsync(milliseconds: number): Promise<void> {
         return new Promise((resolve) => setTimeout(resolve, milliseconds));
     }
