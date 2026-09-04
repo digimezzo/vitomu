@@ -104,6 +104,7 @@ export class YoutubeVideoConverter implements VideoConverter {
             progressCallback(this.getProgressPercentFromYoutubeDownloaderProgress(line));
         } else if (line.includes('[ExtractAudio] Destination:')) {
             this.convertedFilePath = this.getFilePathFromYoutubeDownloaderProgress(line);
+            progressCallback(-1);
         } else if (line.includes('[download]') && line.includes('has already been downloaded')) {
             this.convertedFilePath = this.getAlreadyDownloadedFilePath(line);
         } else if (line.includes('[ExtractAudio] Not converting audio')) {

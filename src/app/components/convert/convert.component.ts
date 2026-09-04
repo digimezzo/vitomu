@@ -133,7 +133,12 @@ export class ConvertComponent implements OnInit, OnDestroy {
     }
 
     private handleConversionProgressChanged(progressPercent: number): void {
-        this.zone.run(() => (this.progressPercent = progressPercent));
+        this.zone.run(() => {
+            this.progressMode = progressPercent < 0 ? 'indeterminate' : 'determinate';
+            if (progressPercent >= 0) {
+                this.progressPercent = progressPercent;
+            }
+        });
     }
 
     private handleClipboardContentChanged(clipboardText: string): void {
