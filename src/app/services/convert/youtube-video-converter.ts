@@ -47,31 +47,48 @@ export class YoutubeVideoConverter implements VideoConverter {
                 separator = '\\';
             }
 
-            const youtubeDownloaderCommand: string = `${youtubeDownloaderExecutable} "${videoUrl}" ${ffmpegLocationParameter} --no-check-certificate --no-playlist --output "${outputDirectory}${separator}%(title)s.%(ext)s" -f bestaudio --extract-audio --audio-format ${audioFormat.ffmpegFormat} --audio-quality ${bitrate}k`;
+            const youtubeDownloaderCommand: string = `${youtubeDownloaderExecutable} "${videoUrl}" ${ffmpegLocationParameter} --no-check-certificate --no-playlist --newline --output "${outputDirectory}${separator}%(title)s.%(ext)s" -f bestaudio --extract-audio --audio-format ${audioFormat.ffmpegFormat} --audio-quality ${bitrate}k`;
             this.logger.info(`Executing command: ${youtubeDownloaderCommand}`, 'YoutubeVideoConverter', 'convertAsync');
 
             try {
-                const process: child.ChildProcess = child.exec(youtubeDownloaderCommand, (err, stdout, stderr) => {
-                    if (err) {
+                let outputBuffer: string = '';
+                let diagnosticOutput: string = '';
+                let settled: boolean = false;
+                const resolveConversion = (result: ConversionResult): void => {
+                    if (!settled) {
+                        settled = true;
+                        resolve(result);
+                    }
+                };
+                const processOutput = (data: string): void => {
+                    diagnosticOutput += data;
+                    outputBuffer += data;
+                    const lines: string[] = outputBuffer.split(/\r?\n|\r/);
+                    outputBuffer = lines.pop() || '';
+
+                    lines.forEach((line) => this.processOutputLine(line, progressCallback));
+                };
+                const process: child.ChildProcess = child.exec(youtubeDownloaderCommand);
+
+                process.stdout.on('data', (data) => processOutput(data.toString()));
+                process.stderr.on('data', (data) => processOutput(data.toString()));
+                process.on('close', (code) => {
+                    processOutput(`${outputBuffer}\n`);
+                    const conversionSucceeded: boolean = code === 0 && !Strings.isNullOrWhiteSpace(this.convertedFilePath);
+
+                    if (!conversionSucceeded) {
                         this.logger.error(
-                            `An error occurred while converting. Error: ${err}`,
+                            `Conversion failed. Exit code: ${code}. Output path: ${this.convertedFilePath || '(none)'}. Process output: ${diagnosticOutput.trim() || '(none)'}`,
                             'YoutubeVideoConverter',
-                            'convertVideoAsync'
+                            'convertAsync'
                         );
-
-                        resolve(new ConversionResult(false, ''));
                     }
+
+                    resolveConversion(new ConversionResult(conversionSucceeded, this.convertedFilePath));
                 });
-
-                process.stdout.on('data', (data) => {
-                    if (data.toString().includes('[download]') && data.toString().includes('%')) {
-                        const progressPercent: number = this.getProgressPercentFromYoutubeDownloaderProgress(data.toString());
-                        progressCallback(progressPercent);
-                    } else if (data.toString().includes('[ExtractAudio] Destination:')) {
-                        this.convertedFilePath = this.getFilePathFromYoutubeDownloaderProgress(data.toString());
-                    } else if (data.toString().includes('Deleting original file')) {
-                        resolve(new ConversionResult(true, this.convertedFilePath));
-                    }
+                process.on('error', (error) => {
+                    this.logger.error(`Could not start conversion. Error: ${error}`, 'YoutubeVideoConverter', 'convertAsync');
+                    resolveConversion(new ConversionResult(false, ''));
                 });
             } catch (error) {
                 this.logger.error(`Could not convert video. Error: ${error}`, 'YoutubeVideoConverter', 'convertVideoAsync');
@@ -80,6 +97,26 @@ export class YoutubeVideoConverter implements VideoConverter {
         });
 
         return promise;
+    }
+
+    private processOutputLine(line: string, progressCallback: any): void {
+        if (line.includes('[download]') && line.includes('%')) {
+            progressCallback(this.getProgressPercentFromYoutubeDownloaderProgress(line));
+        } else if (line.includes('[ExtractAudio] Destination:')) {
+            this.convertedFilePath = this.getFilePathFromYoutubeDownloaderProgress(line);
+        } else if (line.includes('[download]') && line.includes('has already been downloaded')) {
+            this.convertedFilePath = this.getAlreadyDownloadedFilePath(line);
+        } else if (line.includes('[ExtractAudio] Not converting audio')) {
+            this.convertedFilePath = this.getAlreadyConvertedFilePath(line);
+        }
+    }
+
+    private getAlreadyDownloadedFilePath(youtubeDownloaderProgress: string): string {
+        return youtubeDownloaderProgress.replace(/^\[download\]\s+/, '').replace(/\s+has already been downloaded\s*$/, '').trim();
+    }
+
+    private getAlreadyConvertedFilePath(youtubeDownloaderProgress: string): string {
+        return youtubeDownloaderProgress.replace(/^\[ExtractAudio\] Not converting audio\s+/, '').replace(/; file is already in target format.*$/, '').trim();
     }
 
     private getProgressPercentFromYoutubeDownloaderProgress(youtubeDownloaderProgress: string): number {

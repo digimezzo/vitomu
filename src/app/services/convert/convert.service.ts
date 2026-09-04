@@ -92,8 +92,9 @@ export class ConvertService implements BaseConvertService {
     }
 
     public isVideoUrlConvertible(videoUrl: string): boolean {
-        if (!Strings.isNullOrWhiteSpace(videoUrl)) {
-            return Constants.youtubeLinks.some((x) => videoUrl.includes(x));
+        if (!Strings.isNullOrWhiteSpace(videoUrl) && !/[\r\n]/.test(videoUrl)) {
+            const trimmedVideoUrl: string = videoUrl.trim();
+            return Constants.youtubeLinks.some((x) => trimmedVideoUrl.includes(x));
         }
 
         return false;
