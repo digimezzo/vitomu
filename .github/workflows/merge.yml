@@ -7,13 +7,15 @@ on:
 
 jobs:
     merge_build_on_linux:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         if: github.event.pull_request.merged == true
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@master
               with:
-                  node-version: '14.x'
+                  node-version: '22.x'
+            - name: update package directory
+              run: sudo apt update
             - name: install rpm and libarchive
               run: sudo apt install rpm libarchive-tools
             - name: install dependencies
@@ -21,7 +23,18 @@ jobs:
             - name: run unit tests
               run: npm run test
             - name: build
-              run: npm run electron:linux
+              run: |
+                  for i in 1 2 3; do
+                    npm run electron:linux && break
+                    if [ "$i" -eq 3 ]; then
+                      echo "Linux build failed after 3 attempts"
+                      exit 1
+                    fi
+                    echo "Linux build failed (attempt $i), retrying in 30s..."
+                    sleep 30
+                  done
+            - name: repackage AppImage with fuse3 runtime
+              run: bash scripts/repackage-appimage-fuse3.sh release x86_64
             - name: fetch current version
               id: ver_name
               uses: notiz-dev/github-action-json-property@release
@@ -29,39 +42,74 @@ jobs:
                   path: 'package.json'
                   prop_path: 'version'
             - name: uploading rpm artifact
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: vitomu-merge-rpm
-                  path: release/Vitomu-${{ steps.ver_name.outputs.prop }}.rpm
+                  path: release/Vitomu-*.rpm
             - name: upload deb artifact
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: vitomu-merge-deb
-                  path: release/Vitomu-${{ steps.ver_name.outputs.prop }}.deb
+                  path: release/Vitomu-*.deb
             - name: upload appimage artifact
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: vitomu-merge-appimage
-                  path: release/Vitomu-${{ steps.ver_name.outputs.prop }}.AppImage
+                  path: release/Vitomu-*.AppImage
             - name: upload snap artifact
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: vitomu-merge-snap
-                  path: release/Vitomu-${{ steps.ver_name.outputs.prop }}.snap
+                  path: release/Vitomu-*.snap
+
+    merge_build_pacman_on_arch:
+        runs-on: ubuntu-22.04
+        if: github.event.pull_request.merged == true
+        container:
+            image: archlinux:latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+            - name: verify Node runtime
+              run: |
+                  node -v
+                  npm -v
+            - name: install Arch dependencies
+              run: |
+                  pacman -Syu --noconfirm
+                  pacman -S --noconfirm git python base-devel libarchive libxcrypt-compat
+            - name: install dependencies
+              run: npm install
+            - name: run unit tests
+              run: npm run test
+            - name: build pacman package
+              run: |
+                  npm run build:prod
+                  for i in 1 2 3; do
+                    npx electron-builder build --linux pacman --config electron-builder.config.js && break
+                    if [ "$i" -eq 3 ]; then
+                      echo "Pacman build failed after 3 attempts"
+                      exit 1
+                    fi
+                    echo "Pacman build failed (attempt $i), retrying in 30s..."
+                    sleep 30
+                  done
             - name: upload pacman artifact
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: vitomu-merge-pacman
-                  path: release/Vitomu-${{ steps.ver_name.outputs.prop }}.pacman
+                  path: release/Vitomu-*.pacman
 
-    merge_build_on_mac:
-        runs-on: macos-latest
+    merge_build_on_mac_arm:
+        runs-on: macos-15
         if: github.event.pull_request.merged == true
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@master
               with:
-                  node-version: '14.x'
+                  node-version: '22.x'
             - name: install dependencies
               run: npm install
             - name: run unit tests
@@ -75,25 +123,25 @@ jobs:
                   path: 'package.json'
                   prop_path: 'version'
             - name: upload build artifacts
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
-                  name: vitomu-merge-macos
-                  path: release/Vitomu-${{ steps.ver_name.outputs.prop }}.dmg
+                  name: vitomu-merge-macos-arm
+                  path: release/Vitomu-*.dmg
 
-    merge_build_on_win:
-        runs-on: windows-latest
+    merge_build_on_mac_intel:
+        runs-on: macos-15-intel
         if: github.event.pull_request.merged == true
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@master
               with:
-                  node-version: '14.x'
+                  node-version: '22.x'
             - name: install dependencies
               run: npm install
             - name: run unit tests
               run: npm run test
             - name: build
-              run: npm run electron:windows
+              run: npm run electron:mac
             - name: fetch current version
               id: ver_name
               uses: notiz-dev/github-action-json-property@release
@@ -101,7 +149,39 @@ jobs:
                   path: 'package.json'
                   prop_path: 'version'
             - name: upload build artifacts
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
+              with:
+                  name: vitomu-merge-macos-intel
+                  path: release/Vitomu-*.dmg
+
+    merge_build_on_win:
+        runs-on: windows-2022
+        if: github.event.pull_request.merged == true
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+            - name: Install dependencies
+              run: npm install
+            - name: Run unit tests
+              run: npm run test
+            - name: Build
+              run: npm run electron:windows
+            - name: Fetch current version
+              id: ver_name
+              uses: notiz-dev/github-action-json-property@release
+              with:
+                  path: package.json
+                  prop_path: version
+            # Use built-in 7zip (already installed on the runner)
+            - name: Create 7z Archive
+              shell: powershell
+              run: |
+                  cd release
+                  & "C:\Program Files\7-Zip\7z.exe" a ..\vitomu-merge-win.7z Vitomu-*.exe
+            - name: Upload Build Artifact
+              uses: actions/upload-artifact@v4
               with:
                   name: vitomu-merge-win
-                  path: release\Vitomu-${{ steps.ver_name.outputs.prop }}.exe
+                  path: vitomu-merge-win.7z
