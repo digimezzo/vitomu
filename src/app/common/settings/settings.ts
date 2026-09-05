@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import * as Store from 'electron-store';
-import * as os from 'os';
+import { ipcRenderer } from 'electron';
 import { BaseSettings } from './base-settings';
 
 @Injectable()
 export class Settings implements BaseSettings {
-    private settings: Store<any> = new Store();
+    private cache = new Map<string, any>();
 
     constructor() {
-        this.initialize();
+        const allSettings = ipcRenderer.sendSync('settings:getAll');
+        Object.entries(allSettings).forEach(([key, value]) => this.cache.set(key, value));
     }
 
     // Default language
@@ -18,137 +18,100 @@ export class Settings implements BaseSettings {
 
     // Language
     public get language(): string {
-        return this.settings.get('language');
+        return this.get('language');
     }
 
     public set language(v: string) {
-        this.settings.set('language', v);
+        this.set('language', v);
     }
 
     // Audio format
     public get audioFormat(): string {
-        return this.settings.get('audioFormat');
+        return this.get('audioFormat');
     }
 
     public set audioFormat(v: string) {
-        this.settings.set('audioFormat', v);
+        this.set('audioFormat', v);
     }
 
     // Bitrate
     public get audioBitrate(): number {
-        return this.settings.get('audioBitrate');
+        return this.get('audioBitrate');
     }
 
     public set audioBitrate(v: number) {
-        this.settings.set('audioBitrate', v);
+        this.set('audioBitrate', v);
     }
 
     // Check for updates
     public get checkForUpdates(): boolean {
-        return this.settings.get('checkForUpdates');
+        return this.get('checkForUpdates');
     }
 
     public set checkForUpdates(v: boolean) {
-        this.settings.set('checkForUpdates', v);
+        this.set('checkForUpdates', v);
     }
 
     // System title bar
     public get useSystemTitleBar(): boolean {
-        return this.settings.get('useSystemTitleBar');
+        return this.get('useSystemTitleBar');
     }
 
     public set useSystemTitleBar(v: boolean) {
-        this.settings.set('useSystemTitleBar', v);
+        this.set('useSystemTitleBar', v);
     }
 
     // FontSize
     public get fontSize(): number {
-        return this.settings.get('fontSize');
+        return this.get('fontSize');
     }
 
     public set fontSize(v: number) {
-        this.settings.set('fontSize', v);
+        this.set('fontSize', v);
     }
 
     // Theme
     public get theme(): string {
-        return this.settings.get('theme');
+        return this.get('theme');
     }
 
     public set theme(v: string) {
-        this.settings.set('theme', v);
+        this.set('theme', v);
     }
 
     // Follow system theme
     public get followSystemTheme(): boolean {
-        return this.settings.get('followSystemTheme');
+        return this.get('followSystemTheme');
     }
 
     public set followSystemTheme(v: boolean) {
-        this.settings.set('followSystemTheme', v);
+        this.set('followSystemTheme', v);
     }
 
     // Use light background theme
     public get useLightBackgroundTheme(): boolean {
-        return this.settings.get('useLightBackgroundTheme');
+        return this.get('useLightBackgroundTheme');
     }
 
     public set useLightBackgroundTheme(v: boolean) {
-        this.settings.set('useLightBackgroundTheme', v);
+        this.set('useLightBackgroundTheme', v);
     }
 
     // Follow system color
     public get followSystemColor(): boolean {
-        return this.settings.get('followSystemColor');
+        return this.get('followSystemColor');
     }
 
     public set followSystemColor(v: boolean) {
-        this.settings.set('followSystemColor', v);
+        this.set('followSystemColor', v);
     }
 
-    private initialize(): void {
-        if (!this.settings.has('language')) {
-            this.settings.set('language', 'en');
-        }
+    private get<T>(key: string): T {
+        return this.cache.get(key);
+    }
 
-        if (!this.settings.has('checkForUpdates')) {
-            this.settings.set('checkForUpdates', true);
-        }
-
-        if (!this.settings.has('audioFormat')) {
-            this.settings.set('audioFormat', 'mp3');
-        }
-
-        if (!this.settings.has('audioBitrate')) {
-            this.settings.set('audioBitrate', 320);
-        }
-
-        if (!this.settings.has('useSystemTitleBar')) {
-            if (os.platform() === 'win32') {
-                this.settings.set('useSystemTitleBar', false);
-            } else {
-                this.settings.set('useSystemTitleBar', true);
-            }
-        }
-
-        if (!this.settings.has('fontSize')) {
-            this.settings.set('fontSize', 13);
-        }
-
-        if (!this.settings.has('followSystemTheme')) {
-            this.settings.set('followSystemTheme', false);
-        }
-
-        if (!this.settings.has('useLightBackgroundTheme')) {
-            this.settings.set('useLightBackgroundTheme', false);
-        }
-
-        if (!this.settings.has('followSystemColor')) {
-            this.settings.set('followSystemColor', false);
-        }
-
-        if (!this.settings.has('theme')) {
-            this.settings.set('theme', 'Vitomu');
-        }
+    private set<T>(key: string, value: T): void {
+        this.cache.set(key, value);
+        ipcRenderer.sendSync('settings:set', key, value);
     }
 }

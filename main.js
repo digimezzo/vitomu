@@ -5,7 +5,7 @@ var electron_1 = require("electron");
 // See post by megahertz: https://github.com/megahertz/electron-log/issues/60
 // "You need to import electron-log in the main process. Without it, electron-log doesn't works in a renderer process."
 var electron_log_1 = require("electron-log");
-var Store = require("electron-store");
+var settings_store_1 = require("./main/common/settings/settings-store");
 var windowStateKeeper = require("electron-window-state");
 var os = require("os");
 var path = require("path");
@@ -13,6 +13,14 @@ var url = require("url");
 electron_1.app.commandLine.appendSwitch('disable-color-correct-rendering');
 electron_log_1.default.create('main');
 electron_log_1.default.transports.file.resolvePath = function () { return path.join(electron_1.app.getPath('userData'), 'logs', 'Vitomu.log'); };
+var settings = new settings_store_1.SettingsStore();
+electron_1.ipcMain.on('settings:getAll', function (event) {
+    event.returnValue = settings.getAll();
+});
+electron_1.ipcMain.on('settings:set', function (event, key, value) {
+    settings.set(key, value);
+    event.returnValue = true;
+});
 var win, serve;
 var args = process.argv.slice(1);
 serve = args.some(function (val) { return val === '--serve'; });
@@ -27,6 +35,8 @@ function createWindow() {
     var electronScreen = electron_1.screen;
     var size = electronScreen.getPrimaryDisplay().workAreaSize;
     electron_1.Menu.setApplicationMenu(null);
+    var remoteMain = require('@electron/remote/main');
+    remoteMain.initialize();
     // Load the previous state with fallback to defaults
     var windowState = windowStateKeeper({
         defaultWidth: 500,
@@ -44,11 +54,11 @@ function createWindow() {
         webPreferences: {
             webSecurity: false,
             nodeIntegration: true,
-            enableRemoteModule: true,
             contextIsolation: false,
         },
         show: false,
     });
+    remoteMain.enable(win.webContents);
     globalAny.windowHasFrame = windowhasFrame();
     windowState.manage(win);
     if (serve) {
@@ -100,15 +110,6 @@ function createWindow() {
     });
 }
 function windowhasFrame() {
-    var settings = new Store();
-    if (!settings.has('useSystemTitleBar')) {
-        if (os.platform() === 'win32') {
-            settings.set('useSystemTitleBar', false);
-        }
-        else {
-            settings.set('useSystemTitleBar', true);
-        }
-    }
     return settings.get('useSystemTitleBar');
 }
 try {

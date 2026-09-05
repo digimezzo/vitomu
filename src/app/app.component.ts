@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { remote } from 'electron';
+import * as remote from '@electron/remote';
 import log from 'electron-log';
 import * as path from 'path';
 import { BaseAppearanceService } from './services/appearance/base-appearance.service';

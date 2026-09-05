@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { BrowserWindow, remote } from 'electron';
+import * as remote from '@electron/remote';
+import { BrowserWindow } from 'electron';
 
 @Component({
     selector: 'app-window-controls',

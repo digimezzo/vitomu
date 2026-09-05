@@ -1,9 +1,9 @@
-import { app, BrowserWindow, Menu, screen } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, screen } from 'electron';
 // Logging needs to be imported in main.ts also. Otherwise it just doesn't work anywhere else.
 // See post by megahertz: https://github.com/megahertz/electron-log/issues/60
 // "You need to import electron-log in the main process. Without it, electron-log doesn't works in a renderer process."
 import log from 'electron-log';
-import * as Store from 'electron-store';
+import { SettingsStore } from './main/common/settings/settings-store';
 import * as windowStateKeeper from 'electron-window-state';
 import * as os from 'os';
 import * as path from 'path';
@@ -13,6 +13,17 @@ app.commandLine.appendSwitch('disable-color-correct-rendering');
 
 log.create('main');
 log.transports.file.resolvePath = () => path.join(app.getPath('userData'), 'logs', 'Vitomu.log');
+
+const settings = new SettingsStore();
+
+ipcMain.on('settings:getAll', (event) => {
+    event.returnValue = settings.getAll();
+});
+
+ipcMain.on('settings:set', (event, key: string, value: any) => {
+    settings.set(key, value);
+    event.returnValue = true;
+});
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -33,6 +44,9 @@ function createWindow(): void {
 
     Menu.setApplicationMenu(null);
 
+    const remoteMain = require('@electron/remote/main');
+    remoteMain.initialize();
+
     // Load the previous state with fallback to defaults
     const windowState = windowStateKeeper({
         defaultWidth: 500,
@@ -51,11 +65,12 @@ function createWindow(): void {
         webPreferences: {
             webSecurity: false,
             nodeIntegration: true,
-            enableRemoteModule: true,
             contextIsolation: false,
         },
         show: false,
     });
+
+    remoteMain.enable(win.webContents);
 
     globalAny.windowHasFrame = windowhasFrame();
 
@@ -119,16 +134,6 @@ function createWindow(): void {
 }
 
 function windowhasFrame(): boolean {
-    const settings: Store<any> = new Store();
-
-    if (!settings.has('useSystemTitleBar')) {
-        if (os.platform() === 'win32') {
-            settings.set('useSystemTitleBar', false);
-        } else {
-            settings.set('useSystemTitleBar', true);
-        }
-    }
-
     return settings.get('useSystemTitleBar');
 }
 
