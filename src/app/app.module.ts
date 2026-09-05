@@ -5,7 +5,7 @@ import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/lega
 import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { MatSelectModule } from '@angular/material/select';
 import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
 import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
