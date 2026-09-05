@@ -1,0 +1,26 @@
+.dialog-header-component {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 24px;
+}
+
+.dialog-header-component__icon {
+    background: linear-gradient(45deg, var(--theme-primary-color) 30%, var(--theme-secondary-color) 100%);
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 16px 0 16px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #ffffff;
+    margin-right: 16px;
+}
+
+.dialog-header-component__title {
+    color: var(--theme-primary-text);
+    font-size: var(--fontsize-largest) !important;
+    font-weight: lighter !important;
+}

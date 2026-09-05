@@ -32,10 +32,12 @@ import { RemoteProxy } from './common/io/remote-proxy';
 import { Logger } from './common/logger';
 import { BaseSettings } from './common/settings/base-settings';
 import { Settings } from './common/settings/settings';
+import { AccentButtonComponent } from './components/accent-button/accent-button.component';
 import { AboutComponent } from './components/about/about.component';
 import { AudioBitrateSwitcherComponent } from './components/audio-bitrate-switcher/audio-bitrate-switcher.component';
 import { AudioFormatSwitcherComponent } from './components/audio-format-switcher/audio-format-switcher.component';
 import { ConvertComponent } from './components/convert/convert.component';
+import { DialogHeaderComponent } from './components/dialogs/dialog-header/dialog-header.component';
 import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
 import { LicenseDialogComponent } from './components/dialogs/license-dialog/license-dialog.component';
 import { FontSizeSwitcherComponent } from './components/font-size-switcher/font-size-switcher.component';
@@ -44,6 +46,7 @@ import { LanguageSwitcherComponent } from './components/language-switcher/langua
 import { LogoFullComponent } from './components/logo-full/logo-full.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switcher.component';
+import { TransparentButtonComponent } from './components/transparent-button/transparent-button.component';
 import { WindowControlsComponent } from './components/window-controls/window-controls.component';
 import { WebviewDirective } from './directives/webview.directive';
 import { GlobalErrorHandler } from './global-error-handler';
@@ -83,8 +86,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AudioBitrateSwitcherComponent,
         AudioFormatSwitcherComponent,
         LanguageSwitcherComponent,
+        DialogHeaderComponent,
         ErrorDialogComponent,
         LicenseDialogComponent,
+        AccentButtonComponent,
+        TransparentButtonComponent,
         LogoFullComponent,
         WebviewDirective,
     ],
