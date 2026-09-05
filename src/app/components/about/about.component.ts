@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { Constants } from '../../common/application/constants';
 import { ProductInformation } from '../../common/application/product-information';
 import { Desktop } from '../../common/io/desktop';
