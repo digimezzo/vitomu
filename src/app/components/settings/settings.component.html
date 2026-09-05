@@ -34,13 +34,11 @@
 <!-- Title bar -->
 <div class="m-3">
     <h1 class="mt-2">{{ 'SettingsTab.TitleBar' | translate }}</h1>
-    <mat-slide-toggle class="mt-2" [(ngModel)]="useSystemTitleBarChecked">
-        {{ 'SettingsTab.UseSystemTitleBar' | translate }}</mat-slide-toggle
-    >
+    <app-toggle-switch [(isChecked)]="useSystemTitleBarChecked">{{ 'SettingsTab.UseSystemTitleBar' | translate }}</app-toggle-switch>
 </div>
 <mat-divider></mat-divider>
 <!-- Updates -->
 <div class="m-3">
     <h1 class="mt-2">{{ 'SettingsTab.Updates' | translate }}</h1>
-    <mat-slide-toggle class="mt-2" [(ngModel)]="checkForUpdatesChecked"> {{ 'SettingsTab.CheckForUpdates' | translate }}</mat-slide-toggle>
+    <app-toggle-switch [(isChecked)]="checkForUpdatesChecked">{{ 'SettingsTab.CheckForUpdates' | translate }}</app-toggle-switch>
 </div>

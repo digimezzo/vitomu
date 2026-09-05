@@ -1,0 +1,16 @@
+<div class="app-toggle-switch" [ngClass]="{ inactive: isDisabled }">
+    <label class="switch">
+        <input
+            #theCheckBox
+            type="checkbox"
+            [checked]="isChecked"
+            [disabled]="isDisabled"
+            (change)="onCheckedChanged(theCheckBox.checked)"
+        />
+        <span class="slider"></span>
+        <span class="invisible-background"></span>
+    </label>
+    <div class="app-toggle-switch-text" [ngClass]="{ 'full-opacity': isChecked && !isDisabled }">
+        <ng-content></ng-content>
+    </div>
+</div>

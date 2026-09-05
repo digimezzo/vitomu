@@ -6,7 +6,6 @@ import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/lega
 import { MatDividerModule } from '@angular/material/divider';
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
-import { MatLegacySlideToggleModule as MatSlideToggleModule } from '@angular/material/legacy-slide-toggle';
 import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
 import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
@@ -47,6 +46,7 @@ import { LogoFullComponent } from './components/logo-full/logo-full.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switcher.component';
 import { TransparentButtonComponent } from './components/transparent-button/transparent-button.component';
+import { ToggleSwitchComponent } from './components/toggle-switch/toggle-switch.component';
 import { WindowControlsComponent } from './components/window-controls/window-controls.component';
 import { WebviewDirective } from './directives/webview.directive';
 import { GlobalErrorHandler } from './global-error-handler';
@@ -91,6 +91,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         LicenseDialogComponent,
         AccentButtonComponent,
         TransparentButtonComponent,
+        ToggleSwitchComponent,
         LogoFullComponent,
         WebviewDirective,
     ],
@@ -102,7 +103,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         MatSelectModule,
         MatProgressSpinnerModule,
         MatSnackBarModule,
-        MatSlideToggleModule,
         MatDividerModule,
         BrowserAnimationsModule,
         BrowserModule,
