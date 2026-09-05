@@ -6,3 +6,4 @@ release/
 coverage/
 npm-debug.log
 .idea
+.angular

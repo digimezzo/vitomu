@@ -1,10 +1,12 @@
-$light-dividers: rgba(white, 0.12);
+// Not real Sass colors (unquoted strings) so Material's theme mixins that
+// type-check foreground.divider skip color math against our CSS var() backgrounds.
+$light-dividers: unquote('rgba(255, 255, 255, 0.12)');
 $light-focused: rgba(white, 0.12);
 $light-primary-text: white;
 $light-secondary-text: rgba(white, 0.7);
 $light-disabled-text: rgba(white, 0.5);
 
-$dark-dividers: rgba(black, 0.12);
+$dark-dividers: unquote('rgba(0, 0, 0, 0.12)');
 $dark-focused: rgba(black, 0.12);
 $dark-primary-text: rgba(black, 0.87);
 $dark-secondary-text: rgba(black, 0.54);
