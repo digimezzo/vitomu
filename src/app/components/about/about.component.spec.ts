@@ -59,7 +59,7 @@ describe('AboutComponent', () => {
             assert.equal(aboutComponent.githubUrl, Constants.githubUrl);
         });
 
-        it('Should provide twitter url', () => {
+        it('Should provide mastodon url', () => {
             // Arrange
             const productInformationMock = Mock.ofType<ProductInformation>();
             const matDialogMock = Mock.ofType<MatDialog>();
@@ -73,7 +73,24 @@ describe('AboutComponent', () => {
             );
 
             // Assert
-            assert.equal(aboutComponent.twitterUrl, Constants.twitterUrl);
+            assert.equal(aboutComponent.mastodonUrl, Constants.mastodonUrl);
+        });
+
+        it('Should provide bluesky url', () => {
+            // Arrange
+            const productInformationMock = Mock.ofType<ProductInformation>();
+            const matDialogMock = Mock.ofType<MatDialog>();
+            const desktopMock = Mock.ofType<Desktop>();
+
+            // Act
+            const aboutComponent: AboutComponent = new AboutComponent(
+                productInformationMock.object,
+                matDialogMock.object,
+                desktopMock.object
+            );
+
+            // Assert
+            assert.equal(aboutComponent.blueskyUrl, Constants.blueskyUrl);
         });
     });
 

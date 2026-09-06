@@ -14,7 +14,8 @@ import { LicenseDialogComponent } from '../dialogs/license-dialog/license-dialog
 export class AboutComponent implements OnInit {
     constructor(public productInformation: ProductInformation, private dialog: MatDialog, private desktop: Desktop) {}
     public websiteUrl: string = Constants.websiteUrl;
-    public twitterUrl: string = Constants.twitterUrl;
+    public mastodonUrl: string = Constants.mastodonUrl;
+    public blueskyUrl: string = Constants.blueskyUrl;
     public githubUrl: string = Constants.githubUrl;
     public externalComponents: any[] = Constants.externalComponents;
 

@@ -5,9 +5,10 @@ import { AudioFormat } from '../audio-format';
 export class Constants {
     public static readonly logFileName: string = 'Vitomu.log';
     public static readonly donateUrl: string = 'https://digimezzo.github.io/site/donate?software=vitomu';
-    public static readonly websiteUrl: string = 'https://www.digimezzo.com';
-    public static readonly twitterUrl: string = 'https://twitter.com/digimezzo';
-    public static readonly githubUrl: string = 'https://github.com/digimezzo';
+    public static readonly websiteUrl: string = 'https://digimezzo.github.io/site';
+    public static readonly mastodonUrl: string = 'https://hachyderm.io/@digimezzo';
+    public static readonly blueskyUrl: string = 'https://bsky.app/profile/digimezzo.bsky.social';
+    public static readonly githubUrl: string = 'https://github.com/digimezzo/vitomu';
 
     public static readonly languages: Language[] = [
         new Language('en', 'English', 'English'),
