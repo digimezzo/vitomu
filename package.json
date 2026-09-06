@@ -2,6 +2,7 @@
     "name": "Vitomu",
     "desktopName": "Vitomu",
     "version": "2.1.1",
+    "versionSuffix": "",
     "description": "Video to audio converter",
     "homepage": "https://github.com/digimezzo/vitomu",
     "repository": {
