@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Constants } from '../../common/application/constants';
 import { AudioFormat } from '../../common/audio-format';
+import { Environment } from '../../common/io/environment';
 import { FileSystem } from '../../common/io/file-system';
 import { Logger } from '../../common/logger';
 import { BaseSettings } from '../../common/settings/base-settings';
@@ -41,7 +42,8 @@ export class ConvertService implements BaseConvertService {
         private youtubeDownloaderUpdater: YoutubeDownloaderUpdater,
         private fileSystem: FileSystem,
         private settings: BaseSettings,
-        private videoConverterFactory: VideoConverterFactory
+        private videoConverterFactory: VideoConverterFactory,
+        private environment: Environment
     ) {
         this.outputDirectory = this.fileSystem.combinePath([this.fileSystem.musicDirectory(), 'Vitomu']);
         this._selectedAudioFormat = this.audioFormats.find((x) => x.id === this.settings.audioFormat)!;
@@ -154,13 +156,13 @@ export class ConvertService implements BaseConvertService {
 
         let ffmpegPathOverride: string = '';
 
-        if (!(await this.ffmpegChecker.isDependencyInSystemPathAsync())) {
+        if (this.environment.isSnap() || !(await this.ffmpegChecker.isDependencyInSystemPathAsync())) {
             ffmpegPathOverride = this.ffmpegChecker.getPathOfDownloadedDependency();
         }
 
         let youtubeDownloaderPathOverride: string = '';
 
-        if (!(await this.youtubeDownloaderChecker.isDependencyInSystemPathAsync())) {
+        if (this.environment.isSnap() || !(await this.youtubeDownloaderChecker.isDependencyInSystemPathAsync())) {
             youtubeDownloaderPathOverride = this.youtubeDownloaderChecker.getPathOfDownloadedDependency();
         }
 
@@ -173,7 +175,7 @@ export class ConvertService implements BaseConvertService {
             this.selectedAudioBitrate,
             ffmpegPathOverride,
             youtubeDownloaderPathOverride,
-            (progressPercent) => this.onConversionProgressChanged(progressPercent)
+            (progressPercent: number) => this.onConversionProgressChanged(progressPercent)
         );
 
         if (conversionResult.isConversionSuccessful) {

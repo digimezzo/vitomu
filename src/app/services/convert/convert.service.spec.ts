@@ -59,7 +59,8 @@ describe('ConvertService', () => {
             youtubeDownloaderUpdaterMock.object,
             fileSystemMock.object,
             settingsMock.object,
-            videoConverterFactoryMock.object
+            videoConverterFactoryMock.object,
+            environmentMock.object
         );
     }
 
@@ -494,7 +495,7 @@ describe('ConvertService', () => {
             );
         });
 
-        it('Should convert using local Ffmpeg and Youtube downloader if both not found in path', async () => {
+        it('Should use downloaded dependencies in Snap even if system commands are found', async () => {
             // Arrange
             const videoConverterMock: IMock<VideoConverter> = Mock.ofType<VideoConverter>();
 
@@ -515,9 +516,10 @@ describe('ConvertService', () => {
             videoConverterFactoryMock.setup((x) => x.create('dummyUrl')).returns(() => videoConverterMock.object);
 
             ffmpegCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'ffmpeg path');
-            ffmpegCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
+            ffmpegCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => true);
             youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'yt-dlp path');
-            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => true);
+            environmentMock.setup((x) => x.isSnap()).returns(() => true);
 
             const convertService: BaseConvertService = createService();
 
