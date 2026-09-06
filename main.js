@@ -84,12 +84,22 @@ function createWindow() {
         // when you should delete the corresponding element.
         win = null;
     });
+    var hasShownWindow = false;
+    var showWindow = function () {
+        if (hasShownWindow || !win) {
+            return;
+        }
+        hasShownWindow = true;
+        win.show();
+        win.focus();
+    };
     // 'ready-to-show' doesn't fire on Windows in dev mode. In prod it seems to work.
     // See: https://github.com/electron/electron/issues/7779
     win.on('ready-to-show', function () {
-        win.show();
-        win.focus();
+        showWindow();
     });
+    win.webContents.on('did-finish-load', showWindow);
+    setTimeout(showWindow, 10000);
     // Makes links open in external browser
     var handleRedirect = function (e, link) {
         // Check that the requested link is not the current page

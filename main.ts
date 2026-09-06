@@ -103,12 +103,25 @@ function createWindow(): void {
         win = null;
     });
 
+    let hasShownWindow = false;
+    const showWindow = () => {
+        if (hasShownWindow || !win) {
+            return;
+        }
+
+        hasShownWindow = true;
+        win.show();
+        win.focus();
+    };
+
     // 'ready-to-show' doesn't fire on Windows in dev mode. In prod it seems to work.
     // See: https://github.com/electron/electron/issues/7779
     win.on('ready-to-show', () => {
-        win.show();
-        win.focus();
+        showWindow();
     });
+
+    win.webContents.on('did-finish-load', showWindow);
+    setTimeout(showWindow, 10000);
 
     // Makes links open in external browser
     const handleRedirect = (e, link) => {
