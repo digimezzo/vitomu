@@ -3,32 +3,32 @@ const { getFullVersion } = require('./get-package-information.js');
 const config = {
     appId: 'com.vitomu.dopamine',
     productName: 'Vitomu',
-    snapcraft: {
-        base: 'core24',
-        core24: {
-            grade: 'stable',
-            confinement: 'strict',
-            summary: 'Easy to use video to audio converter.',
-            description:
-                'Vitomu stands for VIdeo TO MUsic converter. It allows easy conversion of online and offline videos to audio files.',
-            extensions: ['gnome'],
-            plugs: [
-                'desktop',
-                'desktop-legacy',
-                'wayland',
-                'x11',
-                'unity7',
-                'opengl',
-                'audio-playback',
-                { 'browser-support': { interface: 'browser-support', 'allow-sandbox': true } },
-                'network',
-                'network-bind',
-                'gsettings',
-                'screen-inhibit-control',
-                'home',
-                'removable-media',
-            ],
-        },
+    snap: {
+        base: 'core22', // Must match build server (currently Ubuntu 22.04)
+        grade: 'stable',
+        confinement: 'strict',
+        summary: 'Easy to use video to audio converter.',
+        description:
+            'Vitomu stands for VIdeo TO MUsic converter. It allows easy conversion of online and offline videos to audio files.',
+        plugs: [
+            // REQUIRED for Electron desktop apps
+            'desktop',
+            'desktop-legacy',
+            'wayland',
+            'x11',
+            'unity7',
+            'opengl',
+            'audio-playback',
+            'browser-support',
+            'network',
+            'network-bind',
+            'gsettings',
+            'screen-inhibit-control',
+
+            // File access
+            'home',
+            'removable-media',
+        ],
     },
     nsis: {
         shortcutName: 'Vitomu',
