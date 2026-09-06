@@ -14,6 +14,10 @@ app.commandLine.appendSwitch('disable-color-correct-rendering');
 log.create('main');
 log.transports.file.resolvePath = () => path.join(app.getPath('userData'), 'logs', 'Vitomu.log');
 
+// Prevent EPIPE crashes when stdout/stderr pipe is closed (e.g. launched from file manager on Linux)
+process.stdout?.on?.('error', () => {});
+process.stderr?.on?.('error', () => {});
+
 const settings = new SettingsStore();
 
 ipcMain.on('settings:getAll', (event) => {
@@ -79,6 +83,7 @@ function createWindow(): void {
     if (serve) {
         require('electron-reload')(__dirname, {
             electron: require(`${__dirname}/node_modules/electron`),
+            ignored: [/node_modules|[/\\]\./, /[/\\]release[/\\]/],
         });
         win.loadURL('http://localhost:4200');
     } else {

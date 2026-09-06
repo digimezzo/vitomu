@@ -70,8 +70,8 @@ export class YoutubeVideoConverter implements VideoConverter {
                 };
                 const process: child.ChildProcess = child.exec(youtubeDownloaderCommand);
 
-                process.stdout.on('data', (data) => processOutput(data.toString()));
-                process.stderr.on('data', (data) => processOutput(data.toString()));
+                process.stdout?.on('data', (data) => processOutput(data.toString()));
+                process.stderr?.on('data', (data) => processOutput(data.toString()));
                 process.on('close', (code) => {
                     processOutput(`${outputBuffer}\n`);
                     const conversionSucceeded: boolean = code === 0 && !Strings.isNullOrWhiteSpace(this.convertedFilePath);
