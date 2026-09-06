@@ -1,6 +1,7 @@
 import { ErrorHandler, Injectable, NgZone } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { BrowserWindow, remote } from 'electron';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import * as remote from '@electron/remote';
+import { BrowserWindow } from 'electron';
 import { Logger } from './common/logger';
 import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
 

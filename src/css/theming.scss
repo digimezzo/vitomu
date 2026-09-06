@@ -1,11 +1,14 @@
-@import '~@angular/material/theming';
+@import '@angular/material/theming';
 @import 'custom-mat-themes';
 
 $custom-typography: mat-typography-config(
     $font-family: 'opensans',
 );
 
-@include mat-core($custom-typography);
+// mat-core() no longer applies typography in Material 15+; apply it separately.
+@include mat-core();
+@include angular-material-typography($custom-typography);
+@include mat-typography-hierarchy($custom-typography);
 
 $default-palette: (
     50: var(--theme-accent-50),

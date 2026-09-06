@@ -1,4 +1,4 @@
-import { MatDialog } from '@angular/material';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import * as assert from 'assert';
 import { It, Mock, Times } from 'typemoq';
 import { Constants } from '../../common/application/constants';

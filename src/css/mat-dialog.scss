@@ -1,0 +1,25 @@
+.mat-dialog-container,
+.mat-mdc-dialog-surface {
+    background-color: var(--theme-secondary-background) !important;
+    padding: 0 !important;
+}
+
+.mat-dialog-content,
+.mat-mdc-dialog-content {
+    color: var(--theme-primary-text) !important;
+    font-size: var(--fontsize-normal) !important;
+    margin: 0 !important;
+}
+
+.mat-dialog-actions,
+.mat-mdc-dialog-actions {
+    justify-content: flex-end !important;
+    gap: 8px;
+    margin: 0 !important;
+    padding: 24px !important;
+}
+
+.mat-dialog-content,
+.mdc-dialog .mdc-dialog__content {
+    padding: 0 24px !important;
+}

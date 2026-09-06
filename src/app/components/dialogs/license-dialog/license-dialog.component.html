@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ 'LicenseDialog.License' | translate }}</h1>
+<app-dialog-header icon="las la-certificate" title="{{ 'LicenseDialog.License' | translate }}"></app-dialog-header>
 <mat-dialog-content>
     <p>This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
@@ -17,5 +17,5 @@
     </p>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-raised-button color="primary" [mat-dialog-close]>{{ 'Buttons.Ok' | translate }}</button>
+    <app-accent-button [mat-dialog-close]>{{ 'Buttons.Ok' | translate }}</app-accent-button>
 </mat-dialog-actions>

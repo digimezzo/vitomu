@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as commandExists from 'command-exists-promise';
-import { remote } from 'electron';
+import * as remote from '@electron/remote';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 

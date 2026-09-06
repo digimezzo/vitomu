@@ -23,6 +23,18 @@ mat-tab-group {
     color: var(--theme-selected-tab-text) !important;
 }
 
+.mat-tab-group .mat-ink-bar,
+.mat-tab-nav-bar .mat-ink-bar {
+    background-color: var(--theme-accent-color) !important;
+    height: 2px !important;
+}
+
+.mat-mdc-tab-group .mdc-tab-indicator__content--underline,
+.mat-mdc-tab-nav-bar .mdc-tab-indicator__content--underline {
+    border-color: var(--theme-accent-color) !important;
+    border-top-width: 2px !important;
+}
+
 .mat-tab-header {
     border-bottom-style: none !important;
     background-color: var(--theme-secondary-background) !important;

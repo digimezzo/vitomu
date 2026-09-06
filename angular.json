@@ -9,8 +9,14 @@
             "projectType": "application",
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-builders/custom-webpack:browser",
                     "options": {
+                        "customWebpackConfig": {
+                            "path": "./angular.webpack.js",
+                            "mergeStrategies": {
+                                "externals": "append"
+                            }
+                        },
                         "outputPath": "dist",
                         "index": "src/index.html",
                         "main": "src/main.ts",
@@ -35,7 +41,6 @@
                             "optimization": false,
                             "outputHashing": "all",
                             "sourceMap": true,
-                            "extractCss": true,
                             "namedChunks": false,
                             "aot": false,
                             "extractLicenses": true,
@@ -52,7 +57,6 @@
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
-                            "extractCss": true,
                             "namedChunks": false,
                             "aot": true,
                             "extractLicenses": true,
@@ -68,7 +72,7 @@
                     }
                 },
                 "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "builder": "@angular-builders/custom-webpack:dev-server",
                     "options": {
                         "browserTarget": "vitomu:build"
                     },
@@ -86,25 +90,20 @@
                     "options": {
                         "browserTarget": "vitomu:build"
                     }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
-                        "exclude": ["**/node_modules/**"]
-                    }
                 }
             }
         }
     },
-    "defaultProject": "vitomu",
     "schematics": {
         "@schematics/angular:component": {
             "prefix": "app",
-            "styleext": "scss"
+            "style": "scss"
         },
         "@schematics/angular:directive": {
             "prefix": "app"
         }
+    },
+    "cli": {
+      "analytics": false
     }
 }

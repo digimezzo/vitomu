@@ -3,7 +3,9 @@ import { ThemeCoreColors } from './theme/theme-core-colors';
 import { ThemeCreator } from './theme/theme-creator';
 import { ThemeNeutralColors } from './theme/theme-neutral-colors';
 import { ThemeOptions } from './theme/theme-options';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class DefaultThemesCreator {
     private creator: ThemeCreator = new ThemeCreator('Digimezzo', 'info@digimezzo.com');
 

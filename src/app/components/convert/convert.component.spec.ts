@@ -112,7 +112,8 @@ describe('ConvertComponent', () => {
 
             // Act
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
-            await convertComponent.performConvertAsync();
+                await convertComponent.ngOnInit();
+                await convertComponent.performConvertAsync();
 
             // Assert
             convertServiceMock.verify((x) => x.convertAsync('https://my.url.is.glorious'), Times.exactly(1));
@@ -131,7 +132,8 @@ describe('ConvertComponent', () => {
 
             // Act
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
-            await convertComponent.performConvertAsync();
+                await convertComponent.ngOnInit();
+                await convertComponent.performConvertAsync();
 
             // Assert
             assert.equal(convertComponent.convertState, ConvertState.ConversionSuccessful);
@@ -150,7 +152,7 @@ describe('ConvertComponent', () => {
 
             // Act
             delayer.canExecute = true;
-            convertComponent.ngOnInit();
+                await convertComponent.ngOnInit();
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
             await convertComponent.performConvertAsync();
             convertComponent.ngOnDestroy();
@@ -172,7 +174,7 @@ describe('ConvertComponent', () => {
 
             // Act
             delayer.canExecute = true;
-            convertComponent.ngOnInit();
+                await convertComponent.ngOnInit();
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
             await convertComponent.performConvertAsync();
             convertComponent.ngOnDestroy();
@@ -194,7 +196,7 @@ describe('ConvertComponent', () => {
 
             // Act
             delayer.canExecute = true;
-            convertComponent.ngOnInit();
+                await convertComponent.ngOnInit();
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
             await convertComponent.performConvertAsync();
             convertComponent.ngOnDestroy();
@@ -216,7 +218,8 @@ describe('ConvertComponent', () => {
 
             // Act
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
-            await convertComponent.performConvertAsync();
+                await convertComponent.ngOnInit();
+                await convertComponent.performConvertAsync();
 
             // Assert
             assert.equal(convertComponent.convertState, ConvertState.ConversionFailed);
@@ -235,7 +238,7 @@ describe('ConvertComponent', () => {
 
             // Act
             delayer.canExecute = true;
-            convertComponent.ngOnInit();
+                await convertComponent.ngOnInit();
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
             await convertComponent.performConvertAsync();
             convertComponent.ngOnDestroy();
@@ -257,7 +260,7 @@ describe('ConvertComponent', () => {
 
             // Act
             delayer.canExecute = true;
-            convertComponent.ngOnInit();
+                await convertComponent.ngOnInit();
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
             await convertComponent.performConvertAsync();
             convertComponent.ngOnDestroy();
@@ -279,7 +282,7 @@ describe('ConvertComponent', () => {
 
             // Act
             delayer.canExecute = true;
-            convertComponent.ngOnInit();
+                await convertComponent.ngOnInit();
             convertComponent.downloadUrl = 'https://my.url.is.glorious';
             await convertComponent.performConvertAsync();
             convertComponent.ngOnDestroy();

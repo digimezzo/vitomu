@@ -1,22 +1,19 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-    MatButtonModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatTabsModule,
-    MatTooltipModule,
-} from '@angular/material';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
+import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import 'reflect-metadata';
 import '../polyfills';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,10 +31,12 @@ import { RemoteProxy } from './common/io/remote-proxy';
 import { Logger } from './common/logger';
 import { BaseSettings } from './common/settings/base-settings';
 import { Settings } from './common/settings/settings';
+import { AccentButtonComponent } from './components/accent-button/accent-button.component';
 import { AboutComponent } from './components/about/about.component';
 import { AudioBitrateSwitcherComponent } from './components/audio-bitrate-switcher/audio-bitrate-switcher.component';
 import { AudioFormatSwitcherComponent } from './components/audio-format-switcher/audio-format-switcher.component';
 import { ConvertComponent } from './components/convert/convert.component';
+import { DialogHeaderComponent } from './components/dialogs/dialog-header/dialog-header.component';
 import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
 import { LicenseDialogComponent } from './components/dialogs/license-dialog/license-dialog.component';
 import { FontSizeSwitcherComponent } from './components/font-size-switcher/font-size-switcher.component';
@@ -46,6 +45,8 @@ import { LanguageSwitcherComponent } from './components/language-switcher/langua
 import { LogoFullComponent } from './components/logo-full/logo-full.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switcher.component';
+import { TransparentButtonComponent } from './components/transparent-button/transparent-button.component';
+import { ToggleSwitchComponent } from './components/toggle-switch/toggle-switch.component';
 import { WindowControlsComponent } from './components/window-controls/window-controls.component';
 import { WebviewDirective } from './directives/webview.directive';
 import { GlobalErrorHandler } from './global-error-handler';
@@ -85,8 +86,12 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AudioBitrateSwitcherComponent,
         AudioFormatSwitcherComponent,
         LanguageSwitcherComponent,
+        DialogHeaderComponent,
         ErrorDialogComponent,
         LicenseDialogComponent,
+        AccentButtonComponent,
+        TransparentButtonComponent,
+        ToggleSwitchComponent,
         LogoFullComponent,
         WebviewDirective,
     ],
@@ -95,10 +100,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         MatTooltipModule,
         MatDialogModule,
         MatTabsModule,
+        MatFormFieldModule,
         MatSelectModule,
         MatProgressSpinnerModule,
         MatSnackBarModule,
-        MatSlideToggleModule,
         MatDividerModule,
         BrowserAnimationsModule,
         BrowserModule,
@@ -145,7 +150,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
             useClass: GlobalErrorHandler,
         },
     ],
-    bootstrap: [AppComponent],
-    entryComponents: [LicenseDialogComponent, ErrorDialogComponent],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
