@@ -266,7 +266,7 @@ export class AppearanceService implements BaseAppearanceService {
     }
 
     private setSelectedThemeFromSettings(): void {
-        let themeFromSettings: Theme = this.themes.find((x) => x.name === this.settings.theme);
+        let themeFromSettings: Theme | undefined = this.themes.find((x) => x.name === this.settings.theme);
 
         if (themeFromSettings == undefined) {
             themeFromSettings = this.themes.find((x) => x.name === 'Dopamine');
@@ -286,7 +286,7 @@ export class AppearanceService implements BaseAppearanceService {
     }
 
     private setSelectedFontSizeFromSettings(): void {
-        this._selectedFontSize = this.fontSizes.find((x) => x.normalSize === this.settings.fontSize);
+        this._selectedFontSize = this.fontSizes.find((x) => x.normalSize === this.settings.fontSize)!;
     }
 
     private isSystemUsingDarkTheme(): boolean {

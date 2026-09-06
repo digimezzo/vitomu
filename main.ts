@@ -9,10 +9,16 @@ import * as os from 'os';
 import * as path from 'path';
 import * as url from 'url';
 
-app.commandLine.appendSwitch('disable-color-correct-rendering');
+app.commandLine.appendSwitch('disable-color-correct-rendering'); // Prevents incorrect color rendering
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required'); // Prevents requiring user interaction to play audio
+app.commandLine.appendSwitch('disable-http-cache'); // Disables clearing of the cache folder at each startup
 
 log.create('main');
 log.transports.file.resolvePath = () => path.join(app.getPath('userData'), 'logs', 'Vitomu.log');
+
+// Prevent EPIPE crashes when stdout/stderr pipe is closed (e.g. launched from file manager on Linux)
+process.stdout?.on?.('error', () => {});
+process.stderr?.on?.('error', () => {});
 
 const settings = new SettingsStore();
 
@@ -32,6 +38,8 @@ serve = args.some((val) => val === '--serve');
 // Workaround: Global does not allow setting custom properties.
 // We need to cast it to "any" first.
 const globalAny: any = global;
+
+globalAny.isSnap = process.env.SNAP != undefined;
 
 // Static folder is not detected correctly in production
 if (process.env.NODE_ENV !== 'development') {
@@ -79,6 +87,7 @@ function createWindow(): void {
     if (serve) {
         require('electron-reload')(__dirname, {
             electron: require(`${__dirname}/node_modules/electron`),
+            ignored: [/node_modules|[/\\]\./, /[/\\]release[/\\]/],
         });
         win.loadURL('http://localhost:4200');
     } else {
@@ -147,6 +156,11 @@ function createWindow(): void {
 }
 
 function windowhasFrame(): boolean {
+    // GTK native window decorations crash under snap confinement (old bundled Mesa), so force frameless there.
+    if (process.env.SNAP) {
+        return false;
+    }
+
     return settings.get('useSystemTitleBar');
 }
 

@@ -36,6 +36,10 @@ export class Desktop {
         remote.shell.showItemInFolder(filePath);
     }
 
+    public isSnap(): boolean {
+        return remote.getGlobal('isSnap') === true;
+    }
+
     public shouldUseDarkColors(): boolean {
         return remote.nativeTheme.shouldUseDarkColors;
     }

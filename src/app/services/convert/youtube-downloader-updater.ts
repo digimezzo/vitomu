@@ -28,7 +28,7 @@ export class YoutubeDownloaderUpdater {
                     }
                 });
 
-                process.stdout.on('data', (data) => {
+                process.stdout?.on('data', (data) => {
                     this.logger.info(data.toString(), 'YoutubeDownloaderUpdater', 'updateYoutubeDownloader');
                 });
 
