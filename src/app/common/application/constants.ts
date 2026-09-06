@@ -70,12 +70,6 @@ export class Constants {
             licenseUrl: 'https://github.com/mawie81/electron-window-state/blob/master/license',
         },
         {
-            name: 'emoji-strip',
-            description: 'Use emoji-regex to Strip emoji from a string in Node.js and browsers.',
-            url: 'https://github.com/nizaroni/emoji-strip',
-            licenseUrl: 'https://github.com/nizaroni/emoji-strip/blob/master/LICENSE',
-        },
-        {
             name: 'ffbinaries downloader',
             description: 'Downloads precompiled ffmpeg, ffprobe, ffplay and ffserver binaries from ffbinaries.com.',
             url: 'https://github.com/vot/ffbinaries-node',
@@ -112,18 +106,6 @@ export class Constants {
             description: 'A simple http file downloader for node.js.',
             url: 'https://github.com/hgouveia/node-downloader-helper',
             licenseUrl: 'https://github.com/hgouveia/node-downloader-helper/blob/master/LICENSE',
-        },
-        {
-            name: 'progress-stream',
-            description: 'Read the progress of a stream. Supports speed and eta.',
-            url: 'https://github.com/freeall/progress-stream',
-            licenseUrl: 'https://github.com/freeall/progress-stream/blob/master/LICENSE',
-        },
-        {
-            name: 'sanitize-filename',
-            description: 'Sanitize a string to be safe for use as a filename by removing directory paths and invalid characters.',
-            url: 'https://github.com/parshap/node-sanitize-filename',
-            licenseUrl: 'https://github.com/parshap/node-sanitize-filename/blob/master/LICENSE.md',
         },
         {
             name: 'TinyColor',
