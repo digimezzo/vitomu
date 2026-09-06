@@ -12,6 +12,10 @@ import { BaseAppearanceService } from '../../services/appearance/base-appearance
 export class SettingsComponent implements OnInit, OnDestroy {
     constructor(public appearanceService: BaseAppearanceService, private desktop: Desktop, private settings: BaseSettings) {}
 
+    public get isSnap(): boolean {
+        return this.desktop.isSnap();
+    }
+
     public get useSystemTitleBarChecked(): boolean {
         return this.settings.useSystemTitleBar;
     }

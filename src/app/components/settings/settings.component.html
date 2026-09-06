@@ -31,12 +31,12 @@
     <app-audio-bitrate-switcher class="mt-2"></app-audio-bitrate-switcher>
 </div>
 <mat-divider></mat-divider>
-<!-- Title bar -->
-<div class="m-3">
+<!-- Title bar (native decorations crash under snap confinement, so hide the option there) -->
+<div class="m-3" *ngIf="!isSnap">
     <h1 class="mt-2">{{ 'SettingsTab.TitleBar' | translate }}</h1>
     <app-toggle-switch [(isChecked)]="useSystemTitleBarChecked">{{ 'SettingsTab.UseSystemTitleBar' | translate }}</app-toggle-switch>
 </div>
-<mat-divider></mat-divider>
+<mat-divider *ngIf="!isSnap"></mat-divider>
 <!-- Updates -->
 <div class="m-3">
     <h1 class="mt-2">{{ 'SettingsTab.Updates' | translate }}</h1>

@@ -39,6 +39,8 @@ serve = args.some((val) => val === '--serve');
 // We need to cast it to "any" first.
 const globalAny: any = global;
 
+globalAny.isSnap = process.env.SNAP != undefined;
+
 // Static folder is not detected correctly in production
 if (process.env.NODE_ENV !== 'development') {
     globalAny.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
@@ -154,6 +156,11 @@ function createWindow(): void {
 }
 
 function windowhasFrame(): boolean {
+    // GTK native window decorations crash under snap confinement (old bundled Mesa), so force frameless there.
+    if (process.env.SNAP) {
+        return false;
+    }
+
     return settings.get('useSystemTitleBar');
 }
 
