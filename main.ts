@@ -9,7 +9,9 @@ import * as os from 'os';
 import * as path from 'path';
 import * as url from 'url';
 
-app.commandLine.appendSwitch('disable-color-correct-rendering');
+app.commandLine.appendSwitch('disable-color-correct-rendering'); // Prevents incorrect color rendering
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required'); // Prevents requiring user interaction to play audio
+app.commandLine.appendSwitch('disable-http-cache'); // Disables clearing of the cache folder at each startup
 
 log.create('main');
 log.transports.file.resolvePath = () => path.join(app.getPath('userData'), 'logs', 'Vitomu.log');

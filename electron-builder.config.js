@@ -58,7 +58,6 @@ const config = {
     linux: {
         target: ['AppImage', 'deb', 'rpm', 'pacman', 'snap'],
         category: 'Audio',
-        syncDesktopName: true,
         artifactName: `\${productName}-${getFullVersion()}.\${ext}`,
         synopsis: 'Easy to use video to audio converter.',
         description:

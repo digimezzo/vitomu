@@ -11,7 +11,9 @@ const windowStateKeeper = require("electron-window-state");
 const os = require("os");
 const path = require("path");
 const url = require("url");
-electron_1.app.commandLine.appendSwitch('disable-color-correct-rendering');
+electron_1.app.commandLine.appendSwitch('disable-color-correct-rendering'); // Prevents incorrect color rendering
+electron_1.app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required'); // Prevents requiring user interaction to play audio
+electron_1.app.commandLine.appendSwitch('disable-http-cache'); // Disables clearing of the cache folder at each startup
 electron_log_1.default.create('main');
 electron_log_1.default.transports.file.resolvePath = () => path.join(electron_1.app.getPath('userData'), 'logs', 'Vitomu.log');
 // Prevent EPIPE crashes when stdout/stderr pipe is closed (e.g. launched from file manager on Linux)
