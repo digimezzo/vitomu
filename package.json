@@ -4,6 +4,13 @@
   "version": "2.1.0",
   "description": "Video to audio converter",
   "homepage": "https://github.com/digimezzo/vitomu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digimezzo/vitomu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/digimezzo/vitomu/issues"
+  },
   "author": {
     "name": "Digimezzo",
     "email": "info@digimezzo.com"
