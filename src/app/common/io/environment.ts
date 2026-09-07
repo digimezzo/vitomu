@@ -7,8 +7,4 @@ export class Environment {
     public isWindows(): boolean {
         return process.platform === 'win32';
     }
-
-    public isSnap(): boolean {
-        return process.env.SNAP !== undefined;
-    }
 }
