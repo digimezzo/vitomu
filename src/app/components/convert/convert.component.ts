@@ -27,6 +27,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     private _downloadUrl: string;
     private _convertState: ConvertState;
     private _progressMode: string;
+    private youtubeDownloaderWasDownloaded: boolean = false;
 
     constructor(
         private delayer: Delayer,
@@ -88,8 +89,19 @@ export class ConvertComponent implements OnInit, OnDestroy {
     }
 
     private async checkDependenciesAsync(): Promise<void> {
-        await this.checkFfmpegAsync();
-        await this.checkYoutubeDownloaderAsync();
+        if (!(await this.checkFfmpegAsync())) {
+            return;
+        }
+
+        if (!(await this.checkYoutubeDownloaderAsync())) {
+            return;
+        }
+
+        if (this.youtubeDownloaderWasDownloaded) {
+            this.convertState = ConvertState.WaitingForClipboardContent;
+            return;
+        }
+
         await this.updateYoutubeDownloaderAsync();
 
         this.convertState = ConvertState.WaitingForClipboardContent;
@@ -157,22 +169,37 @@ export class ConvertComponent implements OnInit, OnDestroy {
         });
     }
 
-    private async checkFfmpegAsync(): Promise<void> {
+    private async checkFfmpegAsync(): Promise<boolean> {
         if (!(await this.convertService.isFfmpegAvailableAsync())) {
             this.convertState = ConvertState.downloadingFfmpeg;
             this.progressMode = 'indeterminate';
-            await this.convertService.downloadFfmpegAsync();
+            try {
+                await this.convertService.downloadFfmpegAsync();
+            } catch (error) {
+                this.convertState = ConvertState.ffmpegNotAvailable;
+                return false;
+            }
             this.progressMode = 'determinate';
         }
+
+        return true;
     }
 
-    private async checkYoutubeDownloaderAsync(): Promise<void> {
+    private async checkYoutubeDownloaderAsync(): Promise<boolean> {
         if (!(await this.convertService.isYoutubeDownloaderAvailableAsync())) {
             this.convertState = ConvertState.downloadingYoutubeDownloader;
             this.progressMode = 'indeterminate';
-            await this.convertService.downloadYoutubeDownloaderAsync();
+            try {
+                await this.convertService.downloadYoutubeDownloaderAsync();
+            } catch (error) {
+                this.convertState = ConvertState.youtubeDownloaderNotAvailable;
+                return false;
+            }
             this.progressMode = 'determinate';
+            this.youtubeDownloaderWasDownloaded = true;
         }
+
+        return true;
     }
 
     private async updateYoutubeDownloaderAsync(): Promise<void> {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as child from 'child_process';
 import { DownloaderHelper } from 'node-downloader-helper';
 import { Environment } from '../../common/io/environment';
 import { FileSystem } from '../../common/io/file-system';
@@ -22,10 +23,9 @@ export class YoutubeDownloaderDownloader {
             const downloadUrl: string = `${YoutubeDownloaderConstants.downloaderDownloadUrl}${fileToDownload}`;
             const destinationDownloadPath: string = this.fileSystem.combinePath([downloadFolder, fileToDownload]);
 
-            // The download URL redirects, which leaves a request that times out after the file is
-            // already complete. The default removeOnFail/removeOnStop would then delete that file.
+            // Preserve completed downloads after late redirect timeouts.
             const downloaderHelper: any = new DownloaderHelper(downloadUrl, downloadFolder, {
-                httpsRequestOptions: { rejectUnauthorized: false },
+                httpsRequestOptions: { rejectUnauthorized: false, timeout: 30000 },
                 removeOnFail: false,
                 removeOnStop: false,
             });
@@ -41,9 +41,8 @@ export class YoutubeDownloaderDownloader {
 
                 if (!isDownloadFinished) {
                     this.fileSystem.deleteFileIfExists(destinationDownloadPath);
+                    reject(err);
                 }
-
-                resolve();
             });
 
             downloaderHelper.on('start', () => {
@@ -54,25 +53,42 @@ export class YoutubeDownloaderDownloader {
                 );
             });
 
-            downloaderHelper.on('end', () => {
+            downloaderHelper.on('end', async () => {
                 isDownloadFinished = true;
 
-                this.logger.info(
-                    `Finished downloading ${fileToDownload} from ${downloadUrl}.`,
-                    'YoutubeDownloaderDownloader',
-                    'downloadAsync'
-                );
+                try {
+                    if (!this.environment.isWindows()) {
+                        this.fileSystem.makeFileExecutable(destinationDownloadPath);
+                    }
 
-                if (!this.environment.isWindows()) {
-                    this.fileSystem.makeFileExecutable(destinationDownloadPath);
+                    await this.verifyDownloadedExecutableAsync(destinationDownloadPath);
+                    this.logger.info(
+                        `Finished downloading ${fileToDownload} from ${downloadUrl}.`,
+                        'YoutubeDownloaderDownloader',
+                        'downloadAsync'
+                    );
+                    resolve();
+                } catch (error) {
+                    this.fileSystem.deleteFileIfExists(destinationDownloadPath);
+                    reject(error);
                 }
-
-                resolve();
             });
 
             downloaderHelper.start();
         });
 
         return promise;
+    }
+
+    private async verifyDownloadedExecutableAsync(executablePath: string): Promise<void> {
+        await new Promise<void>((resolve, reject) => {
+            child.execFile(executablePath, ['--version'], { timeout: 30000 }, (error) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
+            });
+        });
     }
 }

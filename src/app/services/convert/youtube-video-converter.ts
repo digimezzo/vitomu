@@ -11,6 +11,7 @@ export class YoutubeVideoConverter implements VideoConverter {
     private youtubeVideoQuality: string = 'highest';
     private requestOptions: any = { maxRedirects: 5 };
     private progressTimeoutMilliseconds: number = 100;
+    private conversionTimeoutMilliseconds: number = 30 * 60 * 1000;
 
     private convertedFilePath: string = '';
 
@@ -31,14 +32,8 @@ export class YoutubeVideoConverter implements VideoConverter {
             progressCallback(0);
 
             let youtubeDownloaderExecutable: string = YoutubeDownloaderConstants.downloaderName;
-            let ffmpegLocationParameter: string = '';
-
             if (!Strings.isNullOrWhiteSpace(youtubeDownloaderPathOverride)) {
                 youtubeDownloaderExecutable = youtubeDownloaderPathOverride;
-            }
-
-            if (!Strings.isNullOrWhiteSpace(ffmpegPathOverride)) {
-                ffmpegLocationParameter = `--ffmpeg-location "${ffmpegPathOverride}"`;
             }
 
             let separator: string = '/';
@@ -47,8 +42,33 @@ export class YoutubeVideoConverter implements VideoConverter {
                 separator = '\\';
             }
 
-            const youtubeDownloaderCommand: string = `${youtubeDownloaderExecutable} "${videoUrl}" ${ffmpegLocationParameter} --no-check-certificate --no-playlist --newline --output "${outputDirectory}${separator}%(title)s.%(ext)s" -f bestaudio --extract-audio --audio-format ${audioFormat.ffmpegFormat} --audio-quality ${bitrate}k`;
-            this.logger.info(`Executing command: ${youtubeDownloaderCommand}`, 'YoutubeVideoConverter', 'convertAsync');
+            const youtubeDownloaderArguments: string[] = [videoUrl];
+
+            if (!Strings.isNullOrWhiteSpace(ffmpegPathOverride)) {
+                youtubeDownloaderArguments.push('--ffmpeg-location', ffmpegPathOverride);
+            }
+
+            youtubeDownloaderArguments.push(
+                '--no-check-certificate',
+                '--no-playlist',
+                '--newline',
+                '--print',
+                'after_move:__VITOMU_OUTPUT__%(filepath)s',
+                '--output',
+                `${outputDirectory}${separator}%(title)s.%(ext)s`,
+                '-f',
+                'bestaudio',
+                '--extract-audio',
+                '--audio-format',
+                audioFormat.ffmpegFormat,
+                '--audio-quality',
+                `${bitrate}k`
+            );
+            this.logger.info(
+                `Executing command: ${youtubeDownloaderExecutable} ${youtubeDownloaderArguments.join(' ')}`,
+                'YoutubeVideoConverter',
+                'convertAsync'
+            );
 
             try {
                 let outputBuffer: string = '';
@@ -68,7 +88,10 @@ export class YoutubeVideoConverter implements VideoConverter {
 
                     lines.forEach((line) => this.processOutputLine(line, progressCallback));
                 };
-                const process: child.ChildProcess = child.exec(youtubeDownloaderCommand);
+                const process: child.ChildProcess = child.execFile(youtubeDownloaderExecutable, youtubeDownloaderArguments, {
+                    timeout: this.conversionTimeoutMilliseconds,
+                    maxBuffer: 10 * 1024 * 1024,
+                });
 
                 process.stdout?.on('data', (data) => processOutput(data.toString()));
                 process.stderr?.on('data', (data) => processOutput(data.toString()));
@@ -100,7 +123,9 @@ export class YoutubeVideoConverter implements VideoConverter {
     }
 
     private processOutputLine(line: string, progressCallback: any): void {
-        if (line.includes('[download]') && line.includes('%')) {
+        if (line.startsWith('__VITOMU_OUTPUT__')) {
+            this.convertedFilePath = line.replace('__VITOMU_OUTPUT__', '').trim();
+        } else if (line.includes('[download]') && line.includes('%')) {
             progressCallback(this.getProgressPercentFromYoutubeDownloaderProgress(line));
         } else if (line.includes('[ExtractAudio] Destination:')) {
             this.convertedFilePath = this.getFilePathFromYoutubeDownloaderProgress(line);

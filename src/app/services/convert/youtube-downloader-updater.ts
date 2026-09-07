@@ -10,36 +10,38 @@ export class YoutubeDownloaderUpdater {
     constructor(private environment: Environment, private fileSystem: FileSystem, private logger: Logger) {}
 
     public async updateYoutubeDownloaderAsync(youtubeDownloaderPath: string): Promise<void> {
-        const promise = new Promise<void>(async (resolve, reject) => {
+        const promise = new Promise<void>((resolve) => {
             try {
-                const updateCommand: string = `${youtubeDownloaderPath} -U`;
+                this.logger.info(
+                    `Executing command: ${youtubeDownloaderPath} -U`,
+                    'YoutubeDownloaderUpdater',
+                    'updateYoutubeDownloader'
+                );
 
-                this.logger.info(`Executing command:. ${updateCommand}`, 'YoutubeDownloaderUpdater', 'updateYoutubeDownloader');
-
-                const process: child.ChildProcess = child.exec(updateCommand, (err, stdout, stderr) => {
+                const process: child.ChildProcess = child.execFile(youtubeDownloaderPath, ['-U'], { timeout: 5 * 60 * 1000 }, (err) => {
                     if (err) {
                         this.logger.error(
                             `An error occurred while updating ${YoutubeDownloaderConstants.downloaderName}. Error: ${err}`,
                             'YoutubeDownloaderUpdater',
-                            'updateYupdateYoutubeDownloaderoutubeDlAsync'
+                            'updateYoutubeDownloaderAsync'
                         );
-
-                        resolve();
                     }
+
+                    resolve();
                 });
 
                 process.stdout?.on('data', (data) => {
                     this.logger.info(data.toString(), 'YoutubeDownloaderUpdater', 'updateYoutubeDownloader');
                 });
 
-                process.on('exit', () => {
-                    this.logger.info(
-                        `Finished updating ${YoutubeDownloaderConstants.downloaderName}.`,
-                        'YoutubeDownloaderUpdater',
-                        'updateYoutubeDownloader'
-                    );
-
-                    resolve();
+                process.on('close', (code) => {
+                    if (code === 0) {
+                        this.logger.info(
+                            `Finished updating ${YoutubeDownloaderConstants.downloaderName}.`,
+                            'YoutubeDownloaderUpdater',
+                            'updateYoutubeDownloader'
+                        );
+                    }
                 });
             } catch (error) {
                 this.logger.error(

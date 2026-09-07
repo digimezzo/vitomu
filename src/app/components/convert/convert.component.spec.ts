@@ -512,9 +512,11 @@ describe('ConvertComponent', () => {
             convertServiceMock.verify((x) => x.isYoutubeDownloaderAvailableAsync(), Times.once());
         });
 
-        it('Should update Youtube downloader', async () => {
+        it('Should update an existing Youtube downloader', async () => {
             // Arrange
             delayer.canDelay = false;
+            convertServiceMock.setup((x) => x.isFfmpegAvailableAsync()).returns(async () => true);
+            convertServiceMock.setup((x) => x.isYoutubeDownloaderAvailableAsync()).returns(async () => true);
 
             const convertComponent: ConvertComponent = createComponent();
 
@@ -524,6 +526,61 @@ describe('ConvertComponent', () => {
 
             // Assert
             convertServiceMock.verify((x) => x.updateYoutubeDownloaderAsync(), Times.once());
+        });
+
+        it('Should not update a Youtube downloader downloaded during initialization', async () => {
+            // Arrange
+            delayer.canDelay = false;
+            convertServiceMock.setup((x) => x.isFfmpegAvailableAsync()).returns(async () => true);
+            convertServiceMock.setup((x) => x.isYoutubeDownloaderAvailableAsync()).returns(async () => false);
+
+            const convertComponent: ConvertComponent = createComponent();
+
+            // Act
+            await convertComponent.ngOnInit();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            convertServiceMock.verify((x) => x.updateYoutubeDownloaderAsync(), Times.never());
+        });
+
+        it('Should show the Youtube downloader error when its download fails', async () => {
+            // Arrange
+            delayer.canDelay = false;
+            convertServiceMock.setup((x) => x.isFfmpegAvailableAsync()).returns(async () => true);
+            convertServiceMock.setup((x) => x.isYoutubeDownloaderAvailableAsync()).returns(async () => false);
+            convertServiceMock.setup((x) => x.downloadYoutubeDownloaderAsync()).returns(async () => {
+                throw new Error('Download failed');
+            });
+
+            const convertComponent: ConvertComponent = createComponent();
+
+            // Act
+            await convertComponent.ngOnInit();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.convertState, ConvertState.youtubeDownloaderNotAvailable);
+            convertServiceMock.verify((x) => x.updateYoutubeDownloaderAsync(), Times.never());
+        });
+
+        it('Should show the FFmpeg error when its download fails', async () => {
+            // Arrange
+            delayer.canDelay = false;
+            convertServiceMock.setup((x) => x.isFfmpegAvailableAsync()).returns(async () => false);
+            convertServiceMock.setup((x) => x.downloadFfmpegAsync()).returns(async () => {
+                throw new Error('Download failed');
+            });
+
+            const convertComponent: ConvertComponent = createComponent();
+
+            // Act
+            await convertComponent.ngOnInit();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.convertState, ConvertState.ffmpegNotAvailable);
+            convertServiceMock.verify((x) => x.isYoutubeDownloaderAvailableAsync(), Times.never());
         });
 
         it('Should set progress mode to determinate after initialization', async () => {
