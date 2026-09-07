@@ -8,9 +8,6 @@ import { VideoConverter } from './video-converter';
 import { YoutubeDownloaderConstants } from './youtube-downloader-constants';
 
 export class YoutubeVideoConverter implements VideoConverter {
-    private youtubeVideoQuality: string = 'highest';
-    private requestOptions: any = { maxRedirects: 5 };
-    private progressTimeoutMilliseconds: number = 100;
     private conversionTimeoutMilliseconds: number = 30 * 60 * 1000;
 
     private convertedFilePath: string = '';
@@ -54,6 +51,11 @@ export class YoutubeVideoConverter implements VideoConverter {
                 '--newline',
                 '--print',
                 'after_move:__VITOMU_OUTPUT__%(filepath)s',
+                '--progress',
+                '--progress-template',
+                'download:__VITOMU_PROGRESS__%(progress._percent_str)s',
+                '--progress-template',
+                'postprocess:__VITOMU_POSTPROCESS__',
                 '--output',
                 `${outputDirectory}${separator}%(title)s.%(ext)s`,
                 '-f',
@@ -125,35 +127,20 @@ export class YoutubeVideoConverter implements VideoConverter {
     private processOutputLine(line: string, progressCallback: any): void {
         if (line.startsWith('__VITOMU_OUTPUT__')) {
             this.convertedFilePath = line.replace('__VITOMU_OUTPUT__', '').trim();
-        } else if (line.includes('[download]') && line.includes('%')) {
+        } else if (line.startsWith('__VITOMU_PROGRESS__')) {
             progressCallback(this.getProgressPercentFromYoutubeDownloaderProgress(line));
-        } else if (line.includes('[ExtractAudio] Destination:')) {
-            this.convertedFilePath = this.getFilePathFromYoutubeDownloaderProgress(line);
+        } else if (line.startsWith('__VITOMU_POSTPROCESS__')) {
             progressCallback(-1);
-        } else if (line.includes('[download]') && line.includes('has already been downloaded')) {
-            this.convertedFilePath = this.getAlreadyDownloadedFilePath(line);
-        } else if (line.includes('[ExtractAudio] Not converting audio')) {
-            this.convertedFilePath = this.getAlreadyConvertedFilePath(line);
         }
-    }
-
-    private getAlreadyDownloadedFilePath(youtubeDownloaderProgress: string): string {
-        return youtubeDownloaderProgress.replace(/^\[download\]\s+/, '').replace(/\s+has already been downloaded\s*$/, '').trim();
-    }
-
-    private getAlreadyConvertedFilePath(youtubeDownloaderProgress: string): string {
-        return youtubeDownloaderProgress.replace(/^\[ExtractAudio\] Not converting audio\s+/, '').replace(/; file is already in target format.*$/, '').trim();
     }
 
     private getProgressPercentFromYoutubeDownloaderProgress(youtubeDownloaderProgress: string): number {
         try {
-            // [download] 100% of 7.33MiB in 00:01
-            const pieces: string[] = youtubeDownloaderProgress.split('%');
+            const match: RegExpMatchArray | null = youtubeDownloaderProgress.match(/(\d+(?:\.\d+)?)%/);
 
-            const stringToParse: string = pieces[0].replace('[download]', '').trim();
-
-            if (!Strings.isNullOrWhiteSpace(stringToParse)) {
-                return parseInt(stringToParse, 10);
+            if (match !== null && !Strings.isNullOrWhiteSpace(match[1])) {
+                const progressPercent: number = parseFloat(match[1]);
+                return Math.max(0, Math.min(100, Math.round(progressPercent)));
             }
         } catch (error) {
             this.logger.error(
@@ -164,20 +151,5 @@ export class YoutubeVideoConverter implements VideoConverter {
         }
 
         return 0;
-    }
-
-    private getFilePathFromYoutubeDownloaderProgress(youtubeDownloaderProgress: string): string {
-        try {
-            // [ExtractAudio] Destination: /home/raphael/Music/Vitomu/Shapov & Nerak - Heaven.mp3
-            return youtubeDownloaderProgress.replace('[ExtractAudio] Destination:', '').trim();
-        } catch (error) {
-            this.logger.error(
-                `Could not get file path. Error: ${error}`,
-                'YoutubeVideoConverter',
-                'getFilePathFromYoutubeDownloaderProgress'
-            );
-        }
-
-        return '';
     }
 }

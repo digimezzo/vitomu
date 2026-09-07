@@ -1,4 +1,5 @@
 import { Component, NgZone, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
 import { Delayer } from '../../common/delayer';
 import { ClipboardWatcher } from '../../common/io/clipboard-watcher';
@@ -26,8 +27,9 @@ export class ConvertComponent implements OnInit, OnDestroy {
     private _progressPercent: number;
     private _downloadUrl: string;
     private _convertState: ConvertState;
-    private _progressMode: string;
+    private _progressMode: ProgressSpinnerMode;
     private youtubeDownloaderWasDownloaded: boolean = false;
+    private isPostProcessing: boolean = false;
 
     constructor(
         private delayer: Delayer,
@@ -41,11 +43,11 @@ export class ConvertComponent implements OnInit, OnDestroy {
         this.reset();
     }
 
-    public get progressMode(): string {
+    public get progressMode(): ProgressSpinnerMode {
         return this._progressMode;
     }
 
-    public set progressMode(v: string) {
+    public set progressMode(v: ProgressSpinnerMode) {
         this._progressMode = v;
     }
 
@@ -70,6 +72,10 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
     public set downloadUrl(v: string) {
         this._downloadUrl = v;
+    }
+
+    public get isConverting(): boolean {
+        return this.convertState === ConvertState.ConversionInProgress && this.progressMode === 'indeterminate';
     }
 
     public async ngOnInit(): Promise<void> {
@@ -112,6 +118,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     }
 
     public async performConvertAsync(): Promise<void> {
+        this.isPostProcessing = false;
         this.convertState = ConvertState.ConversionInProgress;
         const conversionResult: ConversionResult = await this.convertService.convertAsync(this.downloadUrl);
 
@@ -146,10 +153,25 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
     private handleConversionProgressChanged(progressPercent: number): void {
         this.zone.run(() => {
-            this.progressMode = progressPercent < 0 ? 'indeterminate' : 'determinate';
             if (progressPercent >= 0) {
+                this.progressMode = 'determinate';
                 this.progressPercent = progressPercent;
+                return;
             }
+
+            if (this.isPostProcessing) {
+                return;
+            }
+
+            // Show a full ring before switching to the indeterminate extraction phase.
+            this.isPostProcessing = true;
+            this.progressMode = 'determinate';
+            this.progressPercent = 100;
+            setTimeout(() => {
+                if (this.convertState === ConvertState.ConversionInProgress) {
+                    this.progressMode = 'indeterminate';
+                }
+            }, 750);
         });
     }
 

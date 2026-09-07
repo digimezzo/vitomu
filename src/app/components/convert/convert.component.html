@@ -63,8 +63,12 @@
                 </div>
                 <!-- Success icon -->
                 <div class="drop-zone-icon-static" *ngIf="convertState === ConvertStateEnum.ConversionSuccessful">&#xF00C;</div>
+                <!-- Converting icon -->
+                <div class="drop-zone-icon-pulsing" *ngIf="convertState === ConvertStateEnum.ConversionInProgress && isConverting">
+                    &#xF001;
+                </div>
                 <!-- Progress percent -->
-                <div class="drop-zone-progress-text" *ngIf="convertState === ConvertStateEnum.ConversionInProgress">
+                <div class="drop-zone-progress-text" *ngIf="convertState === ConvertStateEnum.ConversionInProgress && !isConverting">
                     {{ progressPercent }}%
                 </div>
             </div>
@@ -105,8 +109,12 @@
             <div *ngIf="convertState === ConvertStateEnum.youtubeDownloaderNotAvailable">
                 {{ 'ConvertTab.YoutubeDownloaderNotFound' | translate: { youtubeDownloaderName: this.youtubeDownloaderName | titlecase } }}
             </div>
+            <!-- Downloading text -->
+            <div *ngIf="convertState === ConvertStateEnum.ConversionInProgress && !isConverting">
+                {{ 'ConvertTab.Downloading' | translate }}
+            </div>
             <!-- Conversion in progress text -->
-            <div *ngIf="convertState === ConvertStateEnum.ConversionInProgress">
+            <div *ngIf="convertState === ConvertStateEnum.ConversionInProgress && isConverting">
                 {{ 'ConvertTab.ConversionInProgress' | translate }}
             </div>
             <!-- Video link text -->

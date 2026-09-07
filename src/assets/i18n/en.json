@@ -13,6 +13,7 @@
         "ConversionFailed": "Conversion failed",
         "FoundOnClipboard": "Found video link on clipboard!",
         "ConversionInProgress": "Conversion in progress...",
+        "Downloading": "Downloading...",
         "DownloadingFFmpeg": "Downloading FFmpeg. We need it to convert videos.",
         "FFmpegNotFound": "FFmpeg was not found. We need it to convert videos.",
         "DownloadingYoutubeDownloader": "Downloading {{youtubeDownloaderName}}. We need it to convert videos.",
