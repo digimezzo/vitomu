@@ -22,9 +22,15 @@ export class YoutubeDownloaderDownloader {
             const downloadUrl: string = `${YoutubeDownloaderConstants.downloaderDownloadUrl}${fileToDownload}`;
             const destinationDownloadPath: string = this.fileSystem.combinePath([downloadFolder, fileToDownload]);
 
+            // The download URL redirects, which leaves a request that times out after the file is
+            // already complete. The default removeOnFail/removeOnStop would then delete that file.
             const downloaderHelper: any = new DownloaderHelper(downloadUrl, downloadFolder, {
                 httpsRequestOptions: { rejectUnauthorized: false },
+                removeOnFail: false,
+                removeOnStop: false,
             });
+
+            let isDownloadFinished: boolean = false;
 
             downloaderHelper.on('error', (err) => {
                 this.logger.error(
@@ -32,6 +38,11 @@ export class YoutubeDownloaderDownloader {
                     'YoutubeDownloaderDownloader',
                     'downloadAsync'
                 );
+
+                if (!isDownloadFinished) {
+                    this.fileSystem.deleteFileIfExists(destinationDownloadPath);
+                }
+
                 resolve();
             });
 
@@ -44,6 +55,8 @@ export class YoutubeDownloaderDownloader {
             });
 
             downloaderHelper.on('end', () => {
+                isDownloadFinished = true;
+
                 this.logger.info(
                     `Finished downloading ${fileToDownload} from ${downloadUrl}.`,
                     'YoutubeDownloaderDownloader',

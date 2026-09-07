@@ -62,6 +62,10 @@ export class FileSystem {
         fs.chmodSync(filePath, '755');
     }
 
+    public deleteFileIfExists(filePath: string): void {
+        fs.removeSync(filePath);
+    }
+
     public getFilesInDirectory(directoryPath: string): string[] {
         const fileNames: string[] = fs.readdirSync(directoryPath);
 
