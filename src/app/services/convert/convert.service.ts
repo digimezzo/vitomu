@@ -105,7 +105,22 @@ export class ConvertService implements BaseConvertService {
     }
 
     public async isYoutubeDownloaderAvailableAsync(): Promise<boolean> {
-        return await this.youtubeDownloaderChecker.isDependencyAvailableAsync();
+        if (await this.youtubeDownloaderChecker.isDependencyInSystemPathAsync()) {
+            return true;
+        }
+
+        const youtubeDownloaderPath: string = this.youtubeDownloaderChecker.getPathOfDownloadedDependency();
+
+        if (Strings.isNullOrWhiteSpace(youtubeDownloaderPath)) {
+            return false;
+        }
+
+        if (await this.youtubeDownloaderDownloader.isExecutableValidAsync(youtubeDownloaderPath)) {
+            return true;
+        }
+
+        this.fileSystem.deleteFileIfExists(youtubeDownloaderPath);
+        return false;
     }
 
     public async downloadFfmpegAsync(): Promise<void> {
@@ -117,7 +132,7 @@ export class ConvertService implements BaseConvertService {
     }
 
     public async downloadYoutubeDownloaderAsync(): Promise<void> {
-        if (!(await this.youtubeDownloaderChecker.isDependencyAvailableAsync())) {
+        if (!(await this.isYoutubeDownloaderAvailableAsync())) {
             this.logger.info(
                 `Start downloading ${YoutubeDownloaderConstants.downloaderName}.`,
                 'ConvertService',
@@ -134,18 +149,22 @@ export class ConvertService implements BaseConvertService {
 
     public async updateYoutubeDownloaderAsync(): Promise<void> {
         // We only update the Youtube downloader if it is our own
-        if (!Strings.isNullOrWhiteSpace(this.youtubeDownloaderChecker.getPathOfDownloadedDependency())) {
+        const youtubeDownloaderPath: string = this.youtubeDownloaderChecker.getPathOfDownloadedDependency();
+
+        if (!Strings.isNullOrWhiteSpace(youtubeDownloaderPath) && (await this.youtubeDownloaderDownloader.isExecutableValidAsync(youtubeDownloaderPath))) {
             this.logger.info(
                 `Start updating ${YoutubeDownloaderConstants.downloaderName}.`,
                 'ConvertService',
                 'updateYoutubeDownloaderAsync'
             );
-            await this.youtubeDownloaderUpdater.updateYoutubeDownloaderAsync(this.youtubeDownloaderChecker.getPathOfDownloadedDependency());
+            await this.youtubeDownloaderUpdater.updateYoutubeDownloaderAsync(youtubeDownloaderPath);
             this.logger.info(
                 `Finished updating ${YoutubeDownloaderConstants.downloaderName}.`,
                 'ConvertService',
                 'updateYoutubeDownloaderAsync'
             );
+        } else if (!Strings.isNullOrWhiteSpace(youtubeDownloaderPath)) {
+            this.fileSystem.deleteFileIfExists(youtubeDownloaderPath);
         }
     }
 

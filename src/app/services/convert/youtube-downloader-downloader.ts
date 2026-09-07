@@ -61,7 +61,9 @@ export class YoutubeDownloaderDownloader {
                         this.fileSystem.makeFileExecutable(destinationDownloadPath);
                     }
 
-                    await this.verifyDownloadedExecutableAsync(destinationDownloadPath);
+                    if (!(await this.isExecutableValidAsync(destinationDownloadPath))) {
+                        throw new Error(`${fileToDownload} could not be executed after downloading.`);
+                    }
                     this.logger.info(
                         `Finished downloading ${fileToDownload} from ${downloadUrl}.`,
                         'YoutubeDownloaderDownloader',
@@ -80,13 +82,18 @@ export class YoutubeDownloaderDownloader {
         return promise;
     }
 
-    private async verifyDownloadedExecutableAsync(executablePath: string): Promise<void> {
-        await new Promise<void>((resolve, reject) => {
+    public async isExecutableValidAsync(executablePath: string): Promise<boolean> {
+        return await new Promise<boolean>((resolve) => {
             child.execFile(executablePath, ['--version'], { timeout: 30000 }, (error) => {
                 if (error) {
-                    reject(error);
+                    this.logger.error(
+                        `Downloaded ${YoutubeDownloaderConstants.downloaderName} is invalid. Error: ${error}`,
+                        'YoutubeDownloaderDownloader',
+                        'isExecutableValidAsync'
+                    );
+                    resolve(false);
                 } else {
-                    resolve();
+                    resolve(true);
                 }
             });
         });

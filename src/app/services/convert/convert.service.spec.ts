@@ -218,7 +218,7 @@ describe('ConvertService', () => {
     describe('isYoutubeDownloaderAvailableAsync', () => {
         it('Should return true if Youtube downloader is available', async () => {
             // Arrange
-            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => true);
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => true);
             const convertService: BaseConvertService = createService();
 
             // Act
@@ -230,7 +230,8 @@ describe('ConvertService', () => {
 
         it('Should return false if FFYoutube downloadermpeg is not available', async () => {
             // Arrange
-            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => false);
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
+            youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => '');
             const convertService: BaseConvertService = createService();
 
             // Act
@@ -238,6 +239,21 @@ describe('ConvertService', () => {
 
             // Assert
             expect(youtubeDownloaderIsAvailable).toBeFalsy();
+        });
+
+        it('Should remove an invalid downloaded Youtube downloader', async () => {
+            // Arrange
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => false);
+            youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'yt-dlp path');
+            youtubeDownloaderDownloaderMock.setup((x) => x.isExecutableValidAsync('yt-dlp path')).returns(async () => false);
+            const convertService: BaseConvertService = createService();
+
+            // Act
+            const youtubeDownloaderIsAvailable: boolean = await convertService.isYoutubeDownloaderAvailableAsync();
+
+            // Assert
+            expect(youtubeDownloaderIsAvailable).toBeFalsy();
+            fileSystemMock.verify((x) => x.deleteFileIfExists('yt-dlp path'), Times.once());
         });
     });
 
@@ -272,7 +288,7 @@ describe('ConvertService', () => {
     describe('downloadYoutubeDownloaderAsync', () => {
         it('Should not download Youtube downloader if it is available', async () => {
             // Arrange
-            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => true);
+            youtubeDownloaderCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => true);
             youtubeDownloaderCheckerMock.setup((x) => x.downloadedDependencyFolder).returns(() => 'Youtube downloader folder');
             const convertService: BaseConvertService = createService();
 
@@ -313,6 +329,9 @@ describe('ConvertService', () => {
         it('Should update Youtube downloader if a downloaded version is found', async () => {
             // Arrange
             youtubeDownloaderCheckerMock.setup((x) => x.getPathOfDownloadedDependency()).returns(() => 'Youtube downloader folder');
+            youtubeDownloaderDownloaderMock
+                .setup((x) => x.isExecutableValidAsync('Youtube downloader folder'))
+                .returns(async () => true);
             const convertService: BaseConvertService = createService();
 
             // Act
