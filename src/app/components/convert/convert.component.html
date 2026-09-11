@@ -29,12 +29,15 @@
                 <!-- Clipboard icon -->
                 <div class="drop-zone-icon-pulsing" *ngIf="convertState === ConvertStateEnum.WaitingForClipboardContent">&#xF328;</div>
                 <!-- Download icon -->
-                <div class="download-icon" *ngIf="convertState === ConvertStateEnum.HasValidClipboardContent">
+                <div 
+                    class="download-icon" 
+                    matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}"
+                    (click)="performConvertAsync()"
+                    *ngIf="convertState === ConvertStateEnum.HasValidClipboardContent">
                     <div class="download-icon-pulse"></div>
                     <div
-                        class="download-icon-icon clickable"
-                        matTooltip="{{ 'Tooltips.ClickToConvert' | translate }}"
-                        (click)="performConvertAsync()"
+                        class="download-icon-icon"
+                        
                     >
                         &#xF019;
                     </div>
