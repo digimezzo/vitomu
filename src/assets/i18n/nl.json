@@ -8,10 +8,10 @@
         "About": "Over"
     },
     "ConvertTab": {
-        "DropText": "Kopieer een video link naar het klembord",
+        "DropText": "Kopieer een videolink of lokaal videopad naar het klembord",
         "ConversionSuccessful": "Conversie succesvol!",
         "ConversionFailed": "Conversie gefaald",
-        "FoundOnClipboard": "Video link gevonden op klembord!",
+        "FoundOnClipboard": "Videobron gevonden op het klembord!",
         "ConversionInProgress": "Conversie wordt uitgevoerd...",
         "Downloading": "Downloaden...",
         "DownloadingFFmpeg": "FFmpeg wordt gedownload. We hebben het nodig om video's te converteren.",
@@ -58,7 +58,7 @@
     },
     "Tooltips": {
         "ClickToConvert": "Klik om te converteren",
-        "ShowVideoLink": "Toon videolink",
+        "ShowVideoLink": "Toon videobron",
         "ViewInFolder": "Bekijk in map",
         "Play": "Afspelen"
     },

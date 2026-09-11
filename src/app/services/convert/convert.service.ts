@@ -11,6 +11,7 @@ import { ConversionResult as ConversionResult } from './conversion-result';
 import { DependencyChecker } from './dependency-checker';
 import { DependencyCheckerFactory } from './dependency-checker-factory';
 import { FFmpegDownloader } from './ffmpeg-downloader';
+import { LocalVideoFile } from './local-video-file';
 import { VideoConverter } from './video-converter';
 import { VideoConverterFactory } from './video-converter.factory';
 import { YoutubeDownloaderConstants } from './youtube-downloader-constants';
@@ -100,6 +101,10 @@ export class ConvertService implements BaseConvertService {
         return false;
     }
 
+    public isLocalVideoConvertible(videoPath: string): boolean {
+        return LocalVideoFile.isSupported(videoPath, this.fileSystem);
+    }
+
     public async isFfmpegAvailableAsync(): Promise<boolean> {
         return await this.ffmpegChecker.isDependencyAvailableAsync();
     }
@@ -168,7 +173,7 @@ export class ConvertService implements BaseConvertService {
         }
     }
 
-    public async convertAsync(videoUrl: string): Promise<ConversionResult> {
+    public async convertAsync(videoSource: string): Promise<ConversionResult> {
         await this.fileSystem.ensureDirectoryAsync(this.outputDirectory);
 
         let ffmpegPathOverride: string = '';
@@ -179,20 +184,20 @@ export class ConvertService implements BaseConvertService {
 
         let youtubeDownloaderPathOverride: string = '';
 
-        if (!(await this.youtubeDownloaderChecker.isDependencyInSystemPathAsync())) {
+        if (!this.isLocalVideoConvertible(videoSource) && !(await this.youtubeDownloaderChecker.isDependencyInSystemPathAsync())) {
             youtubeDownloaderPathOverride = this.youtubeDownloaderChecker.getPathOfDownloadedDependency();
         }
 
-        const videoConverter: VideoConverter = this.videoConverterFactory.create(videoUrl);
+        const videoConverter: VideoConverter = this.videoConverterFactory.create(videoSource);
 
         const conversionResult: ConversionResult = await videoConverter.convertAsync(
-            videoUrl,
+            videoSource,
             this.outputDirectory,
             this.selectedAudioFormat,
             this.selectedAudioBitrate,
             ffmpegPathOverride,
             youtubeDownloaderPathOverride,
-            (progressPercent) => this.onConversionProgressChanged(progressPercent)
+            (progressPercent: number) => this.onConversionProgressChanged(progressPercent)
         );
 
         if (conversionResult.isConversionSuccessful) {

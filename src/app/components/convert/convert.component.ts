@@ -99,17 +99,6 @@ export class ConvertComponent implements OnInit, OnDestroy {
             return;
         }
 
-        if (!(await this.checkYoutubeDownloaderAsync())) {
-            return;
-        }
-
-        if (this.youtubeDownloaderWasDownloaded) {
-            this.convertState = ConvertState.WaitingForClipboardContent;
-            return;
-        }
-
-        await this.updateYoutubeDownloaderAsync();
-
         this.convertState = ConvertState.WaitingForClipboardContent;
     }
 
@@ -119,6 +108,17 @@ export class ConvertComponent implements OnInit, OnDestroy {
 
     public async performConvertAsync(): Promise<void> {
         this.isPostProcessing = false;
+
+        if (this.convertService.isVideoUrlConvertible(this.downloadUrl)) {
+            if (!(await this.checkYoutubeDownloaderAsync())) {
+                return;
+            }
+
+            if (!this.youtubeDownloaderWasDownloaded) {
+                await this.updateYoutubeDownloaderAsync();
+            }
+        }
+
         this.convertState = ConvertState.ConversionInProgress;
         const conversionResult: ConversionResult = await this.convertService.convertAsync(this.downloadUrl);
 
@@ -182,9 +182,9 @@ export class ConvertComponent implements OnInit, OnDestroy {
         }
 
         this.zone.run(() => {
-            if (this.convertService.isVideoUrlConvertible(clipboardText)) {
+            if (this.convertService.isVideoUrlConvertible(clipboardText) || this.convertService.isLocalVideoConvertible(clipboardText)) {
                 this.convertState = ConvertState.HasValidClipboardContent;
-                this.downloadUrl = clipboardText;
+                this.downloadUrl = clipboardText.trim();
             } else {
                 this.reset();
             }

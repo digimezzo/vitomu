@@ -8,10 +8,10 @@
         "About": "À propos"
     },
     "ConvertTab": {
-        "DropText": "Copiez un lien vidéo dans le presse-papier",
+        "DropText": "Copiez un lien vidéo ou un chemin de fichier local dans le presse-papier",
         "ConversionSuccessful": "Conversion réussie!",
         "ConversionFailed": "Conversion échouée",
-        "FoundOnClipboard": "Lien vidéo trouvé dans le presse-papiers!",
+        "FoundOnClipboard": "Source vidéo trouvée dans le presse-papiers!",
         "ConversionInProgress": "Conversion en cours...",
         "Downloading": "Téléchargement...",
         "DownloadingFFmpeg": "Téléchargement de FFmpeg. Nous en avons besoin pour convertir des vidéos.",
@@ -58,7 +58,7 @@
     },
     "Tooltips": {
         "ClickToConvert": "Cliquer pour convertir",
-        "ShowVideoLink": "Afficher le lien vidéo",
+        "ShowVideoLink": "Afficher la source vidéo",
         "ViewInFolder": "Afficher dans le dossier",
         "Play": "Lecture"
     },

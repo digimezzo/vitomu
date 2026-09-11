@@ -225,6 +225,25 @@ describe('ConvertComponent', () => {
             assert.equal(convertComponent.convertState, ConvertState.ConversionFailed);
         });
 
+        it('Should convert a local video without checking the Youtube downloader', async () => {
+            // Arrange
+            delayer.canDelay = false;
+            delayer.canExecute = false;
+            convertServiceMock.setup((x) => x.isVideoUrlConvertible('/home/user/Videos/video.mp4')).returns(() => false);
+            convertServiceMock
+                .setup((x) => x.convertAsync('/home/user/Videos/video.mp4'))
+                .returns(() => Promise.resolve(new ConversionResult(true, 'dummy')));
+            const convertComponent: ConvertComponent = createComponent();
+
+            // Act
+            convertComponent.downloadUrl = '/home/user/Videos/video.mp4';
+            await convertComponent.performConvertAsync();
+
+            // Assert
+            convertServiceMock.verify((x) => x.isYoutubeDownloaderAvailableAsync(), Times.never());
+            convertServiceMock.verify((x) => x.convertAsync('/home/user/Videos/video.mp4'), Times.once());
+        });
+
         it('Should reset state after failed conversion', async () => {
             // Arrange
             delayer.canDelay = false;
@@ -397,6 +416,24 @@ describe('ConvertComponent', () => {
             assert.equal(convertComponent.convertState, ConvertState.HasValidClipboardContent);
         });
 
+        it('Should use a local video path from the clipboard', () => {
+            // Arrange
+            delayer.canDelay = false;
+            const videoPath: string = '/home/user/Videos/video.mp4';
+            convertServiceMock.setup((x) => x.isVideoUrlConvertible(videoPath)).returns(() => false);
+            convertServiceMock.setup((x) => x.isLocalVideoConvertible(videoPath)).returns(() => true);
+            const convertComponent: ConvertComponent = createComponent();
+
+            // Act
+            convertComponent.ngOnInit();
+            clipboardContentChanged.next(videoPath);
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(convertComponent.convertState, ConvertState.HasValidClipboardContent);
+            assert.equal(convertComponent.downloadUrl, videoPath);
+        });
+
         it('Should ignore invalid clipboard content', async () => {
             // Arrange
             delayer.canDelay = false;
@@ -501,12 +538,16 @@ describe('ConvertComponent', () => {
         it('Should check if Youtube downloader is available', async () => {
             // Arrange
             delayer.canDelay = false;
-
+            convertServiceMock.setup((x) => x.isVideoUrlConvertible('https://youtu.be/video')).returns(() => true);
+            convertServiceMock.setup((x) => x.isYoutubeDownloaderAvailableAsync()).returns(async () => false);
+            convertServiceMock
+                .setup((x) => x.convertAsync('https://youtu.be/video'))
+                .returns(async () => new ConversionResult(true, 'dummy'));
             const convertComponent: ConvertComponent = createComponent();
 
             // Act
-            await convertComponent.ngOnInit();
-            convertComponent.ngOnDestroy();
+            convertComponent.downloadUrl = 'https://youtu.be/video';
+            await convertComponent.performConvertAsync();
 
             // Assert
             convertServiceMock.verify((x) => x.isYoutubeDownloaderAvailableAsync(), Times.once());
@@ -516,29 +557,37 @@ describe('ConvertComponent', () => {
             // Arrange
             delayer.canDelay = false;
             convertServiceMock.setup((x) => x.isFfmpegAvailableAsync()).returns(async () => true);
+            convertServiceMock.setup((x) => x.isVideoUrlConvertible('https://youtu.be/video')).returns(() => true);
             convertServiceMock.setup((x) => x.isYoutubeDownloaderAvailableAsync()).returns(async () => true);
+            convertServiceMock
+                .setup((x) => x.convertAsync('https://youtu.be/video'))
+                .returns(async () => new ConversionResult(true, 'dummy'));
 
             const convertComponent: ConvertComponent = createComponent();
 
             // Act
-            await convertComponent.ngOnInit();
-            convertComponent.ngOnDestroy();
+            convertComponent.downloadUrl = 'https://youtu.be/video';
+            await convertComponent.performConvertAsync();
 
             // Assert
             convertServiceMock.verify((x) => x.updateYoutubeDownloaderAsync(), Times.once());
         });
 
-        it('Should not update a Youtube downloader downloaded during initialization', async () => {
+        it('Should not update a Youtube downloader downloaded for a conversion', async () => {
             // Arrange
             delayer.canDelay = false;
             convertServiceMock.setup((x) => x.isFfmpegAvailableAsync()).returns(async () => true);
+            convertServiceMock.setup((x) => x.isVideoUrlConvertible('https://youtu.be/video')).returns(() => true);
             convertServiceMock.setup((x) => x.isYoutubeDownloaderAvailableAsync()).returns(async () => false);
+            convertServiceMock
+                .setup((x) => x.convertAsync('https://youtu.be/video'))
+                .returns(async () => new ConversionResult(true, 'dummy'));
 
             const convertComponent: ConvertComponent = createComponent();
 
             // Act
-            await convertComponent.ngOnInit();
-            convertComponent.ngOnDestroy();
+            convertComponent.downloadUrl = 'https://youtu.be/video';
+            await convertComponent.performConvertAsync();
 
             // Assert
             convertServiceMock.verify((x) => x.updateYoutubeDownloaderAsync(), Times.never());
@@ -548,6 +597,7 @@ describe('ConvertComponent', () => {
             // Arrange
             delayer.canDelay = false;
             convertServiceMock.setup((x) => x.isFfmpegAvailableAsync()).returns(async () => true);
+            convertServiceMock.setup((x) => x.isVideoUrlConvertible('https://youtu.be/video')).returns(() => true);
             convertServiceMock.setup((x) => x.isYoutubeDownloaderAvailableAsync()).returns(async () => false);
             convertServiceMock.setup((x) => x.downloadYoutubeDownloaderAsync()).returns(async () => {
                 throw new Error('Download failed');
@@ -556,8 +606,8 @@ describe('ConvertComponent', () => {
             const convertComponent: ConvertComponent = createComponent();
 
             // Act
-            await convertComponent.ngOnInit();
-            convertComponent.ngOnDestroy();
+            convertComponent.downloadUrl = 'https://youtu.be/video';
+            await convertComponent.performConvertAsync();
 
             // Assert
             assert.equal(convertComponent.convertState, ConvertState.youtubeDownloaderNotAvailable);
@@ -683,13 +733,17 @@ describe('ConvertComponent', () => {
             // Arrange
             delayer.canDelay = false;
             convertServiceMock.setup((x) => x.isFfmpegAvailableAsync()).returns(async () => true);
+            convertServiceMock.setup((x) => x.isVideoUrlConvertible('https://youtu.be/video')).returns(() => true);
             convertServiceMock.setup((x) => x.isYoutubeDownloaderAvailableAsync()).returns(async () => true);
+            convertServiceMock
+                .setup((x) => x.convertAsync('https://youtu.be/video'))
+                .returns(async () => new ConversionResult(true, 'dummy'));
 
             const convertComponent: ConvertComponent = createComponent();
 
             // Act
-            await convertComponent.ngOnInit();
-            convertComponent.ngOnDestroy();
+            convertComponent.downloadUrl = 'https://youtu.be/video';
+            await convertComponent.performConvertAsync();
 
             // Assert
             convertServiceMock.verify((x) => x.downloadYoutubeDownloaderAsync(), Times.never());
@@ -699,13 +753,17 @@ describe('ConvertComponent', () => {
             // Arrange
             delayer.canDelay = false;
             convertServiceMock.setup((x) => x.isFfmpegAvailableAsync()).returns(async () => true);
+            convertServiceMock.setup((x) => x.isVideoUrlConvertible('https://youtu.be/video')).returns(() => true);
             convertServiceMock.setup((x) => x.isYoutubeDownloaderAvailableAsync()).returns(async () => false);
+            convertServiceMock
+                .setup((x) => x.convertAsync('https://youtu.be/video'))
+                .returns(async () => new ConversionResult(true, 'dummy'));
 
             const convertComponent: ConvertComponent = createComponent();
 
             // Act
-            await convertComponent.ngOnInit();
-            convertComponent.ngOnDestroy();
+            convertComponent.downloadUrl = 'https://youtu.be/video';
+            await convertComponent.performConvertAsync();
 
             // Assert
             convertServiceMock.verify((x) => x.downloadYoutubeDownloaderAsync(), Times.once());

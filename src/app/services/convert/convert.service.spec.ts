@@ -165,6 +165,55 @@ describe('ConvertService', () => {
         });
     });
 
+    describe('isLocalVideoConvertible', () => {
+        it('Should consider an existing local file to be convertible', () => {
+            // Arrange
+            fileSystemMock.setup((x) => x.isFile('/home/user/Videos/video.mp4')).returns(() => true);
+            const convertService: BaseConvertService = createService();
+
+            // Act
+            const isLocalVideoConvertible: boolean = convertService.isLocalVideoConvertible(' /home/user/Videos/video.mp4 ');
+
+            // Assert
+            assert.ok(isLocalVideoConvertible);
+        });
+
+        it('Should consider video file extensions case-insensitively', () => {
+            // Arrange
+            fileSystemMock.setup((x) => x.isFile('/home/user/Videos/video.MKV')).returns(() => true);
+            const convertService: BaseConvertService = createService();
+
+            // Act
+            const isLocalVideoConvertible: boolean = convertService.isLocalVideoConvertible('/home/user/Videos/video.MKV');
+
+            // Assert
+            assert.ok(isLocalVideoConvertible);
+        });
+
+        it('Should not consider a file with an unknown extension to be convertible', () => {
+            // Arrange
+            fileSystemMock.setup((x) => x.isFile('/home/user/Videos/video.txt')).returns(() => true);
+            const convertService: BaseConvertService = createService();
+
+            // Act
+            const isLocalVideoConvertible: boolean = convertService.isLocalVideoConvertible('/home/user/Videos/video.txt');
+
+            // Assert
+            assert.ok(!isLocalVideoConvertible);
+        });
+
+        it('Should not consider a missing local file to be convertible', () => {
+            // Arrange
+            const convertService: BaseConvertService = createService();
+
+            // Act
+            const isLocalVideoConvertible: boolean = convertService.isLocalVideoConvertible('/home/user/Videos/missing.mp4');
+
+            // Assert
+            assert.ok(!isLocalVideoConvertible);
+        });
+    });
+
     describe('onConversionProgressChanged', () => {
         it('Should notify when convert progress changes', async () => {
             // Arrange
@@ -465,6 +514,37 @@ describe('ConvertService', () => {
                     ),
                 Times.once()
             );
+        });
+
+        it('Should not check for a Youtube downloader when converting a local video', async () => {
+            // Arrange
+            const videoPath: string = '/home/user/Videos/video.mp4';
+            const videoConverterMock: IMock<VideoConverter> = Mock.ofType<VideoConverter>();
+            fileSystemMock.setup((x) => x.isFile(videoPath)).returns(() => true);
+            videoConverterMock
+                .setup((x) =>
+                    x.convertAsync(
+                        videoPath,
+                        '/home/user/Music/Vitomu',
+                        It.is<AudioFormat>((y) => y.ffmpegFormat === 'mp3'),
+                        320,
+                        It.isAny(),
+                        '',
+                        It.isAny()
+                    )
+                )
+                .returns(async () => new ConversionResult(true, '/home/user/Music/Vitomu/video.mp3'));
+            videoConverterFactoryMock.setup((x) => x.create(videoPath)).returns(() => videoConverterMock.object);
+            ffmpegCheckerMock.setup((x) => x.isDependencyInSystemPathAsync()).returns(async () => true);
+            fileSystemMock.setup((x) => x.getFileName('/home/user/Music/Vitomu/video.mp3')).returns(() => 'video.mp3');
+            const convertService: BaseConvertService = createService();
+
+            // Act
+            await convertService.convertAsync(videoPath);
+
+            // Assert
+            youtubeDownloaderCheckerMock.verify((x) => x.isDependencyInSystemPathAsync(), Times.never());
+            youtubeDownloaderCheckerMock.verify((x) => x.getPathOfDownloadedDependency(), Times.never());
         });
 
         it('Should convert using local Youtube downloader if not found in path', async () => {

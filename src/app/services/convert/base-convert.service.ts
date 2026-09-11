@@ -12,6 +12,7 @@ export abstract class BaseConvertService {
     public abstract selectedAudioBitrate: number;
     public abstract onConversionProgressChanged(progressPercent: number): void;
     public abstract isVideoUrlConvertible(videoUrl: string): boolean;
+    public abstract isLocalVideoConvertible(videoPath: string): boolean;
     public abstract isFfmpegAvailableAsync(): Promise<boolean>;
     public abstract isYoutubeDownloaderAvailableAsync(): Promise<boolean>;
     public abstract downloadFfmpegAsync(): Promise<void>;

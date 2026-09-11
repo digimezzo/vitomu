@@ -42,6 +42,10 @@ export class FileSystem {
         return fs.existsSync(pathToCheck);
     }
 
+    public isFile(pathToCheck: string): boolean {
+        return fs.existsSync(pathToCheck) && fs.lstatSync(pathToCheck).isFile();
+    }
+
     public readDirectory(directory: string): any[] {
         return fs.readdirSync(directory);
     }

@@ -8,10 +8,10 @@
         "About": "About"
     },
     "ConvertTab": {
-        "DropText": "Copy a video link to the clipboard",
+        "DropText": "Copy a video link or local video path to the clipboard",
         "ConversionSuccessful": "Conversion successful!",
         "ConversionFailed": "Conversion failed",
-        "FoundOnClipboard": "Found video link on clipboard!",
+        "FoundOnClipboard": "Found video source on clipboard!",
         "ConversionInProgress": "Conversion in progress...",
         "Downloading": "Downloading...",
         "DownloadingFFmpeg": "Downloading FFmpeg. We need it to convert videos.",
@@ -58,7 +58,7 @@
     },
     "Tooltips": {
         "ClickToConvert": "Click to convert",
-        "ShowVideoLink": "Show video link",
+        "ShowVideoLink": "Show video source",
         "ViewInFolder": "View in folder",
         "Play": "Play"
     },
