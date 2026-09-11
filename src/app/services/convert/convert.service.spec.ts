@@ -123,6 +123,17 @@ describe('ConvertService', () => {
             // Assert
             assert.equal(convertService.selectedAudioFormat.id, 'mp3');
         });
+
+        it('Should retain Youtube downloader preparation state', () => {
+            // Arrange
+            const convertService: BaseConvertService = createService();
+
+            // Act
+            convertService.markYoutubeDownloaderAsPrepared();
+
+            // Assert
+            assert.ok(convertService.isYoutubeDownloaderPrepared());
+        });
     });
     describe('isVideoUrlConvertible', () => {
         it('Should consider long youtube URLs to be convertible', () => {

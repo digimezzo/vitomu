@@ -109,7 +109,7 @@ export class ConvertComponent implements OnInit, OnDestroy {
     public async performConvertAsync(): Promise<void> {
         this.isPostProcessing = false;
 
-        if (this.convertService.isVideoUrlConvertible(this.downloadUrl)) {
+        if (this.convertService.isVideoUrlConvertible(this.downloadUrl) && !this.convertService.isYoutubeDownloaderPrepared()) {
             if (!(await this.checkYoutubeDownloaderAsync())) {
                 return;
             }
@@ -117,6 +117,8 @@ export class ConvertComponent implements OnInit, OnDestroy {
             if (!this.youtubeDownloaderWasDownloaded) {
                 await this.updateYoutubeDownloaderAsync();
             }
+
+            this.convertService.markYoutubeDownloaderAsPrepared();
         }
 
         this.convertState = ConvertState.ConversionInProgress;

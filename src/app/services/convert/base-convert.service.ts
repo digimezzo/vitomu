@@ -10,6 +10,8 @@ export abstract class BaseConvertService {
     public abstract lastConvertedFileName: string;
     public abstract selectedAudioFormat: AudioFormat;
     public abstract selectedAudioBitrate: number;
+    public abstract isYoutubeDownloaderPrepared(): boolean;
+    public abstract markYoutubeDownloaderAsPrepared(): void;
     public abstract onConversionProgressChanged(progressPercent: number): void;
     public abstract isVideoUrlConvertible(videoUrl: string): boolean;
     public abstract isLocalVideoConvertible(videoPath: string): boolean;

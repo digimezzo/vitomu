@@ -30,6 +30,7 @@ export class ConvertService implements BaseConvertService {
 
     private _selectedAudioFormat: AudioFormat;
     private _selectedAudioBitrate: number;
+    private youtubeDownloaderIsPrepared: boolean = false;
 
     private ffmpegChecker: DependencyChecker = this.dependencyCheckerFactory.createFfmpegChecker();
     private youtubeDownloaderChecker: DependencyChecker = this.dependencyCheckerFactory.createYoutubeDownloaderChecker();
@@ -86,6 +87,14 @@ export class ConvertService implements BaseConvertService {
     public set selectedAudioBitrate(v: number) {
         this._selectedAudioBitrate = v;
         this.settings.audioBitrate = v;
+    }
+
+    public isYoutubeDownloaderPrepared(): boolean {
+        return this.youtubeDownloaderIsPrepared;
+    }
+
+    public markYoutubeDownloaderAsPrepared(): void {
+        this.youtubeDownloaderIsPrepared = true;
     }
 
     public onConversionProgressChanged(progressPercent: number): void {

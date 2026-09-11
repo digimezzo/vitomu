@@ -573,6 +573,36 @@ describe('ConvertComponent', () => {
             convertServiceMock.verify((x) => x.updateYoutubeDownloaderAsync(), Times.once());
         });
 
+        it('Should prepare the Youtube downloader only once across component instances', async () => {
+            // Arrange
+            delayer.canDelay = false;
+            delayer.canExecute = false;
+            let youtubeDownloaderIsPrepared: boolean = false;
+            convertServiceMock.setup((x) => x.isVideoUrlConvertible('https://youtu.be/video')).returns(() => true);
+            convertServiceMock.setup((x) => x.isYoutubeDownloaderPrepared()).returns(() => youtubeDownloaderIsPrepared);
+            convertServiceMock
+                .setup((x) => x.markYoutubeDownloaderAsPrepared())
+                .callback(() => (youtubeDownloaderIsPrepared = true));
+            convertServiceMock.setup((x) => x.isYoutubeDownloaderAvailableAsync()).returns(async () => true);
+            convertServiceMock
+                .setup((x) => x.convertAsync('https://youtu.be/video'))
+                .returns(async () => new ConversionResult(true, 'dummy'));
+            const firstConvertComponent: ConvertComponent = createComponent();
+
+            // Act
+            firstConvertComponent.downloadUrl = 'https://youtu.be/video';
+            await firstConvertComponent.performConvertAsync();
+            const secondConvertComponent: ConvertComponent = createComponent();
+            secondConvertComponent.downloadUrl = 'https://youtu.be/video';
+            await secondConvertComponent.performConvertAsync();
+
+            // Assert
+            convertServiceMock.verify((x) => x.isYoutubeDownloaderAvailableAsync(), Times.once());
+            convertServiceMock.verify((x) => x.updateYoutubeDownloaderAsync(), Times.once());
+            convertServiceMock.verify((x) => x.markYoutubeDownloaderAsPrepared(), Times.once());
+            convertServiceMock.verify((x) => x.convertAsync('https://youtu.be/video'), Times.exactly(2));
+        });
+
         it('Should not update a Youtube downloader downloaded for a conversion', async () => {
             // Arrange
             delayer.canDelay = false;
