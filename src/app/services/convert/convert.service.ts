@@ -93,12 +93,21 @@ export class ConvertService implements BaseConvertService {
     }
 
     public isVideoUrlConvertible(videoUrl: string): boolean {
-        if (!Strings.isNullOrWhiteSpace(videoUrl) && !/[\r\n]/.test(videoUrl)) {
-            const trimmedVideoUrl: string = videoUrl.trim();
-            return Constants.youtubeLinks.some((x) => trimmedVideoUrl.includes(x));
+        if (Strings.isNullOrWhiteSpace(videoUrl) || /[\r\n]/.test(videoUrl)) {
+            return false;
         }
 
-        return false;
+        try {
+            const parsedVideoUrl: URL = new URL(videoUrl.trim());
+            const hostname: string = parsedVideoUrl.hostname.toLowerCase();
+            const isSupportedHost: boolean = Constants.supportedVideoHosts.some(
+                (supportedHost) => hostname === supportedHost || hostname.endsWith(`.${supportedHost}`)
+            );
+
+            return ['http:', 'https:'].includes(parsedVideoUrl.protocol) && isSupportedHost && parsedVideoUrl.pathname !== '/';
+        } catch {
+            return false;
+        }
     }
 
     public isLocalVideoConvertible(videoPath: string): boolean {

@@ -151,6 +151,45 @@ describe('ConvertService', () => {
             assert.ok(isVideoUrlConvertible);
         });
 
+        it('Should consider SoundCloud short URLs to be convertible', () => {
+            // Arrange
+            const convertService: BaseConvertService = createService();
+
+            // Act
+            const isVideoUrlConvertible: boolean = convertService.isVideoUrlConvertible(
+                'https://on.soundcloud.com/9RPFW9OLbYG5hgb5aC'
+            );
+
+            // Assert
+            assert.ok(isVideoUrlConvertible);
+        });
+
+        it('Should consider canonical SoundCloud track URLs to be convertible', () => {
+            // Arrange
+            const convertService: BaseConvertService = createService();
+
+            // Act
+            const isVideoUrlConvertible: boolean = convertService.isVideoUrlConvertible(
+                'https://soundcloud.com/sharonvanetten/jupiter-4'
+            );
+
+            // Assert
+            assert.ok(isVideoUrlConvertible);
+        });
+
+        it('Should not consider lookalike SoundCloud domains to be convertible', () => {
+            // Arrange
+            const convertService: BaseConvertService = createService();
+
+            // Act
+            const isVideoUrlConvertible: boolean = convertService.isVideoUrlConvertible(
+                'https://soundcloud.com.example.org/artist/track'
+            );
+
+            // Assert
+            assert.ok(!isVideoUrlConvertible);
+        });
+
         it('Should consider non-youtube URLs to be not convertible', () => {
             // Arrange
             settingsMock.setup((x) => x.audioFormat).returns(() => 'mp3');

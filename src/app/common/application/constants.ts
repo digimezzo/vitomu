@@ -28,7 +28,7 @@ export class Constants {
 
     public static readonly audioBitrates: number[] = [32, 48, 56, 64, 96, 128, 160, 192, 224, 256, 320];
 
-    public static readonly youtubeLinks: string[] = ['www.youtube.com/watch?v=', 'youtu.be/'];
+    public static readonly supportedVideoHosts: string[] = ['youtube.com', 'youtu.be', 'soundcloud.com'];
 
     public static readonly externalComponents: any[] = [
         {
