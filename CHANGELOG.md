@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-09-11
+
+### Added
+
+- Added support for converting local video files
+
+### Fixed
+
+- Fixed conversion failure in Snap version
+- Fixed failure to start on some GNU/Linux distributions
+
 ## [2.1.0] - 2021-12-12
 
 ### Added
