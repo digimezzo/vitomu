@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed conversion failure in Snap version
+- Fixed conversion failure error for already converted videos
 - Fixed failure to start on some GNU/Linux distributions
 
 ## [2.1.0] - 2021-12-12
