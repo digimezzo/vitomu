@@ -6,8 +6,40 @@
     overflow-wrap: anywhere;
 }
 
-.mat-simple-snackbar-action .mat-button-wrapper {
-    color: var(--theme-accent-color) !important;
+.mat-simple-snackbar-action button,
+.mat-simple-snackbar-action .mat-button,
+.mat-mdc-snack-bar-action button {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 16px !important;
+    height: 30px !important;
+    min-width: unset !important;
+    line-height: normal !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.7px !important;
+    background: var(--theme-accent-color) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 30px !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.25s ease 0s !important;
+    cursor: pointer !important;
+    outline: none !important;
+    font-size: calc(var(--fontsize-normal) * 0.8) !important;
+
+    .mat-button-wrapper,
+    .mdc-button__label {
+        color: #ffffff !important;
+    }
+
+    &:hover {
+        background-color: var(--theme-accent-color) !important;
+        box-shadow: 0 5px 15px var(--theme-accent-color) !important;
+        color: #ffffff !important;
+        transform: translateY(-3px) !important;
+    }
 }
 
 .dark-snackbar {
