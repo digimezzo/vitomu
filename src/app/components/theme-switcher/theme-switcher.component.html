@@ -1,17 +1,15 @@
 <div class="theme-switcher-component">
-    <div *ngFor="let theme of appearanceService.themes">
-        <div class="theme-switcher-component-button mr-2 mb-2" matTooltip="{{ theme.name }}" (click)="setTheme(theme)">
+    <div *ngFor="let theme of appearanceService.themes" matTooltip="{{ theme.name }}">
+        <div class="theme-switcher-component-button mr-2 mb-2" [ngClass]="{ inactive: theme.isBroken }" (click)="setTheme(theme)">
             <i
                 class="theme-switcher-component-button__selector las la-check"
                 *ngIf="theme.name === appearanceService.selectedTheme.name"
             ></i>
-            <div
-                class="theme-switcher-component-button__color"
-                [ngStyle]="{
-                    background:
-                        'linear-gradient(45deg, ' + theme.coreColors.primaryColor + ' 30%, ' + theme.coreColors.secondaryColor + ' 100%)'
-                }"
-            ></div>
+            <div class="theme-switcher-component-button__color">
+                <div class="theme-switcher-component-button__accent" [ngStyle]="{ background: 'linear-gradient(45deg, ' + theme.coreColors.primaryColor + ' 30%, ' + theme.coreColors.secondaryColor + ' 100%)' }"></div>
+                <div class="theme-switcher-component-button__light" [ngStyle]="{ background: theme.lightColors.mainBackground }"></div>
+                <div class="theme-switcher-component-button__dark" [ngStyle]="{ background: theme.darkColors.mainBackground }"></div>
+            </div>
         </div>
     </div>
 </div>

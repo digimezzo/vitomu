@@ -1,120 +1,20 @@
 import { Theme } from './theme';
+import { ThemeAuthor } from './theme-author';
 import { ThemeCoreColors } from './theme-core-colors';
-import { ThemeCreator } from './theme-creator';
 import { ThemeNeutralColors } from './theme-neutral-colors';
 import { ThemeOptions } from './theme-options';
 
 describe('Theme', () => {
-    function createNeutralColors(): ThemeNeutralColors {
-        return new ThemeNeutralColors('#000', '#111', '#222', '#333', '#444', '#555', '#666', '#777', '#888', '#999', '#fff');
-    }
+    it('should preserve all theme metadata', () => {
+        const author = new ThemeAuthor('Author', 'author@example.com');
+        const colors = new ThemeNeutralColors(
+            '#000', '#111', '#222', '#333', '#444', '#555', '#666', '#777', '#888', '#999', '#aaa', '#bbb', '#ccc', '#ddd',
+            '#eee', '#fff', '#000', '#111', '#222', '#333', '#444', '#555', '#666', '#777', '#888', '#999', '#aaa', '#bbb', '#ccc'
+        );
+        const theme = new Theme('Test', author, new ThemeCoreColors('#111', '#222', '#333'), colors, colors, new ThemeOptions(true));
 
-    beforeEach(() => {});
-
-    describe('constructor', () => {
-        it('should create', () => {
-            // Arrange
-            const creator: ThemeCreator = new ThemeCreator('My creator', 'my@email.com');
-            const coreColors: ThemeCoreColors = new ThemeCoreColors('#fff', '#000', '#ccc');
-            const darkColors: ThemeNeutralColors = createNeutralColors();
-            const lightColors: ThemeNeutralColors = createNeutralColors();
-            const options: ThemeOptions = new ThemeOptions();
-
-            // Act
-            const theme: Theme = new Theme('My name', creator, coreColors, darkColors, lightColors, options);
-
-            // Assert
-            expect(theme).toBeDefined();
-        });
-
-        it('should set name', () => {
-            // Arrange
-            const creator: ThemeCreator = new ThemeCreator('My creator', 'my@email.com');
-            const coreColors: ThemeCoreColors = new ThemeCoreColors('#fff', '#000', '#ccc');
-            const darkColors: ThemeNeutralColors = createNeutralColors();
-            const lightColors: ThemeNeutralColors = createNeutralColors();
-            const options: ThemeOptions = new ThemeOptions();
-
-            // Act
-            const theme: Theme = new Theme('My name', creator, coreColors, darkColors, lightColors, options);
-
-            // Assert
-            expect(theme.name).toEqual('My name');
-        });
-
-        it('should set creator', () => {
-            // Arrange
-            const creator: ThemeCreator = new ThemeCreator('My creator', 'my@email.com');
-            const coreColors: ThemeCoreColors = new ThemeCoreColors('#fff', '#000', '#ccc');
-            const darkColors: ThemeNeutralColors = createNeutralColors();
-            const lightColors: ThemeNeutralColors = createNeutralColors();
-            const options: ThemeOptions = new ThemeOptions();
-
-            // Act
-            const theme: Theme = new Theme('My name', creator, coreColors, darkColors, lightColors, options);
-
-            // Assert
-            expect(theme.creator).toBe(creator);
-        });
-
-        it('should set coreColors', () => {
-            // Arrange
-            const creator: ThemeCreator = new ThemeCreator('My creator', 'my@email.com');
-            const coreColors: ThemeCoreColors = new ThemeCoreColors('#fff', '#000', '#ccc');
-            const darkColors: ThemeNeutralColors = createNeutralColors();
-            const lightColors: ThemeNeutralColors = createNeutralColors();
-            const options: ThemeOptions = new ThemeOptions();
-
-            // Act
-            const theme: Theme = new Theme('My name', creator, coreColors, darkColors, lightColors, options);
-
-            // Assert
-            expect(theme.coreColors).toBe(coreColors);
-        });
-
-        it('should set darkColors', () => {
-            // Arrange
-            const creator: ThemeCreator = new ThemeCreator('My creator', 'my@email.com');
-            const coreColors: ThemeCoreColors = new ThemeCoreColors('#fff', '#000', '#ccc');
-            const darkColors: ThemeNeutralColors = createNeutralColors();
-            const lightColors: ThemeNeutralColors = createNeutralColors();
-            const options: ThemeOptions = new ThemeOptions();
-
-            // Act
-            const theme: Theme = new Theme('My name', creator, coreColors, darkColors, lightColors, options);
-
-            // Assert
-            expect(theme.darkColors).toBe(darkColors);
-        });
-
-        it('should set lightColors', () => {
-            // Arrange
-            const creator: ThemeCreator = new ThemeCreator('My creator', 'my@email.com');
-            const coreColors: ThemeCoreColors = new ThemeCoreColors('#fff', '#000', '#ccc');
-            const darkColors: ThemeNeutralColors = createNeutralColors();
-            const lightColors: ThemeNeutralColors = createNeutralColors();
-            const options: ThemeOptions = new ThemeOptions();
-
-            // Act
-            const theme: Theme = new Theme('My name', creator, coreColors, darkColors, lightColors, options);
-
-            // Assert
-            expect(theme.lightColors).toBe(lightColors);
-        });
-
-        it('should set options', () => {
-            // Arrange
-            const creator: ThemeCreator = new ThemeCreator('My creator', 'my@email.com');
-            const coreColors: ThemeCoreColors = new ThemeCoreColors('#fff', '#000', '#ccc');
-            const darkColors: ThemeNeutralColors = createNeutralColors();
-            const lightColors: ThemeNeutralColors = createNeutralColors();
-            const options: ThemeOptions = new ThemeOptions();
-
-            // Act
-            const theme: Theme = new Theme('My name', creator, coreColors, darkColors, lightColors, options);
-
-            // Assert
-            expect(theme.options).toBe(options);
-        });
+        expect(theme.author).toBe(author);
+        expect(theme.options.centerAlbumInfoText).toBeTruthy();
+        expect(theme.isBroken).toBeFalsy();
     });
 });

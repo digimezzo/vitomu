@@ -21,8 +21,12 @@
         "YoutubeDownloaderNotFound": "{{youtubeDownloaderName}} was not found. We need it to convert videos."
     },
     "SettingsTab": {
+        "Theme": "Theme",
+        "FollowSystemTheme": "Follow the system theme",
+        "UseLightTheme": "Use light theme",
         "Language": "Language",
         "Color": "Color",
+        "FollowSystemColor": "Follow the system color",
         "FontSize": "Font size",
         "Conversion": "Conversion",
         "AudioFormat": "Audio format",

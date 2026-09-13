@@ -225,31 +225,11 @@ export class AppearanceService implements BaseAppearanceService {
 
         // Neutral colors
         let themeName: string = 'default-theme-dark';
-        element.style.setProperty('--theme-window-button-icon', this.selectedTheme.darkColors.windowButtonIcon);
-        element.style.setProperty('--theme-hovered-item-background', this.selectedTheme.darkColors.hoveredItemBackground);
-        element.style.setProperty('--theme-tab-text', this.selectedTheme.darkColors.tabText);
-        element.style.setProperty('--theme-selected-tab-text', this.selectedTheme.darkColors.selectedTabText);
-        element.style.setProperty('--theme-primary-background', this.selectedTheme.darkColors.primaryBackground);
-        element.style.setProperty('--theme-secondary-background', this.selectedTheme.darkColors.secondaryBackground);
-        element.style.setProperty('--theme-primary-text', this.selectedTheme.darkColors.primaryText);
-        element.style.setProperty('--theme-secondary-text', this.selectedTheme.darkColors.secondaryText);
-        element.style.setProperty('--theme-settings-separators', this.selectedTheme.darkColors.settingsSeparators);
-        element.style.setProperty('--theme-scroll-bars', scrollBarColorToApply);
-        element.style.setProperty('--theme-button-text', this.selectedTheme.darkColors.buttonText);
+        this.applyNeutralColors(element, this.selectedTheme.darkColors, scrollBarColorToApply);
 
         if (this.isUsingLightTheme) {
             themeName = 'default-theme-light';
-            element.style.setProperty('--theme-window-button-icon', this.selectedTheme.lightColors.windowButtonIcon);
-            element.style.setProperty('--theme-hovered-item-background', this.selectedTheme.lightColors.hoveredItemBackground);
-            element.style.setProperty('--theme-tab-text', this.selectedTheme.lightColors.tabText);
-            element.style.setProperty('--theme-selected-tab-text', this.selectedTheme.lightColors.selectedTabText);
-            element.style.setProperty('--theme-primary-background', this.selectedTheme.lightColors.primaryBackground);
-            element.style.setProperty('--theme-secondary-background', this.selectedTheme.lightColors.secondaryBackground);
-            element.style.setProperty('--theme-primary-text', this.selectedTheme.lightColors.primaryText);
-            element.style.setProperty('--theme-secondary-text', this.selectedTheme.lightColors.secondaryText);
-            element.style.setProperty('--theme-settings-separators', this.selectedTheme.lightColors.settingsSeparators);
-            element.style.setProperty('--theme-scroll-bars', scrollBarColorToApply);
-            element.style.setProperty('--theme-button-text', this.selectedTheme.lightColors.buttonText);
+            this.applyNeutralColors(element, this.selectedTheme.lightColors, scrollBarColorToApply);
         }
 
         // Apply theme to components in the overlay container: https://gist.github.com/tomastrajan/ee29cd8e180b14ce9bc120e2f7435db7
@@ -263,6 +243,41 @@ export class AppearanceService implements BaseAppearanceService {
             'AppearanceService',
             'applyTheme'
         );
+    }
+
+    private applyNeutralColors(element: HTMLElement, colors: import('./theme/theme-neutral-colors').ThemeNeutralColors, scrollBarColor: string): void {
+        element.style.setProperty('--theme-window-button-icon', colors.windowButtonIcon);
+        element.style.setProperty('--theme-hovered-item-background', colors.hoveredItemBackground);
+        element.style.setProperty('--theme-selected-item-background', colors.selectedItemBackground);
+        element.style.setProperty('--theme-tab-text', colors.tabText);
+        element.style.setProperty('--theme-selected-tab-text', colors.selectedTabText);
+        element.style.setProperty('--theme-main-background', colors.mainBackground);
+        element.style.setProperty('--theme-primary-background', colors.mainBackground);
+        element.style.setProperty('--theme-header-background', colors.headerBackground);
+        element.style.setProperty('--theme-footer-background', colors.footerBackground);
+        element.style.setProperty('--theme-side-pane-background', colors.sidePaneBackground);
+        element.style.setProperty('--theme-secondary-background', colors.headerBackground);
+        element.style.setProperty('--theme-primary-text', colors.primaryText);
+        element.style.setProperty('--theme-secondary-text', colors.secondaryText);
+        element.style.setProperty('--theme-slider-background', colors.sliderBackground);
+        element.style.setProperty('--theme-slider-thumb-background', colors.sliderThumbBackground);
+        element.style.setProperty('--theme-album-cover-background', colors.albumCoverBackground);
+        element.style.setProperty('--theme-header-separator', colors.headerSeparator);
+        element.style.setProperty('--theme-pane-separators', colors.paneSeparators);
+        element.style.setProperty('--theme-settings-separators', colors.settingsSeparators);
+        element.style.setProperty('--theme-context-menu-separators', colors.contextMenuSeparators);
+        element.style.setProperty('--theme-scroll-bars', scrollBarColor);
+        element.style.setProperty('--theme-search-box', colors.searchBox);
+        element.style.setProperty('--theme-search-box-text', colors.searchBoxText);
+        element.style.setProperty('--theme-search-box-icon', colors.searchBoxIcon);
+        element.style.setProperty('--theme-dialog-background', colors.dialogBackground);
+        element.style.setProperty('--theme-primary-button-text', colors.primaryButtonText);
+        element.style.setProperty('--theme-button-text', colors.primaryButtonText);
+        element.style.setProperty('--theme-secondary-button-background', colors.secondaryButtonBackground);
+        element.style.setProperty('--theme-secondary-button-text', colors.secondaryButtonText);
+        element.style.setProperty('--theme-tooltip-text', colors.tooltipText);
+        element.style.setProperty('--theme-button-border', colors.buttonBorder);
+        element.style.setProperty('--theme-highlight-foreground', colors.highlightForeground);
     }
 
     private setSelectedThemeFromSettings(): void {

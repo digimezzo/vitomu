@@ -11,6 +11,6 @@ exports.DEFAULT_SETTINGS = {
     followSystemTheme: false,
     useLightBackgroundTheme: false,
     followSystemColor: false,
-    theme: 'Vitomu',
+    theme: 'Dopamine',
 };
 //# sourceMappingURL=default-settings.js.map
