@@ -1,0 +1,70 @@
+{
+    "ErrorTexts": {
+        "GlobalError": "发生错误，将导致应用程序关闭。 如果您需要更多信息，请验证日志。"
+    },
+    "Tabs": {
+        "Convert": "转换",
+        "Settings": "设置",
+        "About": "关于"
+    },
+    "ConvertTab": {
+        "DropText": "复制一个视频链接到剪贴板",
+        "ConversionSuccessful": "转换成功！",
+        "ConversionFailed": "转换失败",
+        "FoundOnClipboard": "在剪贴板上找到视频链接！",
+        "ConversionInProgress": "正在转换...",
+        "DownloadingFFmpeg": "下载 FFmpeg。 我们需要它来转换视频。",
+        "FFmpegNotFound": "未找到 FFmpeg。 我们需要它来转换视频。",
+        "DownloadingYoutubeDownloader": "正在下载 {{youtubeDownloaderName}}。 我们需要它来转换视频。",
+        "UpdatingYoutubeDownloader": "正在更新 {{youtubeDownloaderName}}。",
+        "YoutubeDownloaderNotFound": "{{youtubeDownloaderName}} 没有找到。 我们需要它来转换视频。"
+    },
+    "SettingsTab": {
+        "Language": "语言",
+        "Color": "颜色",
+        "FontSize": "字体大小",
+        "Conversion": "转换",
+        "AudioFormat": "音频格式",
+        "AudioBitrate": "音频比特率",
+        "TitleBar": "标题栏",
+        "UseSystemTitleBar": "使用系统标题栏（需要重启）",
+        "Updates": "更新",
+        "CheckForUpdates": "检查更新",
+        "AddMoreThemes": "添加更多主题",
+        "RefreshThemes": "刷新主题"
+    },
+    "AboutTab": {
+        "About": "关于",
+        "Version": "版本",
+        "Donate": "捐赠",
+        "IsAppUseful": "Vitomu 有用吗？ 请考虑捐赠。 谢谢！",
+        "GetInTouch": "联系我们",
+        "Website": "网站",
+        "License": "许可证",
+        "Components": "组件"
+    },
+    "Buttons": {
+        "Ok": "确定",
+        "ViewLog": "查看日志",
+        "License": "许可证",
+        "Donate": "捐赠"
+    },
+    "DialogTitles": {
+        "Error": "错误"
+    },
+    "LicenseDialog": {
+        "License": "许可证"
+    },
+    "Tooltips": {
+        "ClickToConvert": "点击转换",
+        "ShowVideoLink": "显示视频链接",
+        "ViewInFolder": "在文件夹中查看",
+        "Play": "播放"
+    },
+    "SnackBarMessages": {
+        "NewVersionAvailable": "有一个新版本可用：{{version}}"
+    },
+    "SnackBarActions": {
+        "Ok": "确定"
+    }
+}
