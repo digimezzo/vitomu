@@ -7,9 +7,12 @@ import { defaultDarkColors, defaultLightColors } from './default-neutral-colors'
 
 export class VitomuTheme {
     public static create(author: ThemeAuthor): Theme {
+        const coreColors: ThemeCoreColors = new ThemeCoreColors('#ec1a65', '#ec1a65', '#ec1a65');
         const darkColors: ThemeNeutralColors = defaultDarkColors();
         const lightColors: ThemeNeutralColors = defaultLightColors();
+        darkColors.scrollBars = coreColors.accentColor;
+        lightColors.scrollBars = coreColors.accentColor;
         const options: ThemeOptions = new ThemeOptions(false);
-        return new Theme('Vitomu', author, new ThemeCoreColors('#6260e3', '#3fdcdd', '#4883e0'), darkColors, lightColors, options);
+        return new Theme('Vitomu', author, coreColors, darkColors, lightColors, options);
     }
 }
