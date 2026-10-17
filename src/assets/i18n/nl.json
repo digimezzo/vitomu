@@ -15,7 +15,7 @@
         "ConversionInProgress": "Conversie wordt uitgevoerd...",
         "Downloading": "Downloaden...",
         "DownloadingFFmpeg": "FFmpeg wordt gedownload. We hebben het nodig om video's te converteren.",
-        "FFmpegNotFound": "FFmpeg werd niet gevonden. We hebben het nodig om video's te converteren.",
+        "FFmpegDownloadFailed": "FFmpeg kon niet gedownload worden. We hebben het nodig om video's te converteren. Controleer je internetverbinding en probeer opnieuw.",
         "DownloadingYoutubeDownloader": "{{youtubeDownloaderName}} wordt gedownload. We hebben het nodig om video's te converteren.",
         "UpdatingYoutubeDownloader": "Updaten van {{youtubeDownloaderName}}.",
         "YoutubeDownloaderNotFound": "{{youtubeDownloaderName}} werd niet gevonden. We hebben het nodig om video's te converteren."
@@ -50,6 +50,7 @@
     },
     "Buttons": {
         "Ok": "OK",
+        "Retry": "OPNIEUW",
         "ViewLog": "BEKIJK LOG",
         "License": "LICENTIE",
         "Donate": "DONATIE"

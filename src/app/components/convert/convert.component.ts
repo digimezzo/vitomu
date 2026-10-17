@@ -102,6 +102,14 @@ export class ConvertComponent implements OnInit, OnDestroy {
         this.convertState = ConvertState.WaitingForClipboardContent;
     }
 
+    public async retryFfmpegDownloadAsync(): Promise<void> {
+        if (this.convertState !== ConvertState.ffmpegNotAvailable) {
+            return;
+        }
+
+        await this.checkDependenciesAsync();
+    }
+
     public ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }

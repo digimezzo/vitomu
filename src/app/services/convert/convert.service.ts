@@ -149,7 +149,13 @@ export class ConvertService implements BaseConvertService {
     public async downloadFfmpegAsync(): Promise<void> {
         if (!(await this.ffmpegChecker.isDependencyAvailableAsync())) {
             this.logger.info('Start downloading FFmpeg.', 'ConvertService', 'downloadFfmpegAsync');
-            await this.ffmpegDownloader.downloadAsync(this.ffmpegChecker.downloadedDependencyFolder);
+            try {
+                await this.ffmpegDownloader.downloadAsync(this.ffmpegChecker.downloadedDependencyFolder);
+            } catch (e) {
+                const errorMessage: string = e instanceof Error ? e.message : String(e);
+                this.logger.error(`Could not download FFmpeg. Error: ${errorMessage}`, 'ConvertService', 'downloadFfmpegAsync');
+                throw e;
+            }
             this.logger.info('Finished downloading FFmpeg.', 'ConvertService', 'downloadFfmpegAsync');
         }
     }

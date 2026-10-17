@@ -124,6 +124,13 @@
     align-content: center;
 }
 
+.ffmpeg-download-failed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+}
+
 .view-link-button {
     color: var(--theme-accent-color);
     font-family: la-solid;

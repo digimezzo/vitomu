@@ -663,6 +663,49 @@ describe('ConvertComponent', () => {
             convertServiceMock.verify((x) => x.isYoutubeDownloaderAvailableAsync(), Times.never());
         });
 
+        it('Should wait for clipboard content when retrying the FFmpeg download succeeds', async () => {
+            // Arrange
+            delayer.canDelay = false;
+            let downloadAttempts: number = 0;
+            convertServiceMock.setup((x) => x.isFfmpegAvailableAsync()).returns(async () => false);
+            convertServiceMock.setup((x) => x.downloadFfmpegAsync()).returns(async () => {
+                downloadAttempts++;
+
+                if (downloadAttempts === 1) {
+                    throw new Error('Download failed');
+                }
+            });
+
+            const convertComponent: ConvertComponent = createComponent();
+            await convertComponent.ngOnInit();
+            assert.equal(convertComponent.convertState, ConvertState.ffmpegNotAvailable);
+
+            // Act
+            await convertComponent.retryFfmpegDownloadAsync();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            assert.equal(downloadAttempts, 2);
+            assert.equal(convertComponent.convertState, ConvertState.WaitingForClipboardContent);
+            assert.equal(convertComponent.progressMode, 'determinate');
+        });
+
+        it('Should not retry the FFmpeg download when FFmpeg is not in an error state', async () => {
+            // Arrange
+            delayer.canDelay = false;
+            convertServiceMock.setup((x) => x.isFfmpegAvailableAsync()).returns(async () => true);
+
+            const convertComponent: ConvertComponent = createComponent();
+            await convertComponent.ngOnInit();
+
+            // Act
+            await convertComponent.retryFfmpegDownloadAsync();
+            convertComponent.ngOnDestroy();
+
+            // Assert
+            convertServiceMock.verify((x) => x.isFfmpegAvailableAsync(), Times.once());
+        });
+
         it('Should set progress mode to determinate after initialization', async () => {
             // Arrange
             delayer.canDelay = false;
