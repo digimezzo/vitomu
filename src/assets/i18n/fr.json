@@ -15,14 +15,18 @@
         "ConversionInProgress": "Conversion en cours...",
         "Downloading": "Téléchargement...",
         "DownloadingFFmpeg": "Téléchargement de FFmpeg. Nous en avons besoin pour convertir des vidéos.",
-        "FFmpegNotFound": "FFmpeg est introuvable. Nous en avons besoin pour convertir des vidéos.",
+        "FFmpegDownloadFailed": "FFmpeg n'a pas pu être téléchargé. Nous en avons besoin pour convertir des vidéos. Veuillez vérifier votre connexion Internet et réessayer.",
         "DownloadingYoutubeDownloader": "Téléchargement de {{youtubeDownloaderName}}. Nous en avons besoin pour convertir des vidéos.",
         "UpdatingYoutubeDownloader": "Mise à jour de {{youtubeDownloaderName}}.",
         "YoutubeDownloaderNotFound": "{{youtubeDownloaderName}} est introuvable. Nous en avons besoin pour convertir des vidéos."
     },
     "SettingsTab": {
+        "Theme": "Thème",
+        "FollowSystemTheme": "Suivre le thème du système",
+        "UseLightTheme": "Utiliser le thème clair",
         "Language": "Langue",
         "Color": "Couleur",
+        "FollowSystemColor": "Suivre la couleur du système",
         "FontSize": "Taille de police",
         "Conversion": "Conversion",
         "AudioFormat": "Format audio",
@@ -46,6 +50,7 @@
     },
     "Buttons": {
         "Ok": "OK",
+        "Retry": "RÉESSAYER",
         "ViewLog": "VÉRIFIER LOG",
         "License": "LICENCE",
         "Donate": "FAIRE UN DON"

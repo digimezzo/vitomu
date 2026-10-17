@@ -1,3 +1,3 @@
 export class ThemeOptions {
-    constructor() {}
+    public constructor(public centerAlbumInfoText: boolean = false) {}
 }

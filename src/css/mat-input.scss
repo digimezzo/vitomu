@@ -42,6 +42,10 @@
   background-color: var(--theme-secondary-background) !important;
 }
 
+.mat-form-field-appearance-fill .mat-mdc-select-arrow-wrapper {
+  transform: none !important;
+}
+
 .mat-mdc-option {
   background-color: var(--theme-secondary-background) !important;
   color: var(--theme-primary-text) !important;
@@ -88,4 +92,3 @@
 .mat-mdc-form-field-focus-overlay {
   background-color: unset !important;
 }
-

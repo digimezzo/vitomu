@@ -1,6 +1,6 @@
 <div class="container p-2">
     <!-- Drop zone -->
-    <div class="drop-zone my-4 no-select">
+    <div class="drop-zone no-select">
         <!-- Drop zone circle -->
         <div class="drop-zone-circle mb-4">
             <!-- Progress spinner -->
@@ -95,8 +95,9 @@
                 {{ 'ConvertTab.DownloadingFFmpeg' | translate }}
             </div>
             <!-- FFmpeg not found text -->
-            <div *ngIf="convertState === ConvertStateEnum.ffmpegNotAvailable">
-                {{ 'ConvertTab.FFmpegNotFound' | translate }}
+            <div *ngIf="convertState === ConvertStateEnum.ffmpegNotAvailable" class="ffmpeg-download-failed">
+                <div>{{ 'ConvertTab.FFmpegDownloadFailed' | translate }}</div>
+                <app-accent-button class="mt-3" (click)="retryFfmpegDownloadAsync()">{{ 'Buttons.Retry' | translate }}</app-accent-button>
             </div>
             <!-- Downloading Youtube downloader text -->
             <div *ngIf="convertState === ConvertStateEnum.downloadingYoutubeDownloader">

@@ -5,3 +5,8 @@
 .hidden {
   visibility: hidden;
 }
+
+.inactive {
+  pointer-events: none;
+  opacity: 0.4;
+}

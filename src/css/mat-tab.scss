@@ -2,7 +2,8 @@ mat-tab-group {
     height: 100%;
 }
 
-.mat-tab-body-wrapper {
+.mat-tab-body-wrapper,
+.mat-mdc-tab-body-wrapper {
     flex-grow: 1;
     height: 100%;
 }

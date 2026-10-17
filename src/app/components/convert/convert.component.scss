@@ -5,13 +5,18 @@
 .container {
     width: 100%;
     height: 100%;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .drop-zone {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     align-items: center;
+    margin: auto 0;
+    text-align: center;
 }
 
 .drop-zone-circle {
@@ -117,6 +122,13 @@
     display: flex;
     flex-direction: row;
     align-content: center;
+}
+
+.ffmpeg-download-failed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
 }
 
 .view-link-button {

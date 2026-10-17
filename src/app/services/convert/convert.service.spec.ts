@@ -382,6 +382,28 @@ describe('ConvertService', () => {
             // Assert
             ffmpegDownloaderMock.verify((x) => x.downloadAsync('FFmpeg folder'), Times.once());
         });
+
+        it('Should log and rethrow the error if downloading FFmpeg fails', async () => {
+            // Arrange
+            ffmpegCheckerMock.setup((x) => x.isDependencyAvailableAsync()).returns(async () => false);
+            ffmpegCheckerMock.setup((x) => x.downloadedDependencyFolder).returns(() => 'FFmpeg folder');
+            ffmpegDownloaderMock
+                .setup((x) => x.downloadAsync('FFmpeg folder'))
+                .returns(() => Promise.reject("Couldn't connect to ffbinaries.com API. Check your Internet connection."));
+            const convertService: BaseConvertService = createService();
+
+            // Act & Assert
+            await assert.rejects(convertService.downloadFfmpegAsync());
+            loggerMock.verify(
+                (x) =>
+                    x.error(
+                        "Could not download FFmpeg. Error: Couldn't connect to ffbinaries.com API. Check your Internet connection.",
+                        'ConvertService',
+                        'downloadFfmpegAsync'
+                    ),
+                Times.once()
+            );
+        });
     });
 
     describe('downloadYoutubeDownloaderAsync', () => {
